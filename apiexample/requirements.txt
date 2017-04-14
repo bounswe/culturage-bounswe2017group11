@@ -1,5 +1,14 @@
+appdirs==1.4.3
 dj-database-url==0.4.1
-Django==1.10.4
+Django==1.11
 gunicorn==19.6.0
+oauthlib==2.0.2
+packaging==16.8
 psycopg2==2.6.2
+pyparsing==2.2.0
+pytz==2017.2
+requests==2.13.0
+requests-oauthlib==0.8.0
+six==1.10.0
+tweepy==3.5.0
 whitenoise==3.2
