@@ -26,6 +26,29 @@ def example(request):
     # Returns response of twitter. It's looks like messy. Don't be coward :)
     return HttpResponse(public_tweets)
 
+def getFrequencyOfWordsOfLikedTweets(request):
+    api = getTwitterApi()
+    # User name of the user to look for
+    test_user = "Rza_ozcelik"
+
+    #find each favorited tweet
+    tweets = []
+    for page in tweepy.Cursor(api.favorites,id=test_user,wait_on_rate_limit=True, count=200).pages(200):
+        for status in page:
+            tweets.append(str(status.text))
+
+    #find all words anc count them
+    allWords = [s  for t in tweets for s in t.split(' ')]
+    counts = {w: allWords.count(w) for w in allWords}
+    
+    #ignore usual suspects
+    if '' in counts:
+        del counts['']
+    if ' ' in counts:
+        del counts[' ']
+    #return
+    result = str(counts)
+    return HttpResponse(result)
 
 
 # Returns ready use Twitter API
