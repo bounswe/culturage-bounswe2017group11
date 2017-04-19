@@ -48,7 +48,9 @@ def getFrequencyOfWordsOfLikedTweets(request):
         del counts[' ']
     #return
     result = str(counts)
-    return HttpResponse(result)
+    d = {"frequencies":[{'word':key,"frequency":value} for key,value in counts.items()]}
+    json_string = json.dumps(d)
+    return HttpResponse(json_string)
 
 
 # Returns ready use Twitter API
