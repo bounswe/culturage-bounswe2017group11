@@ -28,12 +28,19 @@ def example(request):
 
 def getFrequencyOfWordsOfLikedTweets(request):
     api = getTwitterApi()
-    # User name of the user to look for
-    test_user = "Rza_ozcelik"
-
+    count = 100
+    test_user = ""
+    if request.GET.get('username'):
+        # User name of the user to look for
+        test_user = request.GET.get('username')
+    else:
+        return HttpResponse("NO USERNAME!")
+    if request.GET.get('count'):
+        count = request.GET.get('count')
     #find each favorited tweet
     tweets = []
-    for page in tweepy.Cursor(api.favorites,id=test_user,wait_on_rate_limit=True, count=200).pages(200):
+    pages = tweepy.Cursor(api.favorites,id=test_user,wait_on_rate_limit=True, count=count).pages(200)
+    for page in pages:
         for status in page:
             tweets.append(str(status.text))
 
@@ -46,8 +53,7 @@ def getFrequencyOfWordsOfLikedTweets(request):
         del counts['']
     if ' ' in counts:
         del counts[' ']
-    #return
-    result = str(counts)
+    
     d = {"frequencies":[{'word':key,"frequency":value} for key,value in counts.items()]}
     json_string = json.dumps(d)
     return HttpResponse(json_string)
