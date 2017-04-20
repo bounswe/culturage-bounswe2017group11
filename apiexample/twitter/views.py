@@ -101,6 +101,7 @@ def getMostNumberOfFollowers(request):
     for follower in tweepy.Cursor(api.followers, id=test_user, wait_on_rate_limit=True, count=count).items():
         if(maxFollower<follower.followers_count):
             name = follower.screen_name
+            maxFollower = follower.followers_count
 
     return HttpResponse(name)
 
