@@ -2,6 +2,7 @@ from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from django.template import loader
+from datetime import datetime
 import json,requests,os, unicodedata
 import tweepy
 
@@ -25,6 +26,29 @@ def example(request):
 
     # Returns response of twitter. It's looks like messy. Don't be coward :)
     return HttpResponse(public_tweets)
+
+def getUsersTweetingMostFrequently(request):
+    api = getTwitterApi()
+    page_list = []
+    users = []
+    usersSorted = []
+    for page in tweepy.Cursor(api.home_timeline).pages(1):
+        page_list.append(page)
+
+    for page in page_list:
+        for status in page:
+           # Take time difference for 1 hour difference
+           diff = datetime.now() - status.created_at
+           if diff.total_seconds() < 3600:
+               # Add most frequently tweeting users to the list 
+               users.append(status.user.id)
+    # Sort users
+    for count, elem in sorted(((users.count(e), e) for e in set(users)), reverse=True):
+        usersSorted.append(elem)
+        usersSorted.append(' ')
+
+    #Return sorted list
+    return HttpResponse(usersSorted)
 
 def getFrequencyOfWordsOfLikedTweets(request):
     api = getTwitterApi()
