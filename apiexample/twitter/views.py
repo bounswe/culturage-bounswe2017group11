@@ -83,6 +83,28 @@ def getFrequencyOfWordsOfLikedTweets(request):
     return HttpResponse(json_string)
 
 
+def getMostNumberOfFollowers(request):
+    api = getTwitterApi()
+    count = 100
+    test_user = ""
+    if request.GET.get('username'):
+        # User name of the user to look for
+        test_user = request.GET.get('username')
+    else:
+        return HttpResponse("NO USERNAME!")
+    if request.GET.get('count'):
+        count = request.GET.get('count')
+
+    maxFollower = 0
+    name = ""
+
+    for follower in tweepy.Cursor(api.followers, id=test_user, wait_on_rate_limit=True, count=count).items():
+        if(maxFollower<follower.followers_count):
+            name = follower.screen_name
+            maxFollower = follower.followers_count
+
+    return HttpResponse(name)
+
 # Returns ready use Twitter API
 def getTwitterApi():
     consumerKey = 'GN1xGLyDGT3xH0s5NXTKDSCQQ'
