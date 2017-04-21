@@ -44,8 +44,8 @@ def getUsersTweetingMostFrequently(request):
                users.append(status.user.id)
     # Sort users
     for count, elem in sorted(((users.count(e), e) for e in set(users)), reverse=True):
-        usersSorted.append(elem)
-        usersSorted.append(' ')
+        usersSorted.append(api.get_user(elem))
+        #usersSorted.append(' ')
 
     #Return sorted list
     return HttpResponse(usersSorted)
