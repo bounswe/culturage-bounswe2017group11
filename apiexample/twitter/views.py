@@ -3,7 +3,8 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from django.template import loader
 from datetime import datetime
-import json,requests,os, unicodedata, re
+from collections import Counter
+import json,requests,os, unicodedata, re, operator
 import tweepy
 
 # Create your views here.
@@ -44,8 +45,8 @@ def getUsersTweetingMostFrequently(request):
                users.append(status.user.id)
     # Sort users
     for count, elem in sorted(((users.count(e), e) for e in set(users)), reverse=True):
-        usersSorted.append(elem)
-        usersSorted.append(' ')
+        usersSorted.append(api.get_user(elem))
+        #usersSorted.append(' ')
 
     #Return sorted list
     return HttpResponse(usersSorted)
@@ -106,11 +107,63 @@ def getMostNumberOfFollowers(request):
     return HttpResponse(name)
 
 
-def getWhoMentionedMost(request)
-	api = getTwitterApi
-	test_user=""
-	usrName = ""
-	if request.GET.get('username'):
+def getMostLikedPages(request):
+    api = getTwitterApi()
+    count = 100
+    test_user = ""
+    if request.GET.get('username'):
+        # User name of the user to look for
+        test_user = request.GET.get('username')
+    else:
+        return HttpResponse("NO USERNAME!")
+    if request.GET.get('count'):
+        count = request.GET.get('count')
+    #find each favorited tweet
+    userNames = []
+    ids = []
+    pages = tweepy.Cursor(api.favorites,id=test_user,wait_on_rate_limit=True, count=count).pages(200)
+    for page in pages:
+        for status in page:
+            userNames.append(status.user.name)
+            ids.append(status.user.id)
+    
+    
+    topIDs = []
+    data = Counter(ids)
+    try:
+        topIDs.append(data.most_common(3)[0][0])
+        topIDs.append(data.most_common(3)[1][0])
+        topIDs.append(data.most_common(3)[2][0])
+    except:
+        pass
+    
+    topThree = []
+    data = Counter(userNames)
+    try:
+        topThree.append(data.most_common(3)[0][0])
+        topThree.append(data.most_common(3)[1][0])
+        topThree.append(data.most_common(3)[2][0])
+    except:
+        pass
+    
+
+    try:
+        tuples = []
+        tuples.append((topIDs[0],topThree[0]))
+        tuples.append((topIDs[1],topThree[1]))
+        tuples.append((topIDs[2],topThree[2]))
+    except:
+        pass
+    #print(tuples)
+    
+    return HttpResponse(tuples)
+
+
+    def getWhoMentionedMost(request)
+    api = getTwitterApi
+    test_user=""
+    usrName = ""
+    if request.GET.get('username'):
         # User name of the user to look for
         test_user = request.GET.get('username')
         usrName=test_user.username
@@ -122,15 +175,17 @@ def getWhoMentionedMost(request)
     pattern = re.compile("@"+userName)
 
     for tweet in followers_tweets:
-    	follower_id = tweet.id_str
-    	text = tweet.text
-    	if pattern.match(text):
-    		if follower_id in id_map:
-    			id_map[follower_id] = id_map[follower_id]+1
-    		else:
-    			id_map[follower_id] = 1
-    	
+        follower_id = tweet.id_str
+        text = tweet.text
+        if pattern.match(text):
+            if follower_id in id_map:
+                id_map[follower_id] = id_map[follower_id]+1
+            else:
+                id_map[follower_id] = 1
+        
 
+    mostMentionedUser_Id = max(id_map.iteritems(),key = operator.itemgetter(1))[0]
+    return mostMentionedUser_Id
 
 
 # Returns ready use Twitter API
