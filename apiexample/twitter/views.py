@@ -3,7 +3,7 @@ from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse
 from django.template import loader
 from datetime import datetime
-import json,requests,os, unicodedata
+import json,requests,os, unicodedata, re
 import tweepy
 
 # Create your views here.
@@ -104,6 +104,34 @@ def getMostNumberOfFollowers(request):
             maxFollower = follower.followers_count
 
     return HttpResponse(name)
+
+
+def getWhoMentionedMost(request)
+	api = getTwitterApi
+	test_user=""
+	usrName = ""
+	if request.GET.get('username'):
+        # User name of the user to look for
+        test_user = request.GET.get('username')
+        usrName=test_user.username
+    else:
+        return HttpResponse("NO USERNAME!")
+    
+    id_map = {0:0}
+    followers_tweets = user.followers_status();
+    pattern = re.compile("@"+userName)
+
+    for tweet in followers_tweets:
+    	follower_id = tweet.id_str
+    	text = tweet.text
+    	if pattern.match(text):
+    		if follower_id in id_map:
+    			id_map[follower_id] = id_map[follower_id]+1
+    		else:
+    			id_map[follower_id] = 1
+    	
+
+
 
 # Returns ready use Twitter API
 def getTwitterApi():
