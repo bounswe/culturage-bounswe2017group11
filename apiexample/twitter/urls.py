@@ -9,5 +9,6 @@ urlpatterns = [
     url(r'^freqTweeting', views.getUsersTweetingMostFrequently, name='getUsersTweetingMostFrequently'),
     url(r'^mostFollower', views.getMostNumberOfFollowers, name='getMostNumberOfFollowers'),
     url(r'^mostLikedPages', views.getMostLikedPages, name='getMostLikedPages'),
-    url(r'^whoMentionMost', view.getWhoMentionedMost)
+    url(r'^whoMentionMost', view.getWhoMentionedMost),
+    url(r'^freqOfWords', views.getFrequencyOfWordsOfAllTweets, name='getFrequencyOfWordsOfAllTweets')
 ]
