@@ -159,33 +159,31 @@ def getMostLikedPages(request):
     return HttpResponse(tuples)
 
 
-    def getWhoMentionedMost(request)
-    api = getTwitterApi
+def getWhoMentionedMost(request):
+    api = getTwitterApi()
     test_user=""
     usrName = ""
     if request.GET.get('username'):
         # User name of the user to look for
         test_user = request.GET.get('username')
-        usrName=test_user.username
     else:
         return HttpResponse("NO USERNAME!")
+    mention_map = {"username":0}
+    friendList =  api.followers(test_user)
+    pattern = re.compile("@"+test_user)
+
+    for friend in friendList:
+        f_screenName = friend.screen_name
+        mention_map[f_screenName] = 0
+        f_statusList = api.user_timeline(f_screenName,100)
+        for tweets in f_statusList:
+            t_text = tweets.text
+            if(pattern.match(t_text)):
+                mention_map[screen_name] = mention_map[screen_name]+1
     
-    id_map = {0:0}
-    followers_tweets = user.followers_status();
-    pattern = re.compile("@"+userName)
+    maxMentionKey = max(mention_map.iteritems(),key = operator.itemgetter(1))[0]
 
-    for tweet in followers_tweets:
-        follower_id = tweet.id_str
-        text = tweet.text
-        if pattern.match(text):
-            if follower_id in id_map:
-                id_map[follower_id] = id_map[follower_id]+1
-            else:
-                id_map[follower_id] = 1
-        
-
-    mostMentionedUser_Id = max(id_map.iteritems(),key = operator.itemgetter(1))[0]
-    return mostMentionedUser_Id
+    return HttpResponse(""+mention_map[maxMentionKey])
 
 
 # Returns ready use Twitter API
