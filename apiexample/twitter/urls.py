@@ -13,3 +13,4 @@ urlpatterns = [
     url(r'^user/allwords', views.getFrequencyOfWordsOfAllTweets, name='getFrequencyOfWordsOfAllTweets'),
     url(r'^users/likes', views.getLikeRatioOfTwoUsers, name='getLikeRatioOfTwoUsers'),
     url(r'^user/hashtag', views.hashtagPercentage, name='hashtagPercentage')
+]
