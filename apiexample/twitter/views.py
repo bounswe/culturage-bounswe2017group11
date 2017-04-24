@@ -101,7 +101,6 @@ def getMostNumberOfFollowers(request):
     count = 100
     test_user = ""
     if request.GET.get('username'):
-        # User name of the user to look for
         test_user = request.GET.get('username')
     else:
         return HttpResponse("NO USERNAME!")
