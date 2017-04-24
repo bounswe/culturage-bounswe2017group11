@@ -187,6 +187,35 @@ def getMostLikedPages(request):
     mostMentionedUser_Id = max(id_map.iteritems(),key = operator.itemgetter(1))[0]
     return mostMentionedUser_Id
 
+def getLikeRatioOfTwoUsers(request):
+    api = getTwitterApi()
+    user1 = ""
+    user2 = ""
+    count = 100
+    if request.GET.get('user1'):
+        user1 = request.GET.get('user1')
+    else:
+        return HttpResponse("MISSING USERNAME!")
+    if request.GET.get('user2'):
+        user2 = request.GET.get('user2')
+    else:
+        return HttpResponse("MISSING USERNAME!")
+    pages1 = tweepy.Cursor(api.favorites, id=user1, wait_on_rate_limit=True, count=count).pages(200)
+    count1 = 0
+    for page in pages1:
+        for status in page:
+            if status.user.screen_name == user2:
+                count1 += 1
+    pages2 = tweepy.Cursor(api.favorites, id=user2, wait_on_rate_limit=True, count=count).pages(200)
+    count2 = 0
+    for page in pages2:
+        for status in page:
+            if status.user.screen_name == user1:
+                count2 += 1
+    d = {'frequencies': [{'user1': user1, 'count': count1}, {'user2': user2, 'count': count2}]}
+    json_string = json.dumps(d)
+    return HttpResponse(json_string)
+
 
 # Returns ready use Twitter API
 def getTwitterApi():
