@@ -50,7 +50,13 @@ def getUsersTweetingMostFrequently(request):
 
     #Return sorted list
     return HttpResponse(usersSorted)
-
+"""
+author: Rıza Özçelik
+This method counts the frequency of the words a specific user liked.
+It has two paramters, username and count where username is compulsory.
+If a username is not provided, method returns a string that expresses this fact.
+If count is not provided, it is defaulted to 100, hence only 100 tweets is searched.
+"""
 def getFrequencyOfWordsOfLikedTweets(request):
     api = getTwitterApi()
     count = 100
@@ -64,11 +70,17 @@ def getFrequencyOfWordsOfLikedTweets(request):
         count = request.GET.get('count')
     #find each favorited tweet
     tweets = []
-    pages = tweepy.Cursor(api.favorites,id=test_user,wait_on_rate_limit=True, count=count).pages(200)
+    pages = tweepy.Cursor(api.favorites,id=test_user,wait_on_rate_limit=True, count=200).pages(200)
+    brokenInnerLoop = False
     for page in pages:
         for status in page:
             tweets.append(str(status.text))
-
+            # break  when enough tweet is collected.
+            if len(tweets) > count:
+                brokenInnerLoop = True
+                break
+        if brokenInnerLoop:
+            break
     #find all words anc count them
     allWords = [s  for t in tweets for s in t.split(' ')]
     counts = {w: allWords.count(w) for w in allWords}
