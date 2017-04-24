@@ -118,7 +118,10 @@ def getMostNumberOfFollowers(request):
 
     return HttpResponse(name)
 
-
+"""
+author: giray
+This method returns three most liked pages of the user, based on likes.
+"""
 def getMostLikedPages(request):
     api = getTwitterApi()
     count = 100
