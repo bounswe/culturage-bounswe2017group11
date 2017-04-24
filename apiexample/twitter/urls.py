@@ -11,6 +11,7 @@ urlpatterns = [
     url(r'^mostLikedPages', views.getMostLikedPages, name='getMostLikedPages'),
     url(r'^whoMentionMost', views.getWhoMentionedMost, name='getWhoMentionedMost'), 
     url(r'^freqOfWords', views.getFrequencyOfWordsOfAllTweets, name='getFrequencyOfWordsOfAllTweets'),
-    url(r'^likeRatio', views.getLikeRatioOfTwoUsers, name='getLikeRatioOfTwoUsers')
+    url(r'^likeRatio', views.getLikeRatioOfTwoUsers, name='getLikeRatioOfTwoUsers'),
+    url(r'^hashtagPercentage', views.hashtagPercentage, name='hashtagPercentage')
 
 

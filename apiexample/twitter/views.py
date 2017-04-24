@@ -286,3 +286,27 @@ def getFrequencyOfWordsOfAllTweets(request):
     d = {"frequencies":[{'word':key,"frequency":value} for key,value in counts.items()]}
     json_string = json.dumps(d)
     return HttpResponse(json_string)
+
+def hashtagPercentage(request):
+    api = getTwitterApi()
+    cnt = 1
+    test_user = ""
+    tweets = []
+    count1 = 1
+    count2 = 0
+    if request.GET.get('username'):
+        # User name of the user to look for
+        test_user = request.GET.get('username')
+    else:
+        return HttpResponse("NO USERNAME!")
+
+    for status in tweepy.Cursor(api.user_timeline,id=test_user,wait_on_rate_limit=True).items(int(cnt)): 
+       first_three_letters = status.text[:3]
+       if first_three_letters != 'RT ':
+           count1 += 1
+           tweets.append(str(status.text))
+           if "#" in status.text:
+               count2 += 1
+           print(status.text)
+
+    return HttpResponse(count2/count1)
