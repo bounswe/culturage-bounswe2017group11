@@ -164,26 +164,30 @@ def getWhoMentionedMost(request):
     test_user=""
     usrName = ""
     if request.GET.get('username'):
-        # User name of the user to look for
         test_user = request.GET.get('username')
     else:
         return HttpResponse("NO USERNAME!")
-    mention_map = {"username":0}
+    mention_map = {}
     friendList =  api.followers(test_user)
-    pattern = re.compile("@"+test_user)
+    #return HttpResponse(friendList)
+    
+    #pattern = re.compile("@"+test_user)
 
     for friend in friendList:
         f_screenName = friend.screen_name
+        pattern = re.compile("@"+f_screenName+"\s")
+        #f_id = friend.id
+        #return HttpResponse(f_screenName)
         mention_map[f_screenName] = 0
-        f_statusList = api.user_timeline(f_screenName,100)
+        f_statusList = api.home_timeline(500)
+        #return HttpResponse(f_statusList)
         for tweets in f_statusList:
             t_text = tweets.text
             if(pattern.match(t_text)):
-                mention_map[screen_name] = mention_map[screen_name]+1
-    
-    maxMentionKey = max(mention_map.iteritems(),key = operator.itemgetter(1))[0]
-
-    return HttpResponse(""+mention_map[maxMentionKey])
+                mention_map[f_screenName] = mention_map[f_screenName]+1
+    #maxMentionKey = max(mention_map.iteritems(),key = operator.itemgetter(1))[0]
+    maxMention = max(mention_map, key = lambda i:mention_map[i])
+    return HttpResponse(maxMention)
 
 
 # Returns ready use Twitter API
