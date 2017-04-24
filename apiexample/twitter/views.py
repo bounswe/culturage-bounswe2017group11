@@ -189,6 +189,35 @@ def getWhoMentionedMost(request):
     maxMention = max(mention_map, key = lambda i:mention_map[i])
     return HttpResponse(maxMention)
 
+def getLikeRatioOfTwoUsers(request):
+    api = getTwitterApi()
+    user1 = ""
+    user2 = ""
+    count = 100
+    if request.GET.get('user1'):
+        user1 = request.GET.get('user1')
+    else:
+        return HttpResponse("MISSING USERNAME!")
+    if request.GET.get('user2'):
+        user2 = request.GET.get('user2')
+    else:
+        return HttpResponse("MISSING USERNAME!")
+    pages1 = tweepy.Cursor(api.favorites, id=user1, wait_on_rate_limit=True, count=count).pages(200)
+    count1 = 0
+    for page in pages1:
+        for status in page:
+            if status.user.screen_name == user2:
+                count1 += 1
+    pages2 = tweepy.Cursor(api.favorites, id=user2, wait_on_rate_limit=True, count=count).pages(200)
+    count2 = 0
+    for page in pages2:
+        for status in page:
+            if status.user.screen_name == user1:
+                count2 += 1
+    d = {'frequencies': [{'user1': user1, 'count': count1}, {'user2': user2, 'count': count2}]}
+    json_string = json.dumps(d)
+    return HttpResponse(json_string)
+
 
 # Returns ready use Twitter API
 def getTwitterApi():
@@ -201,3 +230,47 @@ def getTwitterApi():
     auth.set_access_token(accessToken, accessTokenSecret)
 
     return tweepy.API(auth)
+
+    #This function is used the calculating of words in user's tweets
+def getFrequencyOfWordsOfAllTweets(request):
+    api = getTwitterApi()
+    cnt = 1
+    test_user = ""
+    tweets = []
+            
+    # Validation of username
+    if request.GET.get('username'):
+        # User name of the user to look for
+        test_user = request.GET.get('username')
+    else:
+        return HttpResponse("NO USERNAME!")
+    
+    # Check if user enter count number, otherwise use default one
+    if request.GET.get('count'):
+        cnt = request.GET.get('count') 
+   
+    #find each user's tweets
+    #Note that, status object has some contents to distinguish user's own tweets from others in user timeline.
+    #For example, status.entities.user_mentions.screen_name gives name of owner of tweet but it could be sometimes NULL 
+    # if user didn't fill his profile information. Also, there is "retweeted" part of status which indicates if tweet is
+    # retweeted or not but it is not useful for our condition, either. Finally, I choose to compare first three character
+    #of text which are always 'RT ' if it is retweeted.  
+    for status in tweepy.Cursor(api.user_timeline,id=test_user,wait_on_rate_limit=True).items(int(cnt)): 
+       first_three_letters = status.text[:3]
+       if first_three_letters != 'RT ':
+           tweets.append(str(status.text))
+           print(status.text)
+    
+    #find all words anc count them
+    allWords = [s  for t in tweets for s in t.split(' ')]
+    counts = {w: allWords.count(w) for w in allWords}
+    
+    #ignore usual suspects
+    if '' in counts:
+        del counts['']
+    if ' ' in counts:
+        del counts[' ']
+    
+    d = {"frequencies":[{'word':key,"frequency":value} for key,value in counts.items()]}
+    json_string = json.dumps(d)
+    return HttpResponse(json_string)
