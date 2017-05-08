@@ -18,3 +18,8 @@ class StatsTestCases(TestCase):
     	self.assertEqual(status_code,2)
     	json = r.json()
     	self.assertEqual(count,json['count'])
+
+    def test_getFrequencyOfWordsOfAllTweets(self):
+    	count = 10
+    	x = requests.get('http://127.0.0.1:8000/user/allwords') 
+    	self.assertEqual(x.text,'NO USERNAME!')
