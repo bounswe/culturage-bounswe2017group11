@@ -110,6 +110,12 @@ class TwitterStats:
         return HttpResponse(json_string)
 
 
+    """
+    author: Barın Özmen
+    This method returns the user who has the most number of followers in the list of the specific user's(given as parameter) followers.
+    If username is not given as a parameter, it returns No Username
+    If count parameter isn't give, it counts 100 follower as a default.
+    """
     def getMostNumberOfFollowers(request):
         api = TwitterStats.getTwitterApi()
         count = 100

@@ -9,6 +9,7 @@ class StatsTestCases(TestCase):
  	# Unit Test for getFrequencyOfWordsOfLikedTweets method
  	# It tests two things, status code of the request and number of tweets searched 
  	# during execution
+    
     def test_getFrequencyOfWordsOfLikedTweets(self):
     	count = 100
     	parameters = {'username': 'menescakir', 'count': count}
@@ -30,3 +31,11 @@ class StatsTestCases(TestCase):
         request = requests.get('http://127.0.0.1:8000/user/hashtag/hashtagPercentage', params=parameters)
 
         self.assertEqual("0.05486968449931413", request.text)
+    
+    def test_getMostNumberOfFollowers(self):
+        count = 100
+        parameters = {'username': 'menescakir', 'count': count}
+        req = requests.get('http://127.0.0.1:8000/followers/popular', params=parameters)
+        self.assertEqual(req.text, 'stonefiregrill')
+
+
