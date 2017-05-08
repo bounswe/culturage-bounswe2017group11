@@ -24,7 +24,7 @@ class StatsTestCases(TestCase):
     	x = requests.get('http://127.0.0.1:8000/user/allwords') 
     	self.assertEqual(x.text,'NO USERNAME!')
 
-    # Checks whether return type is a     
+    # Checks whether return type is correct   
     def test_getHashtagPercentage(self):
         parameters = {'username': 'menescakir'}
         request = requests.get('http://127.0.0.1:8000/user/hashtag/hashtagPercentage', params=parameters)
