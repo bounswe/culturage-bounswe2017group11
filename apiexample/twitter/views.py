@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.template import loader
 from datetime import datetime
 from collections import Counter
+from time import sleep
 import json,requests,os, unicodedata, re, operator
 import tweepy
 
@@ -195,19 +196,21 @@ class TwitterStats:
 	        test_user = request.GET.get('username')
 	    else:
 	        return HttpResponse("NO USERNAME!")
+	    
 	    mention_map = {}
+	    user = api.get_user(test_user)
+	    sleep(0.1)
 	    friendList =  api.followers(test_user)
 	    #return HttpResponse(friendList)
-	    
 	    #pattern = re.compile("@"+test_user)
-
+	    f_statusList = api.user_timeline(user.id,count=100)
 	    for friend in friendList:
 	        f_screenName = friend.screen_name
 	        pattern = re.compile("@"+f_screenName+"\s")
 	        #f_id = friend.id
 	        #return HttpResponse(f_screenName)
 	        mention_map[f_screenName] = 0
-	        f_statusList = api.home_timeline(500)
+	        #f_statusList = api.home_timeline(500)
 	        #return HttpResponse(f_statusList)
 	        for tweets in f_statusList:
 	            t_text = tweets.text
