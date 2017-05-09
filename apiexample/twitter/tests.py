@@ -58,6 +58,14 @@ class StatsTestCases(TestCase):
     	x = requests.get('http://127.0.0.1:8000/user/allwords') 
     	self.assertEqual(x.text,'NO USERNAME!')
 
+    def test_getLikeRatioOfTwoUsers(self):
+        count1 = 11
+        count2 = 0
+        parameters = {'user1': 'user1_api', 'user2': 'tuhafamasahici'}
+        r = requests.get('http://127.0.0.1:8000/users/likes', params=parameters)
+        json = r.json()
+        self.assertEqual(json['count1'], count1)
+
     # Checks whether return value is correct   
     def test_getHashtagPercentage(self):
         parameters = {'username': 'menescakir'}

@@ -246,7 +246,7 @@ class TwitterStats:
             for status in page:
                 if status.user.screen_name == user1:
                     count2 += 1
-        d = {'frequencies': [{'user1': user1, 'count': count1}, {'user2': user2, 'count': count2}]}
+        d = {'user1': user1, 'count1': count1, 'user2': user2, 'count2': count2}
         json_string = json.dumps(d)
         return HttpResponse(json_string)
 
