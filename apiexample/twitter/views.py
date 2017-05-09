@@ -44,26 +44,24 @@ class TwitterStats:
 
     def getUsersTweetingMostFrequently(request):
         api = TwitterStats.getTwitterApi()
-        page_list = []
         users = []
         usersSorted = []
-        for page in tweepy.Cursor(api.home_timeline).pages(1):
-            page_list.append(page)
-
-        for page in page_list:
-            for status in page:
-               # Take time difference for 1 hour difference
-               diff = datetime.now() - status.created_at
-               if diff.total_seconds() < 3600:
-                   # Add most frequently tweeting users to the list 
-                   users.append(status.user.id)
+        public_tweets = api.home_timeline()
+		
+        for tweet in public_tweets:
+            # Take time difference for 1 hour difference
+            diff = datetime.now() - tweet.created_at
+            if diff.total_seconds() < 3600:
+                # Add most frequently tweeting users to the list 
+                users.append(tweet.user.id)
+				
         # Sort users
         for count, elem in sorted(((users.count(e), e) for e in set(users)), reverse=True):
             usersSorted.append(api.get_user(elem))
-            #usersSorted.append(' ')
 
         #Return sorted list
         return HttpResponse(usersSorted)
+
     """
     author: Rıza Özçelik
     This method counts the frequency of the words a specific user liked.
