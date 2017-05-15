@@ -63,15 +63,17 @@ class TwitterStats:
         #Return sorted list
         return HttpResponse(usersSorted)
 
-    """
-    author: Rıza Özçelik
-    This method counts the frequency of the words a specific user liked.
-    It has two paramters, username and count where username is compulsory.
-    If a username is not provided, method returns a string that expresses this fact.
-    If count is not provided, it is defaulted to 100, hence only 100 tweets is searched.
-    """
+   
     def getFrequencyOfWordsOfLikedTweets(request):
-        api = TwitterStats.getTwitterApi()
+	    """
+	    This method counts the frequency of the words a specific user liked.
+	    It has two paramters, username and count where username is compulsory.
+	    If a username is not provided, method returns a string that expresses this fact.
+	    If count is not provided, it is defaulted to 100, hence only 100 tweets is searched.
+
+		author: Riza Ozcelik
+	    """ 
+	    api = TwitterStats.getTwitterApi()
         count = 100
         test_user = ""
         if request.GET.get('username'):
