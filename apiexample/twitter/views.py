@@ -234,8 +234,8 @@ class TwitterStats:
                 t_text = tweets.text
                 if(pattern.match(t_text)):
                     mention_map[f_screenName] = mention_map[f_screenName]+1
-            # Calculated the biggest value in map of screen name and appearance count
-            maxMention = max(mention_map, key = lambda i:mention_map[i])
+        # Calculated the biggest value in map of screen name and appearance count
+        maxMention = max(mention_map, key = lambda i:mention_map[i])
         # Return the screen name of max value.
         return HttpResponse(maxMention)
 
