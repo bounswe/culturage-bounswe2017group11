@@ -44,6 +44,13 @@ class TwitterStats:
         return HttpResponse(public_tweets)
 
     def getUsersTweetingMostFrequently(request):
+	    """
+	    This method finds users who has been tweeting most frequently (on hourly basis).
+	    It checks for the time difference between request and tweets.
+	    The tweets are collected from timeline.
+
+		author: Anil Seyrek
+	    """ 
         api = TwitterStats.getTwitterApi()
         users = []
         usersSorted = []
