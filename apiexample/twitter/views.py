@@ -240,6 +240,14 @@ class TwitterStats:
         return HttpResponse(maxMention)
 
     def getFrequencyOfWordsOfAllTweets(request):
+        """
+	    This method counts the frequency of the words a specific user own tweets.
+	    It has two paramters, username and count where username is compulsory.
+	    If a username is not provided, method returns a string that expresses this fact.
+	    If count is not provided, it is defaulted to 1, hence only 1 tweets is searched.
+
+		author: Fatih Asagidag
+        """
         api = TwitterStats.getTwitterApi()
         cnt = 1
         test_user = ""
