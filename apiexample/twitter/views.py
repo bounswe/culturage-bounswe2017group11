@@ -205,43 +205,40 @@ class TwitterStats:
 
     def getWhoMentionedMost(request):
         """
-    author: Ezgi Yuceturk
-    #This method to find the follower who has recently been mentioned most by the authenticated user the most.
-    """
-	#Get twitter api with authenticated user
-	    api = TwitterStats.getTwitterApi()
-	    test_user=""
-	    usrName = ""
-	    if request.GET.get('username'):
-	        test_user = request.GET.get('username')
-	    else:
-	        return HttpResponse("NO USERNAME!")
-	    
-	    mention_map = {}
-	#Get the user information f authenticated user. Returns user object.
-	    user = api.get_user(test_user)
-	    sleep(0.1)
-	#Get followers of the authenticated user. Returns list of user objects
-	    friendList =  api.followers(test_user)
-	#Get the recent 100 tweets of authenticated user. Returns list of status objects.
-	    f_statusList = api.user_timeline(user.id,count=100)
-	#For each foolowers this loops checks if their screen name appears in a tweet and if so, counts 
-	#how mant times it appears in 100 tweets. 
-	    for friend in friendList:
-	        f_screenName = friend.screen_name
-	        pattern = re.compile("@"+f_screenName+"\s")
-	        mention_map[f_screenName] = 0
-	        for tweets in f_statusList:
-	            t_text = tweets.text
-	            if(pattern.match(t_text)):
-	                mention_map[f_screenName] = mention_map[f_screenName]+1
-	#Calculated the biggest value in map of screen name and appearance count
-	    maxMention = max(mention_map, key = lambda i:mention_map[i])
-	#Return the screen name of max value.
-	    return HttpResponse(maxMention)
+        author: Ezgi Yuceturk
+        This method to find the follower who has recently been mentioned most by the authenticated user the most.
+        """
+        # Get twitter api with authenticated user
+        api = TwitterStats.getTwitterApi()
+        test_user=""
+        usrName = ""
+        if request.GET.get('username'):
+            test_user = request.GET.get('username')
+        else:
+            return HttpResponse("NO USERNAME!")
+            mention_map = {}
+        # Get the user information f authenticated user. Returns user object.
+        user = api.get_user(test_user)
+        sleep(0.1)
+        # Get followers of the authenticated user. Returns list of user objects
+        friendList =  api.followers(test_user)
+        # Get the recent 100 tweets of authenticated user. Returns list of status objects.
+        f_statusList = api.user_timeline(user.id,count=100)
+        # For each foolowers this loops checks if their screen name appears in a tweet and if so, counts
+        # how mant times it appears in 100 tweets.
+        for friend in friendList:
+            f_screenName = friend.screen_name
+            pattern = re.compile("@"+f_screenName+"\s")
+            mention_map[f_screenName] = 0
+            for tweets in f_statusList:
+                t_text = tweets.text
+                if(pattern.match(t_text)):
+                    mention_map[f_screenName] = mention_map[f_screenName]+1
+            # Calculated the biggest value in map of screen name and appearance count
+            maxMention = max(mention_map, key = lambda i:mention_map[i])
+        # Return the screen name of max value.
+        return HttpResponse(maxMention)
 
-
-   
     def getFrequencyOfWordsOfAllTweets(request):
         api = TwitterStats.getTwitterApi()
         cnt = 1
@@ -311,4 +308,3 @@ class TwitterStats:
                     count2 += 0
 
         return HttpResponse(count2/count1)
-
