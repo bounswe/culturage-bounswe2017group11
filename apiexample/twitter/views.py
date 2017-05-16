@@ -4,11 +4,13 @@ from django.http import HttpResponse
 from django.template import loader
 from datetime import datetime
 from collections import Counter
+from time import sleep
 import json,requests,os, unicodedata, re, operator
 import tweepy
 
 # Create your views here.
 class TwitterStats:
+
 
     @csrf_exempt
     def index(request):
@@ -201,68 +203,45 @@ class TwitterStats:
 
         return HttpResponse(tuples)
 
-
+  #This method to find the follower who has recently been mentioned most by the authenticated user the most.
     def getWhoMentionedMost(request):
-        api = TwitterStats.getTwitterApi()
-        test_user=""
-        usrName = ""
-        if request.GET.get('username'):
-            test_user = request.GET.get('username')
-        else:
-            return HttpResponse("NO USERNAME!")
-        mention_map = {}
-        friendList =  api.followers(test_user)
-        #return HttpResponse(friendList)
-
-        #pattern = re.compile("@"+test_user)
-
-        for friend in friendList:
-            f_screenName = friend.screen_name
-            pattern = re.compile("@"+f_screenName+"\s")
-            #f_id = friend.id
-            #return HttpResponse(f_screenName)
-            mention_map[f_screenName] = 0
-            f_statusList = api.home_timeline(500)
-            #return HttpResponse(f_statusList)
-            for tweets in f_statusList:
-                t_text = tweets.text
-                if(pattern.match(t_text)):
-                    mention_map[f_screenName] = mention_map[f_screenName]+1
-        #maxMentionKey = max(mention_map.iteritems(),key = operator.itemgetter(1))[0]
-        maxMention = max(mention_map, key = lambda i:mention_map[i])
-        return HttpResponse(maxMention)
-
-    def getLikeRatioOfTwoUsers(request):
-        api = TwitterStats.getTwitterApi()
-        user1 = ""
-        user2 = ""
-        count = 100
-        if request.GET.get('user1'):
-            user1 = request.GET.get('user1')
-        else:
-            return HttpResponse("MISSING USERNAME!")
-        if request.GET.get('user2'):
-            user2 = request.GET.get('user2')
-        else:
-            return HttpResponse("MISSING USERNAME!")
-        pages1 = tweepy.Cursor(api.favorites, id=user1, wait_on_rate_limit=True, count=count).pages(200)
-        count1 = 0
-        for page in pages1:
-            for status in page:
-                if status.user.screen_name == user2:
-                    count1 += 1
-        pages2 = tweepy.Cursor(api.favorites, id=user2, wait_on_rate_limit=True, count=count).pages(200)
-        count2 = 0
-        for page in pages2:
-            for status in page:
-                if status.user.screen_name == user1:
-                    count2 += 1
-        d = {'user1': user1, 'count1': count1, 'user2': user2, 'count2': count2}
-        json_string = json.dumps(d)
-        return HttpResponse(json_string)
+	#Get twitter api with authenticated user
+	    api = TwitterStats.getTwitterApi()
+	    test_user=""
+	    usrName = ""
+	    if request.GET.get('username'):
+	        test_user = request.GET.get('username')
+	    else:
+	        return HttpResponse("NO USERNAME!")
+	    
+	    mention_map = {}
+	#Get the user information f authenticated user. Returns user object.
+	    user = api.get_user(test_user)
+	    sleep(0.1)
+	#Get followers of the authenticated user. Returns list of user objects
+	    friendList =  api.followers(test_user)
+	#Get the recent 100 tweets of authenticated user. Returns list of status objects.
+	    f_statusList = api.user_timeline(user.id,count=100)
+	#For each foolowers this loops checks if their screen name appears in a tweet and if so, counts 
+	#how mant times it appears in 100 tweets. 
+	    for friend in friendList:
+	        f_screenName = friend.screen_name
+	        pattern = re.compile("@"+f_screenName+"\s")
+	        mention_map[f_screenName] = 0
+	        for tweets in f_statusList:
+	            t_text = tweets.text
+	            if(pattern.match(t_text)):
+	                mention_map[f_screenName] = mention_map[f_screenName]+1
+	#Calculated the biggest value in map of screen name and appearance count
+	    maxMention = max(mention_map, key = lambda i:mention_map[i])
+	#Return the screen name of max value.
+	    return HttpResponse(maxMention)
 
 
-        #This function is used the calculating of words in user's tweets
+   """
+    author: Ezgi Yuceturk
+    #This method to find the follower who has recently been mentioned most by the authenticated user the most.
+    """
     def getFrequencyOfWordsOfAllTweets(request):
         api = TwitterStats.getTwitterApi()
         cnt = 1
@@ -332,3 +311,4 @@ class TwitterStats:
                     count2 += 0
 
         return HttpResponse(count2/count1)
+
