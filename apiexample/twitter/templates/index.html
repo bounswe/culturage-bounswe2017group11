@@ -35,7 +35,49 @@
                       <tr>
                         <td>GET</td>
                         <td>/user/favwords</td>
-                        <td>Return favorite word of given user</td>
+                        <td>This method counts the frequency of the words a specific user liked.</td>
+                        <td>username*, count</td>
+                      </tr>
+                      <tr>
+                        <td>GET</td>
+                        <td>/user/liked</td>
+                        <td>This method returns three most liked pages of the user, based on likes.</td>
+                        <td>username*, count</td>
+                      </tr>
+                      <tr>
+                        <td>GET</td>
+                        <td>/user/mention</td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td>GET</td>
+                        <td>/user/allwords</td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td>GET</td>
+                        <td>/users/likes</td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td>GET</td>
+                        <td>/user/hashtag</td>
+                        <td></td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td>GET</td>
+                        <td>/followers/freq</td>
+                        <td>This method finds users who has been tweeting most frequently (on hourly basis).</td>
+                        <td></td>
+                      </tr>
+                      <tr>
+                        <td>GET</td>
+                        <td>/followers/popular</td>
+                        <td>This method returns the user who has the most number of followers in the list of the specific user's(given as parameter) followers.</td>
                         <td>username*, count</td>
                       </tr>
                     </tbody>

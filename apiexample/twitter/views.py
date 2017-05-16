@@ -27,6 +27,7 @@ class TwitterStats:
         auth.set_access_token(accessToken, accessTokenSecret)
 
         return tweepy.API(auth)
+
     # Example for Twitter usage
     def example(request):
         # Get Twitter API
@@ -44,13 +45,13 @@ class TwitterStats:
         return HttpResponse(public_tweets)
 
     def getUsersTweetingMostFrequently(request):
-	    """
-	    This method finds users who has been tweeting most frequently (on hourly basis).
-	    It checks for the time difference between request and tweets.
-	    The tweets are collected from timeline.
+        """
+        This method finds users who has been tweeting most frequently (on hourly basis).
+        It checks for the time difference between request and tweets.
+        The tweets are collected from timeline.
 
-		author: Anil Seyrek
-	    """ 
+        author: Anil Seyrek
+        """
         api = TwitterStats.getTwitterApi()
         users = []
         usersSorted = []
@@ -70,17 +71,17 @@ class TwitterStats:
         #Return sorted list
         return HttpResponse(usersSorted)
 
-   
+
     def getFrequencyOfWordsOfLikedTweets(request):
-	    """
+        """
 	    This method counts the frequency of the words a specific user liked.
 	    It has two paramters, username and count where username is compulsory.
 	    If a username is not provided, method returns a string that expresses this fact.
 	    If count is not provided, it is defaulted to 100, hence only 100 tweets is searched.
 
 		author: Riza Ozcelik
-	    """ 
-	    api = TwitterStats.getTwitterApi()
+        """
+        api = TwitterStats.getTwitterApi()
         count = 100
         test_user = ""
         if request.GET.get('username'):
