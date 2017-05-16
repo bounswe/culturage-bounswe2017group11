@@ -203,8 +203,11 @@ class TwitterStats:
 
         return HttpResponse(tuples)
 
-  #This method to find the follower who has recently been mentioned most by the authenticated user the most.
     def getWhoMentionedMost(request):
+        """
+    author: Ezgi Yuceturk
+    #This method to find the follower who has recently been mentioned most by the authenticated user the most.
+    """
 	#Get twitter api with authenticated user
 	    api = TwitterStats.getTwitterApi()
 	    test_user=""
@@ -238,10 +241,7 @@ class TwitterStats:
 	    return HttpResponse(maxMention)
 
 
-   """
-    author: Ezgi Yuceturk
-    #This method to find the follower who has recently been mentioned most by the authenticated user the most.
-    """
+   
     def getFrequencyOfWordsOfAllTweets(request):
         api = TwitterStats.getTwitterApi()
         cnt = 1
