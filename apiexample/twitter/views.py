@@ -290,6 +290,42 @@ class TwitterStats:
         json_string = json.dumps(d)
         return HttpResponse(json_string)
 
+    def getLikeRatioOfTwoUsers(request):
+        """
+        This method takes two usernames and finds the like counts of each others' posts.
+        Returns 'MISSING USERNAME' when at least one username is not provided.
+        100 tweets are taken from timeline for both users.
+
+        author: Hilal Benzer
+        """
+        api = TwitterStats.getTwitterApi()
+        user1 = ""
+        user2 = ""
+        count = 100
+        if request.GET.get('user1'):
+            user1 = request.GET.get('user1')
+        else:
+            return HttpResponse("MISSING USERNAME!")
+        if request.GET.get('user2'):
+            user2 = request.GET.get('user2')
+        else:
+            return HttpResponse("MISSING USERNAME!")
+        pages1 = tweepy.Cursor(api.favorites, id=user1, wait_on_rate_limit=True, count=count).pages(200)
+        count1 = 0
+        for page in pages1:
+            for status in page:
+                if status.user.screen_name == user2:
+                    count1 += 1
+        pages2 = tweepy.Cursor(api.favorites, id=user2, wait_on_rate_limit=True, count=count).pages(200)
+        count2 = 0
+        for page in pages2:
+            for status in page:
+                if status.user.screen_name == user1:
+                    count2 += 1
+        d = {'user1': user1, 'count1': count1, 'user2': user2, 'count2': count2}
+        json_string = json.dumps(d)
+        return HttpResponse(json_string)    
+
     def hashtagPercentage(request):
         api = TwitterStats.getTwitterApi()
         count = 100
