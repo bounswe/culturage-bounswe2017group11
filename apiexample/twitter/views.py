@@ -1,5 +1,6 @@
 from django.views.decorators.csrf import csrf_exempt
 from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render_to_response
 from django.http import HttpResponse
 from django.template import loader
 from datetime import datetime
@@ -16,6 +17,9 @@ class TwitterStats:
     def index(request):
         template = loader.get_template('index.html')
         return HttpResponse(template.render())
+
+    def doc(request):
+        return render_to_response('documentation/classtwitter_1_1views_1_1_twitter_stats.html')
 
     # Returns ready use Twitter API
     @staticmethod
@@ -324,7 +328,7 @@ class TwitterStats:
                     count2 += 1
         d = {'user1': user1, 'count1': count1, 'user2': user2, 'count2': count2}
         json_string = json.dumps(d)
-        return HttpResponse(json_string)    
+        return HttpResponse(json_string)
 
     def hashtagPercentage(request):
         api = TwitterStats.getTwitterApi()
