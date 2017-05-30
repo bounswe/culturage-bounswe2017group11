@@ -18,3 +18,6 @@ To use this project, follow these steps:
 3. Add your function to `twitter/views.py`
 4. More info for [Django](https://docs.djangoproject.com/en/1.11/intro/tutorial01/)
 5. More info for [Tweepy](http://tweepy.readthedocs.io/en/v3.5.0/getting_started.html)
+
+## Generate Documentations
+`doxygen doxygen.config`
