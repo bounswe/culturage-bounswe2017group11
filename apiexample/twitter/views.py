@@ -11,16 +11,18 @@ import tweepy
 
 # Create your views here.
 class TwitterStats:
-
-
     @csrf_exempt
     def index(request):
         template = loader.get_template('index.html')
         return HttpResponse(template.render())
 
-    # Returns ready use Twitter API
     @staticmethod
     def getTwitterApi():
+        """
+	    This method returns ready use Twitter API object.
+
+		author: Enes Cakir
+        """
         consumerKey = 'PjHfYvauYeQ7INPtpJuVJ9I1n'
         consumerSecret = 'lSmSdzC5ikfxp1ngY88oXLjlsqlTPuzQCVziACG4RMKvlcaW20'
         accessToken = '861900081443766274-InQx7aZOUAPF7BEZ8JuexYsFbnGzxct'
@@ -33,6 +35,11 @@ class TwitterStats:
 
     # Example for Twitter usage
     def example(request):
+        """
+	    This method shows example usage of Twitter API.
+
+		author: Enes Cakir
+        """
         # Get Twitter API
         api = TwitterStats.getTwitterApi()
 
@@ -47,9 +54,7 @@ class TwitterStats:
         # Returns response of twitter. It's looks like messy. Don't be coward :)
         return HttpResponse(public_tweets)
 
-
-
-
+    @csrf_exempt
     def postTweet(request):
         """
 	    This method post a tweet.
@@ -73,10 +78,6 @@ class TwitterStats:
             return HttpResponse("No tweet to post!")
         api.update_status(status = tweet)
         return HttpResponse(tweet)
-
-
-
-
 
     def getUsersTweetingMostFrequently(request):
         """
@@ -152,14 +153,14 @@ class TwitterStats:
         json_string = json.dumps(d)
         return HttpResponse(json_string)
 
-
-    """
-    author: Barın Özmen
-    This method returns the user who has the most number of followers in the list of the specific user's(given as parameter) followers.
-    If username is not given as a parameter, it returns No Username
-    If count parameter isn't give, it counts 100 follower as a default.
-    """
     def getMostNumberOfFollowers(request):
+        """
+        This method returns the user who has the most number of followers in the list of the specific user's(given as parameter) followers.
+        If username is not given as a parameter, it returns No Username
+        If count parameter isn't give, it counts 100 follower as a default.
+
+        author: Barın Özmen
+        """
         api = TwitterStats.getTwitterApi()
         count = 100
         test_user = ""
@@ -180,11 +181,12 @@ class TwitterStats:
 
         return HttpResponse(name)
 
-    """
-    author: giray
-    This method returns three most liked pages of the user, based on likes.
-    """
     def getMostLikedPages(request):
+        """
+        This method returns three most liked pages of the user, based on likes.
+
+        author: Giray Eryilmaz
+        """
         api = TwitterStats.getTwitterApi()
         count = 100
         test_user = ""
@@ -237,8 +239,9 @@ class TwitterStats:
 
     def getWhoMentionedMost(request):
         """
-        author: Ezgi Yuceturk
         This method to find the follower who has recently been mentioned most by the authenticated user the most.
+
+        author: Ezgi Yuceturk
         """
         # Get twitter api with authenticated user
         api = TwitterStats.getTwitterApi()
@@ -360,12 +363,11 @@ class TwitterStats:
 
     def hashtagPercentage(request):
         """
-        This method takes username of a twitter account and returns how frequently the user 
+        This method takes username of a twitter account and returns how frequently the user
         uses hastags in their tweets. Basically, it counts all tweets and tweets with # character and
-        then returns the percentage of them. 
+        then returns the percentage of them.
 
-        Author: Halil Kalkan
-
+        author: Halil Kalkan
         """
         api = TwitterStats.getTwitterApi()
         count = 100
