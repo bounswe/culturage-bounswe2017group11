@@ -4,7 +4,6 @@ from . import views
 
 urlpatterns = [
     url(r'^$', views.TwitterStats.index, name='index'),
-    url(r'^documentation', views.TwitterStats.doc, name='doc'),
     url(r'^example', views.TwitterStats.example, name='example'),
     url(r'^user/tweet', views.TwitterStats.postTweet, name='postTweet'),
     url(r'^user/favwords', views.TwitterStats.getFrequencyOfWordsOfLikedTweets, name='getFrequencyOfWordsOfLikedTweets'),

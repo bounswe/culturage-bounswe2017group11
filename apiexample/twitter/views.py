@@ -18,9 +18,6 @@ class TwitterStats:
         template = loader.get_template('index.html')
         return HttpResponse(template.render())
 
-    def doc(request):
-        return render_to_response('documentation/classtwitter_1_1views_1_1_twitter_stats.html')
-
     # Returns ready use Twitter API
     @staticmethod
     def getTwitterApi():
