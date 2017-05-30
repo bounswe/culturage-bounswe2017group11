@@ -24,10 +24,10 @@ class TwitterStats:
     # Returns ready use Twitter API
     @staticmethod
     def getTwitterApi():
-        consumerKey = 'GN1xGLyDGT3xH0s5NXTKDSCQQ'
-        consumerSecret = '01RXlOlHjrBMkB7t0x7TKu1iFzPknXyqQerLxCMrd6XrdJaTwN'
-        accessToken = '326422323-B0uNTwh2H3fgYeQpEZGEIOQ76fjPRtsDzd7JHIVU'
-        accessTokenSecret = '4ApJcSEbKib3X8pZVoBFHpkJkH5bbyF2EMArcIxQbz4OU'
+        consumerKey = 'PjHfYvauYeQ7INPtpJuVJ9I1n'
+        consumerSecret = 'lSmSdzC5ikfxp1ngY88oXLjlsqlTPuzQCVziACG4RMKvlcaW20'
+        accessToken = '861900081443766274-InQx7aZOUAPF7BEZ8JuexYsFbnGzxct'
+        accessTokenSecret = 'muXAKPwSlfLl5px9h990KXIKw6C40UjcLDHhRSLapI92Y'
 
         auth = tweepy.OAuthHandler(consumerKey, consumerSecret)
         auth.set_access_token(accessToken, accessTokenSecret)
@@ -49,6 +49,37 @@ class TwitterStats:
 
         # Returns response of twitter. It's looks like messy. Don't be coward :)
         return HttpResponse(public_tweets)
+
+
+
+
+    def postTweet(request):
+        """
+	    This method post a tweet.
+	    It has two paramters, username and tweet where both of them are compulsory.
+	    If the username or the tweet is not provided, method returns an error.
+
+		author: Abdullatif Köksal
+        """
+        api = TwitterStats.getTwitterApi()
+        tweet = ""
+        test_user = ""
+        if request.GET.get('username'):
+            # User name of the user to look for
+            test_user = request.GET.get('username')
+        else:
+            return HttpResponse("No username!")
+        if request.GET.get('tweet'):
+            # Text of the tweet you want to send
+            tweet = request.GET.get('tweet')
+        else:
+            return HttpResponse("No tweet to post!")
+        api.update_status(status = tweet)
+        return HttpResponse(tweet)
+
+
+
+
 
     def getUsersTweetingMostFrequently(request):
         """
