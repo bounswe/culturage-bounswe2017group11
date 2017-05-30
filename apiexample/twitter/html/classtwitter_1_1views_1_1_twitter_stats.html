@@ -76,9 +76,14 @@ Public Member Functions</h2></td></tr>
 <tr class="memitem:ae34b27b044e8f8493952f856866e1528"><td class="memItemLeft" align="right" valign="top"><a id="ae34b27b044e8f8493952f856866e1528"></a>
 def&#160;</td><td class="memItemRight" valign="bottom"><b>index</b> (request)</td></tr>
 <tr class="separator:ae34b27b044e8f8493952f856866e1528"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab1921cb6813db8033c9370362080b0de"><td class="memItemLeft" align="right" valign="top"><a id="ab1921cb6813db8033c9370362080b0de"></a>
+def&#160;</td><td class="memItemRight" valign="bottom"><b>doc</b> (request)</td></tr>
+<tr class="separator:ab1921cb6813db8033c9370362080b0de"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:af34b050b301a95d439181f762ec5448f"><td class="memItemLeft" align="right" valign="top"><a id="af34b050b301a95d439181f762ec5448f"></a>
 def&#160;</td><td class="memItemRight" valign="bottom"><b>example</b> (request)</td></tr>
 <tr class="separator:af34b050b301a95d439181f762ec5448f"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ac200435de3b88cb266e273e8c95de286"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtwitter_1_1views_1_1_twitter_stats.html#ac200435de3b88cb266e273e8c95de286">postTweet</a> (request)</td></tr>
+<tr class="separator:ac200435de3b88cb266e273e8c95de286"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a1b25912ecee8b0ee19af0948378a57fa"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtwitter_1_1views_1_1_twitter_stats.html#a1b25912ecee8b0ee19af0948378a57fa">getUsersTweetingMostFrequently</a> (request)</td></tr>
 <tr class="separator:a1b25912ecee8b0ee19af0948378a57fa"><td class="memSeparator" colspan="2">&#160;</td></tr>
 <tr class="memitem:a880c4da522b5f91c401c54861dc3ad12"><td class="memItemLeft" align="right" valign="top">def&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="classtwitter_1_1views_1_1_twitter_stats.html#a880c4da522b5f91c401c54861dc3ad12">getFrequencyOfWordsOfLikedTweets</a> (request)</td></tr>
@@ -217,6 +222,29 @@ author: Anil Seyrek
 </div><div class="memdoc">
 <pre class="fragment">author: Ezgi Yuceturk
 This method to find the follower who has recently been mentioned most by the authenticated user the most.
+</pre> 
+</div>
+</div>
+<a id="ac200435de3b88cb266e273e8c95de286"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ac200435de3b88cb266e273e8c95de286">&#9670;&nbsp;</a></span>postTweet()</h2>
+
+<div class="memitem">
+<div class="memproto">
+      <table class="memname">
+        <tr>
+          <td class="memname">def twitter.views.TwitterStats.postTweet </td>
+          <td>(</td>
+          <td class="paramtype">&#160;</td>
+          <td class="paramname"><em>request</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+</div><div class="memdoc">
+<pre class="fragment">This method post a tweet.
+It has two paramters, username and tweet where both of them are compulsory.
+If the username or the tweet is not provided, method returns an error.
+
+author: Abdullatif Köksal
 </pre> 
 </div>
 </div>
