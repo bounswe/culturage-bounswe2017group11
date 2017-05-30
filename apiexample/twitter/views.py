@@ -359,6 +359,14 @@ class TwitterStats:
         return HttpResponse(json_string)
 
     def hashtagPercentage(request):
+        """
+        This method takes username of a twitter account and returns how frequently the user 
+        uses hastags in their tweets. Basically, it counts all tweets and tweets with # character and
+        then returns the percentage of them. 
+
+        Author: Halil Kalkan
+
+        """
         api = TwitterStats.getTwitterApi()
         count = 100
         test_user = ""
@@ -372,8 +380,9 @@ class TwitterStats:
             return HttpResponse("NO USERNAME!")
 
         pages = tweepy.Cursor(api.user_timeline,id=test_user,wait_on_rate_limit=True, count = count).pages(200)
+        #Pattern for words with hashtag
         pattern = re.compile("#\w*")
-
+        #For each page it counts tweets, also counts tweets which contains hashtag sign
         for pg in pages:
             for status in pg:
                 count1 += 1
