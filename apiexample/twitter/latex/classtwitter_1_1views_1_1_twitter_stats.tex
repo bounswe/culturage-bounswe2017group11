@@ -1,0 +1,72 @@
+\hypertarget{classtwitter_1_1views_1_1_twitter_stats}{}\section{twitter.\+views.\+Twitter\+Stats Class Reference}
+\label{classtwitter_1_1views_1_1_twitter_stats}\index{twitter.\+views.\+Twitter\+Stats@{twitter.\+views.\+Twitter\+Stats}}
+\subsection*{Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classtwitter_1_1views_1_1_twitter_stats_ae34b27b044e8f8493952f856866e1528}\label{classtwitter_1_1views_1_1_twitter_stats_ae34b27b044e8f8493952f856866e1528}} 
+def {\bfseries index} (request)
+\item 
+\mbox{\Hypertarget{classtwitter_1_1views_1_1_twitter_stats_af34b050b301a95d439181f762ec5448f}\label{classtwitter_1_1views_1_1_twitter_stats_af34b050b301a95d439181f762ec5448f}} 
+def {\bfseries example} (request)
+\item 
+def \hyperlink{classtwitter_1_1views_1_1_twitter_stats_a1b25912ecee8b0ee19af0948378a57fa}{get\+Users\+Tweeting\+Most\+Frequently} (request)
+\item 
+def \hyperlink{classtwitter_1_1views_1_1_twitter_stats_a880c4da522b5f91c401c54861dc3ad12}{get\+Frequency\+Of\+Words\+Of\+Liked\+Tweets} (request)
+\item 
+\mbox{\Hypertarget{classtwitter_1_1views_1_1_twitter_stats_aab4275f1224264499ea247a721fa23ce}\label{classtwitter_1_1views_1_1_twitter_stats_aab4275f1224264499ea247a721fa23ce}} 
+def {\bfseries get\+Most\+Number\+Of\+Followers} (request)
+\item 
+\mbox{\Hypertarget{classtwitter_1_1views_1_1_twitter_stats_ae955472d98f39a044a91efef95b7b156}\label{classtwitter_1_1views_1_1_twitter_stats_ae955472d98f39a044a91efef95b7b156}} 
+def {\bfseries get\+Most\+Liked\+Pages} (request)
+\item 
+\mbox{\Hypertarget{classtwitter_1_1views_1_1_twitter_stats_a45827ee187a326fb1394d680bc483fb9}\label{classtwitter_1_1views_1_1_twitter_stats_a45827ee187a326fb1394d680bc483fb9}} 
+def {\bfseries get\+Who\+Mentioned\+Most} (request)
+\item 
+\mbox{\Hypertarget{classtwitter_1_1views_1_1_twitter_stats_ae06146619068fb60465d6f99c4f9c369}\label{classtwitter_1_1views_1_1_twitter_stats_ae06146619068fb60465d6f99c4f9c369}} 
+def {\bfseries get\+Like\+Ratio\+Of\+Two\+Users} (request)
+\item 
+\mbox{\Hypertarget{classtwitter_1_1views_1_1_twitter_stats_a48eab8e241bb382791c9f2803b57ca34}\label{classtwitter_1_1views_1_1_twitter_stats_a48eab8e241bb382791c9f2803b57ca34}} 
+def {\bfseries get\+Frequency\+Of\+Words\+Of\+All\+Tweets} (request)
+\item 
+\mbox{\Hypertarget{classtwitter_1_1views_1_1_twitter_stats_a78a796f6ed9c85bd1b8d5614138b84e6}\label{classtwitter_1_1views_1_1_twitter_stats_a78a796f6ed9c85bd1b8d5614138b84e6}} 
+def {\bfseries hashtag\+Percentage} (request)
+\end{DoxyCompactItemize}
+\subsection*{Static Public Member Functions}
+\begin{DoxyCompactItemize}
+\item 
+\mbox{\Hypertarget{classtwitter_1_1views_1_1_twitter_stats_aa259d1356864ab08580a065ea7228ab6}\label{classtwitter_1_1views_1_1_twitter_stats_aa259d1356864ab08580a065ea7228ab6}} 
+def {\bfseries get\+Twitter\+Api} ()
+\end{DoxyCompactItemize}
+
+
+\subsection{Member Function Documentation}
+\mbox{\Hypertarget{classtwitter_1_1views_1_1_twitter_stats_a880c4da522b5f91c401c54861dc3ad12}\label{classtwitter_1_1views_1_1_twitter_stats_a880c4da522b5f91c401c54861dc3ad12}} 
+\index{twitter\+::views\+::\+Twitter\+Stats@{twitter\+::views\+::\+Twitter\+Stats}!get\+Frequency\+Of\+Words\+Of\+Liked\+Tweets@{get\+Frequency\+Of\+Words\+Of\+Liked\+Tweets}}
+\index{get\+Frequency\+Of\+Words\+Of\+Liked\+Tweets@{get\+Frequency\+Of\+Words\+Of\+Liked\+Tweets}!twitter\+::views\+::\+Twitter\+Stats@{twitter\+::views\+::\+Twitter\+Stats}}
+\subsubsection{\texorpdfstring{get\+Frequency\+Of\+Words\+Of\+Liked\+Tweets()}{getFrequencyOfWordsOfLikedTweets()}}
+{\footnotesize\ttfamily def twitter.\+views.\+Twitter\+Stats.\+get\+Frequency\+Of\+Words\+Of\+Liked\+Tweets (\begin{DoxyParamCaption}\item[{}]{request }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}This method counts the frequency of the words a specific user liked.
+It has two paramters, username and count where username is compulsory.
+If a username is not provided, method returns a string that expresses this fact.
+If count is not provided, it is defaulted to 100, hence only 100 tweets is searched.
+
+author: Riza Ozcelik
+\end{DoxyVerb}
+ \mbox{\Hypertarget{classtwitter_1_1views_1_1_twitter_stats_a1b25912ecee8b0ee19af0948378a57fa}\label{classtwitter_1_1views_1_1_twitter_stats_a1b25912ecee8b0ee19af0948378a57fa}} 
+\index{twitter\+::views\+::\+Twitter\+Stats@{twitter\+::views\+::\+Twitter\+Stats}!get\+Users\+Tweeting\+Most\+Frequently@{get\+Users\+Tweeting\+Most\+Frequently}}
+\index{get\+Users\+Tweeting\+Most\+Frequently@{get\+Users\+Tweeting\+Most\+Frequently}!twitter\+::views\+::\+Twitter\+Stats@{twitter\+::views\+::\+Twitter\+Stats}}
+\subsubsection{\texorpdfstring{get\+Users\+Tweeting\+Most\+Frequently()}{getUsersTweetingMostFrequently()}}
+{\footnotesize\ttfamily def twitter.\+views.\+Twitter\+Stats.\+get\+Users\+Tweeting\+Most\+Frequently (\begin{DoxyParamCaption}\item[{}]{request }\end{DoxyParamCaption})}
+
+\begin{DoxyVerb}This method finds users who has been tweeting most frequently (on hourly basis).
+It checks for the time difference between request and tweets.
+The tweets are collected from timeline.
+
+author: Anil Seyrek
+\end{DoxyVerb}
+ 
+
+The documentation for this class was generated from the following file\+:\begin{DoxyCompactItemize}
+\item 
+views.\+py\end{DoxyCompactItemize}
