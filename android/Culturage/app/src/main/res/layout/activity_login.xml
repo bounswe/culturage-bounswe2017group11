@@ -19,7 +19,7 @@
         android:orientation="vertical"
         android:padding="8dp">
 
-        <AutoCompleteTextView
+        <EditText
             android:id="@+id/username"
             android:layout_width="match_parent"
             android:layout_height="48dp"
