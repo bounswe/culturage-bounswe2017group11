@@ -24,7 +24,7 @@
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:background="@drawable/border"
-            android:hint="@string/prompt_username"
+            android:hint="ThisSignupPage"
             android:inputType="textAutoComplete"
             android:padding="8dp"
             android:layout_marginBottom="8dp"

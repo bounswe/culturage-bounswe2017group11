@@ -16,4 +16,5 @@
     <string name="sign_up">Sign Up</string>
     <string name="need_an_account">Need an account?</string>
     <string name="middle_line_text">OR</string>
+    <string name="unsuccessful_login">Invalid username or password</string>
 </resources>
