@@ -11,21 +11,24 @@ https://docs.djangoproject.com/en/1.11/ref/settings/
 """
 
 import os
+from dotenv import load_dotenv
 
 # Build paths inside the project like this: os.path.join(BASE_DIR, ...)
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
+# Load .env for enviroment variables
+load_dotenv(os.path.join(BASE_DIR, '.env'))
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/1.11/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'zv#8v9!6%++rx+l2vo8oo1te!%sdx_%zll%xkxqa7@!_z(^3an'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = bool(int(os.getenv('DEBUG', False)))
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS').split(',') if os.getenv('ALLOWED_HOSTS') else []
 
 
 # Application definition
@@ -75,8 +78,12 @@ WSGI_APPLICATION = 'culturage.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': os.path.join(BASE_DIR, 'db.sqlite3'),
+        'ENGINE'   : 'django.db.backends.mysql',
+        'NAME'     : os.environ.get('DATABASE_NAME', ''),
+        'USER'     : os.environ.get('DATABASE_USER', ''),
+        'PASSWORD' : os.environ.get('DATABASE_PASSWORD', ''),
+        'HOST'     : os.environ.get('DATABASE_HOST', ''),
+        'PORT'     : os.environ.get('DATABASE_PORT', '')
     }
 }
 
