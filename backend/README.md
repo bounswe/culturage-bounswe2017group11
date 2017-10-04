@@ -15,3 +15,4 @@ To use this project, follow these steps:
 10. Run database migrations (`$ python3 manage.py migrate`)
 11. Run server locally (`$ python3 manage.py runserver`)
 12. If you get success message, server’s running, visit `http://127.0.0.1:8000/`
+
