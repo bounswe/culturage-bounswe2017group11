@@ -1,4 +1,4 @@
-package com.culturage.oceans_eleven.culturage;
+package com.culturage.oceans_eleven.culturage.signup_login;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,9 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
+
+import com.culturage.oceans_eleven.culturage.R;
+import com.culturage.oceans_eleven.culturage.newsFeed.NewsFeedActivity;
 
 public class LoginActivity extends AppCompatActivity {
 
@@ -54,8 +57,8 @@ public class LoginActivity extends AppCompatActivity {
         String username = mUsernameView.getText().toString();
         String password = mPasswordView.getText().toString();
 
-        if (username.equals("rizaozcelik") && password.equals("12345")) {
-            Intent intent = new Intent(LoginActivity.this, NewsFeed.class);
+        if (username.equals("r") && password.equals("1")) {
+            Intent intent = new Intent(LoginActivity.this, NewsFeedActivity.class);
             startActivity(intent);
         } else {
             Toast.makeText(this, R.string.unsuccessful_login, Toast.LENGTH_SHORT).show();
