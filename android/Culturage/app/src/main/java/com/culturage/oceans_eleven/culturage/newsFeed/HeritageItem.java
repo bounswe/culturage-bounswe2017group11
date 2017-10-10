@@ -5,10 +5,12 @@ class HeritageItem {
 
     private String mTitle;
     private String mDescription;
+    private int mResourceId;
 
-    public HeritageItem(String mTitle, String mDescription) {
+    public HeritageItem(String mTitle, String mDescription, int mResourceId) {
         this.mTitle = mTitle;
         this.mDescription = mDescription;
+        this.mResourceId = mResourceId;
     }
 
     public String getmTitle() {
@@ -19,6 +21,10 @@ class HeritageItem {
         return mDescription;
     }
 
+    public int getmResourceId() {
+        return mResourceId;
+    }
+
     public void setmTitle(String mTitle) {
         this.mTitle = mTitle;
     }
@@ -26,4 +32,9 @@ class HeritageItem {
     public void setmDescription(String mDescription) {
         this.mDescription = mDescription;
     }
+
+    public void setmResourceId(int mResourceId) {
+        this.mResourceId = mResourceId;
+    }
+
 }

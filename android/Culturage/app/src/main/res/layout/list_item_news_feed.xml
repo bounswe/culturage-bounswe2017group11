@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:minHeight="40dp"
-    android:background="@color/primary_blue"
+    android:background="@android:color/white"
     android:orientation="vertical">
 
     <ImageView
@@ -14,7 +14,7 @@
         android:layout_height="wrap_content"
         android:scaleType="centerCrop"
         android:padding="16dp"
-        android:src="@mipmap/hagia_sophia" />
+        tools:src="@mipmap/hagia_sophia" />
 
     <TextView
         android:id="@+id/title"
@@ -23,7 +23,7 @@
         android:layout_weight="1"
         android:gravity="bottom"
         android:textAppearance="?android:attr/textAppearanceMedium"
-        android:textColor="@color/login_page_text_color"
+        android:textColor="@color/primary_blue"
         android:textStyle="bold"
         tools:text="Hagia Sophia" />
 
@@ -33,7 +33,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:gravity="top"
-        android:textColor="@color/login_page_text_color"
+        android:textColor="@color/primary_blue"
         android:textSize="18sp"
         tools:text="Good one" />
 

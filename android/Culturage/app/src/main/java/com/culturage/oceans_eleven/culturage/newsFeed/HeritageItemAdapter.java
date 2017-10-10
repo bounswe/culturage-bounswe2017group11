@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.culturage.oceans_eleven.culturage.R;
@@ -38,6 +39,9 @@ public class HeritageItemAdapter extends ArrayAdapter {
 
         TextView descriptionView = (TextView) listItemView.findViewById(R.id.description);
         descriptionView.setText(currentItem.getmDescription());
+
+        ImageView imageView = (ImageView) listItemView.findViewById(R.id.image);
+        imageView.setImageResource(currentItem.getmResourceId());
 
         return listItemView;
     }
