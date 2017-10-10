@@ -11,7 +11,7 @@ import android.widget.Toast;
 
 public class LoginActivity extends AppCompatActivity {
 
-
+    // Barin
     private EditText mUsernameView;
     private EditText mPasswordView;
 
