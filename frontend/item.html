@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Bootstrap Example</title>
+  <title>Culturage Item Description</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <script src="https://maps.googleapis.com/maps/api/js?key=YOUR_KEY&callback=myMap"></script>
   <style>
     /* Remove the navbar's default margin-bottom and rounded borders */ 
     .navbar {
@@ -105,34 +106,66 @@
   </div>
 </nav>
   
-<div class="container-fluid text-center">    
-  <div class="row content">
-    <div class="col-sm-2 sidenav">
-      <p><a href="#">Link</a></p>
-      <p><a href="#">Link</a></p>
-      <p><a href="#">Link</a></p>
-    </div>
-    <div class="col-sm-8 text-left"> 
-      <h1>Item #1</h1>
+<div class="container-fluid">    
+	<div class="col-sm-2">
+	</div>
+    <div class="col-sm-6 text-left"> 
+      <h1>Taj Mahal</h1>
       <hr>
-      <img src="https://www.aussiespecialist.com/content/asp/en_sg/sales-resources/image-and-video-galleries/jcr:content/mainParsys/hero/image.adapt.1663.medium.jpg" alt="Mountain View" style="width:700px;">
-      <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+      <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Taj_Mahal_%28Edited%29.jpeg/1200px-Taj_Mahal_%28Edited%29.jpeg" alt="Taj Mahal" style="width: 50%; height: 50%">
+      <p>The Taj Mahal is an ivory-white marble mausoleum on the south bank of the Yamuna river in the Indian city of Agra. It was commissioned in 1632 by the Mughal emperor, Shah Jahan (reigned 1628–1658), to house the tomb of his favourite wife, Mumtaz Mahal. The tomb is the centrepiece of a 17-hectare (42-acre) complex, which includes a mosque and a guest house, and is set in formal gardens bounded on three sides by a crenellated wall.
+
+Construction of the mausoleum was essentially completed in 1643 but work continued on other phases of the project for another 10 years. The Taj Mahal complex is believed to have been completed in its entirety in 1653 at a cost estimated at the time to be around 32 million rupees, which in 2015 would be approximately 52.8 billion rupees (US$827 million). The construction project employed some 20,000 artisans under the guidance of a board of architects led by the court architect to the emperor, Ustad Ahmad Lahauri.
+
+The Taj Mahal was designated as a UNESCO World Heritage Site in 1983 for being "the jewel of Muslim art in India and one of the universally admired masterpieces of the world's heritage". Described by Nobel laureate Rabindranath Tagore as "the tear-drop on the cheek of time", it is regarded by many as the best example of Mughal architecture and a symbol of India's rich history. The Taj Mahal attracts 7–8 million visitors a year. In 2007, it was declared a winner of the New7Wonders of the World (2000–2007) initiative.</p>
     </div>
-    <div class="col-sm-2 sidenav">
-      <div class="well">
-        <p>ADS</p>
-      </div>
-      <div class="well">
-        <p>ADS</p>
-      </div>
+    <div class="col-sm-3">
+    <br>
+    <h3>Where?</h3>
+    <hr>
+    	<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3549.4045269653957!2d78.03996115107064!3d27.17501985520618!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x39747121d702ff6d%3A0xdd2ae4803f767dde!2sTac+Mahal!5e0!3m2!1str!2str!4v1507753338536" width="400" height="300" frameborder="0" style="border:0" allowfullscreen></iframe>
+
+    <h3>Comments</h3>
+    <hr>
+    <div class="col-sm-10">
+ 	<ul class="list-unstyled ui-sortable">
+        <strong class="pull-left primary-font">Canberk</strong>
+        <small class="pull-right text-muted">
+           <span class="glyphicon glyphicon-time"></span>7 mins ago</small>
+        </br>
+        <li class="ui-state-default">Wow! Hilarious. </li>
+        </br>
+         <strong class="pull-left primary-font">Ceren</strong>
+        <small class="pull-right text-muted">
+           <span class="glyphicon glyphicon-time"></span>14 mins ago</small>
+        </br>
+        <li class="ui-state-default">I have visited therere before but I want to see it again.</li>
+        <br>
+        <input type="text" id="userComment" class="form-control input-sm chat-input" placeholder="Add comment..." />
+        <br>
+	    <span class="input-group-btn" onclick="">     
+            <a href="#" class="btn btn-primary btn-sm">Submit</a>
+        </span>
+        
+    </ul>
     </div>
-  </div>
+   </div>
 </div>
 
 <footer class="container-fluid text-center">
-  <p>Footer Text</p>
+  <p>© 2017 Group 11 All Rights Reserved</p>
 </footer>
 
 </body>
 </html>
 
+<script>
+function myMap() {
+    var mapCanvas = document.getElementById("map");
+    var mapOptions = {
+        center: new google.maps.LatLng(51.5, -0.2),
+        zoom: 10
+    };
+    var map = new google.maps.Map(mapCanvas, mapOptions);
+} 
+</script>
