@@ -24,6 +24,7 @@
             </intent-filter>
         </activity>
         <activity android:name=".signup_login.SignUpActivity" />
+        <activity android:name=".newsFeed.ProfilePageActivity" />
         <activity android:name=".newsFeed.NewsFeedActivity"></activity>
     </application>
 

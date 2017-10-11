@@ -1,8 +1,11 @@
 package com.culturage.oceans_eleven.culturage.newsFeed;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.culturage.oceans_eleven.culturage.R;
@@ -15,6 +18,16 @@ public class NewsFeedActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_feed);
+
+        ImageView profileIco = (ImageView) findViewById(R.id.profileIcon);
+        profileIco.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(NewsFeedActivity.this, ProfilePageActivity.class);
+                startActivity(intent);
+            }
+        });
+
 
         ArrayList<HeritageItem> items = new ArrayList<HeritageItem>();
 
@@ -35,4 +48,5 @@ public class NewsFeedActivity extends AppCompatActivity {
         Log.v("list view situation", (listView == null) + "" + (adapter == null));
         listView.setAdapter(adapter);
     }
+
 }
