@@ -8,10 +8,7 @@ router.register(r'items', views.ItemViewSet)
 
 urlpatterns = [
     url(r'^', include(router.urls)),
-    url(r'^auth/', include('rest_framework.urls', namespace='rest_framework')),
-    url(r'^auth/token', obtain_jwt_token),
+    url(r'^auth/login', obtain_jwt_token),
     url(r'^auth/register', views.register, name='register'),
 ]
-
-
 

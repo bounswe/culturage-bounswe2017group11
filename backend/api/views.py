@@ -5,6 +5,7 @@ from base.serializers import UserSerializer
 from rest_framework.parsers import JSONParser
 from rest_framework_jwt.settings import api_settings
 from rest_framework import viewsets
+from rest_framework import permissions
 
 class ItemViewSet(viewsets.ModelViewSet):
     """
@@ -12,12 +13,12 @@ class ItemViewSet(viewsets.ModelViewSet):
     """
     queryset = Item.objects.all().order_by('-created_at')
     serializer_class = ItemSerializer
+    permission_classes = (permissions.IsAuthenticated,)
 
 def register(request):
 	"""
     API endpoint that user can be registered.
     """
-
 	if request.method == 'POST':
 		data = JSONParser().parse(request)
 		serializer = UserSerializer(data=data)
