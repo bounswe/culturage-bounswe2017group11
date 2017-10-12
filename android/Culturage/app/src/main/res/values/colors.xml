@@ -4,5 +4,6 @@
     <color name="colorPrimaryDark">#303F9F</color>
     <color name="colorAccent">#FF4081</color>
     <color name="primary_blue">#1E88E5</color>
+    <color name="separator_grey">#E0E0E0</color>
     <color name="login_page_text_color">#FFFFFF</color>
 </resources>

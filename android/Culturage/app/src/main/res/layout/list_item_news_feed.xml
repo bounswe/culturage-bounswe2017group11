@@ -6,14 +6,17 @@
     android:layout_height="wrap_content"
     android:minHeight="40dp"
     android:background="@android:color/white"
+    android:paddingTop="8dp"
+    android:paddingLeft="8dp"
+    android:paddingRight="8dp"
+    android:paddingBottom="0dp"
     android:orientation="vertical">
 
     <ImageView
         android:id="@+id/image"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        android:padding="16dp"
         tools:src="@mipmap/hagia_sophia" />
 
     <TextView
@@ -37,4 +40,36 @@
         android:textSize="18sp"
         tools:text="Good one" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:background="@color/separator_grey" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/white"
+            android:drawableStart="@mipmap/ic_like_button"
+            android:text="Like"
+            android:textColor="@color/primary_blue" />
+
+        <TextView
+            android:layout_width="2dp"
+            android:layout_height="match_parent"
+            android:background="@color/separator_grey" />
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:background="@android:color/white"
+            android:drawableStart="@mipmap/ic_comment"
+            android:text="Comment"
+            android:textColor="@color/primary_blue" />
+    </LinearLayout>
 </LinearLayout>
