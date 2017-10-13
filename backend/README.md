@@ -1,5 +1,4 @@
 # Culturage Web Service
-### You can see demo at [here](http://18.220.108.135)
 ## How to Use
 To use this project, follow these steps:
 1. Clone project to local.
