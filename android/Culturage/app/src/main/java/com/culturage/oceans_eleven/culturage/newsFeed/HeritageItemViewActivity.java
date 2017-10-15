@@ -8,8 +8,6 @@ import android.widget.TextView;
 
 import com.culturage.oceans_eleven.culturage.R;
 
-import static com.culturage.oceans_eleven.culturage.R.mipmap.ic_launcher;
-
 public class HeritageItemViewActivity extends AppCompatActivity {
 
     private int heritageItemPostID = -1;
@@ -28,19 +26,19 @@ public class HeritageItemViewActivity extends AppCompatActivity {
 
 
         TextView title = (TextView) findViewById(R.id.her_item_Title);
-        title.setText("dummy item");
+        title.setText(getIntent().getStringExtra("title"));
 
 
         ImageView iw = (ImageView) findViewById(R.id.her_item_photo);
-        iw.setImageResource(R.drawable.culturage);
+        int defaultImageId = R.drawable.culturage;
+        iw.setImageResource(getIntent().getIntExtra("resourceID", defaultImageId));
 
         String desc_tit = "WHAT IS IT?";
         TextView desc_tit_view = (TextView) findViewById(R.id.her_item_description_title);
         desc_tit_view.setText(desc_tit);
 
-        String desc = "this is a test text";
         TextView desc_view = (TextView) findViewById(R.id.her_item_description);
-        desc_view.setText(desc);
+        desc_view.setText(getIntent().getStringExtra("description"));
 
         TextView date_title = (TextView) findViewById(R.id.her_item_date_title);
         date_title.setText("SO ACTUALLY WHEN ARE WE TALKING ABOUT?");

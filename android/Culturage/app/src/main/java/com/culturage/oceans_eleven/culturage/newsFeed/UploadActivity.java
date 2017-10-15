@@ -1,3 +1,7 @@
+/*
+This code is taken from:
+http://www.theappguruz.com/blog/android-take-photo-camera-gallery-code-sample
+ */
 package com.culturage.oceans_eleven.culturage.newsFeed;
 
 import android.app.Activity;

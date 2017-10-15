@@ -10,14 +10,21 @@
     android:paddingLeft="8dp"
     android:paddingRight="8dp"
     android:paddingBottom="0dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    android:clickable="false"
+    android:descendantFocusability="blocksDescendants"
+    android:focusable="false"
+    android:focusableInTouchMode="false">
 
     <ImageView
         android:id="@+id/image"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scaleType="centerCrop"
-        tools:src="@mipmap/hagia_sophia" />
+        tools:src="@mipmap/hagia_sophia"
+        android:clickable="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false" />
 
     <TextView
         android:id="@+id/title"
@@ -28,7 +35,10 @@
         android:textAppearance="?android:attr/textAppearanceMedium"
         android:textColor="@color/primary_blue"
         android:textStyle="bold"
-        tools:text="Hagia Sophia" />
+        tools:text="Hagia Sophia"
+        android:clickable="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false" />
 
     <TextView
         android:id="@+id/description"
@@ -38,12 +48,18 @@
         android:gravity="top"
         android:textColor="@color/primary_blue"
         android:textSize="18sp"
-        tools:text="Good one" />
+        tools:text="Good one"
+        android:clickable="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:background="@color/separator_grey" />
+        android:background="@color/separator_grey"
+        android:clickable="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false" />
 
     <LinearLayout
         android:layout_width="match_parent"
