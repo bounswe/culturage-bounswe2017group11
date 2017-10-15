@@ -1,7 +1,7 @@
 package com.culturage.oceans_eleven.culturage.newsFeed;
 
 
-class HeritageItem {
+public class HeritageItem {
 
     private String mTitle;
     private String mDescription;

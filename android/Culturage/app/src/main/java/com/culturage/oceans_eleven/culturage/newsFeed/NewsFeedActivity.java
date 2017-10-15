@@ -2,6 +2,7 @@ package com.culturage.oceans_eleven.culturage.newsFeed;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -19,8 +20,17 @@ public class NewsFeedActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_feed);
 
-        ImageView profileIco = (ImageView) findViewById(R.id.profileIcon);
-        profileIco.setOnClickListener(new View.OnClickListener() {
+        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(NewsFeedActivity.this, UploadActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        ImageView profileIcon = (ImageView) findViewById(R.id.profileIcon);
+        profileIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(NewsFeedActivity.this, ProfilePageActivity.class);
