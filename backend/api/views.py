@@ -8,12 +8,15 @@ from rest_framework import viewsets
 from rest_framework import permissions
 
 class ItemViewSet(viewsets.ModelViewSet):
-    """
+	"""
     API endpoint that allows items to be viewed or edited.
     """
-    queryset = Item.objects.all().order_by('-created_at')
-    serializer_class = ItemSerializer
-    permission_classes = (permissions.IsAuthenticated,)
+	queryset = Item.objects.all().order_by('-created_at')
+	serializer_class = ItemSerializer
+	permission_classes = (permissions.IsAuthenticated,)
+
+	def perform_create(self, serializer):
+		serializer.save(featured_img=self.request.data.get('image'))
 
 def register(request):
 	"""

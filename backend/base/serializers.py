@@ -6,7 +6,8 @@ from rest_framework.validators import UniqueValidator
 class ItemSerializer(serializers.HyperlinkedModelSerializer):
 	class Meta:
 		model = Item
-		fields = ('name', 'description', 'rate')
+		fields = ('name', 'description', 'featured_img', 'rate', 'created_at')
+
 
 class UserSerializer(serializers.Serializer):
 	id = serializers.IntegerField(read_only=True)
