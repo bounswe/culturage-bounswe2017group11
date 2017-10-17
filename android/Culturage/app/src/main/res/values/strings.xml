@@ -24,4 +24,7 @@
     <string name="prompt_">Location</string>
     <string name="prompt_tags">Tags</string>
     <string name="upload_btn">ADD!</string>
+    <string name="like_btn_text">Like</string>
+    <string name="comment_btn_text">Comment</string>
+    <string name="search_text">Search</string>
 </resources>

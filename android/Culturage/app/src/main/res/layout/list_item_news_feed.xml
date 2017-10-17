@@ -4,11 +4,10 @@
     android:id="@+id/frame"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:minHeight="40dp"
     android:background="@android:color/white"
-    android:paddingTop="8dp"
-    android:paddingLeft="8dp"
-    android:paddingRight="8dp"
+    android:paddingTop="@dimen/small_padding"
+    android:paddingLeft="@dimen/small_padding"
+    android:paddingRight="@dimen/small_padding"
     android:paddingBottom="0dp"
     android:orientation="vertical"
     android:clickable="false"
@@ -55,7 +54,7 @@
 
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="2dp"
+        android:layout_height="@dimen/dummy_layout_size"
         android:background="@color/separator_grey"
         android:clickable="false"
         android:focusable="false"
@@ -71,11 +70,11 @@
             android:layout_weight="1"
             android:background="@android:color/white"
             android:drawableStart="@mipmap/ic_like_button"
-            android:text="Like"
+            android:text="@string/like_btn_text"
             android:textColor="@color/primary_blue" />
 
         <TextView
-            android:layout_width="2dp"
+            android:layout_width="@dimen/dummy_layout_size"
             android:layout_height="match_parent"
             android:background="@color/separator_grey" />
 
@@ -85,7 +84,7 @@
             android:layout_weight="1"
             android:background="@android:color/white"
             android:drawableStart="@mipmap/ic_comment"
-            android:text="Comment"
+            android:text="@string/comment_btn_text"
             android:textColor="@color/primary_blue" />
     </LinearLayout>
 </LinearLayout>

@@ -12,7 +12,7 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="48dp"
+        android:layout_height="@dimen/edit_text_height"
         android:background="@color/primary_blue"
         android:id="@+id/top_bar">
 
@@ -21,11 +21,11 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:backgroundTint="@android:color/white"
-            android:hint="Search"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"
+            android:hint="@string/search_text"
+            android:paddingLeft="@dimen/medium_padding"
+            android:paddingRight="@dimen/medium_padding"
             android:textColorHighlight="@android:color/white"
-            android:textColorHint="@android:color/white"
+            android:textColorHint="@color/hint_color"
             android:textColor="@android:color/white"
             android:textCursorDrawable="@null">
 
@@ -36,8 +36,8 @@
             android:layout_height="match_parent"
             android:layout_weight="0"
             android:background="@color/primary_blue"
-            android:paddingEnd="8dp"
-            android:paddingStart="8dp"
+            android:paddingEnd="@dimen/medium_padding"
+            android:paddingStart="@dimen/medium_padding"
             android:src="@mipmap/ic_search" />
 
         <ImageButton
@@ -54,7 +54,7 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_below="@id/top_bar"
-        android:dividerHeight="16dp"
+        android:dividerHeight="@dimen/medium_padding"
         android:orientation="vertical" />
 
     <android.support.design.widget.FloatingActionButton xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -64,7 +64,7 @@
         app:backgroundTint="@color/primary_blue"
         android:layout_alignParentBottom="true"
         android:layout_alignParentEnd="true"
-        android:layout_margin="16dp"
+        android:layout_margin="@dimen/medium_padding"
         android:src="@mipmap/ic_upload"
         app:fabSize="normal" />
 

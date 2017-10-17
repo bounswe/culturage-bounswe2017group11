@@ -6,4 +6,5 @@
     <color name="primary_blue">#1E88E5</color>
     <color name="separator_grey">#E0E0E0</color>
     <color name="login_page_text_color">#FFFFFF</color>
+    <color name="hint_color">@android:color/secondary_text_dark</color>
 </resources>

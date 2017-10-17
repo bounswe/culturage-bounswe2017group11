@@ -22,29 +22,29 @@
         <EditText
             android:id="@+id/username"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="@dimen/edit_text_height"
             android:background="@drawable/white_border"
             android:hint="@string/prompt_username"
             android:inputType="textAutoComplete"
-            android:padding="8dp"
-            android:layout_marginBottom="8dp"
+            android:padding="@dimen/small_padding"
+            android:layout_marginBottom="@dimen/small_padding"
             android:textCursorDrawable="@null"
             android:textColor="@color/login_page_text_color"
-            android:textColorHint="@android:color/secondary_text_dark" />
+            android:textColorHint="@color/hint_color" />
 
 
         <EditText
             android:id="@+id/password"
             android:layout_width="match_parent"
-            android:layout_height="48dp"
+            android:layout_height="@dimen/edit_text_height"
             android:background="@drawable/white_border"
             android:textCursorDrawable="@null"
             android:hint="@string/prompt_password"
             android:inputType="textPassword"
             android:maxLines="1"
-            android:padding="8dp"
+            android:padding="@dimen/small_padding"
             android:textColor="@color/login_page_text_color"
-            android:textColorHint="@android:color/secondary_text_dark" />
+            android:textColorHint="@color/hint_color" />
 
 
         <Button
@@ -52,7 +52,7 @@
             style="?android:textAppearanceSmall"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
+            android:layout_marginTop="@dimen/medium_padding"
             android:background="@drawable/white_border"
             android:text="@string/action_sign_in"
             android:textStyle="bold"
@@ -64,11 +64,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:paddingTop="32dp">
+        android:paddingTop="@dimen/large_padding">
 
         <View
             android:layout_width="0dp"
-            android:layout_height="2dp"
+            android:layout_height="@dimen/dummy_layout_size"
             android:layout_gravity="center_vertical"
             android:layout_weight="2"
             android:background="@color/login_page_text_color" />
@@ -78,15 +78,15 @@
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:gravity="center_horizontal"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"
+            android:paddingLeft="@dimen/small_padding"
+            android:paddingRight="@dimen/small_padding"
             android:text="@string/middle_line_text"
             style="?android:textAppearanceLarge"
             android:textColor="@color/login_page_text_color" />
 
         <View
             android:layout_width="0dp"
-            android:layout_height="2dp"
+            android:layout_height="@dimen/dummy_layout_size"
             android:layout_gravity="center_vertical"
             android:layout_weight="2"
             android:background="@color/login_page_text_color" />
@@ -97,7 +97,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:orientation="vertical"
-        android:paddingTop="32dp">
+        android:paddingTop="@dimen/large_padding">
 
         <TextView
             android:layout_width="match_parent"
@@ -106,7 +106,7 @@
             style="?android:textAppearanceMedium"
             android:textColor="@color/login_page_text_color"
             android:textStyle="italic"
-            android:paddingBottom="8dp" />
+            android:paddingBottom="@dimen/small_padding" />
 
         <Button
             android:id="@+id/sign_up_button"

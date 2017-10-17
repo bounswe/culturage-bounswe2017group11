@@ -3,4 +3,12 @@
     <dimen name="activity_horizontal_margin">16dp</dimen>
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="login_form_width">256dp</dimen>
+    <dimen name="edit_text_height">48dp</dimen>
+    <dimen name="small_padding">8dp</dimen>
+    <dimen name="medium_padding">16dp</dimen>
+    <dimen name="large_padding">32dp</dimen>
+    <dimen name="dummy_layout_size">2dp</dimen>
+    <dimen name="upload_image_size">180dp</dimen>
+    <dimen name="large_edit_text_height">144dp</dimen>
+    <dimen name="tiny_padding">4dp</dimen>
 </resources>
