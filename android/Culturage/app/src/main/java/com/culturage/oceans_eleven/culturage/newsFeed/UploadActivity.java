@@ -5,10 +5,7 @@ http://www.theappguruz.com/blog/android-take-photo-camera-gallery-code-sample
 package com.culturage.oceans_eleven.culturage.newsFeed;
 
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.os.Environment;
@@ -16,13 +13,13 @@ import android.provider.MediaStore;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.culturage.oceans_eleven.culturage.R;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
@@ -30,69 +27,58 @@ import java.io.IOException;
 public class UploadActivity extends Activity {
 
     private int REQUEST_CAMERA = 0, SELECT_FILE = 1;
-    private Button btnSelect;
     private ImageView ivImage;
-    private String userChoosenTask;
+    private String userChosenTask;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_upload);
-        btnSelect = (Button) findViewById(R.id.btnSelectPhoto);
-        btnSelect.setOnClickListener(new OnClickListener() {
 
+        ImageButton btnTakePhoto = (ImageButton) findViewById(R.id.btnTakePhoto);
+        btnTakePhoto.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                selectImage();
+                cameraIntent();
+                //userChosenTask = "Take Photo";
+            }
+        });
+
+        ImageButton btnSelectPhoto = (ImageButton) findViewById(R.id.btnSelectPhoto);
+        btnSelectPhoto.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //userChosenTask = "Choose from Gallery";
+                galleryIntent();
+            }
+        });
+
+        Button btnUpload = (Button) findViewById(R.id.upload_btn);
+        btnUpload.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // For now just return to news feed
+                startActivity(new Intent(UploadActivity.this, NewsFeedActivity.class));
             }
         });
         ivImage = (ImageView) findViewById(R.id.ivImage);
     }
 
-    @Override
-    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
-        switch (requestCode) {
-            case Utility.MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE:
-                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                    if (userChoosenTask.equals("Take Photo"))
-                        cameraIntent();
-                    else if (userChoosenTask.equals("Choose from Library"))
-                        galleryIntent();
-                } else {
-                    //code for deny
-                }
-                break;
-        }
-    }
-
-    private void selectImage() {
-        final CharSequence[] items = {"Take Photo", "Choose from Library",
-                "Cancel"};
-
-        AlertDialog.Builder builder = new AlertDialog.Builder(UploadActivity.this);
-        builder.setTitle("Add Photo!");
-        builder.setItems(items, new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int item) {
-                boolean result = Utility.checkPermission(UploadActivity.this);
-
-                if (items[item].equals("Take Photo")) {
-                    userChoosenTask = "Take Photo";
-                    if (result)
-                        cameraIntent();
-
-                } else if (items[item].equals("Choose from Library")) {
-                    userChoosenTask = "Choose from Library";
-                    if (result)
-                        galleryIntent();
-
-                } else if (items[item].equals("Cancel")) {
-                    dialog.dismiss();
-                }
-            }
-        });
-        builder.show();
-    }
+//    @Override
+//    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+//        switch (requestCode) {
+//            case Utility.MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE:
+//                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+//                    if (userChosenTask.equals("Take Photo"))
+//                        cameraIntent();
+//                    else if (userChosenTask.equals("Choose from Gallery"))
+//                        galleryIntent();
+//                } else {
+//                    //code for deny
+//                }
+//                break;
+//        }
+//    }
 
     private void galleryIntent() {
         Intent intent = new Intent();
@@ -132,9 +118,7 @@ public class UploadActivity extends Activity {
             fo = new FileOutputStream(destination);
             fo.write(bytes.toByteArray());
             fo.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

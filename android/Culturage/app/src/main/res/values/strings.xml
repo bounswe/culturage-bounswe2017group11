@@ -18,4 +18,10 @@
     <string name="middle_line_text">OR</string>
     <string name="unsuccessful_login">Invalid username or password</string>
     <string name="action_sign_up">Sign Up</string>
+    <string name="prompt_title">Title</string>
+    <string name="prompt_description">Description</string>
+    <string name="prompt_time">Time</string>
+    <string name="prompt_">Location</string>
+    <string name="prompt_tags">Tags</string>
+    <string name="upload_btn">ADD!</string>
 </resources>

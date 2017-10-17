@@ -24,8 +24,7 @@ public class NewsFeedActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(NewsFeedActivity.this, UploadActivity.class);
-                startActivity(intent);
+                startActivity(new Intent(NewsFeedActivity.this, UploadActivity.class));
             }
         });
 
@@ -33,8 +32,7 @@ public class NewsFeedActivity extends AppCompatActivity {
         profileIcon.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Intent intent = new Intent(NewsFeedActivity.this, ProfilePageActivity.class);
-                startActivity(intent);
+                startActivity(new Intent(NewsFeedActivity.this, ProfilePageActivity.class));
             }
         });
 
