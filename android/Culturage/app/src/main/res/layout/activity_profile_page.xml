@@ -4,43 +4,237 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/primary_blue"
-    android:gravity="center_horizontal"
     android:orientation="vertical"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.culturage.oceans_eleven.culturage.newsFeed.NewsFeedActivity">
+    tools:context="com.culturage.oceans_eleven.culturage.newsFeed.ProfilePageActivity"
+    android:weightSum="1">
 
-    <ImageView
-        android:id="@+id/CulturagePicture"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:srcCompat="@drawable/culturage" />
+    <ScrollView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
-    <Button
-        android:id="@+id/button3"
-        android:layout_width="180dp"
-        android:layout_height="wrap_content"
-        android:text="Choose Image" />
+        <LinearLayout
+            android:layout_width="385dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:weightSum="1">
 
-    <ListView xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/profilePage_"
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
 
-    <Button
-        android:id="@+id/button4"
-        android:layout_width="180dp"
-        android:layout_height="wrap_content"
-        android:text="Sign Out" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:weightSum="1">
 
-    <Button
-        android:id="@+id/button5"
-        android:layout_width="180dp"
-        android:layout_height="wrap_content"
-        android:text="Save Changes" />
+                <ImageView
+                    android:id="@+id/CulturagePicture"
+                    android:layout_width="385dp"
+                    android:layout_height="166dp"
+                    app:srcCompat="@drawable/culturage" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="60dp"
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:orientation="vertical"
+                android:weightSum="1">
+
+                <Button
+                    android:id="@+id/uploadProfilePic"
+                    android:layout_width="167dp"
+                    android:layout_height="wrap_content"
+                    android:text="Upload Image" />
+
+            </LinearLayout>
+
+            <!-- -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:weightSum="1">
+
+                <TextView
+                    android:id="@+id/profileName"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.77"
+                    android:gravity="center"
+                    android:text="Name"
+                    android:textColor="@color/fab_material_black"
+                    android:textStyle="italic" />
+
+                <EditText
+                    android:id="@+id/profileNameEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.22"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:text="Ocean's" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:weightSum="1">
+
+                <TextView
+                    android:id="@+id/profileLastname"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.77"
+                    android:gravity="center"
+                    android:text="Lastname"
+                    android:textColor="@color/fab_material_black"
+                    android:textStyle="italic" />
+
+                <EditText
+                    android:id="@+id/profileLastameEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.22"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:text="Eleven" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:weightSum="1">
+
+                <TextView
+                    android:id="@+id/profilUsername"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.77"
+                    android:gravity="center"
+                    android:text="Username"
+                    android:textColor="@color/fab_material_black"
+                    android:textStyle="italic" />
+
+                <EditText
+                    android:id="@+id/profileUsernameEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.22"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:text="Culturage" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:weightSum="1">
+
+                <TextView
+                    android:id="@+id/profileDateBirth"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.77"
+                    android:gravity="center"
+                    android:text="Date Of Birth"
+                    android:textColor="@color/fab_material_black"
+                    android:textStyle="italic" />
+
+                <EditText
+                    android:id="@+id/profileDateBirthEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.22"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:text="15/02/17" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:weightSum="1">
+
+                <TextView
+                    android:id="@+id/profileEmail"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.77"
+                    android:gravity="center"
+                    android:text="Email Address"
+                    android:textColor="@color/fab_material_black"
+                    android:textStyle="italic" />
+
+                <EditText
+                    android:id="@+id/profileEmailEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.22"
+                    android:ems="10"
+                    android:inputType="textPersonName"
+                    android:text="culturage@cmpe451" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="100dp"
+                android:weightSum="1">
+
+                <TextView
+                    android:id="@+id/profileAbout"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.77"
+                    android:gravity="center"
+                    android:text="About You"
+                    android:textColor="@color/fab_material_black"
+                    android:textStyle="italic" />
+
+                <EditText
+                    android:id="@+id/profileAboutEdit"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.22"
+                    android:ems="10"
+                    android:inputType="textMultiLine"
+                    android:text="We are great!" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="20dp"></LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:weightSum="1">
+
+                <Button
+                    android:id="@+id/saveProfile"
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0.63"
+                    android:text="Save Changes" />
+
+                <Button
+                    android:id="@+id/signOut"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="0.36"
+                    android:text="Sign Out" />
+
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </ScrollView>
 
 
 </LinearLayout>
