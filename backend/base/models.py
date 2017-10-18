@@ -27,4 +27,10 @@ class ItemFollow(models.Model):
 	user_id = models.ForeignKey(User, related_name ='following_user', on_delete= models.CASCADE, null = True)
 	item_id = models.ForeignKey(Item, related_name ='followed_item', on_delete=models.CASCADE, null = True)
 
-	
+class Reported(models.Model):
+	user_id = models.ForeignKey(User, related_name ='reporter_user', on_delete= models.CASCADE, null = True)
+	item_id = models.ForeignKey(Item, related_name ='reported_item', on_delete=models.CASCADE, null = True)
+
+class ItemEdit(models.Model):
+	user_id = models.ForeignKey(User, related_name ='editing_user', on_delete= models.SET_NULL, null = True)
+	item_id = models.ForeignKey(Item, related_name ='edited_item', on_delete=models.CASCADE, null = True)
