@@ -37,4 +37,6 @@
         <activity android:name=".newsFeed.HeritageItemViewActivity" />
     </application>
 
+
 </manifest>
+

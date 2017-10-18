@@ -70,7 +70,10 @@
                     android:layout_weight="0.22"
                     android:ems="10"
                     android:inputType="textPersonName"
-                    android:text="Ocean's" />
+                    android:layout_marginBottom="@dimen/small_padding"
+                    android:background="@drawable/blue_border"
+                    android:hint=" Name"
+                    android:text=" Ocean's" />
 
             </LinearLayout>
 
@@ -96,7 +99,10 @@
                     android:layout_weight="0.22"
                     android:ems="10"
                     android:inputType="textPersonName"
-                    android:text="Eleven" />
+                    android:layout_marginBottom="@dimen/small_padding"
+                    android:background="@drawable/blue_border"
+                    android:hint=" Lastname"
+                    android:text=" Eleven" />
 
             </LinearLayout>
 
@@ -122,7 +128,10 @@
                     android:layout_weight="0.22"
                     android:ems="10"
                     android:inputType="textPersonName"
-                    android:text="Culturage" />
+                    android:layout_marginBottom="@dimen/small_padding"
+                    android:background="@drawable/blue_border"
+                    android:hint=" Username"
+                    android:text=" Culturage" />
 
             </LinearLayout>
 
@@ -135,20 +144,46 @@
                     android:id="@+id/profileDateBirth"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.77"
+                    android:layout_weight="0.99"
                     android:gravity="center"
                     android:text="Date Of Birth"
                     android:textColor="@color/fab_material_black"
                     android:textStyle="italic" />
 
-                <EditText
-                    android:id="@+id/profileDateBirthEdit"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.22"
-                    android:ems="10"
-                    android:inputType="textPersonName"
-                    android:text="15/02/17" />
+                    android:background="@android:color/white"
+                    android:layout_marginBottom="@dimen/small_padding"
+                    android:orientation="horizontal"
+                    android:weightSum="1">
+
+                    <Spinner
+                        android:id="@+id/birthDaySpinner"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content" />
+
+                    <Spinner
+                        android:id="@+id/birthMonthSpinner"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content" />
+
+                    <Spinner
+                        android:id="@+id/birthYearSpinner"
+                        android:layout_width="fill_parent"
+                        android:layout_height="wrap_content" />
+
+
+                </LinearLayout>
+
+                <!-- <EditText
+                     android:id="@+id/profileDateBirthEdit"
+                     android:layout_width="wrap_content"
+                     android:layout_height="match_parent"
+                     android:layout_weight="0.22"
+                     android:ems="10"
+                     android:inputType="textPersonName"
+                     android:text="15/02/17" /> -->
 
             </LinearLayout>
 
@@ -174,7 +209,10 @@
                     android:layout_weight="0.22"
                     android:ems="10"
                     android:inputType="textPersonName"
-                    android:text="culturage@cmpe451" />
+                    android:layout_marginBottom="@dimen/small_padding"
+                    android:background="@drawable/blue_border"
+                    android:hint=" E-mail"
+                    android:text=" culturage@cmpe451" />
 
             </LinearLayout>
 
@@ -196,11 +234,13 @@
                 <EditText
                     android:id="@+id/profileAboutEdit"
                     android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
+                    android:layout_height="113dp"
                     android:layout_weight="0.22"
                     android:ems="10"
                     android:inputType="textMultiLine"
-                    android:text="We are great!" />
+                    android:background="@drawable/blue_border"
+                    android:hint=" About You"
+                    android:text=" We are great!" />
 
             </LinearLayout>
 
@@ -218,21 +258,42 @@
                     android:id="@+id/saveProfile"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.63"
+                    android:layout_weight="0.80"
                     android:text="Save Changes" />
 
                 <Button
-                    android:id="@+id/signOut"
+                    android:id="@+id/DiscardProfile"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.36"
+                    android:layout_weight="0.17"
+                    android:text="Discard Changes" />
+
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="15dp">
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical|center_horizontal"
+                android:orientation="vertical"
+                android:weightSum="1">
+
+                <Button
+                    android:id="@+id/SignOut"
+                    android:layout_width="167dp"
+                    android:layout_height="wrap_content"
                     android:text="Sign Out" />
 
             </LinearLayout>
 
 
         </LinearLayout>
-
 
     </ScrollView>
 
