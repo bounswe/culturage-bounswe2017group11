@@ -7,12 +7,16 @@ public class HeritageItem {
     private String mTitle;
     private String mDescription;
     private int mResourceId;
+    private long mLikeCount;
+    private long mCommentCount;
 
-    public HeritageItem(long mPostId, String mTitle, String mDescription, int mResourceId) {
+    public HeritageItem(long mPostId, String mTitle, String mDescription, int mResourceId, long mLikeCount, long mCommentCount) {
         this.mPostId = mPostId;
         this.mTitle = mTitle;
         this.mDescription = mDescription;
         this.mResourceId = mResourceId;
+        this.mLikeCount = mLikeCount;
+        this.mCommentCount = mCommentCount;
     }
 
     public long getmPostId() {
@@ -31,6 +35,14 @@ public class HeritageItem {
         return mResourceId;
     }
 
+    public long getmLikeCount() {
+        return mLikeCount;
+    }
+
+    public long getmCommentCount() {
+        return mCommentCount;
+    }
+
     public void setmPostId(long mPostId) {
         this.mPostId = mPostId;
     }
@@ -43,8 +55,12 @@ public class HeritageItem {
         this.mDescription = mDescription;
     }
 
-    public void setmResourceId(int mResourceId) {
-        this.mResourceId = mResourceId;
+    public void setmLikeCount(long likeCount) {
+        this.mLikeCount = likeCount;
+    }
+
+    public void setmCommentCount(long commentCount) {
+        this.mCommentCount = commentCount;
     }
 
 }

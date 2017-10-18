@@ -7,6 +7,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -43,6 +44,10 @@ public class HeritageItemAdapter extends ArrayAdapter {
         ImageView imageView = (ImageView) listItemView.findViewById(R.id.image);
         imageView.setImageResource(currentItem.getmResourceId());
 
+        Button commentBtn = (Button) listItemView.findViewById(R.id.comment_btn);
+        commentBtn.setText(currentItem.getmCommentCount() + "");
+        Button likeBtn = (Button) listItemView.findViewById(R.id.like_btn);
+        likeBtn.setText(currentItem.getmLikeCount() + "");
         return listItemView;
     }
 

@@ -41,14 +41,14 @@ public class NewsFeedActivity extends AppCompatActivity {
 
         String description = "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\"";
         String title = "Lorem Ipsum";
-        items.add(new HeritageItem(1, title, description, R.drawable.sample_0));
-        items.add(new HeritageItem(2, title, description, R.drawable.sample_1));
-        items.add(new HeritageItem(3, title, description, R.drawable.sample_2));
-        items.add(new HeritageItem(4, title, description, R.drawable.sample_3));
-        items.add(new HeritageItem(5, title, description, R.drawable.sample_4));
-        items.add(new HeritageItem(6, title, description, R.drawable.sample_5));
-        items.add(new HeritageItem(7, title, description, R.drawable.sample_6));
-        items.add(new HeritageItem(8, title, description, R.drawable.sample_7));
+        items.add(new HeritageItem(1, title, description, R.drawable.sample_0, 1, 3));
+        items.add(new HeritageItem(2, title, description, R.drawable.sample_1, 2, 6));
+        items.add(new HeritageItem(3, title, description, R.drawable.sample_2, 1, 7));
+        items.add(new HeritageItem(4, title, description, R.drawable.sample_3, 3, 3));
+        items.add(new HeritageItem(5, title, description, R.drawable.sample_4, 1, 89));
+        items.add(new HeritageItem(6, title, description, R.drawable.sample_5, 5, 5));
+        items.add(new HeritageItem(7, title, description, R.drawable.sample_6, 3, 7));
+        items.add(new HeritageItem(8, title, description, R.drawable.sample_7, 1, 4));
 
         HeritageItemAdapter adapter = new HeritageItemAdapter(NewsFeedActivity.this, items);
         final ListView listView = (ListView) findViewById(R.id.news_feed_list);
@@ -65,6 +65,8 @@ public class NewsFeedActivity extends AppCompatActivity {
                 startActivity(intent);
             }
         });
+
+
     }
 
 }

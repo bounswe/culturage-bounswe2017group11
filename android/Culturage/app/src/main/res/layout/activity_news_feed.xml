@@ -45,8 +45,8 @@
             android:layout_height="match_parent"
             android:layout_weight="0"
             android:background="@color/primary_blue"
-            android:layout_marginRight="@dimen/tiny_padding"
-            android:layout_marginLeft="@dimen/small_padding"
+            android:layout_marginEnd="@dimen/tiny_padding"
+            android:layout_marginStart="@dimen/small_padding"
             android:src="@mipmap/ic_search"
             android:scaleType="centerInside" />
 
@@ -55,8 +55,8 @@
             android:layout_width="36dp"
             android:layout_height="match_parent"
             android:layout_weight="0"
-            android:layout_marginLeft="@dimen/tiny_padding"
-            android:layout_marginRight="@dimen/small_padding"
+            android:layout_marginStart="@dimen/tiny_padding"
+            android:layout_marginEnd="@dimen/small_padding"
             android:background="@color/primary_blue"
             android:src="@mipmap/ic_user"
             android:scaleType="centerInside" />

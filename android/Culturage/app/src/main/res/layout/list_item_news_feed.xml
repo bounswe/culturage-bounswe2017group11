@@ -65,12 +65,15 @@
         android:layout_height="wrap_content">
 
         <Button
+            android:id="@+id/like_btn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@android:color/white"
-            android:drawableStart="@mipmap/ic_like_button"
-            android:text="@string/like_btn_text"
+            android:drawableStart="@drawable/ic_like"
+            tools:text="225"
+            android:paddingStart="65dp"
+            android:textAlignment="textStart"
             android:textColor="@color/primary_blue" />
 
         <TextView
@@ -79,12 +82,16 @@
             android:background="@color/separator_grey" />
 
         <Button
+            android:id="@+id/comment_btn"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
             android:background="@android:color/white"
-            android:drawableStart="@mipmap/ic_comment"
-            android:text="@string/comment_btn_text"
-            android:textColor="@color/primary_blue" />
+            android:drawableStart="@drawable/ic_comment"
+            android:paddingStart="65dp"
+            tools:text="15"
+            android:textAlignment="textStart"
+            android:textColor="@color/primary_blue"
+            android:layout_marginStart="@dimen/small_padding" />
     </LinearLayout>
 </LinearLayout>
