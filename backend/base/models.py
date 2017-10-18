@@ -17,7 +17,17 @@ class Comment(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(null=True)
     written_by = models.ForeignKey(User, related_name='comment_written_by', on_delete=models.SET_NULL, null=True)
-    related_item = models.ForeignKey(Item, related_name='commented_item', on_delete=models.SET_NULL, null=True)
+    related_item = models.ForeignKey(Item, related_name='commented_item', on_delete=models.CASCADE, null=True)
+
+class Annotation(models.Model):
+	text = models.CharField(max_length=500)
+	rate = models.IntegerField(null=True)
+	user_id = models.ForeignKey(User, related_name ='annotating_user', on_delete= models.CASCADE, null = True)
+	item_id = models.ForeignKey(Item, related_name ='annotated_item', on_delete=models.CASCADE, null = True)
+
+class Tag(models.Model):
+	name = models.CharField(max_length=200)
+	user_id = models.ForeignKey(User, related_name ='tagging_user', on_delete= models.SET_NULL, null = True)
 
 class Location(models.Model):
 	name = models.CharField(max_length=200)
@@ -57,6 +67,25 @@ class UserRatedComment(models.Model):
 	rate = models.IntegerField(null=True)
 	user_id = models.ForeignKey(User, related_name ='comment_rating_user', on_delete= models.CASCADE, null = True)
 	comment_id = models.ForeignKey(Comment, related_name ='rated_comment', on_delete= models.CASCADE, null = True)
+
+class UserRatedAnnotation(models.Model):
+	rate = models.IntegerField(null=True)
+	user_id = models.ForeignKey(User, related_name ='annotation_rating_user', on_delete= models.CASCADE, null = True)
+	annotation_id = models.ForeignKey (Annotation, related_name ='rated_annotation', on_delete=models.CASCADE, null= True)
+
+class TagList(models.Model):
+	item_id = models.ForeignKey(Item, related_name ='tagged_item', on_delete=models.CASCADE, null = True)
+	tag_id = models.ForeignKey(Tag, related_name = 'tag', on_delete = models.CASCADE, null = True)
+
+
+
+
+
+
+
+
+
+
 
 
 
