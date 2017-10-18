@@ -28,4 +28,5 @@
     <string name="comment_btn_text">Comment</string>
     <string name="search_text">Search</string>
     <string name="upload_profile_pic">Search</string>
+    <string name="prompt_email">Email</string>
 </resources>

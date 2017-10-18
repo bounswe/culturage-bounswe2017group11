@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primary_blue"
+    android:background="@android:color/white"
     android:gravity="center_horizontal"
     android:orientation="vertical"
     android:padding="@dimen/medium_padding"
@@ -16,13 +16,24 @@
         android:orientation="vertical"
         android:padding="@dimen/small_padding">
 
-        <AutoCompleteTextView
+        <EditText
+            android:id="@+id/email_signup_form"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edit_text_height"
+            android:background="@drawable/blue_border"
+            android:hint="@string/prompt_email"
+            android:padding="@dimen/small_padding"
+            android:layout_marginBottom="@dimen/small_padding"
+            android:textCursorDrawable="@null"
+            android:textColor="@color/login_page_text_color"
+            android:textColorHint="@color/hint_color" />
+
+        <EditText
             android:id="@+id/username"
             android:layout_width="match_parent"
             android:layout_height="@dimen/edit_text_height"
-            android:background="@drawable/white_border"
+            android:background="@drawable/blue_border"
             android:hint="@string/prompt_username"
-            android:inputType="textAutoComplete"
             android:padding="@dimen/small_padding"
             android:layout_marginBottom="@dimen/small_padding"
             android:textCursorDrawable="@null"
@@ -34,7 +45,7 @@
             android:id="@+id/password"
             android:layout_width="match_parent"
             android:layout_height="@dimen/edit_text_height"
-            android:background="@drawable/white_border"
+            android:background="@drawable/blue_border"
             android:textCursorDrawable="@null"
             android:hint="@string/prompt_password"
             android:inputType="textPassword"
@@ -50,10 +61,10 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/medium_padding"
-            android:background="@drawable/white_border"
+            android:background="@drawable/blue_border"
             android:text="@string/sign_up"
             android:textStyle="bold"
-            android:textColor="@color/login_page_text_color" />
+            android:textColor="@color/primary_blue" />
 
     </LinearLayout>
 

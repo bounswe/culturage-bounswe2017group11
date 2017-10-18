@@ -68,10 +68,8 @@ public class LoginActivity extends AppCompatActivity {
                             finish();
                         }
                     })
-
                     .setIcon(android.R.drawable.ic_dialog_alert)
                     .show();
-            //finish();
         }
     }
 
