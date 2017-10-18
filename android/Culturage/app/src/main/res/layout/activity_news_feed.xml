@@ -7,7 +7,7 @@
     android:background="@android:color/white"
     android:gravity="center_horizontal"
     android:orientation="vertical"
-    android:descendantFocusability="blocksDescendants"
+    android:descendantFocusability="beforeDescendants"
     tools:context="com.culturage.oceans_eleven.culturage.newsFeed.NewsFeedActivity">
 
     <LinearLayout
@@ -15,7 +15,14 @@
         android:layout_height="@dimen/edit_text_height"
         android:background="@color/primary_blue"
         android:id="@+id/top_bar">
-
+        <!-- A dummy view to draw the focus-->
+        <LinearLayout
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:id="@+id/dummyView"
+            android:orientation="horizontal" />
         <EditText
             android:layout_width="0dp"
             android:layout_height="match_parent"
@@ -27,26 +34,32 @@
             android:textColorHighlight="@android:color/white"
             android:textColorHint="@color/hint_color"
             android:textColor="@android:color/white"
-            android:textCursorDrawable="@null">
+            android:textCursorDrawable="@null"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
 
         </EditText>
 
         <ImageButton
-            android:layout_width="wrap_content"
+            android:layout_width="36dp"
             android:layout_height="match_parent"
             android:layout_weight="0"
             android:background="@color/primary_blue"
-            android:paddingEnd="@dimen/medium_padding"
-            android:paddingStart="@dimen/medium_padding"
-            android:src="@mipmap/ic_search" />
+            android:layout_marginRight="@dimen/tiny_padding"
+            android:layout_marginLeft="@dimen/small_padding"
+            android:src="@mipmap/ic_search"
+            android:scaleType="centerInside" />
 
         <ImageButton
             android:id="@+id/profileIcon"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="36dp"
+            android:layout_height="match_parent"
             android:layout_weight="0"
+            android:layout_marginLeft="@dimen/tiny_padding"
+            android:layout_marginRight="@dimen/small_padding"
             android:background="@color/primary_blue"
-            android:src="@mipmap/ic_user" />
+            android:src="@mipmap/ic_user"
+            android:scaleType="centerInside" />
     </LinearLayout>
 
     <ListView xmlns:android="http://schemas.android.com/apk/res/android"

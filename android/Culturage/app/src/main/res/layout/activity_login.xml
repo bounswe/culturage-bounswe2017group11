@@ -23,14 +23,14 @@
             android:id="@+id/username"
             android:layout_width="match_parent"
             android:layout_height="@dimen/edit_text_height"
+            android:layout_marginBottom="@dimen/small_padding"
             android:background="@drawable/blue_border"
             android:hint="@string/prompt_username"
             android:inputType="textAutoComplete"
             android:padding="@dimen/small_padding"
-            android:layout_marginBottom="@dimen/small_padding"
-            android:textCursorDrawable="@null"
             android:textColor="@color/login_page_text_color"
-            android:textColorHint="@color/hint_color" />
+            android:textColorHint="@color/hint_color"
+            android:textCursorDrawable="@null" />
 
 
         <EditText
@@ -38,13 +38,13 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/edit_text_height"
             android:background="@drawable/blue_border"
-            android:textCursorDrawable="@null"
             android:hint="@string/prompt_password"
             android:inputType="textPassword"
             android:maxLines="1"
             android:padding="@dimen/small_padding"
             android:textColor="@color/login_page_text_color"
-            android:textColorHint="@color/hint_color" />
+            android:textColorHint="@color/hint_color"
+            android:textCursorDrawable="@null" />
 
 
         <Button
@@ -55,8 +55,8 @@
             android:layout_marginTop="@dimen/medium_padding"
             android:background="@drawable/blue_border"
             android:text="@string/action_sign_in"
-            android:textStyle="bold"
-            android:textColor="@color/primary_blue" />
+            android:textColor="@color/login_page_text_color"
+            android:textStyle="bold" />
 
     </LinearLayout>
 
@@ -71,9 +71,10 @@
             android:layout_height="@dimen/dummy_layout_size"
             android:layout_gravity="center_vertical"
             android:layout_weight="2"
-            android:background="@color/primary_blue" />
+            android:background="@color/login_page_text_color" />
 
         <TextView
+            style="?android:textAppearanceLarge"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
@@ -81,8 +82,7 @@
             android:paddingLeft="@dimen/small_padding"
             android:paddingRight="@dimen/small_padding"
             android:text="@string/middle_line_text"
-            style="?android:textAppearanceLarge"
-            android:textColor="@color/primary_blue" />
+            android:textColor="@color/login_page_text_color" />
 
         <View
             android:layout_width="0dp"
@@ -100,22 +100,22 @@
         android:paddingTop="@dimen/large_padding">
 
         <TextView
+            style="?android:textAppearanceMedium"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:paddingBottom="@dimen/small_padding"
             android:text="@string/need_an_account"
-            style="?android:textAppearanceMedium"
-            android:textColor="@color/primary_blue"
-            android:textStyle="italic"
-            android:paddingBottom="@dimen/small_padding" />
+            android:textColor="@color/login_page_text_color"
+            android:textStyle="italic" />
 
         <Button
             android:id="@+id/sign_up_button"
             android:layout_width="@dimen/login_form_width"
             android:layout_height="wrap_content"
+            android:background="@drawable/blue_border"
             android:drawableStart="@mipmap/ic_add_user_blue"
             android:gravity="start|center_vertical"
             android:text="@string/sign_up"
-            android:textColor="@color/primary_blue"
-            android:background="@drawable/blue_border" />
+            android:textColor="@color/login_page_text_color" />
     </LinearLayout>
 </LinearLayout>
