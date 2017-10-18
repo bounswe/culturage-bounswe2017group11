@@ -77,6 +77,41 @@ class TagList(models.Model):
 	item_id = models.ForeignKey(Item, related_name ='tagged_item', on_delete=models.CASCADE, null = True)
 	tag_id = models.ForeignKey(Tag, related_name = 'tag', on_delete = models.CASCADE, null = True)
 
+class Media(models.Model):
+	mediaType = models.CharField(max_length=100)
+	formatExtend = models.CharField(max_length=100)
+	name = models.CharField(max_length = 200)
+	item_id = models.ForeignKey(Item, related_name = 'media_item', on_delete = models.CASCADE, null =True)
+
+class VideoAnno(models.Model):
+	text = models.CharField (max_length = 500)
+	startTime = models.TimeField(null = True)
+	endTime = models.TimeField(null = True)
+	media_id = models.ForeignKey(Media, related_name = 'video_media', on_delete = models.CASCADE, null= True)
+	annotation_id = models.ForeignKey(Annotation, related_name = 'video_annotation', on_delete = models.CASCADE, null=True)
+
+class AudioAnno(models.Model):
+	text = models.CharField (max_length = 500)
+	startTime = models.TimeField(null = True)
+	endTime = models.TimeField(null = True)
+	media_id = models.ForeignKey(Media, related_name = 'audio_media', on_delete = models.CASCADE, null= True)
+	annotation_id = models.ForeignKey(Annotation, related_name = 'audio_annotation', on_delete = models.CASCADE, null=True)
+
+class ImageAnno(models.Model):
+	text = models.CharField (max_length = 500)
+	pixelX = models.IntegerField(null = True)
+	pixelY = models.IntegerField(null = True)
+	media_id = models.ForeignKey(Media, related_name = 'image_media', on_delete = models.CASCADE, null= True)
+	annotation_id = models.ForeignKey(Annotation, related_name = 'image_annotation', on_delete = models.CASCADE, null=True)
+
+class TextAnno(models.Model):
+	text = models.CharField (max_length = 500)
+	startChar = models.TimeField(null = True)
+	endChar = models.TimeField(null = True)
+	media_id = models.ForeignKey(Media, related_name = 'text_media', on_delete = models.CASCADE, null= True)
+	annotation_id = models.ForeignKey(Annotation, related_name = 'text_annotation', on_delete = models.CASCADE, null=True)
+
+
 
 
 
