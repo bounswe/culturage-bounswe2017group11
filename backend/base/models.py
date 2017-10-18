@@ -16,5 +16,15 @@ class Comment(models.Model):
     rate = models.IntegerField(null=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(null=True)
-    written_by = models.ForeignKey(User, related_name='comment_written', on_delete=models.SET_NULL, null=True)
-    related_item = models.ForeignKey(Item, related_name='related_item', on_delete=models.SET_NULL, null=True)
+    written_by = models.ForeignKey(User, related_name='comment_written_by', on_delete=models.SET_NULL, null=True)
+    related_item = models.ForeignKey(Item, related_name='commented_item', on_delete=models.SET_NULL, null=True)
+
+class Follow(models.Model):
+	follower = models.ForeignKey(User, related_name ='user_follower', on_delete=models.CASCADE, null=True)
+	followed = models.ForeignKey(User, related_name ='user_followed', on_delete=models.CASCADE, null=True)
+
+class ItemFollow(models.Model):
+	user_id = models.ForeignKey(User, related_name ='following_user', on_delete= models.CASCADE, null = True)
+	item_id = models.ForeignKey(Item, related_name ='followed_item', on_delete=models.CASCADE, null = True)
+
+	
