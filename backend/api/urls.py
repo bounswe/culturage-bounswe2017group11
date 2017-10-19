@@ -10,5 +10,7 @@ urlpatterns = [
     url(r'^', include(router.urls)),
     url(r'^auth/login', obtain_jwt_token),
     url(r'^auth/register', views.register, name='register'),
+    url(r'^auth/addLoc', views.register, name='addLoc'),
+
 ]
 
