@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 
@@ -29,7 +30,7 @@ public class ProfilePageActivity extends AppCompatActivity {
         setContentView(R.layout.activity_profile_page);
 
         //Upload profile picture button
-        Button uploadProfilePic = (Button) findViewById(R.id.uploadProfilePic);
+        ImageButton uploadProfilePic = (ImageButton) findViewById(R.id.uploadProfilePic);
         uploadProfilePic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -50,13 +51,21 @@ public class ProfilePageActivity extends AppCompatActivity {
 
         //Save Change button for saving profile changes
         final boolean isValidProfileChange = true;
-        Button saveprofile = (Button) findViewById(R.id.saveProfile);
+        ImageButton saveprofile = (ImageButton) findViewById(R.id.saveProfile);
         saveprofile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (isValidProfileChange) {
                     startActivity(new Intent(ProfilePageActivity.this, NewsFeedActivity.class));
                 }
+            }
+        });
+
+        ImageButton discard_changes = (ImageButton) findViewById(R.id.discard_changes);
+        discard_changes.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(ProfilePageActivity.this, NewsFeedActivity.class));
             }
         });
 

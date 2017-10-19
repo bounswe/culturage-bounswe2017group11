@@ -3,8 +3,9 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/primary_blue"
+    android:background="#FFFFFF"
     android:orientation="vertical"
+    android:padding="@dimen/small_padding"
     tools:context="com.culturage.oceans_eleven.culturage.newsFeed.ProfilePageActivity"
     android:weightSum="1">
 
@@ -18,91 +19,130 @@
             android:orientation="vertical"
             android:weightSum="1">
 
+            <LinearLayout
+                android:layout_width="356dp"
+                android:layout_height="@dimen/edit_text_height"
+                android:background="#FFFFFF"
+                android:id="@+id/top_bar_profile">
+                <!-- A dummy view to draw the focus-->
+                <LinearLayout
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:layout_width="250dp"
+                    android:layout_height="1dp"
+                    android:id="@+id/dummyView2"
+                    android:orientation="horizontal" />
+
+                <ImageButton
+                    android:layout_width="36dp"
+                    android:id="@+id/saveProfile"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0"
+                    android:background="#FFFFFF"
+                    android:layout_marginEnd="@dimen/tiny_padding"
+                    android:layout_marginStart="@dimen/small_padding"
+                    android:src="@mipmap/save_proifle"
+                    android:scaleType="centerInside" />
+
+                <ImageButton
+                    android:id="@+id/discard_changes"
+                    android:layout_width="36dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight="0"
+                    android:layout_marginStart="@dimen/tiny_padding"
+                    android:layout_marginEnd="@dimen/small_padding"
+                    android:background="#FFFFFF"
+                    android:src="@mipmap/discard_changes"
+
+                    android:scaleType="centerInside" />
+            </LinearLayout>
+
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:weightSum="1">
+                android:layout_height="@dimen/upload_image_size"
+                android:layout_gravity="center"
+                android:orientation="horizontal">
 
                 <ImageView
                     android:id="@+id/CulturagePicture"
-                    android:layout_width="385dp"
-                    android:layout_height="166dp"
+                    android:layout_width="@dimen/upload_image_size"
+                    android:layout_height="match_parent"
+                    android:layout_gravity="center"
                     app:srcCompat="@drawable/culturage" />
 
-            </LinearLayout>
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical"
+                    android:paddingTop="@dimen/medium_padding">
 
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="60dp"
-                android:layout_gravity="center_vertical|center_horizontal"
-                android:orientation="vertical"
-                android:weightSum="1">
 
-                <Button
-                    android:id="@+id/uploadProfilePic"
-                    android:layout_width="167dp"
-                    android:layout_height="wrap_content"
-                    android:text="Upload Image" />
+                    <ImageButton
+                        android:id="@+id/uploadProfilePic"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:background="#FFFFFF"
+                        android:src="@mipmap/upload_profilepic" />
+                </LinearLayout>
 
             </LinearLayout>
 
             <!-- -->
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:weightSum="1">
+                android:layout_width="363dp"
+                android:layout_height="25dp"
+                android:weightSum="1"
+                android:layout_weight="0.14">
 
                 <TextView
                     android:id="@+id/profileName"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.77"
+                    android:layout_weight="0.14"
                     android:gravity="center"
                     android:text="Name"
-                    android:textColor="@color/fab_material_black"
+                    android:textColor="@color/hint_color"
                     android:textStyle="italic" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:weightSum="1">
 
                 <EditText
                     android:id="@+id/profileNameEdit"
-                    android:layout_width="wrap_content"
+                    android:layout_width="337dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.22"
                     android:ems="10"
-                    android:inputType="textPersonName"
+                    android:inputType="textAutoComplete"
+                    android:textColorHint="@color/hint_color"
+                    android:textCursorDrawable="@null"
                     android:layout_marginBottom="@dimen/small_padding"
                     android:background="@drawable/blue_border"
+                    android:textColor="@color/primary_blue"
                     android:hint=" Name"
                     android:text=" Ocean's" />
 
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:weightSum="1">
+                android:layout_width="363dp"
+                android:layout_height="25dp"
+                android:weightSum="1"
+                android:layout_weight="0.14">
 
                 <TextView
                     android:id="@+id/profileLastname"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.77"
-                    android:gravity="center"
-                    android:text="Lastname"
-                    android:textColor="@color/fab_material_black"
-                    android:textStyle="italic" />
-
-                <EditText
-                    android:id="@+id/profileLastameEdit"
                     android:layout_width="wrap_content"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.22"
-                    android:ems="10"
-                    android:inputType="textPersonName"
-                    android:layout_marginBottom="@dimen/small_padding"
-                    android:background="@drawable/blue_border"
-                    android:hint=" Lastname"
-                    android:text=" Eleven" />
+                    android:gravity="center"
+                    android:text="Lastname"
+                    android:textColor="@color/hint_color"
+                    android:textStyle="italic"
+                    android:layout_weight="0.04" />
 
             </LinearLayout>
 
@@ -111,25 +151,56 @@
                 android:layout_height="45dp"
                 android:weightSum="1">
 
+                <EditText
+                    android:id="@+id/profileLastnameEdit"
+                    android:layout_width="337dp"
+                    android:layout_height="match_parent"
+                    android:ems="10"
+                    android:inputType="textAutoComplete"
+                    android:textColorHint="@color/hint_color"
+                    android:textCursorDrawable="@null"
+                    android:layout_marginBottom="@dimen/small_padding"
+                    android:background="@drawable/blue_border"
+                    android:textColor="@color/primary_blue"
+                    android:hint=" Lastname"
+                    android:text=" Eleven" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="363dp"
+                android:layout_height="25dp"
+                android:weightSum="1"
+                android:layout_weight="0.14">
+
                 <TextView
-                    android:id="@+id/profilUsername"
+                    android:id="@+id/profileUsername"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.77"
+                    android:layout_weight="0.21"
                     android:gravity="center"
                     android:text="Username"
-                    android:textColor="@color/fab_material_black"
+                    android:textColor="@color/hint_color"
                     android:textStyle="italic" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:weightSum="1">
 
                 <EditText
                     android:id="@+id/profileUsernameEdit"
-                    android:layout_width="wrap_content"
+                    android:layout_width="337dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.22"
                     android:ems="10"
-                    android:inputType="textPersonName"
+                    android:inputType="textAutoComplete"
+                    android:textColorHint="@color/hint_color"
+                    android:textCursorDrawable="@null"
                     android:layout_marginBottom="@dimen/small_padding"
                     android:background="@drawable/blue_border"
+                    android:textColor="@color/primary_blue"
                     android:hint=" Username"
                     android:text=" Culturage" />
 
@@ -145,9 +216,8 @@
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_weight="0.99"
-                    android:gravity="center"
-                    android:text="Date Of Birth"
-                    android:textColor="@color/fab_material_black"
+                    android:text="  Date Of Birth"
+                    android:textColor="@color/hint_color"
                     android:textStyle="italic" />
 
                 <LinearLayout
@@ -188,94 +258,91 @@
             </LinearLayout>
 
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:weightSum="1">
+                android:layout_width="363dp"
+                android:layout_height="25dp"
+                android:weightSum="1"
+                android:layout_weight="0.14">
 
                 <TextView
                     android:id="@+id/profileEmail"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.77"
+                    android:layout_weight="0.16"
                     android:gravity="center"
-                    android:text="Email Address"
-                    android:textColor="@color/fab_material_black"
+                    android:text="E-mail"
+                    android:textColor="@color/hint_color"
                     android:textStyle="italic" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="45dp"
+                android:weightSum="1">
 
                 <EditText
                     android:id="@+id/profileEmailEdit"
-                    android:layout_width="wrap_content"
+                    android:layout_width="337dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.22"
                     android:ems="10"
-                    android:inputType="textPersonName"
+                    android:inputType="textAutoComplete"
+                    android:textColorHint="@color/hint_color"
+                    android:textCursorDrawable="@null"
                     android:layout_marginBottom="@dimen/small_padding"
                     android:background="@drawable/blue_border"
+                    android:textColor="@color/primary_blue"
                     android:hint=" E-mail"
                     android:text=" culturage@cmpe451" />
 
             </LinearLayout>
 
+
             <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="100dp"
-                android:weightSum="1">
+                android:layout_width="363dp"
+                android:layout_height="25dp"
+                android:weightSum="1"
+                android:layout_weight="0.14">
 
                 <TextView
                     android:id="@+id/profileAbout"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
-                    android:layout_weight="0.77"
+                    android:layout_weight="0.19"
                     android:gravity="center"
                     android:text="About You"
-                    android:textColor="@color/fab_material_black"
+                    android:textColor="@color/hint_color"
                     android:textStyle="italic" />
+
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:weightSum="1">
 
                 <EditText
                     android:id="@+id/profileAboutEdit"
-                    android:layout_width="wrap_content"
-                    android:layout_height="113dp"
-                    android:layout_weight="0.22"
+                    android:layout_width="337dp"
+                    android:layout_height="match_parent"
                     android:ems="10"
                     android:inputType="textMultiLine"
+                    android:gravity="top"
+                    android:textColorHint="@color/hint_color"
+                    android:textCursorDrawable="@null"
+                    android:layout_marginBottom="@dimen/small_padding"
                     android:background="@drawable/blue_border"
+                    android:textColor="@color/primary_blue"
                     android:hint=" About You"
-                    android:text=" We are great!" />
+                    android:text=" We are great!!!" />
 
             </LinearLayout>
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="20dp"></LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:weightSum="1">
-
-                <Button
-                    android:id="@+id/saveProfile"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.80"
-                    android:text="Save Changes" />
-
-                <Button
-                    android:id="@+id/DiscardProfile"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="0.17"
-                    android:text="Discard Changes" />
-
+                android:layout_height="20dp">
 
             </LinearLayout>
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="15dp">
-
-            </LinearLayout>
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -286,9 +353,12 @@
 
                 <Button
                     android:id="@+id/SignOut"
-                    android:layout_width="167dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="Sign Out" />
+                    android:layout_gravity="center"
+                    android:background="@drawable/white_border"
+                    android:text="Sign Out"
+                    android:textColor="@android:color/white" />
 
             </LinearLayout>
 
