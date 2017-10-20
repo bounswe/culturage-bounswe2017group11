@@ -33,7 +33,13 @@ public class HeritageItemViewActivity extends AppCompatActivity {
         int defaultImageId = R.drawable.culturage;
         iw.setImageResource(getIntent().getIntExtra("resourceID", defaultImageId));
 
-        String desc_tit = "WHAT IS IT?";
+        TextView tagsView = (TextView) findViewById(R.id.her_item_tags);
+        tagsView.setText("#nice\t#cool\t#dummy");
+
+
+//        String desc_tit = "WHAT IS IT?";
+        String desc_tit = "What is it?";
+
         TextView desc_tit_view = (TextView) findViewById(R.id.her_item_description_title);
         desc_tit_view.setText(desc_tit);
 
@@ -41,13 +47,16 @@ public class HeritageItemViewActivity extends AppCompatActivity {
         desc_view.setText(getIntent().getStringExtra("description"));
 
         TextView date_title = (TextView) findViewById(R.id.her_item_date_title);
-        date_title.setText("SO ACTUALLY WHEN ARE WE TALKING ABOUT?");
+//        date_title.setText("SO ACTUALLY WHEN ARE WE TALKING ABOUT?");
+        date_title.setText("So... what actually ar we talking about?");
 
         TextView date = (TextView) findViewById(R.id.her_item_date);
         date.setText("1789 - ?");
 
         TextView loc_title = (TextView) findViewById(R.id.her_item_location_title);
-        loc_title.setText("ANY KNOWN LOCATION?");
+//        loc_title.setText("ANY KNOWN LOCATION?");
+        loc_title.setText("Any known location?");
+
 
         TextView loc = (TextView) findViewById(R.id.her_item_location);
         loc.setText("in the middle of nowhere");
