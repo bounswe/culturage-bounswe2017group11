@@ -29,7 +29,7 @@
             android:textColorHint="@color/hint_color" />
 
         <EditText
-            android:id="@+id/username"
+            android:id="@+id/signup_username"
             android:layout_width="match_parent"
             android:layout_height="@dimen/edit_text_height"
             android:background="@drawable/blue_border"
@@ -42,7 +42,7 @@
 
 
         <EditText
-            android:id="@+id/password"
+            android:id="@+id/signup_password"
             android:layout_width="match_parent"
             android:layout_height="@dimen/edit_text_height"
             android:background="@drawable/blue_border"
