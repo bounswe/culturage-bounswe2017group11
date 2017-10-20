@@ -8,7 +8,6 @@ import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -41,7 +40,7 @@ public class ProfilePageActivity extends AppCompatActivity {
 
         profileImage = (ImageView) findViewById(R.id.CulturagePicture);
 
-        Button signout = (Button) findViewById(R.id.SignOut);
+        ImageButton signout = (ImageButton) findViewById(R.id.logout);
         signout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

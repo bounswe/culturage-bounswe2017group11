@@ -1,106 +1,135 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="fill_parent" android:layout_height="fill_parent">
-<LinearLayout
-    android:background="@android:color/white"
-    android:orientation="vertical"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
-
-    <TextView
-        android:id="@+id/her_item_Title"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="20dp"
-        android:orientation="vertical"
-        android:textSize="16dp"
-        android:textStyle="bold|italic"
-        android:background="@drawable/blue_border"
-        android:textAllCaps="true"
-        android:textColor="@color/login_page_text_color"
-        android:gravity="center"
-        android:layout_margin="@dimen/small_padding"/>
-
-    <ImageView
-        android:layout_margin="@dimen/small_padding"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:contentDescription="heritage_item_main_photo"
-        android:scaleType="centerCrop"
-        android:id="@+id/her_item_photo" />
-    <!--android:src="@mipmap/ic_launcher"-->
-
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent">
 
     <LinearLayout
-        android:layout_margin="@dimen/small_padding"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:background="@android:color/white"
         android:orientation="vertical">
 
         <TextView
-            android:id="@+id/her_item_tags"
-            style="?android:textAppearanceMedium"
+            android:id="@+id/her_item_Title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/small_padding"
-            android:paddingLeft="@dimen/small_padding"
             android:background="@drawable/blue_border"
-            android:gravity="left"
-            android:textAllCaps="false"
-            android:textColor="@color/login_page_text_color" />
+            android:gravity="center"
+            android:orientation="vertical"
+            android:padding="@dimen/medium_padding"
+            android:textAllCaps="true"
+            android:textColor="@color/login_page_text_color"
+            android:textStyle="bold"
+            tools:text="Here is an example title" />
 
-        <TextView
-            android:id="@+id/her_item_description_title"
-            style="?android:textAppearanceMedium"
+        <ImageView
+            android:id="@+id/her_item_photo"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_margin="@dimen/small_padding"
+            android:scaleType="centerCrop"
+            tools:src="@mipmap/hagia_sophia" />
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/small_padding"
-            android:paddingLeft="@dimen/small_padding"
-            android:background="@drawable/blue_border"
-            android:gravity="left"
-            android:textColor="@color/login_page_text_color" />
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/her_item_description"
-            android:textColor="@color/login_page_text_color"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/her_item_tags"
+                style="?android:textAppearanceMedium"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/small_padding"
+                android:background="@drawable/blue_border"
+                android:gravity="start"
+                android:padding="@dimen/small_padding"
+                android:textColor="@color/login_page_text_color"
+                tools:text="#someTags #someMoreTags #hereIsAnotherTag" />
 
-        <TextView
-            android:id="@+id/her_item_date_title"
-            style="?android:textAppearanceMedium"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/small_padding"
-            android:paddingLeft="@dimen/small_padding"
-            android:background="@drawable/blue_border"
-            android:gravity="left"
-            android:textColor="@color/login_page_text_color" />
+            <TextView
+                android:id="@+id/her_item_description_title"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/label_height"
+                android:gravity="start"
+                android:text="Description"
+                android:textColor="@color/hint_color"
+                android:textStyle="italic" />
 
-        <TextView
-            android:id="@+id/her_item_date"
-            android:layout_margin="@dimen/small_padding"
-            android:textColor="@color/login_page_text_color"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/her_item_description"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/large_edit_text_height"
+                android:background="@drawable/blue_border"
+                android:textColor="@color/login_page_text_color" />
 
-        <TextView
-            style="?android:textAppearanceMedium"
-            android:id="@+id/her_item_location_title"
-            android:layout_margin="@dimen/small_padding"
-            android:paddingLeft="@dimen/small_padding"
-            android:background="@drawable/blue_border"
-            android:textColor="@color/login_page_text_color"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="left"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
 
-        <TextView
-            android:layout_margin="@dimen/small_padding"
-            android:id="@+id/her_item_location"
-            android:textColor="@color/login_page_text_color"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/her_item_date_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/label_height"
+                        android:gravity="start"
+                        android:text="Date"
+                        android:textColor="@color/hint_color"
+                        android:paddingTop="@dimen/tiny_padding"
+                        android:textStyle="italic" />
+
+                    <TextView
+                        android:id="@+id/her_item_date"
+                        style="?android:textAppearanceMedium"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/edit_text_height"
+                        android:background="@drawable/blue_border"
+                        android:textColor="@color/login_page_text_color"
+                        tools:text="01/01/2018"
+                        android:layout_marginEnd="@dimen/tiny_padding"
+                        android:gravity="center" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/her_item_location_title"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/label_height"
+                        android:gravity="start"
+                        android:text="Location"
+                        android:textColor="@color/hint_color"
+                        android:paddingTop="@dimen/tiny_padding"
+                        android:textStyle="italic" />
+
+                    <TextView
+                        android:id="@+id/her_item_location"
+                        style="?android:textAppearanceMedium"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/edit_text_height"
+                        android:background="@drawable/blue_border"
+                        android:paddingLeft="@dimen/small_padding"
+                        android:layout_marginStart="@dimen/tiny_padding"
+                        android:textColor="@color/login_page_text_color"
+                        tools:text="Sultanahmet"
+                        android:gravity="center" />
+
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
     </LinearLayout>
-</LinearLayout>
 </ScrollView>

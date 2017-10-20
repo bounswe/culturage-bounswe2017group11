@@ -1,4 +1,4 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -6,367 +6,253 @@
     android:background="#FFFFFF"
     android:orientation="vertical"
     android:padding="@dimen/small_padding"
-    tools:context="com.culturage.oceans_eleven.culturage.newsFeed.ProfilePageActivity"
-    android:weightSum="1">
+    tools:context="com.culturage.oceans_eleven.culturage.newsFeed.ProfilePageActivity">
 
-    <ScrollView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:weightSum="1">
 
         <LinearLayout
-            android:layout_width="385dp"
-            android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:weightSum="1">
-
-            <LinearLayout
-                android:layout_width="356dp"
-                android:layout_height="@dimen/edit_text_height"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edit_text_height"
+            android:background="#FFFFFF">
+            <!-- A dummy view to draw the focus-->
+            <ImageButton
+                android:id="@+id/logout"
+                android:layout_width="36dp"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="@dimen/tiny_padding"
+                android:layout_marginStart="@dimen/small_padding"
+                android:layout_weight="0"
                 android:background="#FFFFFF"
-                android:id="@+id/top_bar_profile">
-                <!-- A dummy view to draw the focus-->
-                <LinearLayout
-                    android:focusable="true"
-                    android:focusableInTouchMode="true"
-                    android:layout_width="250dp"
-                    android:layout_height="1dp"
-                    android:id="@+id/dummyView2"
-                    android:orientation="horizontal" />
-
-                <ImageButton
-                    android:layout_width="36dp"
-                    android:id="@+id/saveProfile"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0"
-                    android:background="#FFFFFF"
-                    android:layout_marginEnd="@dimen/tiny_padding"
-                    android:layout_marginStart="@dimen/small_padding"
-                    android:src="@mipmap/save_proifle"
-                    android:scaleType="centerInside" />
-
-                <ImageButton
-                    android:id="@+id/discard_changes"
-                    android:layout_width="36dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0"
-                    android:layout_marginStart="@dimen/tiny_padding"
-                    android:layout_marginEnd="@dimen/small_padding"
-                    android:background="#FFFFFF"
-                    android:src="@mipmap/discard_changes"
-
-                    android:scaleType="centerInside" />
-            </LinearLayout>
-
+                android:scaleType="centerInside"
+                android:src="@mipmap/ic_logout" />
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/upload_image_size"
+                android:id="@+id/dummyView2"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:orientation="horizontal" />
+
+            <ImageButton
+                android:id="@+id/saveProfile"
+                android:layout_width="36dp"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="@dimen/tiny_padding"
+                android:layout_marginStart="@dimen/small_padding"
+                android:layout_weight="0"
+                android:background="#FFFFFF"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_confirm" />
+
+            <ImageButton
+                android:id="@+id/discard_changes"
+                android:layout_width="36dp"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="@dimen/small_padding"
+                android:layout_marginStart="@dimen/tiny_padding"
+                android:layout_weight="0"
+                android:background="#FFFFFF"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_cancel" />
+        </LinearLayout>
+
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/upload_image_size"
+            android:layout_gravity="center"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/CulturagePicture"
+                android:layout_width="@dimen/upload_image_size"
+                android:layout_height="match_parent"
                 android:layout_gravity="center"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:id="@+id/CulturagePicture"
-                    android:layout_width="@dimen/upload_image_size"
-                    android:layout_height="match_parent"
-                    android:layout_gravity="center"
-                    app:srcCompat="@drawable/culturage" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:orientation="vertical"
-                    android:paddingTop="@dimen/medium_padding">
-
-
-                    <ImageButton
-                        android:id="@+id/uploadProfilePic"
-                        android:layout_width="wrap_content"
-                        android:layout_height="match_parent"
-                        android:background="#FFFFFF"
-                        android:src="@mipmap/upload_profilepic" />
-                </LinearLayout>
-
-            </LinearLayout>
-
-            <!-- -->
-            <LinearLayout
-                android:layout_width="363dp"
-                android:layout_height="25dp"
-                android:weightSum="1"
-                android:layout_weight="0.14">
-
-                <TextView
-                    android:id="@+id/profileName"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.14"
-                    android:gravity="center"
-                    android:text="Name"
-                    android:textColor="@color/hint_color"
-                    android:textStyle="italic" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:weightSum="1">
-
-                <EditText
-                    android:id="@+id/profileNameEdit"
-                    android:layout_width="337dp"
-                    android:layout_height="match_parent"
-                    android:ems="10"
-                    android:inputType="textAutoComplete"
-                    android:textColorHint="@color/hint_color"
-                    android:textCursorDrawable="@null"
-                    android:layout_marginBottom="@dimen/small_padding"
-                    android:background="@drawable/blue_border"
-                    android:textColor="@color/primary_blue"
-                    android:hint=" Name"
-                    android:text=" Ocean's" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="363dp"
-                android:layout_height="25dp"
-                android:weightSum="1"
-                android:layout_weight="0.14">
-
-                <TextView
-                    android:id="@+id/profileLastname"
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:text="Lastname"
-                    android:textColor="@color/hint_color"
-                    android:textStyle="italic"
-                    android:layout_weight="0.04" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:weightSum="1">
-
-                <EditText
-                    android:id="@+id/profileLastnameEdit"
-                    android:layout_width="337dp"
-                    android:layout_height="match_parent"
-                    android:ems="10"
-                    android:inputType="textAutoComplete"
-                    android:textColorHint="@color/hint_color"
-                    android:textCursorDrawable="@null"
-                    android:layout_marginBottom="@dimen/small_padding"
-                    android:background="@drawable/blue_border"
-                    android:textColor="@color/primary_blue"
-                    android:hint=" Lastname"
-                    android:text=" Eleven" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="363dp"
-                android:layout_height="25dp"
-                android:weightSum="1"
-                android:layout_weight="0.14">
-
-                <TextView
-                    android:id="@+id/profileUsername"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.21"
-                    android:gravity="center"
-                    android:text="Username"
-                    android:textColor="@color/hint_color"
-                    android:textStyle="italic" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:weightSum="1">
-
-                <EditText
-                    android:id="@+id/profileUsernameEdit"
-                    android:layout_width="337dp"
-                    android:layout_height="match_parent"
-                    android:ems="10"
-                    android:inputType="textAutoComplete"
-                    android:textColorHint="@color/hint_color"
-                    android:textCursorDrawable="@null"
-                    android:layout_marginBottom="@dimen/small_padding"
-                    android:background="@drawable/blue_border"
-                    android:textColor="@color/primary_blue"
-                    android:hint=" Username"
-                    android:text=" Culturage" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:weightSum="1">
-
-                <TextView
-                    android:id="@+id/profileDateBirth"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.99"
-                    android:text="  Date Of Birth"
-                    android:textColor="@color/hint_color"
-                    android:textStyle="italic" />
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="match_parent"
-                    android:background="@android:color/white"
-                    android:layout_marginBottom="@dimen/small_padding"
-                    android:orientation="horizontal"
-                    android:weightSum="1">
-
-                    <Spinner
-                        android:id="@+id/birthDaySpinner"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content" />
-
-                    <Spinner
-                        android:id="@+id/birthMonthSpinner"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content" />
-
-                    <Spinner
-                        android:id="@+id/birthYearSpinner"
-                        android:layout_width="fill_parent"
-                        android:layout_height="wrap_content" />
-
-
-                </LinearLayout>
-
-                <!-- <EditText
-                     android:id="@+id/profileDateBirthEdit"
-                     android:layout_width="wrap_content"
-                     android:layout_height="match_parent"
-                     android:layout_weight="0.22"
-                     android:ems="10"
-                     android:inputType="textPersonName"
-                     android:text="15/02/17" /> -->
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="363dp"
-                android:layout_height="25dp"
-                android:weightSum="1"
-                android:layout_weight="0.14">
-
-                <TextView
-                    android:id="@+id/profileEmail"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.16"
-                    android:gravity="center"
-                    android:text="E-mail"
-                    android:textColor="@color/hint_color"
-                    android:textStyle="italic" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="45dp"
-                android:weightSum="1">
-
-                <EditText
-                    android:id="@+id/profileEmailEdit"
-                    android:layout_width="337dp"
-                    android:layout_height="match_parent"
-                    android:ems="10"
-                    android:inputType="textAutoComplete"
-                    android:textColorHint="@color/hint_color"
-                    android:textCursorDrawable="@null"
-                    android:layout_marginBottom="@dimen/small_padding"
-                    android:background="@drawable/blue_border"
-                    android:textColor="@color/primary_blue"
-                    android:hint=" E-mail"
-                    android:text=" culturage@cmpe451" />
-
-            </LinearLayout>
-
-
-            <LinearLayout
-                android:layout_width="363dp"
-                android:layout_height="25dp"
-                android:weightSum="1"
-                android:layout_weight="0.14">
-
-                <TextView
-                    android:id="@+id/profileAbout"
-                    android:layout_width="0dp"
-                    android:layout_height="match_parent"
-                    android:layout_weight="0.19"
-                    android:gravity="center"
-                    android:text="About You"
-                    android:textColor="@color/hint_color"
-                    android:textStyle="italic" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:weightSum="1">
-
-                <EditText
-                    android:id="@+id/profileAboutEdit"
-                    android:layout_width="337dp"
-                    android:layout_height="match_parent"
-                    android:ems="10"
-                    android:inputType="textMultiLine"
-                    android:gravity="top"
-                    android:textColorHint="@color/hint_color"
-                    android:textCursorDrawable="@null"
-                    android:layout_marginBottom="@dimen/small_padding"
-                    android:background="@drawable/blue_border"
-                    android:textColor="@color/primary_blue"
-                    android:hint=" About You"
-                    android:text=" We are great!!!" />
-
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="20dp">
-
-            </LinearLayout>
-
+                app:srcCompat="@drawable/culturage" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_vertical|center_horizontal"
+                android:layout_height="match_parent"
                 android:orientation="vertical"
-                android:weightSum="1">
+                android:paddingTop="@dimen/medium_padding">
 
-                <Button
-                    android:id="@+id/SignOut"
+
+                <ImageButton
+                    android:id="@+id/uploadProfilePic"
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:background="@drawable/white_border"
-                    android:text="Sign Out"
-                    android:textColor="@android:color/white" />
-
+                    android:layout_height="match_parent"
+                    android:background="#FFFFFF"
+                    android:src="@mipmap/ic_camera" />
             </LinearLayout>
+
+        </LinearLayout>
+
+
+        <TextView
+            android:id="@+id/profileName"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/label_height"
+            android:gravity="start"
+            android:text="Name"
+            android:textColor="@color/hint_color"
+            android:textStyle="italic" />
+
+
+        <EditText
+            android:id="@+id/profileNameEdit"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edit_text_height"
+            android:layout_marginBottom="@dimen/small_padding"
+            android:background="@drawable/blue_border"
+            android:ems="10"
+            android:hint=" Name"
+            android:paddingStart="@dimen/small_padding"
+            android:text="Ocean's"
+            android:textColor="@color/primary_blue"
+            android:textColorHint="@color/hint_color"
+            android:textCursorDrawable="@null" />
+
+
+        <TextView
+            android:id="@+id/profileLastName"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/label_height"
+            android:gravity="start"
+            android:text="Lastname"
+            android:textColor="@color/hint_color"
+            android:textStyle="italic" />
+
+
+        <EditText
+            android:id="@+id/profileLastnameEdit"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edit_text_height"
+            android:layout_marginBottom="@dimen/small_padding"
+            android:background="@drawable/blue_border"
+            android:ems="10"
+            android:hint="Lastname"
+            android:paddingStart="@dimen/small_padding"
+            android:text="Eleven"
+            android:textColor="@color/primary_blue"
+            android:textColorHint="@color/hint_color"
+            android:textCursorDrawable="@null" />
+
+        <TextView
+            android:id="@+id/profileUsername"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/label_height"
+            android:gravity="start"
+            android:text="Lastname"
+            android:textColor="@color/hint_color"
+            android:textStyle="italic" />
+
+
+        <EditText
+            android:id="@+id/profileUsernameEdit"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edit_text_height"
+            android:layout_marginBottom="@dimen/small_padding"
+            android:background="@drawable/blue_border"
+            android:ems="10"
+            android:hint="Username"
+            android:paddingStart="@dimen/small_padding"
+            android:text="username"
+            android:textColor="@color/primary_blue"
+            android:textColorHint="@color/hint_color"
+            android:textCursorDrawable="@null" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edit_text_height">
+
+            <TextView
+                android:id="@+id/profileDateBirth"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:text="  Date Of Birth"
+                android:paddingRight="@dimen/small_padding"
+                android:textColor="@color/hint_color"
+                android:textStyle="italic" />
+
+
+            <Spinner
+                android:id="@+id/birthDaySpinner"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/edit_text_height"
+                android:layout_weight="1" />
+
+            <Spinner
+                android:id="@+id/birthMonthSpinner"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/edit_text_height"
+                android:layout_weight="1" />
+
+            <Spinner
+                android:id="@+id/birthYearSpinner"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/edit_text_height"
+                android:layout_weight="1" />
 
 
         </LinearLayout>
 
-    </ScrollView>
+
+        <TextView
+            android:id="@+id/profileEmail"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/label_height"
+            android:gravity="start"
+            android:text="Email"
+            android:textColor="@color/hint_color"
+            android:textStyle="italic" />
 
 
-</LinearLayout>
+        <EditText
+            android:id="@+id/profileEmailEdit"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edit_text_height"
+            android:layout_marginBottom="@dimen/small_padding"
+            android:background="@drawable/blue_border"
+            android:ems="10"
+            android:hint="Email"
+            android:paddingStart="@dimen/small_padding"
+            android:text="culturage@oceanseleven.com"
+            android:textColor="@color/primary_blue"
+            android:textColorHint="@color/hint_color"
+            android:textCursorDrawable="@null" />
 
+
+        <TextView
+            android:id="@+id/profileAboutYou"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/label_height"
+            android:gravity="start"
+            android:text="About You"
+            android:textColor="@color/hint_color"
+            android:textStyle="italic" />
+
+
+        <EditText
+            android:id="@+id/profileAboutEdit"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/large_edit_text_height"
+            android:layout_marginBottom="@dimen/small_padding"
+            android:background="@drawable/blue_border"
+            android:ems="10"
+            android:gravity="top"
+            android:hint=" About You"
+            android:inputType="textMultiLine"
+            android:text=" We are great!!!"
+            android:textColor="@color/primary_blue"
+            android:textColorHint="@color/hint_color"
+            android:textCursorDrawable="@null" />
+
+    </LinearLayout>
+
+</ScrollView>
