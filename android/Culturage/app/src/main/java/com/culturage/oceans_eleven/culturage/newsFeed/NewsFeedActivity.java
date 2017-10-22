@@ -69,4 +69,14 @@ public class NewsFeedActivity extends AppCompatActivity {
 
     }
 
+    @Override
+    public void onBackPressed() {
+        moveTaskToBack(true);
+//        Intent intent = new Intent(mContext, LoginActivity.class);
+//        intent.putExtra("FLAG", 0);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
+//        startActivity(intent);
+    }
+
 }

@@ -1,14 +1,17 @@
 package com.culturage.oceans_eleven.culturage.signup_login;
 
-import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.culturage.oceans_eleven.culturage.R;
@@ -25,17 +28,21 @@ public class SignUpActivity extends AppCompatActivity {
 
     private static final String registerURI = "auth/register/";
     private EditText mPasswordView, mEmailView, mUsernameView;
+    private ProgressBar mProgressBar;
     String email, username, password;
-    static String token;
+    SharedPreferences preferences;
+    SharedPreferences.Editor editor;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_sign_up);
+        preferences = PreferenceManager.getDefaultSharedPreferences(SignUpActivity.this);
 
         mUsernameView = (EditText) findViewById(R.id.signup_username);
         mPasswordView = (EditText) findViewById(R.id.signup_password);
         mEmailView = (EditText) findViewById(R.id.email_signup_form);
+        mProgressBar = (ProgressBar) findViewById(R.id.progress_bar_signup);
 
         Button mSignUpBtn;
         mSignUpBtn = (Button) findViewById(R.id.sign_up_button);
@@ -49,19 +56,52 @@ public class SignUpActivity extends AppCompatActivity {
                         , username + password, Toast.LENGTH_SHORT).show();
                 Log.v("signuptag", "Send request");
                 try {
-                    new SignupRequest().execute();
+                    new SignupRequest(SignUpActivity.this).execute();
                 } catch (Exception e) {
                     Log.v("signuptag", "caught exception");
                     finish();
                 }
-                if (token != null) {
-                    Log.v("signuptag", token);
-                    startActivity(new Intent(SignUpActivity.this, NewsFeedActivity.class));
-                } else {
-                    Log.v("signuptag", token + "null");
-                }
             }
         });
+
+    }
+
+
+    private class SignupRequest extends AsyncTask<String, String, String> {
+
+        private String resp;
+        String returnedToken;
+        Context mContext;
+
+        public SignupRequest(Context context) {
+            mContext = context;
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                returnedToken = sendSignupRequest();
+            } catch (Exception e) {
+                e.printStackTrace();
+                resp = e.getMessage();
+            }
+            return resp;
+        }
+
+
+        @Override
+        protected void onPostExecute(String result) {
+            mProgressBar.setVisibility(View.GONE);
+            editor = preferences.edit();
+            editor.putString("token", returnedToken);
+            editor.apply();
+            startActivity(new Intent(SignUpActivity.this, NewsFeedActivity.class));
+        }
+
+        @Override
+        protected void onPreExecute() {
+            mProgressBar.setVisibility(View.VISIBLE);
+        }
 
     }
 
@@ -94,6 +134,7 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
     private String parseJson(String result) {
+        String token = null;
         try {
             JSONObject json = new JSONObject(result);
             token = json.getString("token");
@@ -102,40 +143,5 @@ public class SignUpActivity extends AppCompatActivity {
             Log.e("signuptag", "Problem parsing the JSON results", e);
         }
         return token;
-    }
-
-    private class SignupRequest extends AsyncTask<String, String, String> {
-
-        private String resp;
-        ProgressDialog progressDialog;
-        String returnedToken;
-
-        @Override
-        protected String doInBackground(String... params) {
-            publishProgress("Sleeping..."); // Calls onProgressUpdate()
-            try {
-                returnedToken = sendSignupRequest();
-            } catch (Exception e) {
-                e.printStackTrace();
-                resp = e.getMessage();
-            }
-            return resp;
-        }
-
-
-        @Override
-        protected void onPostExecute(String result) {
-            progressDialog.dismiss();
-            SignUpActivity.token = returnedToken;
-            startActivity(new Intent(SignUpActivity.this, NewsFeedActivity.class));
-        }
-
-        @Override
-        protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(SignUpActivity.this,
-                    "ProgressDialog",
-                    "Wait for  seconds");
-        }
-
     }
 }

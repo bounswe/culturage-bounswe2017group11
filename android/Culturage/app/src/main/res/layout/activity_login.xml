@@ -19,6 +19,13 @@
         android:orientation="vertical"
         android:padding="8dp">
 
+        <ProgressBar
+            android:id="@+id/progress_bar_login"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"
+            android:layout_gravity="center" />
+
         <EditText
             android:id="@+id/username"
             android:layout_width="match_parent"
@@ -118,4 +125,5 @@
             android:text="@string/sign_up"
             android:textColor="@color/login_page_text_color" />
     </LinearLayout>
+
 </LinearLayout>

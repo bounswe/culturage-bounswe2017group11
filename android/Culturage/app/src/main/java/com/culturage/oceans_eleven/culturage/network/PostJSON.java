@@ -32,8 +32,8 @@ public class PostJSON {
         try {
             //Connect
             urlConnection.setDoOutput(true);
-//            urlConnection.setRequestProperty("Content-Type", "application/json");
-//            urlConnection.setRequestProperty("Accept", "application/json");
+            urlConnection.setRequestProperty("Content-Type", "application/json");
+            urlConnection.setRequestProperty("Accept", "application/json");
             urlConnection.setRequestMethod("POST");
             urlConnection.connect();
             Log.v("postApi", "url connected");
@@ -44,12 +44,15 @@ public class PostJSON {
             writer.close();
             outputStream.close();
             Log.v("postApi", "output closed");
-            if (urlConnection.getResponseCode() == 201) {
+            if (urlConnection.getResponseCode() == 201 || urlConnection.getResponseCode() == 200) {
                 inputStream = urlConnection.getInputStream();
                 result = readFromStream(inputStream);
             } else {
                 Log.v("postApi", json.toString());
                 Log.v("postApi", urlConnection.getResponseCode() + "");
+                Log.v("postApi-response", urlConnection.getResponseMessage());
+                result = readFromStream(urlConnection.getErrorStream());
+                Log.v("postApi-result", result);
                 return "400";
             }
 
