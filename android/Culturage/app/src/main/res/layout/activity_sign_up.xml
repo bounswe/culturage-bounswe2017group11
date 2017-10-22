@@ -1,0 +1,76 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:padding="@dimen/medium_padding"
+    tools:context="com.culturage.oceans_eleven.culturage.signup_login.LoginActivity">
+
+    <LinearLayout
+        android:id="@+id/email_login_form"
+        android:layout_width="@dimen/login_form_width"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/large_padding"
+        android:orientation="vertical"
+        android:padding="@dimen/small_padding">
+
+        <EditText
+            android:id="@+id/email_signup_form"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edit_text_height"
+            android:background="@drawable/blue_border"
+            android:hint="@string/prompt_email"
+            android:padding="@dimen/small_padding"
+            android:layout_marginBottom="@dimen/small_padding"
+            android:textCursorDrawable="@null"
+            android:textColor="@color/login_page_text_color"
+            android:textColorHint="@color/hint_color" />
+
+        <EditText
+            android:id="@+id/signup_username"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edit_text_height"
+            android:background="@drawable/blue_border"
+            android:hint="@string/prompt_username"
+            android:padding="@dimen/small_padding"
+            android:layout_marginBottom="@dimen/small_padding"
+            android:textCursorDrawable="@null"
+            android:textColor="@color/login_page_text_color"
+            android:textColorHint="@color/hint_color" />
+
+
+        <EditText
+            android:id="@+id/signup_password"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edit_text_height"
+            android:background="@drawable/blue_border"
+            android:textCursorDrawable="@null"
+            android:hint="@string/prompt_password"
+            android:inputType="textPassword"
+            android:maxLines="1"
+            android:padding="@dimen/small_padding"
+            android:textColor="@color/login_page_text_color"
+            android:textColorHint="@color/hint_color" />
+
+
+        <Button
+            android:id="@+id/sign_up_button"
+            style="?android:textAppearanceSmall"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/medium_padding"
+            android:background="@drawable/blue_border"
+            android:text="@string/sign_up"
+            android:textStyle="bold"
+            android:textColor="@color/primary_blue" />
+
+    </LinearLayout>
+
+    <ProgressBar
+        android:id="@+id/progress_bar_signup"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:visibility="invisible" />
+</LinearLayout>

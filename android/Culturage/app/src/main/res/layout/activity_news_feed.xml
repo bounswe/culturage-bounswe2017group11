@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:gravity="center_horizontal"
+    android:orientation="vertical"
+    android:descendantFocusability="beforeDescendants"
+    tools:context="com.culturage.oceans_eleven.culturage.newsFeed.NewsFeedActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/edit_text_height"
+        android:background="@color/primary_blue"
+        android:id="@+id/top_bar">
+        <!-- A dummy view to draw the focus-->
+        <LinearLayout
+            android:focusable="true"
+            android:focusableInTouchMode="true"
+            android:layout_width="0dp"
+            android:layout_height="0dp"
+            android:id="@+id/dummyView"
+            android:orientation="horizontal" />
+        <EditText
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:backgroundTint="@android:color/white"
+            android:hint="@string/search_text"
+            android:paddingLeft="@dimen/medium_padding"
+            android:paddingRight="@dimen/medium_padding"
+            android:textColorHighlight="@android:color/white"
+            android:textColorHint="@color/hint_color"
+            android:textColor="@android:color/white"
+            android:textCursorDrawable="@null"
+            android:focusable="true"
+            android:focusableInTouchMode="true">
+
+        </EditText>
+
+        <ImageButton
+            android:layout_width="36dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0"
+            android:background="@color/primary_blue"
+            android:layout_marginEnd="@dimen/tiny_padding"
+            android:layout_marginStart="@dimen/small_padding"
+            android:src="@mipmap/ic_search"
+            android:scaleType="centerInside" />
+
+        <ImageButton
+            android:id="@+id/profileIcon"
+            android:layout_width="36dp"
+            android:layout_height="match_parent"
+            android:layout_weight="0"
+            android:layout_marginStart="@dimen/tiny_padding"
+            android:layout_marginEnd="@dimen/small_padding"
+            android:background="@color/primary_blue"
+            android:src="@mipmap/ic_user"
+            android:scaleType="centerInside" />
+    </LinearLayout>
+
+    <ListView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@+id/news_feed_list"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@id/top_bar"
+        android:dividerHeight="@dimen/medium_padding"
+        android:orientation="vertical" />
+
+    <android.support.design.widget.FloatingActionButton xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/fab"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:backgroundTint="@color/primary_blue"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true"
+        android:layout_margin="@dimen/medium_padding"
+        android:src="@mipmap/ic_upload"
+        app:fabSize="normal" />
+
+</RelativeLayout>

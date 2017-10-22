@@ -16,4 +16,19 @@
     <string name="sign_up">Sign Up</string>
     <string name="need_an_account">Need an account?</string>
     <string name="middle_line_text">OR</string>
+    <string name="unsuccessful_login">Invalid username or password</string>
+    <string name="action_sign_up">Sign Up</string>
+    <string name="prompt_title">Title</string>
+    <string name="prompt_description">Description</string>
+    <string name="prompt_time">Time</string>
+    <string name="prompt_">Location</string>
+    <string name="prompt_tags">Tags</string>
+    <string name="upload_btn">ADD!</string>
+    <string name="like_btn_text">Like</string>
+    <string name="comment_btn_text">Comment</string>
+    <string name="search_text">Search</string>
+    <string name="upload_profile_pic">Search</string>
+    <string name="prompt_email">Email</string>
+
+
 </resources>
