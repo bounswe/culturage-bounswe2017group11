@@ -7,6 +7,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.culturage.oceans_eleven.culturage.R;
+import com.squareup.picasso.Picasso;
 
 public class HeritageItemViewActivity extends AppCompatActivity {
 
@@ -31,7 +32,11 @@ public class HeritageItemViewActivity extends AppCompatActivity {
 
         ImageView iw = (ImageView) findViewById(R.id.her_item_photo);
         int defaultImageId = R.drawable.culturage;
-        iw.setImageResource(getIntent().getIntExtra("resourceID", defaultImageId));
+
+        String imageUri = extras.getString("imageUrl");
+        Picasso.with(this).load(imageUri).into(iw);
+
+//        iw.setImageResource(getIntent().getIntExtra("resourceID", defaultImageId));
 
         TextView tagsView = (TextView) findViewById(R.id.her_item_tags);
         tagsView.setText("#nice\t#cool\t#dummy");
