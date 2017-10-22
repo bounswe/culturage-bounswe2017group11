@@ -2,22 +2,24 @@ from django.db import models
 from django.contrib.auth.models import User
 
 class Item(models.Model):
-    name = models.CharField(max_length=200)
-    description = models.TextField(null=True)
-    featured_img = models.FileField(upload_to='item', null=True)
-    rate = models.IntegerField(null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(null=True)
-    created_by = models.ForeignKey(User, related_name='items_created', on_delete=models.SET_NULL, null=True)
-    updated_by = models.ForeignKey(User, related_name='items_updated', on_delete=models.SET_NULL, null=True)
+	name = models.CharField(max_length=200)
+	description = models.TextField(null=True)
+	featured_img = models.FileField(upload_to='item', null=True)
+	rate = models.IntegerField(null=True)
+	created_at = models.DateTimeField(auto_now_add=True)
+	updated_at = models.DateTimeField(null=True)
+	created_by = models.ForeignKey(User, related_name='items_created', on_delete=models.SET_NULL, null=True)
+	updated_by = models.ForeignKey(User, related_name='items_updated', on_delete=models.SET_NULL, null=True)
+	def __str__(self):
+		return self.name
 
 class Comment(models.Model):
-    text = models.CharField(max_length=500)
-    rate = models.IntegerField(null=True)
-    created_at = models.DateTimeField(auto_now_add=True)
-    updated_at = models.DateTimeField(null=True)
-    written_by = models.ForeignKey(User, related_name='comment_written_by', on_delete=models.SET_NULL, null=True)
-    related_item = models.ForeignKey(Item, related_name='commented_item', on_delete=models.CASCADE, null=True)
+	text = models.CharField(max_length=500)
+	rate = models.IntegerField(null=True)
+	created_at = models.DateTimeField(auto_now_add=True)
+	updated_at = models.DateTimeField(null=True)
+	written_by = models.ForeignKey(User, related_name='comment_written_by', on_delete=models.SET_NULL, null=True)
+	related_item = models.ForeignKey(Item, related_name='commented_item', on_delete=models.CASCADE, null=True)
 
 class Annotation(models.Model):
 	text = models.CharField(max_length=500)
@@ -38,11 +40,13 @@ class Location(models.Model):
 
 class Timeline(models.Model):
 	name = models.CharField(max_length=200)
-	text = models.CharField(max_length=500)
-	startDate = models.DateField(auto_now_add = False)
-	endDate = models.DateField(auto_now_add = False)
-	item_id = models.ForeignKey(Item, related_name = 'timeline_of_item', on_delete= models.CASCADE, null= True)
-	location_id = models.ForeignKey(Location, related_name = 'timeline_location', on_delete = models.SET_NULL, null = True)
+	text = models.CharField(max_length=500, null = True)
+	startDate = models.DateField(auto_now_add = False, null = True)
+	endDate = models.DateField(auto_now_add = False, null = True)
+	item = models.ForeignKey(Item, related_name = 'timelines', on_delete= models.CASCADE, null= True)
+	location = models.ForeignKey(Location, related_name = 'timeline_location', on_delete = models.SET_NULL, null = True)
+	def __str__(self):
+		return self.name + " - " + self.startDate.strftime("%d.%m.%Y")
 
 class Follow(models.Model):
 	follower = models.ForeignKey(User, related_name ='user_follower', on_delete=models.CASCADE, null=True)
@@ -112,17 +116,3 @@ class TextAnno(models.Model):
 	endChar = models.TimeField(null = True)
 	media_id = models.ForeignKey(Media, related_name = 'text_media', on_delete = models.CASCADE, null= True)
 	annotation_id = models.ForeignKey(Annotation, related_name = 'text_annotation', on_delete = models.CASCADE, null=True)
-
-
-
-
-
-
-
-
-
-
-
-
-
-

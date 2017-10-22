@@ -16,7 +16,9 @@ class ItemViewSet(viewsets.ModelViewSet):
 	permission_classes = (permissions.IsAuthenticated,)
 
 	def perform_create(self, serializer):
-		serializer.save(featured_img=self.request.data.get('image'))
+		location = self.request.data.get('location');
+		date = self.request.data.get('date');
+		serializer.save(featured_img=self.request.data.get('image'), created_by=self.request.user, date = date, location = location)
 
 def register(request):
 	"""
