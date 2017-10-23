@@ -6,6 +6,8 @@ from rest_framework.parsers import JSONParser
 from rest_framework_jwt.settings import api_settings
 from rest_framework import viewsets
 from rest_framework import permissions
+from django.contrib.auth.models import User
+from base.models import Profile
 
 class ItemViewSet(viewsets.ModelViewSet):
 	"""
@@ -52,3 +54,26 @@ def addLoc(request):
 			return JsonResponse(data, status=201)
 		return JsonResponse(serializer.errors, status=400)
 	return HttpResponse("GET method not allowed")
+	
+def profile(request, id):
+	"""
+    API endpoint that returns profile page.
+    """
+	if request.method == 'GET':
+		us = User.objects.get(pk=id)
+		username = us.username
+		mail = us.email
+		nameSurname = us.profile.nameSurname
+		birthDay = us.profile.birthDay
+		location = us.profile.location
+		profilePhoto = us.profile.profilePhoto
+		response_data = {}
+		response_data["username"] = username
+		response_data["mail"] = mail
+		response_data["nameSurname"] = nameSurname
+		response_data["birthDay"] = birthDay
+		response_data["location"] = location
+		response_data["profilePhoto"] = str(profilePhoto)
+		return JsonResponse(response_data)
+	return HttpResponse("POST method not allowed")
+

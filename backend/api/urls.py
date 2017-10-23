@@ -13,5 +13,6 @@ urlpatterns = [
     url(r'^auth/refresh', refresh_jwt_token),
     url(r'^auth/register', views.register, name='register'),
     url(r'^auth/addLoc', views.register, name='addLoc'),
+    url(r'^profile/([0-9]+)', views.profile, name='profile'),
 ]
 
