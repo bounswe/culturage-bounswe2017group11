@@ -1,13 +1,15 @@
 from django.http import HttpResponse, JsonResponse
+from django.contrib.auth.models import User
 from base.models import Item
+from base.models import Profile
 from base.serializers import ItemSerializer
 from base.serializers import UserSerializer
 from rest_framework.parsers import JSONParser
 from rest_framework_jwt.settings import api_settings
 from rest_framework import viewsets
 from rest_framework import permissions
-from django.contrib.auth.models import User
-from base.models import Profile
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
 
 class ItemViewSet(viewsets.ModelViewSet):
 	"""
@@ -54,26 +56,26 @@ def addLoc(request):
 			return JsonResponse(data, status=201)
 		return JsonResponse(serializer.errors, status=400)
 	return HttpResponse("GET method not allowed")
-	
-def profile(request, id):
+
+@api_view(['GET'])
+@permission_classes((IsAuthenticated, ))
+def profile(request, id = ''):
 	"""
     API endpoint that returns profile page.
     """
 	if request.method == 'GET':
-		us = User.objects.get(pk=id)
-		username = us.username
-		mail = us.email
-		nameSurname = us.profile.nameSurname
-		birthDay = us.profile.birthDay
-		location = us.profile.location
-		profilePhoto = us.profile.profilePhoto
+		if id:
+			user = User.objects.get(pk=id)
+		else:
+			user = request.user
 		response_data = {}
-		response_data["username"] = username
-		response_data["mail"] = mail
-		response_data["nameSurname"] = nameSurname
-		response_data["birthDay"] = birthDay
-		response_data["location"] = location
-		response_data["profilePhoto"] = str(profilePhoto)
+		response_data["username"] = user.username
+		response_data["email"] = user.email
+		if hasattr(user, 'profile'):
+			response_data["fullName"] = user.profile.fullName
+			response_data["birthday"] = user.profile.birthday
+			response_data["location"] = user.profile.location
+			response_data["photo"] = str(user.profile.photo)
 		return JsonResponse(response_data)
 	return HttpResponse("POST method not allowed")
 

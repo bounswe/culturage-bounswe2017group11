@@ -17,11 +17,11 @@ class Item(models.Model):
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    nameSurname = models.CharField(max_length=500,blank=True, null=True)
-    location = models.CharField(max_length=500,blank=True, null=True)
-    birthDay = models.DateField(auto_now_add = False, null = True, blank=True)
+    fullName = models.CharField(max_length=500, blank=True, null=True)
+    location = models.CharField(max_length=500, blank=True, null=True)
+    birthday = models.DateField(auto_now_add = False, null = True, blank=True)
     moderatorDate = models.DateTimeField(null=True, blank=True)
-    profilePhoto = models.FileField(upload_to='profile', null=True, blank=True)
+    photo = models.FileField(upload_to='profile', null=True, blank=True)
 
 @receiver(post_save, sender=User)
 def create_user_profile(sender, instance, created, **kwargs):
