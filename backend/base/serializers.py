@@ -6,7 +6,7 @@ from rest_framework.validators import UniqueValidator
 class UserSerializer(serializers.Serializer):
 	id = serializers.IntegerField(read_only=True)
 	username = serializers.CharField(required=True, max_length=100, validators=[UniqueValidator(queryset=User.objects.all())])
-	email = serializers.CharField(required=True, max_length=100, validators=[UniqueValidator(queryset=User.objects.all())])
+	email = serializers.EmailField(required=True, max_length=100, validators=[UniqueValidator(queryset=User.objects.all())])
 	password = serializers.CharField(required=True, max_length=100)
 	class Meta:
 		model = User

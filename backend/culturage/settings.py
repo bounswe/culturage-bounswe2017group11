@@ -34,6 +34,7 @@ ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS').split(',') if os.getenv('ALLOWED_HOST
 INTERNAL_IPS = '127.0.0.1'
 
 CSRF_COOKIE_SECURE = False
+CORS_ORIGIN_ALLOW_ALL = True
 
 # Application definition
 
@@ -50,11 +51,13 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'django_extensions',
     'debug_toolbar',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.common.CommonMiddleware',
     # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
