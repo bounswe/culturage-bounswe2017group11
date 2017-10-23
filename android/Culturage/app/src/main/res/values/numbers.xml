@@ -2,6 +2,7 @@
 <resources>
 
     <string-array name="birthDayList">
+        <item>--</item>
         <item>01</item>
         <item>02</item>
         <item>03</item>
@@ -38,6 +39,7 @@
 
     <string-array name="birthMonthList">
 
+        <item>--</item>
         <item>01</item>
         <item>02</item>
         <item>03</item>
@@ -54,6 +56,12 @@
     </string-array>
 
     <string-array name="birthYearList">
+        <item>--</item>
+        <item>89</item>
+        <item>90</item>
+        <item>91</item>
+        <item>92</item>
+        <item>93</item>
         <item>94</item>
         <item>95</item>
         <item>96</item>

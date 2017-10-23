@@ -31,6 +31,22 @@
                 android:src="@mipmap/ic_logout" />
 
             <LinearLayout
+                android:id="@+id/dummyView3"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:orientation="horizontal" />
+
+            <ProgressBar
+                android:id="@+id/progress_bar_profilePage"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"
+                android:layout_gravity="center" />
+
+            <LinearLayout
                 android:id="@+id/dummyView2"
                 android:layout_width="0dp"
                 android:layout_height="0dp"
@@ -38,6 +54,7 @@
                 android:focusable="true"
                 android:focusableInTouchMode="true"
                 android:orientation="horizontal" />
+
 
             <ImageButton
                 android:id="@+id/saveProfile"
@@ -70,11 +87,11 @@
             android:orientation="horizontal">
 
             <ImageView
-                android:id="@+id/CulturagePicture"
+                android:id="@+id/profilePicture"
                 android:layout_width="@dimen/upload_image_size"
                 android:layout_height="match_parent"
                 android:layout_gravity="center"
-                app:srcCompat="@drawable/culturage" />
+                app:srcCompat="@mipmap/ic_no_image" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -95,60 +112,36 @@
 
 
         <TextView
-            android:id="@+id/profileName"
+            android:id="@+id/profileFullName"
             android:layout_width="match_parent"
             android:layout_height="@dimen/label_height"
             android:gravity="start"
-            android:text="Name"
+            android:text="Full Name"
             android:textColor="@color/hint_color"
             android:textStyle="italic" />
 
 
         <EditText
-            android:id="@+id/profileNameEdit"
+            android:id="@+id/profileFullNameEdit"
             android:layout_width="match_parent"
             android:layout_height="@dimen/edit_text_height"
             android:layout_marginBottom="@dimen/small_padding"
             android:background="@drawable/blue_border"
             android:ems="10"
-            android:hint=" Name"
+            android:hint="Full Name"
             android:paddingStart="@dimen/small_padding"
-            android:text="Ocean's"
+            android:text=""
             android:textColor="@color/primary_blue"
             android:textColorHint="@color/hint_color"
             android:textCursorDrawable="@null" />
 
-
-        <TextView
-            android:id="@+id/profileLastName"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/label_height"
-            android:gravity="start"
-            android:text="Lastname"
-            android:textColor="@color/hint_color"
-            android:textStyle="italic" />
-
-
-        <EditText
-            android:id="@+id/profileLastnameEdit"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/edit_text_height"
-            android:layout_marginBottom="@dimen/small_padding"
-            android:background="@drawable/blue_border"
-            android:ems="10"
-            android:hint="Lastname"
-            android:paddingStart="@dimen/small_padding"
-            android:text="Eleven"
-            android:textColor="@color/primary_blue"
-            android:textColorHint="@color/hint_color"
-            android:textCursorDrawable="@null" />
 
         <TextView
             android:id="@+id/profileUsername"
             android:layout_width="match_parent"
             android:layout_height="@dimen/label_height"
             android:gravity="start"
-            android:text="Lastname"
+            android:text="Username"
             android:textColor="@color/hint_color"
             android:textStyle="italic" />
 
@@ -162,7 +155,55 @@
             android:ems="10"
             android:hint="Username"
             android:paddingStart="@dimen/small_padding"
-            android:text="username"
+            android:text=""
+            android:textColor="@color/primary_blue"
+            android:textColorHint="@color/hint_color"
+            android:textCursorDrawable="@null" />
+
+        <TextView
+            android:id="@+id/profileEmail"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/label_height"
+            android:gravity="start"
+            android:text="Email"
+            android:textColor="@color/hint_color"
+            android:textStyle="italic" />
+
+
+        <EditText
+            android:id="@+id/profileEmailEdit"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edit_text_height"
+            android:layout_marginBottom="@dimen/small_padding"
+            android:background="@drawable/blue_border"
+            android:ems="10"
+            android:hint="Email"
+            android:paddingStart="@dimen/small_padding"
+            android:text=""
+            android:textColor="@color/primary_blue"
+            android:textColorHint="@color/hint_color"
+            android:textCursorDrawable="@null" />
+
+        <TextView
+            android:id="@+id/profileLocation"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/label_height"
+            android:gravity="start"
+            android:text="Location"
+            android:textColor="@color/hint_color"
+            android:textStyle="italic" />
+
+
+        <EditText
+            android:id="@+id/profileLocationEdit"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edit_text_height"
+            android:layout_marginBottom="@dimen/small_padding"
+            android:background="@drawable/blue_border"
+            android:ems="10"
+            android:hint="Location"
+            android:paddingStart="@dimen/small_padding"
+            android:text=""
             android:textColor="@color/primary_blue"
             android:textColorHint="@color/hint_color"
             android:textCursorDrawable="@null" />
@@ -203,30 +244,6 @@
         </LinearLayout>
 
 
-        <TextView
-            android:id="@+id/profileEmail"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/label_height"
-            android:gravity="start"
-            android:text="Email"
-            android:textColor="@color/hint_color"
-            android:textStyle="italic" />
-
-
-        <EditText
-            android:id="@+id/profileEmailEdit"
-            android:layout_width="match_parent"
-            android:layout_height="@dimen/edit_text_height"
-            android:layout_marginBottom="@dimen/small_padding"
-            android:background="@drawable/blue_border"
-            android:ems="10"
-            android:hint="Email"
-            android:paddingStart="@dimen/small_padding"
-            android:text="culturage@oceanseleven.com"
-            android:textColor="@color/primary_blue"
-            android:textColorHint="@color/hint_color"
-            android:textCursorDrawable="@null" />
-
 
         <TextView
             android:id="@+id/profileAboutYou"
@@ -248,11 +265,13 @@
             android:gravity="top"
             android:hint=" About You"
             android:inputType="textMultiLine"
-            android:text=" We are great!!!"
+            android:text=""
             android:textColor="@color/primary_blue"
             android:textColorHint="@color/hint_color"
             android:textCursorDrawable="@null" />
 
+
     </LinearLayout>
+
 
 </ScrollView>
