@@ -22,7 +22,8 @@ class ItemViewSet(viewsets.ModelViewSet):
 	def perform_create(self, serializer):
 		location = self.request.data.get('location');
 		date = self.request.data.get('date');
-		serializer.save(featured_img=self.request.data.get('image'), created_by=self.request.user, date = date, location = location)
+		tags = self.request.data.getlist('tags');
+		serializer.save(featured_img=self.request.data.get('image'), created_by=self.request.user, date = date, location = location, tags = tags)
 
 def register(request):
 	"""
