@@ -11,6 +11,43 @@
         android:padding="@dimen/small_padding">
 
         <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edit_text_height"
+            android:background="#FFFFFF">
+            <!-- A dummy view to draw the focus-->
+            <LinearLayout
+                android:id="@+id/dummyView3"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:orientation="horizontal" />
+
+            <ImageButton
+                android:id="@+id/save_upload"
+                android:layout_width="36dp"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="@dimen/tiny_padding"
+                android:layout_marginStart="@dimen/small_padding"
+                android:layout_weight="0"
+                android:background="#FFFFFF"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_confirm" />
+
+            <ImageButton
+                android:id="@+id/discard_upload"
+                android:layout_width="36dp"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="@dimen/small_padding"
+                android:layout_marginStart="@dimen/tiny_padding"
+                android:layout_weight="0"
+                android:background="#FFFFFF"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_cancel" />
+        </LinearLayout>
+
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="@dimen/upload_image_size"
             android:layout_gravity="center"
@@ -122,13 +159,5 @@
             android:textColorHint="@color/hint_color"
             android:textCursorDrawable="@null" />
 
-        <Button
-            android:id="@+id/upload_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@drawable/white_border"
-            android:text="@string/upload_btn"
-            android:textColor="@android:color/white" />
     </LinearLayout>
 </ScrollView>
