@@ -87,7 +87,10 @@ def profile(request, id = ''):
 			response_data["fullName"] = user.profile.fullName
 			response_data["birthday"] = user.profile.birthday
 			response_data["location"] = user.profile.location
-			response_data["photo"] = user.profile.photo.url
+			try:
+				response_data["photo"] = user.profile.photo.url
+			except:
+				response_data["photo"] = None
 		return JsonResponse(response_data)
 	return HttpResponse("POST method not allowed")
 
