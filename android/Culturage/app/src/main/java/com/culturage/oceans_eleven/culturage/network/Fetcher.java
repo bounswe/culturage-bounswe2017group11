@@ -6,6 +6,8 @@ import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.util.Log;
 
+import com.culturage.oceans_eleven.culturage.newsFeed.HeritageItem;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -19,10 +21,6 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
-
-import com.culturage.oceans_eleven.culturage.newsFeed.HeritageItem;
-import com.culturage.oceans_eleven.culturage.newsFeed.NewsFeedActivity;
-import com.culturage.oceans_eleven.culturage.signup_login.LoginActivity;
 
 /**
  * Created by me on 21.10.2017.
@@ -53,7 +51,6 @@ public class Fetcher {
         } catch (IOException e) {
             Log.e(LOG_TAG, "Error closing input stream", e);
         }
-
         // Extract relevant fields from the JSON response and create an {@link Event} object
         ArrayList<HeritageItem> newsFeed = extractHeritageItemsFromJson(jsonResponse);
 
@@ -171,10 +168,11 @@ public class Fetcher {
                 String imageURL = values.getString("featured_img");
                 String rate = values.getString("rate");
                 String createdAt = values.getString("created_at");
-
-
+                JSONArray timelines = values.getJSONArray("timelines");
+                String date = timelines.getJSONObject(0).getString("startDate"); // Date is in index 2
+                String location = timelines.getJSONObject(0).getJSONObject("location").getString("name"); // location object is in index 3
                 //TODO dont forget to give the parameters
-                heritageItems.add(new HeritageItem(name,description,imageURL,rate,createdAt));
+                heritageItems.add(new HeritageItem(name, description, imageURL, rate, createdAt, date, location));
                 int a = heritageItems.size();
             }
         } catch (JSONException e) {

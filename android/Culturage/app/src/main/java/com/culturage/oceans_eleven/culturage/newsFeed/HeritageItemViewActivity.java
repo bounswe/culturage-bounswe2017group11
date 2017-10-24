@@ -53,18 +53,18 @@ public class HeritageItemViewActivity extends AppCompatActivity {
 
         TextView date_title = (TextView) findViewById(R.id.her_item_date_title);
 //        date_title.setText("SO ACTUALLY WHEN ARE WE TALKING ABOUT?");
-        date_title.setText("So... what actually ar we talking about?");
+        date_title.setText("Date");
 
         TextView date = (TextView) findViewById(R.id.her_item_date);
-        date.setText("1789 - ?");
+        date.setText(getIntent().getStringExtra("date"));
 
         TextView loc_title = (TextView) findViewById(R.id.her_item_location_title);
 //        loc_title.setText("ANY KNOWN LOCATION?");
-        loc_title.setText("Any known location?");
+        loc_title.setText("Location");
 
 
         TextView loc = (TextView) findViewById(R.id.her_item_location);
-        loc.setText("in the middle of nowhere");
+        loc.setText(getIntent().getStringExtra("location"));
     }
 
 

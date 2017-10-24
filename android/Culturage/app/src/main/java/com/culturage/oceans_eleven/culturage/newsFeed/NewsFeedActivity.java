@@ -67,10 +67,7 @@ public class NewsFeedActivity extends AppCompatActivity implements LoaderManager
         final ListView listView = (ListView) findViewById(R.id.news_feed_list);
         listView.setAdapter(mAdapter);
         updateUi(items);
-
-
         getLoaderManager().initLoader(1, null, this);
-
 
         // FIXME: 22.10.2017
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -82,6 +79,8 @@ public class NewsFeedActivity extends AppCompatActivity implements LoaderManager
                 intent.putExtra("title", item.getmName());
                 intent.putExtra("description", item.getDescription());
                 intent.putExtra("imageUrl",item.getImageURL());
+                intent.putExtra("date", item.getmDate());
+                intent.putExtra("location", item.getmLocation());
                 startActivity(intent);
             }
         });
@@ -116,7 +115,6 @@ public class NewsFeedActivity extends AppCompatActivity implements LoaderManager
     @Override
     public void onLoaderReset(Loader<ArrayList<HeritageItem>> loader) {
         mAdapter.clear();
-
     }
 
 
@@ -130,14 +128,11 @@ public class NewsFeedActivity extends AppCompatActivity implements LoaderManager
         }
         return ni.isConnected() ;
     }
+
+    //    This method is not to show the login page to a logged in user.
     @Override
     public void onBackPressed() {
         moveTaskToBack(true);
-//        Intent intent = new Intent(mContext, LoginActivity.class);
-//        intent.putExtra("FLAG", 0);
-//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-//        startActivity(intent);
     }
 
 }

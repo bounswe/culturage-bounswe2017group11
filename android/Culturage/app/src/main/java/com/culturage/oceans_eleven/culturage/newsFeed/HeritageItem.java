@@ -9,31 +9,51 @@ public class HeritageItem {
     private int mResourceId;
     private long mLikeCount;
     private long mCommentCount;
+    private String mDate;
+    private String mLocation;
+    private String mName;
+    private String description;
+    private String imageURL;
+    private String rate;
+    private String createdAt;
 
-
-    //according to data base
-
-
-    public String getmName() {
-        return mName;
+    public String getmDate() {
+        return mDate;
     }
 
-    public void setmName(String mName) {
-        this.mName = mName;
+
+    //dummy item; this constructor is not to be used, temporary
+    public HeritageItem(String name, String description, String imageURL, String rate, String createdAt, String date, String location) {
+        this.mName = name;
+        this.createdAt = createdAt;
+        this.description = description;
+        this.imageURL = imageURL;
+        this.rate = rate;
+        this.mDate = date;
+        this.mLocation = location;
     }
 
-    private String mName ;
-    private String description ;
-    private  String imageURL ;
-    private String rate ;
-    private  String createdAt ;
+    public HeritageItem(long mPostId, String mTitle, String mDescription, int mResourceId, long mLikeCount, long mCommentCount) {
+        this.mPostId = mPostId;
+        this.mTitle = mTitle;
+        this.mDescription = mDescription;
+        this.mResourceId = mResourceId;
+        this.mLikeCount = mLikeCount;
+        this.mCommentCount = mCommentCount;
+    }
 
+    public String getmLocation() {
+        return mLocation;
+    }
+
+    public void setmLocation(String mLocation) {
+        this.mLocation = mLocation;
+    }
 
 
     public void setmResourceId(int mResourceId) {
         this.mResourceId = mResourceId;
     }
-
 
     public String getDescription() {
         return description;
@@ -67,24 +87,13 @@ public class HeritageItem {
         this.createdAt = createdAt;
     }
 
-
-
-    //dummy item; this constructor is not to be used, temporary
-    public HeritageItem(String name, String description, String imageURL, String rate,   String createdAt){
-        this.mName = name;
-        this.createdAt = createdAt;
-        this.description = description;
-        this.imageURL = imageURL;
-        this.rate = rate;
+    public String getmName() {
+        return mName;
     }
 
-    public HeritageItem(long mPostId, String mTitle, String mDescription, int mResourceId, long mLikeCount, long mCommentCount) {
-        this.mPostId = mPostId;
-        this.mTitle = mTitle;
-        this.mDescription = mDescription;
-        this.mResourceId = mResourceId;
-        this.mLikeCount = mLikeCount;
-        this.mCommentCount = mCommentCount;
+
+    public void setmName(String mName) {
+        this.mName = mName;
     }
 
     public long getmPostId() {

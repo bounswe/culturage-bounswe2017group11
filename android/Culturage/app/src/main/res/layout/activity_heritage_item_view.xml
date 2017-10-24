@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:background="@android:color/white"
         android:orientation="vertical">
 
@@ -27,7 +27,7 @@
         <ImageView
             android:id="@+id/her_item_photo"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:layout_margin="@dimen/small_padding"
             android:scaleType="centerCrop"
             tools:src="@mipmap/hagia_sophia" />
@@ -62,9 +62,12 @@
             <TextView
                 android:id="@+id/her_item_description"
                 android:layout_width="match_parent"
-                android:layout_height="@dimen/large_edit_text_height"
+                android:layout_height="wrap_content"
+                android:minHeight="@dimen/large_edit_text_height"
                 android:background="@drawable/blue_border"
-                android:textColor="@color/login_page_text_color" />
+                android:textColor="@color/login_page_text_color"
+                tools:text="Some text would go here. Longer surely"
+                android:padding="@dimen/small_padding" />
 
             <LinearLayout
                 android:layout_width="match_parent"
