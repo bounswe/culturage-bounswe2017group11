@@ -172,7 +172,17 @@ public class Fetcher {
                 String date = timelines.getJSONObject(0).getString("startDate"); // Date is in index 2
                 String location = timelines.getJSONObject(0).getJSONObject("location").getString("name"); // location object is in index 3
                 //TODO dont forget to give the parameters
-                heritageItems.add(new HeritageItem(name, description, imageURL, rate, createdAt, date, location));
+                Log.v("integer", date);
+                if (date == null || date.equals("null")) {
+                    date = "2017-01-01";
+                    //Log.v("integer", "here i am");
+                }
+                Log.v("integer", date);
+                String[] temp = date.split("-");
+                temp[0] = Integer.parseInt(temp[0]) + "";
+                date = temp[2] + "/" + temp[1] + "/" + temp[0];
+
+                heritageItems.add(new HeritageItem(name.trim(), description.trim(), imageURL, rate, createdAt, date, location));
                 int a = heritageItems.size();
             }
         } catch (JSONException e) {
