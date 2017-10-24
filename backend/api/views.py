@@ -11,6 +11,9 @@ from rest_framework import permissions
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 
+import base64
+from django.core.files.base import ContentFile
+
 class ItemViewSet(viewsets.ModelViewSet):
 	"""
     API endpoint that allows items to be viewed or edited.
@@ -22,8 +25,16 @@ class ItemViewSet(viewsets.ModelViewSet):
 	def perform_create(self, serializer):
 		location = self.request.data.get('location');
 		date = self.request.data.get('date');
-		tags = self.request.data.getlist('tags');
-		serializer.save(featured_img=self.request.data.get('image'), created_by=self.request.user, date = date, location = location, tags = tags)
+		tags = self.request.data.get('tags');
+		image = None
+		if self.request.data.get('image'):
+			image = self.request.data.get('image');
+			if type(image) is str:
+				format, imgstr = image.split(';base64,')
+				ext = format.split('/')[-1]
+				image = ContentFile(base64.b64decode(imgstr), name='item.' + ext) # You can save this as file instance.
+		# serializer.save(featured_img=self.request.data.get('image'), created_by=self.request.user, date = date, location = location, tags = tags)
+		serializer.save(featured_img=image, created_by=self.request.user, date = date, location = location, tags = tags)
 
 def register(request):
 	"""
