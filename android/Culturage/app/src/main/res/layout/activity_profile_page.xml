@@ -208,40 +208,64 @@
             android:textColorHint="@color/hint_color"
             android:textCursorDrawable="@null" />
 
-        <LinearLayout
+        <TextView
+            android:id="@+id/profileBirthday"
             android:layout_width="match_parent"
-            android:layout_height="@dimen/edit_text_height">
-
-            <TextView
-                android:id="@+id/profileDateBirth"
-                android:layout_width="wrap_content"
-                android:layout_height="match_parent"
-                android:text="  Date Of Birth"
-                android:paddingRight="@dimen/small_padding"
-                android:textColor="@color/hint_color"
-                android:textStyle="italic" />
+            android:layout_height="@dimen/label_height"
+            android:gravity="start"
+            android:text="Birthday"
+            android:textColor="@color/hint_color"
+            android:textStyle="italic" />
 
 
-            <Spinner
-                android:id="@+id/birthDaySpinner"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/edit_text_height"
-                android:layout_weight="1" />
+        <EditText
+            android:id="@+id/profileBirthdayEdit"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edit_text_height"
+            android:layout_marginBottom="@dimen/small_padding"
+            android:background="@drawable/blue_border"
+            android:ems="10"
+            android:hint="Birthday"
+            android:paddingStart="@dimen/small_padding"
+            android:text=""
+            android:textColor="@color/primary_blue"
+            android:textColorHint="@color/hint_color"
+            android:textCursorDrawable="@null" />
+        <!--
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/edit_text_height">
 
-            <Spinner
-                android:id="@+id/birthMonthSpinner"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/edit_text_height"
-                android:layout_weight="1" />
-
-            <Spinner
-                android:id="@+id/birthYearSpinner"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/edit_text_height"
-                android:layout_weight="1" />
+                    <TextView
+                        android:id="@+id/profileDateBirth"
+                        android:layout_width="wrap_content"
+                        android:layout_height="match_parent"
+                        android:text="  Date Of Birth"
+                        android:paddingRight="@dimen/small_padding"
+                        android:textColor="@color/hint_color"
+                        android:textStyle="italic" />
 
 
-        </LinearLayout>
+                    <Spinner
+                        android:id="@+id/birthDaySpinner"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/edit_text_height"
+                        android:layout_weight="1" />
+
+                    <Spinner
+                        android:id="@+id/birthMonthSpinner"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/edit_text_height"
+                        android:layout_weight="1" />
+
+                    <Spinner
+                        android:id="@+id/birthYearSpinner"
+                        android:layout_width="0dp"
+                        android:layout_height="@dimen/edit_text_height"
+                        android:layout_weight="1" />
+
+
+                </LinearLayout> -->
 
 
 

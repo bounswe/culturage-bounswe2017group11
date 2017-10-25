@@ -84,7 +84,7 @@ public class Utils {
             urlConnection = (HttpURLConnection) url.openConnection();
             urlConnection.setReadTimeout(10000 /* milliseconds */);
             urlConnection.setConnectTimeout(15000 /* milliseconds */);
-            urlConnection.setRequestMethod("GET");
+            urlConnection.setRequestMethod("GET");                  //!!!!!!!!!!!1 watch out
 
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
             String token = preferences.getString("token", "null");
@@ -183,7 +183,7 @@ public class Utils {
 
 
             //TODO dont forget to give the parameters
-            profilepages.add(new ProfilePage(username, email, fullName, location, photo));
+            profilepages.add(new ProfilePage(username, email, fullName, location, photo, birthday));
 
         } catch (JSONException e) {
             Log.e("QueryUtils", "Problem parsing the profile page results", e);

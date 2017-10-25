@@ -12,14 +12,23 @@ public class ProfilePage {
     private String email;
     private String about;
     private String photo;
-    private int birthday, birthmonth, birthyear;
+    private String birthday;
 
-    public ProfilePage(String username, String email, String fullName, String location, String photo) {
+    public ProfilePage(String username, String email, String fullName, String location, String photo, String birthday) {
         this.username = username;
         this.email = email;
         this.fullName = fullName;
         this.location = location;
         this.photo = photo;
+        this.birthday = birthday;
+    }
+
+    public void setBirthday(String birthday) {
+        this.birthday = birthday;
+    }
+
+    public String getBirthday() {
+        return birthday;
     }
 
     public void setPhoto(String photo) {
