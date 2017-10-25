@@ -16,7 +16,7 @@ class NewsFeedItem extends React.Component {
                                 </Link>
                                  
                                  <h2>{this.props.item.created_at.substring(0, 10)} - {this.props.item.created_by.username}</h2>
-                                 <p>{this.props.item.description.substring(0, 200)}...<a href="/item">Read more..</a></p>
+                                 <p>{this.props.item.description.substring(0, 200)}...<Link to={"/item/" + this.props.item.id}> Read More </Link></p>
                                  
                               </div>
                               <div class="col-sm-6">
