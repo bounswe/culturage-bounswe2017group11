@@ -4,6 +4,7 @@ import Navbar from '../Home/components/Navbar.jsx';
 import Body from './components/Body.jsx';
 import Comment from './components/Comment.jsx';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import './utils/font-awesome-4.7.0/css/font-awesome.min.css'
 
 import './utils/mycss.css';
 

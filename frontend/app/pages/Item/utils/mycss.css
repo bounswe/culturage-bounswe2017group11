@@ -1,4 +1,4 @@
-@import url("//netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css")
+@import url("https://netdna.bootstrapcdn.com/font-awesome/4.1.0/css/font-awesome.min.css")
 @import url("https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css")
 
 .panel-shadow {
@@ -105,7 +105,7 @@
   margin-left: 50px;
 }
 
-.mycontainer{position:relative;margin-left:auto;margin-right:auto;padding-right:15px;padding-left:15px; padding-top: 25px}
+.mycontainer{position:relative;margin-left:75px;margin-right:75px;padding-right:15px;padding-left:15px; padding-top: 25px}
 
 img {
   height: 100%;
@@ -117,3 +117,10 @@ img {
 }
 
 
+.card-title{margin-bottom:.75rem}.card-subtitle{margin-top:-.375rem;margin-bottom:0}
+
+.bg-info{background-color:#5bc0de!important}a.bg-info:focus,a.bg-info:hover{background-color:#31b0d5!important}
+
+.myjumbotron{padding:2rem 1rem;margin-bottom:2rem;background-color:#eceeef;border-radius:.3rem}@media (min-width:576px){.jumbotron{padding:4rem 2rem}}
+
+.badge-info{background-color:#5bc0de}.badge-info[href]:focus,.badge-info[href]:hover{background-color:#31b0d5}

@@ -1,5 +1,4 @@
 import React from 'react';
-import '../utils/mycss.css';
 
 class Comment extends React.Component {
     constructor(props){
@@ -8,9 +7,10 @@ class Comment extends React.Component {
 
    render() {
    let comment;
+   if(typeof this.props.item != "undefined") {
    comment = <div>
-        <div class="container">
-        <div class="card">
+        <div class="mycontainer">
+        <div class="panel panel-white post">
             <div class="card-header text-white bg-info">
                 Item details
                 </div>
@@ -47,25 +47,15 @@ class Comment extends React.Component {
                             <p>Wow! Hilarious. </p>
                         </div>
                     </li>
-                    <li class="comment">
-                        <a class="pull-left" href="#">
-                            <img class="avatar" src="http://bootdey.com/img/Content/user_2.jpg" alt="avatar"/>
-                        </a>
-                        <div class="comment-body">
-                            <div class="comment-heading">
-                                <h4 class="user">Ceren</h4>
-                                <h5 class="time">14 minutes ago</h5>
-                            </div>
-                            <p>I have visited therere before but I want to see it again.</p>
-                        </div>
-                    </li>
                 </ul>
         </div>
     </div>
 </div>
 
     </div> 
-
+} else{
+    comment = null;
+}
       return (
       <div>
             {comment}
