@@ -15,8 +15,7 @@ ReactDOM.render(
     	<Route exact path="/" component={Home} />
     	<Route exact path="/login" component={Login} />
     	<Route exact path="/upload" component={Upload} />
-    	<Route exact path="/item" component={Item} />
-
+    	<Route path="/item/:id" component={Item} />
   	</Switch>
   </BrowserRouter>,
   document.getElementById('app')

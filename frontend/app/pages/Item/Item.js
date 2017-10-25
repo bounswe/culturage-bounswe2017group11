@@ -8,16 +8,18 @@ import './utils/mycss.css';
 
 
 class Item extends React.Component {
-	constructor(){
-   		super();
+	constructor(props){
+   		super(props);
    		this.state = {items: []};
 	}
 
 	componentDidMount(){
+    var id = this.props.match.params.id;
+    var link = 'http://18.220.108.135/api/items/' + id;
 		var _this = this;
     	var myHeaders = new Headers();
     	myHeaders.append("Authorization", "JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyMiwidXNlcm5hbWUiOiJha29rc2FsIiwiZW1haWwiOiJha29rc2FsQGEuY29tIiwiZXhwIjoyNTA4Njc4OTE1fQ.PgPIJppA9u5umhrHGxPmv7_1Hi2ItASDgd7NH4DHcO0");
-    	fetch('http://18.220.108.135/api/items/5', {
+    	fetch(link , {
         	method: 'GET',
         	headers: myHeaders
         })

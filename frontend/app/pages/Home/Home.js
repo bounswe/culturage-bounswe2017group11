@@ -3,7 +3,7 @@ import Navbar from './components/Navbar.jsx';
 import NewsFeedItem from './components/NewsFeedItem.jsx';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './utils/home-styles.css';
-
+import { Link } from 'react-router-dom';
 
 class Home extends React.Component {
 	constructor(){
@@ -21,6 +21,7 @@ class Home extends React.Component {
         })
     	.then(response => response.json())
     	.then(function(data){
+    			console.log(data);
       		_this.setState({itemlist: data});
       	})
 
@@ -35,6 +36,9 @@ class Home extends React.Component {
 			<div>
 				<Navbar page={"home"}/>
 				<div class = "newsfeed">
+				<Link to="item/3">
+          CLICK ME
+        </Link>
 					{this.state.itemlist.map(function(groupItem, key){ return (
 			            <NewsFeedItem item={groupItem} key={key}/>
 			        );})}
