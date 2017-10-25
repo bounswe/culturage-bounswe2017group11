@@ -22,6 +22,7 @@ class ContactForm extends React.Component {
         this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
         this.handleTagsChange = this.handleTagsChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.handleClear = this.handleClear.bind(this);
     }
 
     _handleSubmit(e) {
@@ -47,7 +48,7 @@ class ContactForm extends React.Component {
     }
 
 
-    handleClear(e) { e.preventDefault();}
+    handleClear(e) { e.preventDefault();window.location.replace("/upload");}
 
     // onChange handler saves subject to state
     handleNameChange(event){event.preventDefault();this.setState({name: event.target.value});};
@@ -183,4 +184,3 @@ function getCookie(key) {
     return keyValue ? keyValue[2] : null;
 }
 export default ContactForm;
-
