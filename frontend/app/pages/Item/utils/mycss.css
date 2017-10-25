@@ -105,6 +105,8 @@
   margin-left: 50px;
 }
 
+.container{position:relative;margin-left:auto;margin-right:auto;padding-right:15px;padding-left:15px}
+
 img {
   height: 100%;
 }
