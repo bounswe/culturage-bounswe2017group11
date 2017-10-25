@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import Navbar from './components/Navbar.jsx';
 import Body from './components/Body.jsx';
 import Comment from './components/Comment.jsx';
-import 'bootstrap/dist/css/bootstrap.min.css';
+import './utils/bootstrap.min.css';
 import './utils/mycss.css';
 
 
