@@ -36,9 +36,6 @@ class Home extends React.Component {
 			<div>
 				<Navbar page={"home"}/>
 				<div class = "newsfeed">
-				<Link to="item/3">
-          CLICK ME
-        </Link>
 					{this.state.itemlist.map(function(groupItem, key){ return (
 			            <NewsFeedItem item={groupItem} key={key}/>
 			        );})}
