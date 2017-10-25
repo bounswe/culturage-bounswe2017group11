@@ -30,7 +30,8 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/small_padding"
             android:scaleType="centerCrop"
-            tools:src="@mipmap/hagia_sophia" />
+            tools:src="@mipmap/hagia_sophia"
+            android:adjustViewBounds="true" />
 
         <LinearLayout
             android:layout_width="match_parent"

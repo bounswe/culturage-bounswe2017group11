@@ -52,7 +52,8 @@ public class HeritageItemAdapter extends ArrayAdapter {
 
 
         String imageUri = currentItem.getmImageString();
-        Picasso.with(this.getContext()).load(imageUri).into(imageView);
+        // 400 looks cool
+        Picasso.with(this.getContext()).load(imageUri).resize(400, 0).into(imageView);
 
 
         Button commentBtn = (Button) listItemView.findViewById(R.id.comment_btn);

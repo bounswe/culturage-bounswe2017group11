@@ -33,7 +33,8 @@ public class HeritageItemViewActivity extends AppCompatActivity {
         int defaultImageId = R.drawable.culturage;
 
         String imageUri = extras.getString("imageUrl");
-        Picasso.with(this).load(imageUri).into(iw);
+        // 400 looks cool
+        Picasso.with(this).load(imageUri).resize(400, 0).into(iw);
 
 //        iw.setImageResource(getIntent().getIntExtra("resourceID", defaultImageId));
 
