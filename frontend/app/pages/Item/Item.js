@@ -41,10 +41,15 @@ class Item extends React.Component {
 			<div>
 				<Navbar page={"home"} /> 
 			   		<div class="container">
+			   		   			<div class="col-md-8">
 
-                  <Navbar page={"home"} />
+
                   <Body item={this.state.items} />
+                  </div>
+                     			<div class="col-md-4">
+
                   <Comment item={this.state.items} />
+                  </div>
 
                   </div>
 			</div>
