@@ -125,9 +125,6 @@ class ContactForm extends React.Component {
                   <input className="fileInput"
                     type="file"
                     onChange={(e)=>this._handleImageChange(e)} />
-                  <button className="btn btn-primary " id="leftSubmit"
-                    type="submit"
-                    onClick={(e)=>this._handleSubmit(e)}>Upload Image</button>
                 </form>
                 <div className="imgPreview">
                   {$imagePreview}
