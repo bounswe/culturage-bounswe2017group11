@@ -22,7 +22,6 @@ class Home extends React.Component {
     	.then(response => response.json())
     	.then(function(data){
       		_this.setState({itemlist: data});
-      		console.log(data)
       	})
 
 		.catch(function(error) {

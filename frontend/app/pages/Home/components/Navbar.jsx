@@ -3,9 +3,16 @@ import React from 'react';
 class Navbar extends React.Component {
 	constructor(props){
    		super(props);
-   		this.state = {activeClassName: this.props.page};
+   		this.state = {
+   			activeClassName: this.props.page,
+   			token: ''
+   		};
 	}
-
+	componentDidMount(){
+		var tokenTemp = getCookie("token");
+		this.setState({token : tokenTemp});
+		console.log(this.token);
+	}
 	render() {
 		return (
 			<div class="navbar navbar-default">
@@ -29,7 +36,9 @@ class Navbar extends React.Component {
 								</form>
 						</div>
 						<ul class="nav navbar-nav navbar-right">
-							<li><a href="http://localhost:8080/"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+						{ this.state.token ? <li><a href="/login"><span class="glyphicon glyphicon-log-out" onClick={this.logOut}></span> Logout </a></li>
+									: <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+						}
 						</ul>
 					</div>
 				</div>
@@ -38,5 +47,8 @@ class Navbar extends React.Component {
 		);
 	}
 }
-
+function getCookie(key) {
+    var keyValue = document.cookie.match('(^|;) ?' + key + '=([^;]*)(;|$)');
+    return keyValue ? keyValue[2] : null;
+}
 export default Navbar;
