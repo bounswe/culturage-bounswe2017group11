@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Navbar from './components/Navbar.jsx';
+import Navbar from '../Home/components/Navbar.jsx';
 import Body from './components/Body.jsx';
 import Comment from './components/Comment.jsx';
 import './utils/bootstrap.min.css';
@@ -37,12 +37,16 @@ class Item extends React.Component {
 
 	render() {
 		return(
-			<div>  
+
+			<div>
+				<Navbar page={"home"} /> 
+			   		<div class="container">
+
                   <Navbar page={"home"} />
                   <Body item={this.state.items} />
                   <Comment item={this.state.items} />
 
-                  
+                  </div>
 			</div>
 		);
 	}
