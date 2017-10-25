@@ -13,6 +13,9 @@ class Navbar extends React.Component {
 		this.setState({token : tokenTemp});
 		console.log(this.token);
 	}
+	handleClick(){
+		removeCookie("token");
+	}
 	render() {
 		return (
 			<div class="navbar navbar-default">
@@ -36,8 +39,9 @@ class Navbar extends React.Component {
 								</form>
 						</div>
 						<ul class="nav navbar-nav navbar-right">
-						{ this.state.token ? <li><a href="/login"><span class="glyphicon glyphicon-log-out" onClick={this.logOut}></span> Logout </a></li>
-									: <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+						{ this.state.token 
+							? <li onClick={this.handleClick}><a href="/login"><span class="glyphicon glyphicon-log-out"></span> Logout </a></li>
+							: <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
 						}
 						</ul>
 					</div>
@@ -50,5 +54,13 @@ class Navbar extends React.Component {
 function getCookie(key) {
     var keyValue = document.cookie.match('(^|;) ?' + key + '=([^;]*)(;|$)');
     return keyValue ? keyValue[2] : null;
+}
+function setCookie(key, value) {
+    var expires = new Date();
+    expires.setTime(expires.getTime() + (1 * 24 * 60 * 60 * 1000));
+    document.cookie = key + '=' + value + ';expires=' + expires.toUTCString();
+}
+function removeCookie( name ) {
+  document.cookie = name + '=; expires=Thu, 01 Jan 1970 00:00:01 GMT;';
 }
 export default Navbar;
