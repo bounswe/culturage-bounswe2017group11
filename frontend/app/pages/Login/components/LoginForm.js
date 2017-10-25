@@ -30,7 +30,9 @@ class LoginForm extends React.Component {
 		  	console.log();
 		  },
 		  success: (res) => {
-		  	console.log("SUCCESS! Token: " + JSON.stringify(res));
+		  	var token = JSON.stringify(res.token);
+		  	console.log("SUCCESS! Token: " + token);
+		  	setCookie("token", token);
 		  },
 		  error: (res, err) => {
 		  	console.log("ERR " + err);
@@ -40,7 +42,6 @@ class LoginForm extends React.Component {
   }
 
   handleChange(event) {
-  	console.log(event.target.id);
   	if(event.target.id == "username"){
     	this.setState({username: event.target.value});
     } else {
@@ -76,5 +77,14 @@ class LoginForm extends React.Component {
  		console.log('jQUery Loaded');
 	}
 }
+function setCookie(key, value) {
+    var expires = new Date();
+    expires.setTime(expires.getTime() + (1 * 24 * 60 * 60 * 1000));
+    document.cookie = key + '=' + value + ';expires=' + expires.toUTCString();
+}
 
+function getCookie(key) {
+    var keyValue = document.cookie.match('(^|;) ?' + key + '=([^;]*)(;|$)');
+    return keyValue ? keyValue[2] : null;
+}
 export default LoginForm;
