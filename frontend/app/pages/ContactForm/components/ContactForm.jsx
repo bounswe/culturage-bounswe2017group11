@@ -79,7 +79,7 @@ class ContactForm extends React.Component {
         "tags": this.state.tags
       };
 
-      console.log(data);
+      //console.log(data);
 
       fetch('http://18.220.108.135/api/items/',
       {
