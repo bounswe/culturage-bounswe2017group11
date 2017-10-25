@@ -126,9 +126,7 @@
   margin: 15px 0 0;
   font-size: 30px;
 }
-.login-form .loginBtn .loginBtn--login{
-  tex30%;
-}
+
 .form .message a {
   color: #4CAF50;
   text-decoration: none;
@@ -170,7 +168,7 @@
   color: #EF3B3A;
 }
 body {
-  background-image: url("https://i.hizliresim.com/lbr4Db.jpg"); /* fallback for old browsers */
+  /*background-image: url("https://i.hizliresim.com/lbr4Db.jpg"); /* fallback for old browsers */
   background-size: 100% 120%;
   font-family: "Roboto", sans-serif;
   -webkit-font-smoothing: antialiased;

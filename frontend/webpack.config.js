@@ -10,7 +10,9 @@ var config = {
       inline: true,
       port: 8080
    },
-	
+	devServer: {
+      historyApiFallback: true,
+   },
    module: {
       loaders: [
          {
@@ -22,7 +24,9 @@ var config = {
                presets: ['es2015', 'react'],
                plugins: ['react-html-attrs', 'transform-class-properties', 'transform-decorators-legacy']
             }
-         }
+         },
+         {test: /\.css$/, loader: 'style-loader!css-loader'},
+         {test: /(\.eot|\.woff2|\.woff|\.ttf|\.svg)/, loader: 'file-loader'}
       ]
    }
 }
