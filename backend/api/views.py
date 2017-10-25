@@ -10,6 +10,7 @@ from rest_framework import viewsets
 from rest_framework import permissions
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
+import datetime
 
 import base64
 from django.core.files.base import ContentFile
@@ -69,7 +70,7 @@ def addLoc(request):
 		return JsonResponse(serializer.errors, status=400)
 	return HttpResponse("GET method not allowed")
 
-@api_view(['GET'])
+@api_view(['GET','POST'])
 @permission_classes((IsAuthenticated, ))
 def profile(request, id = ''):
 	"""
@@ -88,9 +89,50 @@ def profile(request, id = ''):
 			response_data["birthday"] = user.profile.birthday
 			response_data["location"] = user.profile.location
 			try:
-				response_data["photo"] = user.profile.photo.url
+				response_data["photo"] = request.META['HTTP_HOST'] + user.profile.photo.url
 			except:
 				response_data["photo"] = None
 		return JsonResponse(response_data)
-	return HttpResponse("POST method not allowed")
+	else:
+		response_data = {}
+		if id:
+			user = User.objects.get(pk=id)
+		else:
+			user = request.user
+		photo_ch = False
+		data = JSONParser().parse(request)
+		for key in data:
+			if key == "username":
+				response_data["username"] = data.get(key)
+				user.username = data.get(key)
+			if key == "email":
+				response_data[email] = data.get(key)
+				user.email = data.get(key)
+			if hasattr(user,"profile"):
+				if key == "birthday":
+					try:
+						datetime.datetime.strptime(data.get(key), '%Y-%m-%d')
+						user.profile.birthday = data.get(key)
+						response_data["birthday"] = data.get(key)
+					except:
+						return HttpResponse("Value has an invalid date format. It must be in YYYY-MM-DD format.", status = 400)
+				if key == "location":
+					response_data["location"] = data.get(key)
+					user.profile.location = data.get(key)
+				if key == "photo":
+					image = data.get(key)
+					if type(image) is str:
+						format, imgstr = image.split(';base64,')
+						ext = format.split('/')[-1]
+						image = ContentFile(base64.b64decode(imgstr), name='item.' + ext)
+					user.profile.photo = image
+					photo_ch = True
+				if key == "fullName":
+					user.profile.fullName = data.get(key)
+					response_data["fullName"] = data.get(key)
+		user.save()
+		if(photo_ch):
+			response_data["photo"] = request.META['HTTP_HOST']+user.profile.photo.url
+		
+		return JsonResponse(response_data)
 
