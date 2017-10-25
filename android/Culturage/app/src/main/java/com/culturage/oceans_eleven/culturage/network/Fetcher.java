@@ -154,31 +154,24 @@ public class Fetcher {
             for (int i = 0; i < items.length(); i++) {
                 JSONObject values = items.getJSONObject(i);
                 String title = "", description = "", imageURL = "", rate = "", createdAt = "", date = "", location = "", stringTags = "";
+
+                title = values.getString("name");
+                description = values.getString("description");
+                imageURL = values.getString("featured_img");
+                rate = values.getString("rate");
+                createdAt = values.getString("created_at");
+                JSONArray timelines = values.getJSONArray("timelines");
+                date = parseDate(timelines);
                 try {
-                    title = values.getString("name");
-                    description = values.getString("description");
-                    imageURL = values.getString("featured_img");
-                    rate = values.getString("rate");
-                    createdAt = values.getString("created_at");
-                    JSONArray timelines = values.getJSONArray("timelines");
-                    date = timelines.getJSONObject(0).getString("startDate");
-                    Log.v("fetcher-loc", timelines.getJSONObject(0).toString());
                     location = timelines.getJSONObject(0).getJSONObject("location").getString("name");
-                    Log.v("integer", date);
-                    if (date == null || date.equals("null")) {
-                        date = "2017-01-01";
-                    }
-                    String[] temp = date.split("-");
-                    temp[0] = Integer.parseInt(temp[0]) + "";
-                    date = temp[2] + "/" + temp[1] + "/" + temp[0];
-                    JSONArray tags = values.getJSONArray("tags");
-                    Log.v("fetcher-tags", tags.toString());
-                    stringTags = "";
-                    for (int j = 0; i < tags.length(); j++) {
-                        stringTags += tags.getJSONObject(j).getString("name") + " ";
-                    }
                 } catch (Exception e) {
-                    Log.v("fetcher", "Json cannot be parsed.");
+                    Log.v("fetcher", "error parsing location.");
+                }
+                JSONArray tags = values.getJSONArray("tags");
+                try {
+                    stringTags = parseTags(tags);
+                } catch (Exception e) {
+                    Log.v("fetcher", "error parsing tags.");
                 }
                 heritageItems.add(new HeritageItem(title.trim(), description.trim(), imageURL, rate, createdAt, date, location, stringTags));
             }
@@ -187,6 +180,40 @@ public class Fetcher {
         }
 
         return heritageItems;
+    }
+
+    private static String parseTags(JSONArray tags) {
+        String stringTags = "";
+        try {
+            for (int j = 0; j < tags.length(); j++) {
+                stringTags += "#" + tags.getJSONObject(j).getString("name") + " ";
+            }
+        } catch (Exception e) {
+            Log.v("fetcher", "error parsing tags");
+        }
+        if (stringTags.equals("#")) {
+            stringTags = "";
+        }
+        stringTags = stringTags.replaceAll("##", "#").trim();
+        return stringTags;
+    }
+
+    private static String parseDate(JSONArray timelines) {
+        String date = "";
+        try {
+            date = timelines.getJSONObject(0).getString("startDate");
+            Log.v("fetcher-loc", timelines.getJSONObject(0).toString());
+            Log.v("integer", date);
+            if (date == null || date.equals("null")) {
+                date = "2017-01-01";
+            }
+            String[] temp = date.split("-");
+            temp[0] = Integer.parseInt(temp[0]) + "";
+            date = temp[2] + "/" + temp[1] + "/" + temp[0];
+        } catch (Exception e) {
+            Log.v("fetcher", "Error parsing date");
+        }
+        return date;
     }
 
 }
