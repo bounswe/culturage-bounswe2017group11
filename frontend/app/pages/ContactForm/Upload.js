@@ -9,7 +9,7 @@ class Upload extends React.Component {
 	render() {
 		return(
 			<div>
-				<Navbar/>
+				<Navbar page={"upload"}/>
 				<ContactForm />
 			</div>
 		);

@@ -25,9 +25,9 @@ class Navbar extends React.Component {
 					</div>
 					<div class="collapse navbar-collapse" id="myNavbar">
 						<ul class="nav navbar-nav">
-							<li class={(this.state.activeClassName == "home") ? "active" : ""}><a href="http://localhost:8080">Home</a></li>
+							<li class={(this.state.activeClassName == "home") ? "active" : ""}><a href="/">Home</a></li>
 							{ this.state.token 
-								? <li><a href="http://localhost:8080/Upload">Add an Item</a></li>
+								? <li class={(this.state.activeClassName == "upload") ? "active" : ""}><a href="/Upload">Add an Item</a></li>
 								: ""
 							}	
 							
