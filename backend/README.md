@@ -1,7 +1,18 @@
 # Culturage Web Service
 ### You can see demo at [here](http://18.220.108.135)
+### You can see API Documentation at [here](https://app.swaggerhub.com/apis/enescakir/culturage/1.0.0)
+
 ## How to Use
-To use this project, follow these steps:
+1. Switch to venv
+    * If you are using Windows (`$ venv\Scripts\activate`)
+    * If you are using UNIX (`$ source venv/bin/activate`)
+2. Reinstall dependencies for any updates (`$ pip3 install -r requirements.txt`)
+3. Run database migrations for any change (`$ python3 manage.py migrate`)
+4. Run server locally (`$ python3 manage.py runserver`)
+5. If you get success message, server’s running, visit `http://127.0.0.1:8000/`
+
+## How to Setup
+To setup this project, follow these steps:
 1. Clone project to local.
 2. Install Python 3
 3. Install [MySQL](https://dev.mysql.com/doc/refman/5.7/en/installing.html)
