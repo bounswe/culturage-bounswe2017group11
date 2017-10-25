@@ -1,6 +1,11 @@
 import React from 'react';
 
 class Navbar extends React.Component {
+	constructor(props){
+   		super(props);
+   		this.state = {activeClassName: this.props.page};
+	}
+
 	render() {
 		return (
 			<div class="navbar navbar-default">
@@ -10,7 +15,7 @@ class Navbar extends React.Component {
 					</div>
 					<div class="collapse navbar-collapse" id="myNavbar">
 						<ul class="nav navbar-nav">
-							<li><a href="http://localhost:8080/home">Home</a></li>
+							<li class={(this.state.activeClassName == "home") ? "active" : ""}><a href="http://localhost:8080/home">Home</a></li>
 							<li><a href="#">Popular</a></li>
 							<li><a href="#">Add an Item</a></li>
 						</ul>

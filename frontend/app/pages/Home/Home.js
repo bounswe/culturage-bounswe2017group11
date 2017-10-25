@@ -34,7 +34,7 @@ class Home extends React.Component {
 	render() {
 		return(
 			<div>
-				<Navbar/>
+				<Navbar page={"home"}/>
 				<div class = "newsfeed">
 					{this.state.itemlist.map(function(groupItem, key){ return (
 			            <NewsFeedItem item={groupItem} key={key}/>
