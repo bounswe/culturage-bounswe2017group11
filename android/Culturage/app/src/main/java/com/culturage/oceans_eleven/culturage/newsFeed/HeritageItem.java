@@ -11,27 +11,23 @@ public class HeritageItem {
     private long mCommentCount;
     private String mDate;
     private String mLocation;
-    private String mName;
-    private String description;
-    private String imageURL;
+    private String mImageString;
     private String rate;
     private String createdAt;
-
-    public String getmDate() {
-        return mDate;
-    }
-
+    private String mTags;
 
     //dummy item; this constructor is not to be used, temporary
-    public HeritageItem(String name, String description, String imageURL, String rate, String createdAt, String date, String location) {
-        this.mName = name;
+    public HeritageItem(String title, String description, String imageString, String rate, String createdAt, String date, String location, String tags) {
+        this.mTitle = title;
         this.createdAt = createdAt;
-        this.description = description;
-        this.imageURL = imageURL;
+        this.mDescription = description;
+        this.mImageString = imageString;
         this.rate = rate;
         this.mDate = date;
         this.mLocation = location;
+        this.mTags = tags;
     }
+
 
     public HeritageItem(long mPostId, String mTitle, String mDescription, int mResourceId, long mLikeCount, long mCommentCount) {
         this.mPostId = mPostId;
@@ -40,6 +36,10 @@ public class HeritageItem {
         this.mResourceId = mResourceId;
         this.mLikeCount = mLikeCount;
         this.mCommentCount = mCommentCount;
+    }
+
+    public String getmDate() {
+        return mDate;
     }
 
     public String getmLocation() {
@@ -55,20 +55,13 @@ public class HeritageItem {
         this.mResourceId = mResourceId;
     }
 
-    public String getDescription() {
-        return description;
+
+    public String getmImageString() {
+        return mImageString;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
-    public String getImageURL() {
-        return imageURL;
-    }
-
-    public void setImageURL(String imageURL) {
-        this.imageURL = imageURL;
+    public void setmImageString(String mImageString) {
+        this.mImageString = mImageString;
     }
 
     public String getRate() {
@@ -87,22 +80,15 @@ public class HeritageItem {
         this.createdAt = createdAt;
     }
 
-    public String getmName() {
-        return mName;
+    public String getmTitle() {
+        return mTitle;
     }
 
-
-    public void setmName(String mName) {
-        this.mName = mName;
-    }
 
     public long getmPostId() {
         return mPostId;
     }
 
-    public String getmTitle() {
-        return mTitle;
-    }
 
     public String getmDescription() {
         return mDescription;
@@ -118,6 +104,10 @@ public class HeritageItem {
 
     public long getmCommentCount() {
         return mCommentCount;
+    }
+
+    public String getMTags() {
+        return mTags;
     }
 
     public void setmPostId(long mPostId) {

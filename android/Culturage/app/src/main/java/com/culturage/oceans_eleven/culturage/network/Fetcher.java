@@ -9,7 +9,6 @@ import android.util.Log;
 import com.culturage.oceans_eleven.culturage.newsFeed.HeritageItem;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -47,7 +46,7 @@ public class Fetcher {
         // Perform HTTP request to the URL and receive a JSON response back
         String jsonResponse = null;
         try {
-            jsonResponse = makeHttpRequest(url,context);
+            jsonResponse = makeHttpRequest(url, context);
         } catch (IOException e) {
             Log.e(LOG_TAG, "Error closing input stream", e);
         }
@@ -75,7 +74,7 @@ public class Fetcher {
     /**
      * Make an HTTP request to the given URL and return a String as the response.
      */
-    private static String makeHttpRequest(URL url,Context context) throws IOException {
+    private static String makeHttpRequest(URL url, Context context) throws IOException {
         String jsonResponse = "";
 
         // If the URL is null, then return early.
@@ -92,10 +91,10 @@ public class Fetcher {
             urlConnection.setRequestMethod("GET");
 
 
-            SharedPreferences preferences  = PreferenceManager.getDefaultSharedPreferences(context);
+            SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
             String token = preferences.getString("token", "null");
-           // String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyMiwidXNlcm5hbWUiOiJha29rc2FsIiwiZW1haWwiOiJha29rc2FsQGEuY29tIiwiZXhwIjoyNTA4Njc4OTE1fQ.PgPIJppA9u5umhrHGxPmv7_1Hi2ItASDgd7NH4DHcO0";
-            urlConnection.setRequestProperty("Authorization","JWT " + token);
+            // String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyMiwidXNlcm5hbWUiOiJha29rc2FsIiwiZW1haWwiOiJha29rc2FsQGEuY29tIiwiZXhwIjoyNTA4Njc4OTE1fQ.PgPIJppA9u5umhrHGxPmv7_1Hi2ItASDgd7NH4DHcO0";
+            urlConnection.setRequestProperty("Authorization", "JWT " + token);
             urlConnection.connect();
 
             // If the request was successful (response code 200),
@@ -149,47 +148,46 @@ public class Fetcher {
 
         // Create an empty ArrayList that we can start adding HeritageItem's to
         ArrayList<HeritageItem> heritageItems = new ArrayList<>();
-
-        // Try to parse the SAMPLE_JSON_RESPONSE. If there's a problem with the way the JSON
-        // is formatted, a JSONException exception object will be thrown.
-        // Catch the exception so the app doesn't crash, and print the error message to the logs.
         try {
-            //TODO delete these commented ones
-//            JSONObject json = new JSONObject(newsFeedJSON);
-//            JSONArray features = json.getJSONArray("features");
-
 
             JSONArray items = new JSONArray(newsFeedJSON);
-
             for (int i = 0; i < items.length(); i++) {
                 JSONObject values = items.getJSONObject(i);
-                String name =values.getString("name");
-                String description =  values.getString("description");
-                String imageURL = values.getString("featured_img");
-                String rate = values.getString("rate");
-                String createdAt = values.getString("created_at");
-                JSONArray timelines = values.getJSONArray("timelines");
-                String date = timelines.getJSONObject(0).getString("startDate"); // Date is in index 2
-                String location = timelines.getJSONObject(0).getJSONObject("location").getString("name"); // location object is in index 3
-                //TODO dont forget to give the parameters
-                Log.v("integer", date);
-                if (date == null || date.equals("null")) {
-                    date = "2017-01-01";
-                    //Log.v("integer", "here i am");
+                String title = "", description = "", imageURL = "", rate = "", createdAt = "", date = "", location = "", stringTags = "";
+                try {
+                    title = values.getString("name");
+                    description = values.getString("description");
+                    imageURL = values.getString("featured_img");
+                    rate = values.getString("rate");
+                    createdAt = values.getString("created_at");
+                    JSONArray timelines = values.getJSONArray("timelines");
+                    date = timelines.getJSONObject(0).getString("startDate");
+                    Log.v("fetcher-loc", timelines.getJSONObject(0).toString());
+                    location = timelines.getJSONObject(0).getJSONObject("location").getString("name");
+                    //TODO dont forget to give the parameters
+                    Log.v("integer", date);
+                    if (date == null || date.equals("null")) {
+                        date = "2017-01-01";
+                    }
+                    String[] temp = date.split("-");
+                    temp[0] = Integer.parseInt(temp[0]) + "";
+                    date = temp[2] + "/" + temp[1] + "/" + temp[0];
+                    JSONArray tags = values.getJSONArray("tags");
+                    stringTags = "";
+                    for (int j = 0; i < tags.length(); j++) {
+                        stringTags += tags.getJSONObject(j).getString("name") + " ";
+                    }
+                } catch (Exception e) {
+                    Log.v("fetcher", "Json cannot be parsed.");
                 }
-                Log.v("integer", date);
-                String[] temp = date.split("-");
-                temp[0] = Integer.parseInt(temp[0]) + "";
-                date = temp[2] + "/" + temp[1] + "/" + temp[0];
-
-                heritageItems.add(new HeritageItem(name.trim(), description.trim(), imageURL, rate, createdAt, date, location));
-                int a = heritageItems.size();
+                heritageItems.add(new HeritageItem(title.trim(), description.trim(), imageURL, rate, createdAt, date, location, stringTags));
             }
-        } catch (JSONException e) {
-            Log.e("QueryUtils", "Problem parsing the news feed JSON results", e);
+        } catch (Exception e) {
+
         }
 
-        // Return the list of heritageItems
         return heritageItems;
     }
+
 }
+

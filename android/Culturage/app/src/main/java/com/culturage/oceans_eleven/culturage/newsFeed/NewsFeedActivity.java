@@ -76,9 +76,9 @@ public class NewsFeedActivity extends AppCompatActivity implements LoaderManager
                 HeritageItem item = ((HeritageItem) listView.getItemAtPosition(position));
                 Intent intent = new Intent(NewsFeedActivity.this, HeritageItemViewActivity.class);
                 intent.putExtra("postId", item.getmPostId());
-                intent.putExtra("title", item.getmName());
-                intent.putExtra("description", item.getDescription());
-                intent.putExtra("imageUrl",item.getImageURL());
+                intent.putExtra("title", item.getmTitle());
+                intent.putExtra("description", item.getmDescription());
+                intent.putExtra("imageUrl", item.getmImageString());
                 intent.putExtra("date", item.getmDate());
                 intent.putExtra("location", item.getmLocation());
                 startActivity(intent);

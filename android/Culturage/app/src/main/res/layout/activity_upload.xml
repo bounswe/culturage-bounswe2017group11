@@ -24,6 +24,13 @@
                 android:focusableInTouchMode="true"
                 android:orientation="horizontal" />
 
+            <ProgressBar
+                android:id="@+id/progress_bar_upload"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="invisible"
+                android:layout_weight="1"
+                android:layout_gravity="center" />
             <ImageButton
                 android:id="@+id/save_upload"
                 android:layout_width="36dp"
@@ -83,7 +90,7 @@
         </LinearLayout>
 
         <EditText
-            android:id="@+id/title"
+            android:id="@+id/upload_title"
             android:layout_width="match_parent"
             android:layout_height="@dimen/edit_text_height"
             android:layout_marginBottom="@dimen/small_padding"
@@ -96,7 +103,7 @@
             android:textCursorDrawable="@null" />
 
         <EditText
-            android:id="@+id/description"
+            android:id="@+id/upload_description"
             android:layout_width="match_parent"
             android:layout_height="@dimen/large_edit_text_height"
             android:layout_marginBottom="@dimen/small_padding"
@@ -114,7 +121,7 @@
             android:layout_height="wrap_content">
 
             <EditText
-                android:id="@+id/time"
+                android:id="@+id/upload_date"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/edit_text_height"
                 android:layout_marginBottom="@dimen/small_padding"
@@ -129,7 +136,7 @@
                 android:textCursorDrawable="@null" />
 
             <EditText
-                android:id="@+id/location"
+                android:id="@+id/upload_location"
                 android:layout_width="0dp"
                 android:layout_height="48dp"
                 android:layout_marginBottom="@dimen/small_padding"
@@ -146,7 +153,7 @@
 
 
         <EditText
-            android:id="@+id/tags"
+            android:id="@+id/upload_tags"
             android:layout_width="match_parent"
             android:layout_height="@dimen/edit_text_height"
             android:layout_marginBottom="@dimen/small_padding"

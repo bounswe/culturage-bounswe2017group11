@@ -1,7 +1,6 @@
 package com.culturage.oceans_eleven.culturage.newsFeed;
 
 import android.app.Activity;
-import android.graphics.drawable.Drawable;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
@@ -15,10 +14,6 @@ import android.widget.TextView;
 import com.culturage.oceans_eleven.culturage.R;
 import com.squareup.picasso.Picasso;
 
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.ArrayList;
 
 
@@ -44,10 +39,10 @@ public class HeritageItemAdapter extends ArrayAdapter {
 
 
         TextView titleView = (TextView) listItemView.findViewById(R.id.title);
-        titleView.setText(currentItem.getmName());
+        titleView.setText(currentItem.getmTitle());
 
         TextView descriptionView = (TextView) listItemView.findViewById(R.id.description);
-        descriptionView.setText(currentItem.getDescription());
+        descriptionView.setText(currentItem.getmDescription());
 
 
 
@@ -56,7 +51,7 @@ public class HeritageItemAdapter extends ArrayAdapter {
 //        imageView.setImageResource(R.drawable.sample_0);
 
 
-        String imageUri = currentItem.getImageURL();
+        String imageUri = currentItem.getmImageString();
         Picasso.with(this.getContext()).load(imageUri).into(imageView);
 
 
