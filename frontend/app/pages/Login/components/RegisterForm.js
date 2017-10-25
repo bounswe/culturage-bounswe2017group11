@@ -8,7 +8,7 @@ class RegisterForm extends React.Component {
 	      <input type="text" placeholder="name"/>
 	      <input type="password" placeholder="password"/>
 	      <input type="text" placeholder="email address"/>
-	      <button class="loginBtn loginBtn--login" style="text-indent:30%">Create</button>
+	      <button class="loginBtn loginBtn--login">Create</button>
 	      <p class="message">Already registered? <a href="#">Sign In</a></p>
       </form>
 		);

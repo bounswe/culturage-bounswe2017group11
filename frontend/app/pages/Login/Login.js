@@ -1,19 +1,19 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import $ from 'jquery';
+
 import LoginForm from './components/LoginForm.js';
+import RegisterForm from './components/RegisterForm.js';
 import './utils/login-form.css';
 
 class Login extends React.Component {
 	render() {
 		return(
-			<div>
-				<div class="login-page">
-				  <div class="form">
-						<LoginForm/>
-					</div>
+			<div class="login-page">
+			  <div class="form">
+			  	<RegisterForm/>
+					<LoginForm/>
 				</div>
 			</div>
-			
 		);
 	}
 }
