@@ -9,8 +9,8 @@ import Home from './app/pages/Home/Home.js';
 ReactDOM.render(
   <BrowserRouter>
   	<Switch>
-    	<Route exact path="/" component={Login} />
-    	<Route exact path="/home" component={Home} />
+    	<Route exact path="/" component={Home} />
+    	<Route exact path="/login" component={Login} />
   	</Switch>
   </BrowserRouter>,
   document.getElementById('app')
