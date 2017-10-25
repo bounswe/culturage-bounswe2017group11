@@ -80,23 +80,30 @@ class ContactForm extends React.Component {
       };
 
       //console.log(data);
-
+      var token = getCookie('token');
       fetch('http://18.220.108.135/api/items/',
       {
 
       headers: {
         'Accept': 'application/json',
         'Content-Type': 'application/json',
-        'Authorization': 'JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyMiwidXNlcm5hbWUiOiJha29rc2FsIiwiZW1haWwiOiJha29rc2FsQGEuY29tIiwiZXhwIjoyNTA4Njc4OTE1fQ.PgPIJppA9u5umhrHGxPmv7_1Hi2ItASDgd7NH4DHcO0'
+        'Authorization': 'JWT ' + token
       },
 
         method: 'POST',
         body: JSON.stringify( payload )
       })
 
-      .then(function(res){ return res.json(); })
-      .then(function(data){ alert( JSON.stringify( data ) ) })
-
+      .then(function(res){
+        if(res.ok){
+          window.location.replace("/");
+        } else {
+          alert("Couldn't upload");
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      })
     };
 
     render() {
@@ -118,9 +125,6 @@ class ContactForm extends React.Component {
                   <input className="fileInput"
                     type="file"
                     onChange={(e)=>this._handleImageChange(e)} />
-                  <button className="btn btn-primary " id="leftSubmit"
-                    type="submit"
-                    onClick={(e)=>this._handleSubmit(e)}>Upload Image</button>
                 </form>
                 <div className="imgPreview">
                   {$imagePreview}
@@ -174,6 +178,9 @@ class ContactForm extends React.Component {
         );
     }
 }
-
+function getCookie(key) {
+    var keyValue = document.cookie.match('(^|;) ?' + key + '=([^;]*)(;|$)');
+    return keyValue ? keyValue[2] : null;
+}
 export default ContactForm;
 
