@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom';
 import Navbar from '../Home/components/Navbar.jsx';
 import Body from './components/Body.jsx';
 import Comment from './components/Comment.jsx';
-import './utils/bootstrap.min.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 import './utils/mycss.css';
 
 
@@ -40,7 +41,7 @@ class Item extends React.Component {
 
 			<div>
 				<Navbar page={"home"} /> 
-			   		<div class="container">
+			   		<div class="mycontainer">
 			   		   			<div class="col-md-8">
 
 
