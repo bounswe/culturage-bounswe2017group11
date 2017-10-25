@@ -33,6 +33,7 @@ class LoginForm extends React.Component {
 		  	var token = JSON.stringify(res.token);
 		  	console.log("SUCCESS! Token: " + token);
 		  	setCookie("token", token);
+				window.location.replace("/");
 		  },
 		  error: (res, err) => {
 		  	console.log("ERR " + err);
