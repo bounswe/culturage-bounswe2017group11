@@ -4,6 +4,7 @@ var config = {
    output: {
       path:'/',
       filename: 'index.js',
+      publicPath:"/"
    },
 	
    devServer: {
