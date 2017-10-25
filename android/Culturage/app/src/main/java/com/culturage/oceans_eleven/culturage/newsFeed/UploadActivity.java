@@ -282,6 +282,7 @@ public class UploadActivity extends Activity {
                 json.put("location", itemToUpload.getmLocation());
                 json.put("date", itemToUpload.getmDate());
                 JSONArray tags = new JSONArray(itemToUpload.getMTags().split("\\s"));
+                Log.v("upload-tag", tags.toString());
                 json.put("tags", tags);
                 Log.v("upload", itemToUpload.getmImageString());
                 return json.toString();

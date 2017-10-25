@@ -22,7 +22,6 @@ public class HeritageItemViewActivity extends AppCompatActivity {
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             this.heritageItemPostID = extras.getInt("postID");
-            retrievePost();
         }
 
 
@@ -38,12 +37,9 @@ public class HeritageItemViewActivity extends AppCompatActivity {
 
 //        iw.setImageResource(getIntent().getIntExtra("resourceID", defaultImageId));
 
-        TextView tagsView = (TextView) findViewById(R.id.her_item_tags);
-        tagsView.setText("#nice\t#cool\t#dummy");
-
 
 //        String desc_tit = "WHAT IS IT?";
-        String desc_tit = "What is it?";
+        String desc_tit = "Description?";
 
         TextView desc_tit_view = (TextView) findViewById(R.id.her_item_description_title);
         desc_tit_view.setText(desc_tit);
@@ -65,12 +61,10 @@ public class HeritageItemViewActivity extends AppCompatActivity {
 
         TextView loc = (TextView) findViewById(R.id.her_item_location);
         loc.setText(getIntent().getStringExtra("location"));
+
+        TextView tags = (TextView) findViewById(R.id.her_item_tags);
+        tags.setText(getIntent().getStringExtra("tags"));
     }
 
 
-    private boolean retrievePost() {
-        //TODO implement api stuff
-
-        return true; //to see if we got it successfully or not
-    }
 }

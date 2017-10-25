@@ -164,7 +164,6 @@ public class Fetcher {
                     date = timelines.getJSONObject(0).getString("startDate");
                     Log.v("fetcher-loc", timelines.getJSONObject(0).toString());
                     location = timelines.getJSONObject(0).getJSONObject("location").getString("name");
-                    //TODO dont forget to give the parameters
                     Log.v("integer", date);
                     if (date == null || date.equals("null")) {
                         date = "2017-01-01";
@@ -173,6 +172,7 @@ public class Fetcher {
                     temp[0] = Integer.parseInt(temp[0]) + "";
                     date = temp[2] + "/" + temp[1] + "/" + temp[0];
                     JSONArray tags = values.getJSONArray("tags");
+                    Log.v("fetcher-tags", tags.toString());
                     stringTags = "";
                     for (int j = 0; i < tags.length(); j++) {
                         stringTags += tags.getJSONObject(j).getString("name") + " ";
