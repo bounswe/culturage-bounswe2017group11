@@ -1,8 +1,6 @@
 import React from 'react';
 import $ from 'jquery';
 import _ from "lodash";
-import TagsInput from 'react-tagsinput';
-import 'react-tagsinput/react-tagsinput.css';
 
 class ContactForm extends React.Component {
     constructor(props) {
