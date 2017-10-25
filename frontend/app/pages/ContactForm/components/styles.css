@@ -66,8 +66,8 @@ h3{
 .navbar {
     margin-bottom: 0;
     border-radius: 0;
-    background-color: #4CAF50;
-    border-color: #003300;
+    background-color: #17a2b8;
+    border-color: #003300;   
 }
 
 .navbar-default .navbar-nav li a{
@@ -75,22 +75,22 @@ h3{
 }
 
 .navbar-default .navbar-nav .active a{
-    background-color: #b8e0b9;
+    background-color: #8ee4f1;
     color: #ffffff;
 }
 
 .navbar-default .navbar-nav li a:hover,
 .navbar-default .navbar-nav .active a:hover{
-	background-color: #102310;
-	color: #ffffff;
+  background-color: #102310;
+  color: #ffffff;
 }
 
 .navbar-default .navbar-brand{
-	color: white;
+  color: white;
 }
 
 .navbar-default .navbar-brand:hover{
-	color: #ff6600;
+  color: #ff6600;
 }
 
 /* Set height of the grid so .sidenav can be 100% (adjust as needed) */

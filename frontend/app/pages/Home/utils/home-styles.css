@@ -62,7 +62,15 @@
     padding-left: 20px;
 }
 
-.newsfeed-item p, a{
+.newsfeed-item h2{
+    font-family: Calibri, Candara, Segoe, 'Segoe UI', Optima, Arial, sans-serif;
+    padding-left: 30px;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+
+.newsfeed-item p{
     font-family: Calibri, Candara, Segoe, 'Segoe UI', Optima, Arial, sans-serif;
     font-size: 15px;
     padding-left: 15px;

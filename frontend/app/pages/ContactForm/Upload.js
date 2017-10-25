@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Navbar from './components/Navbar.jsx';
+import Navbar from '../Home/components/Navbar.jsx';
 import ContactForm from './components/ContactForm.jsx';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './components/styles.css';
