@@ -7,15 +7,17 @@ class Comment extends React.Component {
 
    render() {
    let comment;
-   if(typeof this.props.item != "undefined") {
-   comment = <div>
-        <div class="mycontainer">
+   if(typeof this.props.item.created_by != "undefined") {
+    comment = <div>
+        <div class="mycontainer2">
         <div class="panel panel-white post">
             <div class="card-header text-white bg-info">
                 Item details
                 </div>
             <div class="card-body">
             <h5 class="card-title">Id: {this.props.item.id}</h5>
+            <h5 class="card-title">Created by: {this.props.item.created_by.username}</h5>
+
             <h5 class="card-title">Created at: {this.props.item.created_at}</h5>
 
             </div>
