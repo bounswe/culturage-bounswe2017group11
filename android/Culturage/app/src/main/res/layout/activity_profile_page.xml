@@ -286,6 +286,7 @@
             android:layout_marginBottom="@dimen/small_padding"
             android:background="@drawable/blue_border"
             android:ems="10"
+            android:padding="@dimen/tiny_padding"
             android:gravity="top"
             android:hint=" About You"
             android:inputType="textMultiLine"
