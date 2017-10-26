@@ -27,8 +27,7 @@ class Item extends React.Component {
         })
     	.then(response => response.json())
     	.then(function(data){
-      		_this.setState({items: data});
-      		console.log(data)
+      		_this.setState({items: data });
       	})
 
 		.catch(function(error) {
@@ -41,7 +40,7 @@ class Item extends React.Component {
 		return(
 
 			<div>
-				<Navbar page={"home"} /> 
+				<Navbar /> 
 			   		<div class="mycontainer">
 			   		   			<div class="col-md-8">
 
