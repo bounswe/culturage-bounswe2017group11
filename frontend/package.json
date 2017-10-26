@@ -2,20 +2,11 @@
   "name": "culterage-frontend",
   "version": "1.0.0",
   "description": "Frontend for Bogazici University CMPE 451 Fall 2017 Group 11 Project",
-  "main": "index.js",
-  "scripts": {
-    "start": "webpack-dev-server --hot"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/bounswe/bounswe2017group11/"
-  },
-  "keywords": [
-    "culterage"
-  ],
-  "author": "kuzdogan",
-  "license": "ISC",
+  "private": true,
   "dependencies": {
+    "react": "^16.0.0",
+    "react-dom": "^16.0.0",
+    "react-scripts": "1.0.14",
     "babel": "^6.23.0",
     "babel-cli": "^6.26.0",
     "babel-core": "^6.26.0",
@@ -33,7 +24,19 @@
     "react-dom": "^16.0.0",
     "react-router-dom": "^4.2.2",
     "style-loader": "^0.19.0",
-    "webpack": "^3.8.1",
-    "webpack-dev-server": "^2.9.2"
-  }
+    "webpack": "^3.8.1"
+  },
+  "scripts": {
+    "start": "react-scripts start",
+    "build": "react-scripts build",
+    "test": "react-scripts test --env=jsdom",
+    "eject": "react-scripts eject"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bounswe/bounswe2017group11/"
+  },
+  "keywords": [
+    "culterage"
+  ]
 }
