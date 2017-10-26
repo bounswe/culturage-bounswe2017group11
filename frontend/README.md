@@ -3,14 +3,14 @@
 ### You can see demo [here](http://culturage.s3-website-us-east-1.amazonaws.com/)
 
 ## Requirements
-nodejs, npm
+node.js, npm
 
 ## Usage
 1. Clone the repository
 2. `cd bounswe2017group11/frontend`
 3. `npm install` to install the dependencies
 
-To run locally run:
+To run locally:
 
 `npm start`
 
