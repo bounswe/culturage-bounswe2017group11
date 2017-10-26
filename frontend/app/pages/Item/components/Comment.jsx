@@ -18,7 +18,7 @@ class Comment extends React.Component {
             <h5 class="card-title">Id: {this.props.item.id}</h5>
             <h5 class="card-title">Created by: {this.props.item.created_by.username}</h5>
 
-            <h5 class="card-title">Created at: {this.props.item.created_at}</h5>
+            <h5 class="card-title">Created at: {this.props.item.created_at.substring(0,10)}</h5>
 
             </div>
         </div>
