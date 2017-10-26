@@ -60,8 +60,8 @@ class ContactForm extends React.Component {
     handleImageChange(event){event.preventDefault();this.setState({image: event.target.value});};
     handleTagsChange(event){event.preventDefault();this.setState({tags: event.target.value});};
 
-    handleChangeTags(tags) {event.preventDefault();this.setState({tags});};
-    handleChangeInput(tag) {event.preventDefault();this.setState({tag});};
+    handleChangeTags(event, tags) {event.preventDefault();this.setState({tags});};
+    handleChangeInput(event, tag) {event.preventDefault();this.setState({tag});};
 
 
 

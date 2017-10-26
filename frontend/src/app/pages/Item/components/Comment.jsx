@@ -1,16 +1,25 @@
 import React from 'react';
 
 class Comment extends React.Component {
+    constructor(props){
+      super(props);
+   }
+
    render() {
-      return (
-      <div>
-        <div class="container">
-        <div class="card">
+   let comment;
+   if(typeof this.props.item.created_by != "undefined") {
+    comment = <div>
+        <div class="mycontainer2">
+        <div class="panel panel-white post">
             <div class="card-header text-white bg-info">
-                Where?
-            </div>
+                Item details
+                </div>
             <div class="card-body">
-            <h5 class="card-title">Dharmapuri, Forest Colony, Tajganj, Agra, Uttar Pradeş 282001, Hindistan</h5>
+            <h5 class="card-title">Id: {this.props.item.id}</h5>
+            <h5 class="card-title">Created by: {this.props.item.created_by.username}</h5>
+
+            <h5 class="card-title">Created at: {this.props.item.created_at}</h5>
+
             </div>
         </div>
          
@@ -40,24 +49,19 @@ class Comment extends React.Component {
                             <p>Wow! Hilarious. </p>
                         </div>
                     </li>
-                    <li class="comment">
-                        <a class="pull-left" href="#">
-                            <img class="avatar" src="http://bootdey.com/img/Content/user_2.jpg" alt="avatar"/>
-                        </a>
-                        <div class="comment-body">
-                            <div class="comment-heading">
-                                <h4 class="user">Ceren</h4>
-                                <h5 class="time">14 minutes ago</h5>
-                            </div>
-                            <p>I have visited therere before but I want to see it again.</p>
-                        </div>
-                    </li>
                 </ul>
         </div>
     </div>
 </div>
 
     </div> 
+} else{
+    comment = null;
+}
+      return (
+      <div>
+            {comment}
+        </div>
       );
    }
 }
