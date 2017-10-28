@@ -41,7 +41,7 @@ class Item extends React.Component {
 		return(
 
 			<div>
-				<Navbar page={"home"} /> 
+				<Navbar/> 
 			   		<div class="mycontainer">
 			   		   			<div class="col-md-8">
 
