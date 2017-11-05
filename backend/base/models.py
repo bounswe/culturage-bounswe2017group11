@@ -31,18 +31,16 @@ class Tag(models.Model):
 
 class Location(models.Model):
 	name = models.CharField(max_length=200)
-	longtitude = models.FloatField(null = True)
-	latitude = models.FloatField(null = True)
-	def __str__(self):
-		return self.name
+	longtitude = models.FloatField(null = true)
+	latitude = models.FloatField(null = true)
 
 class Timeline(models.Model):
 	name = models.CharField(max_length=200)
 	text = models.CharField(max_length=500)
-	startDate = models.DateField(auto_now_add = False)
-	endDate = models.DateField(auto_now_add = False)
-	item_id = models.ForeignKey(Item, related_name = 'timeline_of_item', on_delete= models.CASCADE, null= True)
-	location_id = models.ForeignKey(Location, related_name = 'timeline_location', on_delete = models.SET_NULL, null = True)
+	startDate = models.DateField(auto_now_add = false)
+	endDate = models.DateField(auto_now_add = false)
+	item_id = models.ForeignKey(Item, related_name = 'timeline_of_item', on_delete= models.CASCADE, null = True)
+	location_id = models.ForeignKey(Location, related_name = 'timeline_location', on_delete = SET_NULL, null = True)
 
 class Follow(models.Model):
 	follower = models.ForeignKey(User, related_name ='user_follower', on_delete=models.CASCADE, null=True)
