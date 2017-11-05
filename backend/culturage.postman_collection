@@ -1,0 +1,136 @@
+{
+	"variables": [],
+	"info": {
+		"name": "Culturage",
+		"_postman_id": "4d3febf8-ae77-374f-aa81-818916f0b7cc",
+		"description": "",
+		"schema": "https://schema.getpostman.com/json/collection/v2.0.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Register",
+			"request": {
+				"url": "{{url}}/api/auth/register",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\t\n\t\"username\": \"gsgfdsgsdfg\",\n\t\"password\": \"asddsf\",\n\t\"email\": \"deneme@cakir.web.tr\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Login",
+			"request": {
+				"url": "{{url}}/api/auth/login",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\t\n\t\"username\": \"enes\",\n\t\"password\": \"123\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "List Items",
+			"request": {
+				"url": "{{url}}/api/items",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "JWT {{token}}",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Show Item",
+			"request": {
+				"url": "{{url}}/api/items/49",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "JWT {{token}}",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Store Item",
+			"request": {
+				"url": "{{url}}/api/items/",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "JWT {{token}}",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "name",
+							"value": "Mount Nemrut",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "description",
+							"value": "Nemrut or Nemrud (Turkish: Nemrut Dağı) is a 2,134-metre-high (7,001 ft) mountain in southeastern Turkey, notable for the summit where a number of large statues are erected around what is assumed to be a royal tomb from the 1st century BC.\n\nThe name is a relatively modern one, dating back to the Middle Ages. In Armenian legend, Hayk defeated the Biblical king Nimrod (equated with Bel) and buried him in these mountains. Nemrut is most likely to have received its name from an Armenian tradition in which Nimrod was killed by an arrow by Hayk during a massive battle between two rival armies of giants to the south-east of Lake Van.[1]",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "image",
+							"description": "",
+							"type": "file",
+							"src": "Nemrut_Mountain_Peak.JPG"
+						},
+						{
+							"key": "location",
+							"value": " Adıyaman",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "date",
+							"value": "0537-01-01",
+							"description": "",
+							"type": "text"
+						}
+					]
+				},
+				"description": ""
+			},
+			"response": []
+		}
+	]
+}

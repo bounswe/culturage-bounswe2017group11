@@ -34,6 +34,7 @@ ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS').split(',') if os.getenv('ALLOWED_HOST
 INTERNAL_IPS = '127.0.0.1'
 
 CSRF_COOKIE_SECURE = False
+CORS_ORIGIN_ALLOW_ALL = True
 
 # Application definition
 
@@ -50,13 +51,15 @@ INSTALLED_APPS = [
     'rest_framework.authtoken',
     'django_extensions',
     'debug_toolbar',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
-    'django.middleware.csrf.CsrfViewMiddleware',
+    # 'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
@@ -64,7 +67,7 @@ MIDDLEWARE = [
 ]
 
 JWT_AUTH = {
-    'JWT_EXPIRATION_DELTA': datetime.timedelta(seconds=1000000000),
+    'JWT_EXPIRATION_DELTA': datetime.timedelta(days=300),
 }
 
 REST_FRAMEWORK = {
