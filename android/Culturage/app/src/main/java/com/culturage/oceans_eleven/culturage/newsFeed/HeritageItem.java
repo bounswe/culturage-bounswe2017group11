@@ -15,6 +15,8 @@ public class HeritageItem {
     private String rate;
     private String createdAt;
     private String mTags;
+    private String creator_id;
+    private String creator_username;
 
     //dummy item; this constructor is not to be used, temporary
     public HeritageItem(String title, String description, String imageString, String rate, String createdAt, String date, String location, String tags) {
@@ -26,6 +28,7 @@ public class HeritageItem {
         this.mDate = date;
         this.mLocation = location;
         this.mTags = tags;
+
     }
 
 
@@ -36,6 +39,22 @@ public class HeritageItem {
         this.mResourceId = mResourceId;
         this.mLikeCount = mLikeCount;
         this.mCommentCount = mCommentCount;
+    }
+
+    public String getCreatorId() {
+        return creator_id;
+    }
+
+    public void setCreatorId(String creator_id) {
+        this.creator_id = creator_id;
+    }
+
+    public String getCreatorUsername() {
+        return creator_username;
+    }
+
+    public void setCreatorUsername(String creator_username) {
+        this.creator_username = creator_username;
     }
 
     public String getmDate() {

@@ -153,6 +153,7 @@ public class Fetcher {
             JSONArray items = new JSONArray(newsFeedJSON);
             for (int i = 0; i < items.length(); i++) {
                 JSONObject values = items.getJSONObject(i);
+                JSONObject creator = values.getJSONObject("created_by");  //Change
                 String title = "", description = "", imageURL = "", rate = "", createdAt = "", date = "", location = "", stringTags = "";
 
                 title = values.getString("name");
@@ -174,6 +175,8 @@ public class Fetcher {
                     Log.v("fetcher", "error parsing tags.");
                 }
                 heritageItems.add(new HeritageItem(title.trim(), description.trim(), imageURL, rate, createdAt, date, location, stringTags));
+                heritageItems.get(i).setCreatorId(creator.getString("id")); //New
+                heritageItems.get(i).setCreatorUsername(creator.getString("username"));
             }
         } catch (Exception e) {
 

@@ -82,6 +82,8 @@ public class NewsFeedActivity extends AppCompatActivity implements LoaderManager
                 intent.putExtra("date", item.getmDate());
                 intent.putExtra("location", item.getmLocation());
                 intent.putExtra("tags", item.getMTags());
+                intent.putExtra("creator_id", item.getCreatorId()); //New
+                intent.putExtra("creator_username", item.getCreatorUsername()); //New
                 startActivity(intent);
             }
         });

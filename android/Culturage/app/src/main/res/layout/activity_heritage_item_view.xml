@@ -10,6 +10,14 @@
         android:background="@android:color/white"
         android:orientation="vertical">
 
+        <!-- To be changed -->
+        <TextView
+            android:id="@+id/guest_profile"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textSize="0.15in"
+            android:text="username" />
+
         <TextView
             android:id="@+id/her_item_Title"
             android:layout_width="match_parent"

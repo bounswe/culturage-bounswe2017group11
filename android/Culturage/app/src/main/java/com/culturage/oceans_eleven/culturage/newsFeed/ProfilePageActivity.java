@@ -33,15 +33,8 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.util.ArrayList;
 
 public class ProfilePageActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<ArrayList<ProfilePage>> {
@@ -365,7 +358,11 @@ public class ProfilePageActivity extends AppCompatActivity implements LoaderMana
                 }
                 //TODO: Problem here, needs to be changeed.
                 if (arrayProfile[4] != null) {
-                    json.optString("birthday", arrayProfile[4]);
+                    if (arrayProfile[4].equals("")) {
+                        Log.v("Birthday String Length:", arrayProfile[4]);
+                    } else {
+                        json.put("birthday", arrayProfile[4]);
+                    }
                 }
                 //   if(!("image/png;base64,"+profilePage.getPhoto()).equals(json.getString("photo"))){
                 json.put("photo", "image/png;base64," + profilePage.getPhoto());

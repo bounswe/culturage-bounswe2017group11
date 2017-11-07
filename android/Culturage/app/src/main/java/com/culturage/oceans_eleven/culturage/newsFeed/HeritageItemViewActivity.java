@@ -1,8 +1,10 @@
 package com.culturage.oceans_eleven.culturage.newsFeed;
 
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -12,6 +14,8 @@ import com.squareup.picasso.Picasso;
 public class HeritageItemViewActivity extends AppCompatActivity {
 
     private int heritageItemPostID = -1;
+    private String creator_id;
+    private String creator_username;
 
 
     @Override
@@ -65,6 +69,21 @@ public class HeritageItemViewActivity extends AppCompatActivity {
 
         TextView tags = (TextView) findViewById(R.id.her_item_tags);
         tags.setText(getIntent().getStringExtra("tags"));
+
+        creator_id = getIntent().getStringExtra("creator_id");
+        creator_username = getIntent().getStringExtra("creator_username");
+        TextView guest = (TextView) findViewById(R.id.guest_profile);
+        guest.setText(creator_username);
+        guest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(HeritageItemViewActivity.this, ProfileGuestActivity.class));
+                Intent intent = new Intent(HeritageItemViewActivity.this, ProfileGuestActivity.class);
+                intent.putExtra("creator_id", creator_id); //New
+                startActivity(intent);
+            }
+        });
+
     }
 
 
