@@ -171,7 +171,7 @@ public class LoginActivity extends AppCompatActivity {
 
         String result = null;
         try {
-            result = PostJSON.postToApi(json, registerURI);
+            result = PostJSON.postToApi(json, "http://18.220.108.135/api/" + registerURI,"");
         } catch (Exception e) {
             // TODO: Handle exception
             StringWriter sw = new StringWriter();

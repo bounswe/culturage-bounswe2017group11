@@ -18,11 +18,11 @@ import java.nio.charset.Charset;
 
 public class PostJSON {
 
-    private static final String baseURI = "http://18.220.108.135/api/";
+    //private static final String baseURI = "http://18.220.108.135/api/";
 
-    public static String postToApi(JSONObject json, String endpoint) throws MalformedURLException, IOException {
+    public static String postToApi(JSONObject json, String url, String token) throws  IOException {
         HttpURLConnection urlConnection;
-        String url = baseURI + endpoint;
+        //String url = baseURI + endpoint;
         String data = json.toString();
         String result = null;
         InputStream inputStream = null;
@@ -31,10 +31,12 @@ public class PostJSON {
         Log.v("postApi", " " + (urlConnection == null));
         try {
             //Connect
+            urlConnection.setDoInput(true); // Allow Inputs
             urlConnection.setDoOutput(true);
             urlConnection.setRequestProperty("Content-Type", "application/json");
             urlConnection.setRequestProperty("Accept", "application/json");
             urlConnection.setRequestMethod("POST");
+            urlConnection.setRequestProperty("Authorization", "JWT " + token);
             urlConnection.connect();
             Log.v("postApi", "url connected");
             //Write
@@ -44,6 +46,8 @@ public class PostJSON {
             writer.close();
             outputStream.close();
             Log.v("postApi", "output closed");
+
+            
             if (urlConnection.getResponseCode() == 201 || urlConnection.getResponseCode() == 200) {
                 inputStream = urlConnection.getInputStream();
                 result = readFromStream(inputStream);

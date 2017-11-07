@@ -25,6 +25,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.culturage.oceans_eleven.culturage.R;
+import com.culturage.oceans_eleven.culturage.network.PostJSON;
 import com.culturage.oceans_eleven.culturage.network.ProfilePageLoader;
 import com.culturage.oceans_eleven.culturage.signup_login.LoginActivity;
 import com.squareup.picasso.Picasso;
@@ -325,51 +326,31 @@ public class ProfilePageActivity extends AppCompatActivity implements LoaderMana
         }
 
         private boolean uploadProfile(String token) {
-            HttpURLConnection conn = null;
-            int serverResponseCode = 400;
-            Log.v("upload", "Entered method");
+
+
+            String result = null;
+
             try {
-                URL url = new URL(apiURL);
-                // Open a HTTP  connection to  the URL
-                conn = (HttpURLConnection) url.openConnection();
-                conn.setDoInput(true); // Allow Inputs
-                conn.setDoOutput(true); // Allow Outputs
-//            conn.setUseCaches(false); // Don't use a Cached Copy
-                conn.setRequestMethod("POST");
-                conn.setRequestProperty("Content-Type", "application/json");
-                conn.setRequestProperty("Accept", "application/json");
-                conn.setRequestProperty("Authorization", "JWT " + token);
+                result = PostJSON.postToApi(constructTheJSON(),apiURL,token);
+            } catch (IOException e) {
+                e.printStackTrace();
+                return false;
 
-                String json = constructTheJSON();
+            }
 
-                OutputStream outputStream = conn.getOutputStream();
-                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
-                writer.write(json);
-                writer.close();
-                outputStream.close();
-                Log.v("upload", "Output is closed");
-                // Responses from the server (code and message)
-                serverResponseCode = conn.getResponseCode();
-                String serverResponseMessage = conn.getResponseMessage();
-                Log.v("upload", "HTTP Response is : "
-                        + serverResponseMessage + ": " + serverResponseCode);
-
-
-            } catch (Exception ex) {
-                StringWriter sw = new StringWriter();
-                ex.printStackTrace(new PrintWriter(sw));
-                String exceptionAsString = sw.toString();
-                Log.v("upload", "Caught exception" + exceptionAsString);
+            if(result == null || result.equals("400")){
                 return false;
             }
-            return serverResponseCode < 300;
+
+            return true;
+
         }
 
-        private String constructTheJSON() {
+        private JSONObject constructTheJSON() {
 
-
+            JSONObject json = new JSONObject();
             try {
-                JSONObject json = new JSONObject();
+
                 if (arrayProfile[0] != null) {
                     json.put("fullName", arrayProfile[0]);
                 }
@@ -393,11 +374,11 @@ public class ProfilePageActivity extends AppCompatActivity implements LoaderMana
                 Log.v("Make the comparrison", profilePage.getPhoto());
 
 
-                return json.toString();
+                return json;
             } catch (JSONException e) {
                 Log.v("upload", "Error in json construction");
             }
-            return "";
+            return json;
         }
     }
 

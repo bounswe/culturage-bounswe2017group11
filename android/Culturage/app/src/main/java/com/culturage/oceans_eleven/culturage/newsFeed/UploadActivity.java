@@ -26,6 +26,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.culturage.oceans_eleven.culturage.R;
+import com.culturage.oceans_eleven.culturage.network.PostJSON;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -232,50 +233,28 @@ public class UploadActivity extends Activity {
         }
 
         private boolean uploadPhoto(String token) {
-            HttpURLConnection conn = null;
-            int serverResponseCode = 400;
-            Log.v("upload", "Entered method");
+
+            String result = null;
+
             try {
-                URL url = new URL(UPLOAD_URL);
-                // Open a HTTP  connection to  the URL
-                conn = (HttpURLConnection) url.openConnection();
-                conn.setDoInput(true); // Allow Inputs
-                conn.setDoOutput(true); // Allow Outputs
-//            conn.setUseCaches(false); // Don't use a Cached Copy
-                conn.setRequestMethod("POST");
-                conn.setRequestProperty("Content-Type", "application/json");
-                conn.setRequestProperty("Accept", "application/json");
-                conn.setRequestProperty("Authorization", "JWT " + token);
+                result = PostJSON.postToApi(constructTheJSON(),UPLOAD_URL,token);
+            } catch (IOException e) {
+                e.printStackTrace();
+                return  false;
+            }
 
-                String json = constructTheJSON();
-
-                OutputStream outputStream = conn.getOutputStream();
-                BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
-                writer.write(json);
-                writer.close();
-                outputStream.close();
-                Log.v("upload", "Output is closed");
-                // Responses from the server (code and message)
-                serverResponseCode = conn.getResponseCode();
-                String serverResponseMessage = conn.getResponseMessage();
-                Log.v("upload", "HTTP Response is : "
-                        + serverResponseMessage + ": " + serverResponseCode);
-
-
-            } catch (Exception ex) {
-                StringWriter sw = new StringWriter();
-                ex.printStackTrace(new PrintWriter(sw));
-                String exceptionAsString = sw.toString();
-                Log.v("upload", "Caught exception" + exceptionAsString);
+            if(result == null || result.equals("400")){
                 return false;
             }
-            return serverResponseCode < 300;
+
+            return true;
         }
 
-        private String constructTheJSON() {
+        private JSONObject constructTheJSON() {
+            JSONObject json = new JSONObject();
             try {
 
-                JSONObject json = new JSONObject();
+
                 json.put("name", itemToUpload.getmTitle());
                 json.put("description", itemToUpload.getmDescription());
                 json.put("image", "image/png;base64," + itemToUpload.getmImageString());
@@ -285,11 +264,11 @@ public class UploadActivity extends Activity {
                 Log.v("upload-tag", tags.toString());
                 json.put("tags", tags);
                 Log.v("upload", itemToUpload.getmImageString());
-                return json.toString();
+                return json;
             } catch (JSONException e) {
                 Log.v("upload", "Error in json construction");
             }
-            return "";
+            return json;
         }
 
     }
