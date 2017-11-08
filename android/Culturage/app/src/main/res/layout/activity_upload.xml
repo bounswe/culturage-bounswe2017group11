@@ -29,9 +29,10 @@
                 android:id="@+id/progress_bar_upload"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:visibility="invisible"
+                android:layout_gravity="center"
                 android:layout_weight="1"
-                android:layout_gravity="center" />
+                android:visibility="invisible" />
+
             <ImageButton
                 android:id="@+id/save_upload"
                 android:layout_width="36dp"
@@ -95,8 +96,8 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/edit_text_height"
             android:layout_marginBottom="@dimen/small_padding"
-            android:layout_marginStart="@dimen/small_padding"
             android:layout_marginEnd="@dimen/small_padding"
+            android:layout_marginStart="@dimen/small_padding"
             android:background="@drawable/blue_border"
             android:hint="@string/prompt_title"
             android:inputType="textAutoComplete"
@@ -110,8 +111,8 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/large_edit_text_height"
             android:layout_marginBottom="@dimen/small_padding"
-            android:layout_marginStart="@dimen/small_padding"
             android:layout_marginEnd="@dimen/small_padding"
+            android:layout_marginStart="@dimen/small_padding"
 
             android:background="@drawable/blue_border"
             android:gravity="top"
@@ -124,7 +125,34 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/small_padding"
+            android:layout_marginEnd="@dimen/small_padding"
+            android:layout_marginStart="@dimen/small_padding"
+            android:background="@drawable/blue_border">
+
+            <Switch
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/edit_text_height"
+                android:paddingEnd="@dimen/tiny_padding"
+                android:paddingStart="@dimen/tiny_padding"
+                android:showText="true"
+                android:textColor="@color/hint_color"
+                android:textOff="AC"
+                android:textOn="BC"
+                android:theme="@style/SwitchCompatTheme" />
+
+            <Spinner
+                android:layout_width="0dp"
+                android:layout_height="@dimen/edit_text_height"
+                android:layout_weight="1"
+                android:entries="@array/days"></Spinner>
+
+            <Spinner
+                android:layout_width="0dp"
+                android:layout_height="@dimen/edit_text_height"
+                android:layout_weight="1"
+                android:entries="@array/months"></Spinner>
 
             <EditText
                 android:id="@+id/upload_date"
@@ -133,40 +161,39 @@
                 android:layout_marginBottom="@dimen/small_padding"
                 android:layout_marginEnd="@dimen/tiny_padding"
                 android:layout_marginStart="@dimen/small_padding"
-                android:layout_weight="1"
-                android:background="@drawable/blue_border"
-                android:hint="@string/prompt_time"
-                android:inputType="textAutoComplete"
+                android:layout_weight="2"
+                android:hint="Year"
+                android:inputType="number"
                 android:padding="@dimen/small_padding"
                 android:textColor="@color/primary_blue"
                 android:textColorHint="@color/hint_color"
                 android:textCursorDrawable="@null" />
 
-            <EditText
-                android:id="@+id/upload_location"
-                android:layout_width="0dp"
-                android:layout_height="48dp"
-                android:layout_marginBottom="@dimen/small_padding"
-                android:layout_marginLeft="@dimen/tiny_padding"
-                android:layout_marginEnd="@dimen/small_padding"
-                android:layout_weight="1"
-                android:background="@drawable/blue_border"
-                android:hint="@string/prompt_"
-                android:inputType="textAutoComplete"
-                android:padding="@dimen/small_padding"
-                android:textColor="@color/primary_blue"
-                android:textColorHint="@color/hint_color"
-                android:textCursorDrawable="@null" />
+
         </LinearLayout>
 
+        <EditText
+            android:id="@+id/upload_location"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginBottom="@dimen/small_padding"
+            android:layout_marginEnd="@dimen/small_padding"
+            android:layout_marginStart="@dimen/small_padding"
+            android:background="@drawable/blue_border"
+            android:hint="@string/prompt_"
+            android:inputType="textAutoComplete"
+            android:padding="@dimen/small_padding"
+            android:textColor="@color/primary_blue"
+            android:textColorHint="@color/hint_color"
+            android:textCursorDrawable="@null" />
 
         <EditText
             android:id="@+id/upload_tags"
             android:layout_width="match_parent"
             android:layout_height="@dimen/edit_text_height"
             android:layout_marginBottom="@dimen/small_padding"
-            android:layout_marginStart="@dimen/small_padding"
             android:layout_marginEnd="@dimen/small_padding"
+            android:layout_marginStart="@dimen/small_padding"
             android:background="@drawable/blue_border"
             android:gravity="top"
             android:hint="@string/prompt_tags"
