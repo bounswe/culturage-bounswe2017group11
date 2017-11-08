@@ -5,7 +5,6 @@
     android:layout_height="match_parent"
     android:background="#FFFFFF"
     android:orientation="vertical"
-    android:padding="@dimen/small_padding"
     tools:context="com.culturage.oceans_eleven.culturage.newsFeed.ProfilePageActivity">
 
     <LinearLayout
@@ -17,7 +16,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/edit_text_height"
-            android:background="#FFFFFF">
+            android:background="@color/primary_blue">
             <!-- A dummy view to draw the focus-->
             <ImageButton
                 android:id="@+id/logout"
@@ -26,9 +25,9 @@
                 android:layout_marginEnd="@dimen/tiny_padding"
                 android:layout_marginStart="@dimen/small_padding"
                 android:layout_weight="0"
-                android:background="#FFFFFF"
+                android:background="@color/primary_blue"
                 android:scaleType="centerInside"
-                android:src="@mipmap/ic_logout" />
+                android:src="@drawable/ic_logout" />
 
             <LinearLayout
                 android:id="@+id/dummyView3"
@@ -63,7 +62,7 @@
                 android:layout_marginEnd="@dimen/tiny_padding"
                 android:layout_marginStart="@dimen/small_padding"
                 android:layout_weight="0"
-                android:background="#FFFFFF"
+                android:background="@color/primary_blue"
                 android:scaleType="centerInside"
                 android:src="@drawable/ic_confirm" />
 
@@ -74,7 +73,7 @@
                 android:layout_marginEnd="@dimen/small_padding"
                 android:layout_marginStart="@dimen/tiny_padding"
                 android:layout_weight="0"
-                android:background="#FFFFFF"
+                android:background="@color/primary_blue"
                 android:scaleType="centerInside"
                 android:src="@drawable/ic_cancel" />
         </LinearLayout>
