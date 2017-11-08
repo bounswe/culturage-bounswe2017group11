@@ -8,12 +8,13 @@
         android:layout_height="wrap_content"
         android:background="#FFFFFF"
         android:orientation="vertical"
-        android:padding="@dimen/small_padding">
+
+        android:padding="0dp">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="@dimen/edit_text_height"
-            android:background="#FFFFFF">
+            android:background="@color/primary_blue">
             <!-- A dummy view to draw the focus-->
             <LinearLayout
                 android:id="@+id/dummyView3"
@@ -38,7 +39,7 @@
                 android:layout_marginEnd="@dimen/tiny_padding"
                 android:layout_marginStart="@dimen/small_padding"
                 android:layout_weight="0"
-                android:background="#FFFFFF"
+                android:background="@color/primary_blue"
                 android:scaleType="centerInside"
                 android:src="@drawable/ic_confirm" />
 
@@ -49,7 +50,7 @@
                 android:layout_marginEnd="@dimen/small_padding"
                 android:layout_marginStart="@dimen/tiny_padding"
                 android:layout_weight="0"
-                android:background="#FFFFFF"
+                android:background="@color/primary_blue"
                 android:scaleType="centerInside"
                 android:src="@drawable/ic_cancel" />
         </LinearLayout>
@@ -94,6 +95,8 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/edit_text_height"
             android:layout_marginBottom="@dimen/small_padding"
+            android:layout_marginStart="@dimen/small_padding"
+            android:layout_marginEnd="@dimen/small_padding"
             android:background="@drawable/blue_border"
             android:hint="@string/prompt_title"
             android:inputType="textAutoComplete"
@@ -107,6 +110,9 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/large_edit_text_height"
             android:layout_marginBottom="@dimen/small_padding"
+            android:layout_marginStart="@dimen/small_padding"
+            android:layout_marginEnd="@dimen/small_padding"
+
             android:background="@drawable/blue_border"
             android:gravity="top"
             android:hint="@string/prompt_description"
@@ -126,6 +132,7 @@
                 android:layout_height="@dimen/edit_text_height"
                 android:layout_marginBottom="@dimen/small_padding"
                 android:layout_marginEnd="@dimen/tiny_padding"
+                android:layout_marginStart="@dimen/small_padding"
                 android:layout_weight="1"
                 android:background="@drawable/blue_border"
                 android:hint="@string/prompt_time"
@@ -141,6 +148,7 @@
                 android:layout_height="48dp"
                 android:layout_marginBottom="@dimen/small_padding"
                 android:layout_marginLeft="@dimen/tiny_padding"
+                android:layout_marginEnd="@dimen/small_padding"
                 android:layout_weight="1"
                 android:background="@drawable/blue_border"
                 android:hint="@string/prompt_"
@@ -157,6 +165,8 @@
             android:layout_width="match_parent"
             android:layout_height="@dimen/edit_text_height"
             android:layout_marginBottom="@dimen/small_padding"
+            android:layout_marginStart="@dimen/small_padding"
+            android:layout_marginEnd="@dimen/small_padding"
             android:background="@drawable/blue_border"
             android:gravity="top"
             android:hint="@string/prompt_tags"
