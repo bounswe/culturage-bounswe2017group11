@@ -28,16 +28,16 @@ import java.util.ArrayList;
  * does some other url stuff internally
  */
 
-public class Fetcher {
+class Fetcher {
     /**
      * Tag for the log messages
      */
-    public static final String LOG_TAG = Fetcher.class.getSimpleName();
+    private static final String LOG_TAG = Fetcher.class.getSimpleName();
 
     /**
      * Query the "backend" and return an {@link HeritageItem} object to represent a single heritage item.
      */
-    public static ArrayList<HeritageItem> fetchNewsFeedData(String requestUrl, Context context) {
+    static ArrayList<HeritageItem> fetchNewsFeedData(String requestUrl, Context context) {
 
         // Create URL object
         //FIXME
@@ -51,10 +51,8 @@ public class Fetcher {
             Log.e(LOG_TAG, "Error closing input stream", e);
         }
         // Extract relevant fields from the JSON response and create an {@link Event} object
-        ArrayList<HeritageItem> newsFeed = extractHeritageItemsFromJson(jsonResponse);
-
         // Return the {@link Event}
-        return newsFeed;
+        return extractHeritageItemsFromJson(jsonResponse);
     }
 
     /**
@@ -154,7 +152,7 @@ public class Fetcher {
             for (int i = 0; i < items.length(); i++) {
                 JSONObject values = items.getJSONObject(i);
                 JSONObject creator = values.getJSONObject("created_by");  //Change
-                String title = "", description = "", imageURL = "", rate = "", createdAt = "", date = "", location = "", stringTags = "";
+                String title, description, imageURL, rate, createdAt, date, location = "", stringTags = "";
 
                 title = values.getString("name");
                 description = values.getString("description");
@@ -179,7 +177,7 @@ public class Fetcher {
                 heritageItems.get(i).setCreatorUsername(creator.getString("username"));
             }
         } catch (Exception e) {
-
+            Log.v(LOG_TAG, "Error in populating heritage items");
         }
 
         return heritageItems;
@@ -188,9 +186,13 @@ public class Fetcher {
     private static String parseTags(JSONArray tags) {
         String stringTags = "";
         try {
+            StringBuilder stringTagsBuilder = new StringBuilder();
             for (int j = 0; j < tags.length(); j++) {
-                stringTags += "#" + tags.getJSONObject(j).getString("name") + " ";
+                stringTagsBuilder = stringTagsBuilder.append("#");
+                stringTagsBuilder = stringTagsBuilder.append(tags.getJSONObject(j).getString("name"));
+                stringTagsBuilder = stringTagsBuilder.append(" ");
             }
+            stringTags = stringTagsBuilder.toString();
         } catch (Exception e) {
             Log.v("fetcher", "error parsing tags");
         }
@@ -211,7 +213,12 @@ public class Fetcher {
                 date = "2017-01-01";
             }
             String[] temp = date.split("-");
-            temp[0] = Integer.parseInt(temp[0]) + "";
+            int tempYear = Integer.parseInt(temp[0]);
+            if (tempYear > 3000) {
+                temp[0] = tempYear - 3000 + "";
+            } else {
+                temp[0] = tempYear + "";
+            }
             date = temp[2] + "/" + temp[1] + "/" + temp[0];
         } catch (Exception e) {
             Log.v("fetcher", "Error parsing date");

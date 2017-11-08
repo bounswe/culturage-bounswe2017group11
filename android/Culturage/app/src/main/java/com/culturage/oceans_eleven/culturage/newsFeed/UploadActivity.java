@@ -23,6 +23,8 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
+import android.widget.Spinner;
+import android.widget.Switch;
 import android.widget.Toast;
 
 import com.culturage.oceans_eleven.culturage.R;
@@ -32,17 +34,10 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.BufferedWriter;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.PrintWriter;
-import java.io.StringWriter;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
 
 public class UploadActivity extends Activity {
@@ -51,7 +46,9 @@ public class UploadActivity extends Activity {
     private int REQUEST_CAMERA = 0, SELECT_FILE = 1;
     private ImageView mImageView;
     private ProgressBar mProgressBar;
-    private EditText mTitleView, mDescView, mDateView, mLocView, mTagView;
+    private EditText mTitleView, mDescView, mYearView, mLocView, mTagView;
+    private Switch mBcSwitch;
+    private Spinner mDaySpinner, mMonthSpinner;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,9 +59,12 @@ public class UploadActivity extends Activity {
         mImageView = (ImageView) findViewById(R.id.ivImage);
         mTitleView = (EditText) findViewById(R.id.upload_title);
         mDescView = (EditText) findViewById(R.id.upload_description);
-        mDateView = (EditText) findViewById(R.id.upload_date);
+        mYearView = (EditText) findViewById(R.id.upload_year);
         mLocView = (EditText) findViewById(R.id.upload_location);
         mTagView = (EditText) findViewById(R.id.upload_tags);
+        mBcSwitch = (Switch) findViewById(R.id.acSwitch);
+        mDaySpinner = (Spinner) findViewById(R.id.daySpinner);
+        mMonthSpinner = (Spinner) findViewById(R.id.monthSpinner);
 
         ImageButton btnTakePhoto = (ImageButton) findViewById(R.id.btnTakePhoto);
         btnTakePhoto.setOnClickListener(new OnClickListener() {
@@ -90,8 +90,35 @@ public class UploadActivity extends Activity {
                 String imageString = getEncoded64ImageStringFromBitmap(drawable.getBitmap());
                 String rate = null;
                 String createdAt = null;
+                String day = mDaySpinner.getSelectedItem().toString();
+                String month = mMonthSpinner.getSelectedItem().toString();
+
+                String year = "";
+                try {
+                    int yearTemp = Integer.parseInt(mYearView.getText().toString());
+                    if (mBcSwitch.isChecked()) {
+                        // BC case
+                        year = yearTemp + 3000 + "";
+                    } else {
+                        year = yearTemp + "";
+                    }
+
+                } catch (NumberFormatException e) {
+                    year = "0000";
+                } catch (Exception e) {
+                    Log.v("upload", "Error in year parsing");
+                }
+                if (day.equals("--")) {
+                    day = "00";
+                }
+                if (month.equals("--")) {
+                    month = "00";
+                }
+                String date = year + "-" + month + "-" + day;
+                Log.v("upload-date", date);
+//                startActivity(new Intent(UploadActivity.this, NewsFeedActivity.class));
                 HeritageItem itemToUpload = new HeritageItem(mTitleView.getText().toString(), mDescView.getText().toString(), imageString,
-                        rate, createdAt, mDateView.getText().toString(), mLocView.getText().toString(), mTagView.getText().toString());
+                        rate, createdAt, date, mLocView.getText().toString(), mTagView.getText().toString());
                 new UploadRequest(UploadActivity.this, itemToUpload).execute();
                 startActivity(new Intent(UploadActivity.this, NewsFeedActivity.class));
             }
@@ -113,8 +140,7 @@ public class UploadActivity extends Activity {
         bitmap.compress(Bitmap.CompressFormat.JPEG, 70, stream);
         byte[] byteFormat = stream.toByteArray();
         // get the base 64 string
-        String imgString = Base64.encodeToString(byteFormat, Base64.NO_WRAP);
-        return imgString;
+        return Base64.encodeToString(byteFormat, Base64.NO_WRAP);
     }
 
 //    @Override
@@ -160,7 +186,7 @@ public class UploadActivity extends Activity {
     private void onCaptureImageResult(Intent data) {
         Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        thumbnail.compress(Bitmap.CompressFormat.JPEG, 90, bytes);
+        thumbnail.compress(Bitmap.CompressFormat.JPEG, 70, bytes);
 
         File destination = new File(Environment.getExternalStorageDirectory(),
                 System.currentTimeMillis() + ".jpg");
@@ -237,17 +263,13 @@ public class UploadActivity extends Activity {
             String result = null;
 
             try {
-                result = PostJSON.postToApi(constructTheJSON(),UPLOAD_URL,token);
+                result = PostJSON.postToApi(constructTheJSON(), UPLOAD_URL, token);
             } catch (IOException e) {
                 e.printStackTrace();
-                return  false;
-            }
-
-            if(result == null || result.equals("400")){
                 return false;
             }
 
-            return true;
+            return !(result == null || result.equals("400"));
         }
 
         private JSONObject constructTheJSON() {

@@ -132,6 +132,7 @@
             android:background="@drawable/blue_border">
 
             <Switch
+                android:id="@+id/acSwitch"
                 android:layout_width="wrap_content"
                 android:layout_height="@dimen/edit_text_height"
                 android:paddingEnd="@dimen/tiny_padding"
@@ -143,19 +144,21 @@
                 android:theme="@style/SwitchCompatTheme" />
 
             <Spinner
+                android:id="@+id/daySpinner"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/edit_text_height"
                 android:layout_weight="1"
                 android:entries="@array/days"></Spinner>
 
             <Spinner
+                android:id="@+id/monthSpinner"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/edit_text_height"
                 android:layout_weight="1"
                 android:entries="@array/months"></Spinner>
 
             <EditText
-                android:id="@+id/upload_date"
+                android:id="@+id/upload_year"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/edit_text_height"
                 android:layout_marginBottom="@dimen/small_padding"
