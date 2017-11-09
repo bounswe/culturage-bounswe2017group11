@@ -23,7 +23,7 @@ public class NewsFeedActivity extends AppCompatActivity implements LoaderManager
 
     private static final String apiURL = "http://18.220.108.135/api/items";
 
-    private static HeritageItemAdapter mAdapter;
+    private static HeritageItemAdapter itemAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,12 +60,9 @@ public class NewsFeedActivity extends AppCompatActivity implements LoaderManager
 //        items.add(new HeritageItem(7, title, description, R.drawable.sample_6, 3, 7));
 //        items.add(new HeritageItem(8, title, description, R.drawable.sample_7, 1, 4));
 
-
-
-
-        mAdapter = new HeritageItemAdapter(NewsFeedActivity.this, items);
+        itemAdapter = new HeritageItemAdapter(NewsFeedActivity.this, items);
         final ListView listView = (ListView) findViewById(R.id.news_feed_list);
-        listView.setAdapter(mAdapter);
+        listView.setAdapter(itemAdapter);
         updateUi(items);
         getLoaderManager().initLoader(1, null, this);
 
@@ -91,11 +88,10 @@ public class NewsFeedActivity extends AppCompatActivity implements LoaderManager
 
     }
 
-
     public void updateUi(ArrayList<HeritageItem> heritageItems) {
-        mAdapter.clear();
+        itemAdapter.clear();
         if (heritageItems != null || heritageItems.size() > 0) {
-            mAdapter.addAll(heritageItems);
+            itemAdapter.addAll(heritageItems);
         }
     }
 
@@ -117,9 +113,8 @@ public class NewsFeedActivity extends AppCompatActivity implements LoaderManager
 
     @Override
     public void onLoaderReset(Loader<ArrayList<HeritageItem>> loader) {
-        mAdapter.clear();
+        itemAdapter.clear();
     }
-
 
     private boolean isConnectedToInternet(){
 

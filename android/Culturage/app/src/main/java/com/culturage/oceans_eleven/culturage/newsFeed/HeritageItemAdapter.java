@@ -34,9 +34,7 @@ public class HeritageItemAdapter extends ArrayAdapter {
                     R.layout.list_item_news_feed, parent, false);
         }
 
-
         HeritageItem currentItem = (HeritageItem) getItem(position);
-
 
         TextView titleView = (TextView) listItemView.findViewById(R.id.title);
         titleView.setText(currentItem.getmTitle());

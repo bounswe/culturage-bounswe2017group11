@@ -21,10 +21,6 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 
-/**
- * Created by BARIN on 23.10.2017.
- */
-
 public class Utils {
 
     /**
@@ -32,9 +28,6 @@ public class Utils {
      */
     public static final String LOG_TAG = Utils.class.getSimpleName();
 
-    /**
-     * Query the USGS dataset and return an {@link ProfilePage} object to represent a single earthquake.
-     */
     public static ArrayList<ProfilePage> fetchProfilePageData(String requestUrl, Context context) {
         // Create URL object
         URL url = createUrl(requestUrl);

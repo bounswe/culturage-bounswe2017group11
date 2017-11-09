@@ -47,7 +47,6 @@ public class ProfilePageActivity extends AppCompatActivity implements LoaderMana
     private ProgressBar mProgressBar;
     private EditText username, email, fullName, location, birthday;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,8 +55,6 @@ public class ProfilePageActivity extends AppCompatActivity implements LoaderMana
         mProgressBar = (ProgressBar) findViewById(R.id.progress_bar_profilePage);
 
         getLoaderManager().initLoader(1, null, this);
-
-
 
         //Upload profile picture button
         ImageButton uploadProfilePic = (ImageButton) findViewById(R.id.uploadProfilePic);

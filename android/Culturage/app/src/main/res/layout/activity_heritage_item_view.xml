@@ -15,8 +15,8 @@
             android:id="@+id/guest_profile"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="0.15in"
-            android:text="username" />
+            android:text="username"
+            android:textSize="0.15in" />
 
         <TextView
             android:id="@+id/her_item_Title"
@@ -37,9 +37,9 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/small_padding"
+            android:adjustViewBounds="true"
             android:scaleType="centerCrop"
-            tools:src="@mipmap/hagia_sophia"
-            android:adjustViewBounds="true" />
+            tools:src="@mipmap/hagia_sophia" />
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -72,11 +72,11 @@
                 android:id="@+id/her_item_description"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:minHeight="@dimen/large_edit_text_height"
                 android:background="@drawable/blue_border"
+                android:minHeight="@dimen/large_edit_text_height"
+                android:padding="@dimen/small_padding"
                 android:textColor="@color/login_page_text_color"
-                tools:text="Some text would go here. Longer surely"
-                android:padding="@dimen/small_padding" />
+                tools:text="Some text would go here. Longer surely" />
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -94,9 +94,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/label_height"
                         android:gravity="start"
+                        android:paddingTop="@dimen/tiny_padding"
                         android:text="Date"
                         android:textColor="@color/hint_color"
-                        android:paddingTop="@dimen/tiny_padding"
                         android:textStyle="italic" />
 
                     <TextView
@@ -104,11 +104,11 @@
                         style="?android:textAppearanceMedium"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/edit_text_height"
-                        android:background="@drawable/blue_border"
-                        android:textColor="@color/login_page_text_color"
-                        tools:text="01/01/2018"
                         android:layout_marginEnd="@dimen/tiny_padding"
-                        android:gravity="center" />
+                        android:background="@drawable/blue_border"
+                        android:gravity="center"
+                        android:textColor="@color/login_page_text_color"
+                        tools:text="01/01/2018" />
 
                 </LinearLayout>
 
@@ -123,9 +123,9 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/label_height"
                         android:gravity="start"
+                        android:paddingTop="@dimen/tiny_padding"
                         android:text="Location"
                         android:textColor="@color/hint_color"
-                        android:paddingTop="@dimen/tiny_padding"
                         android:textStyle="italic" />
 
                     <TextView
@@ -133,15 +133,22 @@
                         style="?android:textAppearanceMedium"
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/edit_text_height"
-                        android:background="@drawable/blue_border"
-                        android:paddingLeft="@dimen/small_padding"
                         android:layout_marginStart="@dimen/tiny_padding"
+                        android:background="@drawable/blue_border"
+                        android:gravity="center"
+                        android:paddingLeft="@dimen/small_padding"
                         android:textColor="@color/login_page_text_color"
-                        tools:text="Sultanahmet"
-                        android:gravity="center" />
+                        tools:text="Sultanahmet" />
 
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
+
+        <Button
+            android:id="@+id/showComments"
+            android:text="Comments"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+
     </LinearLayout>
 </ScrollView>
