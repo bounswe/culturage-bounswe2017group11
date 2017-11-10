@@ -1,41 +1,27 @@
 package com.culturage.oceans_eleven.culturage.newsFeed;
 
-import android.app.LoaderManager;
 import android.content.Intent;
-import android.content.Loader;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.ListView;
 
 import com.culturage.oceans_eleven.culturage.R;
-import com.culturage.oceans_eleven.culturage.adapters.HeritageItemAdapter;
-import com.culturage.oceans_eleven.culturage.baseClasses.HeritageItem;
-import com.culturage.oceans_eleven.culturage.network.NewsFeedLoader;
 
-import java.util.ArrayList;
+public class NewsFeedActivity extends AppCompatActivity {
 
-public class NewsFeedActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<ArrayList<HeritageItem>> {
-
-    private static final String apiURL = "http://18.220.108.135/api/items";
-
-    private static HeritageItemAdapter itemAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_news_feed);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(NewsFeedActivity.this, UploadActivity.class));
-            }
-        });
+        // Set the content of the activity to use the activity_main.xml layout file
+        setContentView(R.layout.activity_fragment_work_around);
+
+
 
         ImageView profileIcon = (ImageView) findViewById(R.id.profileIcon);
         profileIcon.setOnClickListener(new View.OnClickListener() {
@@ -45,76 +31,29 @@ public class NewsFeedActivity extends AppCompatActivity implements LoaderManager
             }
         });
 
-        ArrayList<HeritageItem> items = new ArrayList<HeritageItem>();
+        // Find the view pager that will allow the user to swipe between fragments
+        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
 
-//        String description = "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\"";
-//        String title = "Lorem Ipsum";
-//        items.add(new HeritageItem(1, title, description, R.drawable.sample_0, 1, 3));
-//        items.add(new HeritageItem(2, title, description, R.drawable.sample_1, 2, 6));
-//        items.add(new HeritageItem(3, title, description, R.drawable.sample_2, 1, 7));
-//        items.add(new HeritageItem(4, title, description, R.drawable.sample_3, 3, 3));
-//        items.add(new HeritageItem(5, title, description, R.drawable.sample_4, 1, 89));
-//        items.add(new HeritageItem(6, title, description, R.drawable.sample_5, 5, 5));
-//        items.add(new HeritageItem(7, title, description, R.drawable.sample_6, 3, 7));
-//        items.add(new HeritageItem(8, title, description, R.drawable.sample_7, 1, 4));
+        // Create an adapter that knows which fragment should be shown on each page
+        HeritageItemListAdapder adapter = new HeritageItemListAdapder(this, getSupportFragmentManager());
 
-        itemAdapter = new HeritageItemAdapter(NewsFeedActivity.this, items);
-        final ListView listView = (ListView) findViewById(R.id.news_feed_list);
-        listView.setAdapter(itemAdapter);
-        updateUi(items);
-        getLoaderManager().initLoader(1, null, this);
+        // Set the adapter onto the view pager
+        viewPager.setAdapter(adapter);
 
-        // FIXME: 22.10.2017
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                HeritageItem item = ((HeritageItem) listView.getItemAtPosition(position));
-                Intent intent = new Intent(NewsFeedActivity.this, HeritageItemViewActivity.class);
-                intent.putExtra("postId", item.getmPostId());
-                intent.putExtra("title", item.getmTitle());
-                intent.putExtra("description", item.getmDescription());
-                intent.putExtra("imageUrl", item.getmImageString());
-                intent.putExtra("date", item.getmDate());
-                intent.putExtra("location", item.getmLocation());
-                intent.putExtra("tags", item.getMTags());
-                intent.putExtra("creator_id", item.getCreatorId()); //New
-                intent.putExtra("creator_username", item.getCreatorUsername()); //New
-                startActivity(intent);
-            }
-        });
+        // Find the tab layout that shows the tabs
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+
+        // Connect the tab layout with the view pager. This will
+        //   1. Update the tab layout when the view pager is swiped
+        //   2. Update the view pager when a tab is selected
+        //   3. Set the tab layout's tab names with the view pager's adapter's titles
+        //      by calling onPageTitle()
+        tabLayout.setupWithViewPager(viewPager);
 
 
     }
 
-    public void updateUi(ArrayList<HeritageItem> heritageItems) {
-        itemAdapter.clear();
-        if (heritageItems != null || heritageItems.size() > 0) {
-            itemAdapter.addAll(heritageItems);
-        }
-    }
 
-    @Override
-    public Loader<ArrayList<HeritageItem>> onCreateLoader(int i, Bundle bundle) {
-        return new NewsFeedLoader(NewsFeedActivity.this, apiURL);
-
-    }
-
-    @Override
-    public void onLoadFinished(Loader<ArrayList<HeritageItem>> loader, ArrayList<HeritageItem> heritageItems) {
-        if (heritageItems == null) return;
-        updateUi(heritageItems);
-        //TODO decide on these two
-//        mEmptyView.setText(R.string.no_earthquakes);
-//        mProgressBar.setVisibility(View.GONE);
-
-    }
-
-    @Override
-    public void onLoaderReset(Loader<ArrayList<HeritageItem>> loader) {
-        itemAdapter.clear();
-    }
-
-    //    This method is not to show the login page to a logged in user.
     @Override
     public void onBackPressed() {
         moveTaskToBack(true);

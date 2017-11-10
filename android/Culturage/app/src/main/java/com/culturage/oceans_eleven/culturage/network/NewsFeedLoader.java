@@ -1,7 +1,7 @@
 package com.culturage.oceans_eleven.culturage.network;
 
-import android.content.AsyncTaskLoader;
 import android.content.Context;
+import android.support.v4.content.AsyncTaskLoader;
 
 import com.culturage.oceans_eleven.culturage.baseClasses.HeritageItem;
 
