@@ -52,8 +52,6 @@ public class SignUpActivity extends AppCompatActivity {
                 username = mUsernameView.getText().toString();
                 password = mPasswordView.getText().toString();
                 email = mEmailView.getText().toString();
-                Toast.makeText(SignUpActivity.this
-                        , username + password, Toast.LENGTH_SHORT).show();
                 Log.v("signuptag", "Send request");
                 try {
                     new SignupRequest(SignUpActivity.this).execute();
@@ -91,11 +89,15 @@ public class SignUpActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
-            mProgressBar.setVisibility(View.GONE);
-            editor = preferences.edit();
-            editor.putString("token", returnedToken);
-            editor.apply();
-            startActivity(new Intent(SignUpActivity.this, NewsFeedActivity.class));
+            mProgressBar.setVisibility(View.INVISIBLE);
+            if (returnedToken != null) {
+                editor = preferences.edit();
+                editor.putString("token", returnedToken);
+                editor.apply();
+                startActivity(new Intent(SignUpActivity.this, NewsFeedActivity.class));
+            } else {
+                Toast.makeText(mContext, "Invalid credentials", Toast.LENGTH_LONG).show();
+            }
         }
 
         @Override
@@ -119,7 +121,7 @@ public class SignUpActivity extends AppCompatActivity {
 
         String result = null;
         try {
-            result = PostJSON.postToApi(json, registerURI);
+            result = PostJSON.postToApi(json, "http://18.220.108.135/api/"  + registerURI,"");
         } catch (Exception e) {
             // TODO: Handle exception
             StringWriter sw = new StringWriter();

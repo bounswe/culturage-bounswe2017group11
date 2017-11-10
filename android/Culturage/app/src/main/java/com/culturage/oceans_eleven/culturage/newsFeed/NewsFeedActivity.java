@@ -3,30 +3,25 @@ package com.culturage.oceans_eleven.culturage.newsFeed;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TabLayout;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ImageView;
-import android.widget.ListView;
 
 import com.culturage.oceans_eleven.culturage.R;
 
-import java.util.ArrayList;
-
 public class NewsFeedActivity extends AppCompatActivity {
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_news_feed);
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(NewsFeedActivity.this, UploadActivity.class));
-            }
-        });
+        // Set the content of the activity to use the activity_main.xml layout file
+        setContentView(R.layout.activity_fragment_work_around);
+
+
 
         ImageView profileIcon = (ImageView) findViewById(R.id.profileIcon);
         profileIcon.setOnClickListener(new View.OnClickListener() {
@@ -36,47 +31,32 @@ public class NewsFeedActivity extends AppCompatActivity {
             }
         });
 
+        // Find the view pager that will allow the user to swipe between fragments
+        ViewPager viewPager = (ViewPager) findViewById(R.id.viewpager);
 
-        ArrayList<HeritageItem> items = new ArrayList<HeritageItem>();
+        // Create an adapter that knows which fragment should be shown on each page
+        HeritageItemListAdapder adapter = new HeritageItemListAdapder(this, getSupportFragmentManager());
 
-        String description = "\"Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.\"";
-        String title = "Lorem Ipsum";
-        items.add(new HeritageItem(1, title, description, R.drawable.sample_0, 1, 3));
-        items.add(new HeritageItem(2, title, description, R.drawable.sample_1, 2, 6));
-        items.add(new HeritageItem(3, title, description, R.drawable.sample_2, 1, 7));
-        items.add(new HeritageItem(4, title, description, R.drawable.sample_3, 3, 3));
-        items.add(new HeritageItem(5, title, description, R.drawable.sample_4, 1, 89));
-        items.add(new HeritageItem(6, title, description, R.drawable.sample_5, 5, 5));
-        items.add(new HeritageItem(7, title, description, R.drawable.sample_6, 3, 7));
-        items.add(new HeritageItem(8, title, description, R.drawable.sample_7, 1, 4));
+        // Set the adapter onto the view pager
+        viewPager.setAdapter(adapter);
 
-        HeritageItemAdapter adapter = new HeritageItemAdapter(NewsFeedActivity.this, items);
-        final ListView listView = (ListView) findViewById(R.id.news_feed_list);
-        listView.setAdapter(adapter);
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                HeritageItem item = ((HeritageItem) listView.getItemAtPosition(position));
-                Intent intent = new Intent(NewsFeedActivity.this, HeritageItemViewActivity.class);
-                intent.putExtra("postId", item.getmPostId());
-                intent.putExtra("title", item.getmTitle());
-                intent.putExtra("description", item.getmDescription());
-                intent.putExtra("resourceID", item.getmResourceId());
-                startActivity(intent);
-            }
-        });
+        // Find the tab layout that shows the tabs
+        TabLayout tabLayout = (TabLayout) findViewById(R.id.tabs);
+
+        // Connect the tab layout with the view pager. This will
+        //   1. Update the tab layout when the view pager is swiped
+        //   2. Update the view pager when a tab is selected
+        //   3. Set the tab layout's tab names with the view pager's adapter's titles
+        //      by calling onPageTitle()
+        tabLayout.setupWithViewPager(viewPager);
 
 
     }
 
+
     @Override
     public void onBackPressed() {
         moveTaskToBack(true);
-//        Intent intent = new Intent(mContext, LoginActivity.class);
-//        intent.putExtra("FLAG", 0);
-//        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-//        intent.addFlags(Intent.FLAG_ACTIVITY_SINGLE_TOP);
-//        startActivity(intent);
     }
 
 }

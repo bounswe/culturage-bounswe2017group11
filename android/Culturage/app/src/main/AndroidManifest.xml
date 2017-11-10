@@ -29,6 +29,7 @@
         <activity android:name=".signup_login.SignUpActivity" />
         <activity android:name=".newsFeed.UploadActivity" />
         <activity android:name=".newsFeed.ProfilePageActivity" />
+        <activity android:name=".newsFeed.ProfileGuestActivity" />
         <activity android:name=".newsFeed.NewsFeedActivity">
             android:windowSoftInputMode="stateHidden"
         </activity>

@@ -8,7 +8,53 @@
         android:layout_height="wrap_content"
         android:background="#FFFFFF"
         android:orientation="vertical"
-        android:padding="@dimen/small_padding">
+
+        android:padding="0dp">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/edit_text_height"
+            android:background="@color/primary_blue">
+            <!-- A dummy view to draw the focus-->
+            <LinearLayout
+                android:id="@+id/dummyView3"
+                android:layout_width="0dp"
+                android:layout_height="0dp"
+                android:layout_weight="1"
+                android:focusable="true"
+                android:focusableInTouchMode="true"
+                android:orientation="horizontal" />
+
+            <ProgressBar
+                android:id="@+id/progress_bar_upload"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:visibility="invisible" />
+
+            <ImageButton
+                android:id="@+id/save_upload"
+                android:layout_width="36dp"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="@dimen/tiny_padding"
+                android:layout_marginStart="@dimen/small_padding"
+                android:layout_weight="0"
+                android:background="@color/primary_blue"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_confirm" />
+
+            <ImageButton
+                android:id="@+id/discard_upload"
+                android:layout_width="36dp"
+                android:layout_height="match_parent"
+                android:layout_marginEnd="@dimen/small_padding"
+                android:layout_marginStart="@dimen/tiny_padding"
+                android:layout_weight="0"
+                android:background="@color/primary_blue"
+                android:scaleType="centerInside"
+                android:src="@drawable/ic_cancel" />
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -46,10 +92,12 @@
         </LinearLayout>
 
         <EditText
-            android:id="@+id/title"
+            android:id="@+id/upload_title"
             android:layout_width="match_parent"
             android:layout_height="@dimen/edit_text_height"
             android:layout_marginBottom="@dimen/small_padding"
+            android:layout_marginEnd="@dimen/small_padding"
+            android:layout_marginStart="@dimen/small_padding"
             android:background="@drawable/blue_border"
             android:hint="@string/prompt_title"
             android:inputType="textAutoComplete"
@@ -59,10 +107,13 @@
             android:textCursorDrawable="@null" />
 
         <EditText
-            android:id="@+id/description"
+            android:id="@+id/upload_description"
             android:layout_width="match_parent"
             android:layout_height="@dimen/large_edit_text_height"
             android:layout_marginBottom="@dimen/small_padding"
+            android:layout_marginEnd="@dimen/small_padding"
+            android:layout_marginStart="@dimen/small_padding"
+
             android:background="@drawable/blue_border"
             android:gravity="top"
             android:hint="@string/prompt_description"
@@ -74,45 +125,78 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="@dimen/small_padding"
+            android:layout_marginEnd="@dimen/small_padding"
+            android:layout_marginStart="@dimen/small_padding"
+            android:background="@drawable/blue_border">
+
+            <Switch
+                android:id="@+id/acSwitch"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/edit_text_height"
+                android:paddingEnd="@dimen/tiny_padding"
+                android:paddingStart="@dimen/tiny_padding"
+                android:showText="true"
+                android:textColor="@color/hint_color"
+                android:textOff="AC"
+                android:textOn="BC"
+                android:theme="@style/SwitchCompatTheme" />
+
+            <Spinner
+                android:id="@+id/daySpinner"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/edit_text_height"
+                android:layout_weight="1"
+                android:entries="@array/days"></Spinner>
+
+            <Spinner
+                android:id="@+id/monthSpinner"
+                android:layout_width="0dp"
+                android:layout_height="@dimen/edit_text_height"
+                android:layout_weight="1"
+                android:entries="@array/months"></Spinner>
 
             <EditText
-                android:id="@+id/time"
+                android:id="@+id/upload_year"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/edit_text_height"
                 android:layout_marginBottom="@dimen/small_padding"
                 android:layout_marginEnd="@dimen/tiny_padding"
-                android:layout_weight="1"
-                android:background="@drawable/blue_border"
-                android:hint="@string/prompt_time"
-                android:inputType="textAutoComplete"
+                android:layout_marginStart="@dimen/small_padding"
+                android:layout_weight="2"
+                android:hint="Year"
+                android:inputType="number"
                 android:padding="@dimen/small_padding"
                 android:textColor="@color/primary_blue"
                 android:textColorHint="@color/hint_color"
                 android:textCursorDrawable="@null" />
 
-            <EditText
-                android:id="@+id/location"
-                android:layout_width="0dp"
-                android:layout_height="48dp"
-                android:layout_marginBottom="@dimen/small_padding"
-                android:layout_marginLeft="@dimen/tiny_padding"
-                android:layout_weight="1"
-                android:background="@drawable/blue_border"
-                android:hint="@string/prompt_"
-                android:inputType="textAutoComplete"
-                android:padding="@dimen/small_padding"
-                android:textColor="@color/primary_blue"
-                android:textColorHint="@color/hint_color"
-                android:textCursorDrawable="@null" />
+
         </LinearLayout>
 
+        <EditText
+            android:id="@+id/upload_location"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginBottom="@dimen/small_padding"
+            android:layout_marginEnd="@dimen/small_padding"
+            android:layout_marginStart="@dimen/small_padding"
+            android:background="@drawable/blue_border"
+            android:hint="@string/prompt_"
+            android:inputType="textAutoComplete"
+            android:padding="@dimen/small_padding"
+            android:textColor="@color/primary_blue"
+            android:textColorHint="@color/hint_color"
+            android:textCursorDrawable="@null" />
 
         <EditText
-            android:id="@+id/tags"
+            android:id="@+id/upload_tags"
             android:layout_width="match_parent"
             android:layout_height="@dimen/edit_text_height"
             android:layout_marginBottom="@dimen/small_padding"
+            android:layout_marginEnd="@dimen/small_padding"
+            android:layout_marginStart="@dimen/small_padding"
             android:background="@drawable/blue_border"
             android:gravity="top"
             android:hint="@string/prompt_tags"
@@ -122,13 +206,5 @@
             android:textColorHint="@color/hint_color"
             android:textCursorDrawable="@null" />
 
-        <Button
-            android:id="@+id/upload_btn"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center"
-            android:background="@drawable/white_border"
-            android:text="@string/upload_btn"
-            android:textColor="@android:color/white" />
     </LinearLayout>
 </ScrollView>

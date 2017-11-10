@@ -17,6 +17,7 @@ import android.view.View.OnClickListener;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ProgressBar;
+import android.widget.Toast;
 
 import com.culturage.oceans_eleven.culturage.R;
 import com.culturage.oceans_eleven.culturage.network.PostJSON;
@@ -138,11 +139,15 @@ public class LoginActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
-            mProgressBar.setVisibility(View.GONE);
-            editor = preferences.edit();
-            editor.putString("token", returnedToken);
-            editor.apply();
-            startActivity(new Intent(LoginActivity.this, NewsFeedActivity.class));
+            mProgressBar.setVisibility(View.INVISIBLE);
+            if (returnedToken != null) {
+                editor = preferences.edit();
+                editor.putString("token", returnedToken);
+                editor.apply();
+                startActivity(new Intent(LoginActivity.this, NewsFeedActivity.class));
+            } else {
+                Toast.makeText(mContext, "Invalid credentials", Toast.LENGTH_LONG).show();
+            }
         }
 
         @Override
@@ -166,7 +171,7 @@ public class LoginActivity extends AppCompatActivity {
 
         String result = null;
         try {
-            result = PostJSON.postToApi(json, registerURI);
+            result = PostJSON.postToApi(json, "http://18.220.108.135/api/" + registerURI,"");
         } catch (Exception e) {
             // TODO: Handle exception
             StringWriter sw = new StringWriter();
