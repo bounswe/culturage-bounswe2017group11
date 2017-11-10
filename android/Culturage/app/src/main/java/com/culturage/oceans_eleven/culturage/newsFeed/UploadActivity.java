@@ -28,6 +28,7 @@ import android.widget.Switch;
 import android.widget.Toast;
 
 import com.culturage.oceans_eleven.culturage.R;
+import com.culturage.oceans_eleven.culturage.baseClasses.HeritageItem;
 import com.culturage.oceans_eleven.culturage.network.PostJSON;
 
 import org.json.JSONArray;
@@ -146,7 +147,7 @@ public class UploadActivity extends Activity {
 //    @Override
 //    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
 //        switch (requestCode) {
-//            case Utility.MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE:
+//            case NewsFeedUtils.MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE:
 //                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 //                    if (userChosenTask.equals("Take Photo"))
 //                        cameraIntent();
@@ -260,7 +261,7 @@ public class UploadActivity extends Activity {
 
         private boolean uploadPhoto(String token) {
 
-            String result = null;
+            String result;
 
             try {
                 result = PostJSON.postToApi(constructTheJSON(), UPLOAD_URL, token);

@@ -1,4 +1,4 @@
-package com.culturage.oceans_eleven.culturage.newsFeed;
+package com.culturage.oceans_eleven.culturage.adapters;
 
 import android.app.Activity;
 import android.support.annotation.NonNull;
@@ -12,6 +12,7 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.culturage.oceans_eleven.culturage.R;
+import com.culturage.oceans_eleven.culturage.baseClasses.Comment;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;

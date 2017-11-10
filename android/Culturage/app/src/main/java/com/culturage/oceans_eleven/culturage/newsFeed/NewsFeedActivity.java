@@ -1,11 +1,8 @@
 package com.culturage.oceans_eleven.culturage.newsFeed;
 
 import android.app.LoaderManager;
-import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -15,11 +12,13 @@ import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.culturage.oceans_eleven.culturage.R;
+import com.culturage.oceans_eleven.culturage.adapters.HeritageItemAdapter;
+import com.culturage.oceans_eleven.culturage.baseClasses.HeritageItem;
 import com.culturage.oceans_eleven.culturage.network.NewsFeedLoader;
 
 import java.util.ArrayList;
 
-public class NewsFeedActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<ArrayList<HeritageItem>>{
+public class NewsFeedActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<ArrayList<HeritageItem>> {
 
     private static final String apiURL = "http://18.220.108.135/api/items";
 
@@ -45,7 +44,6 @@ public class NewsFeedActivity extends AppCompatActivity implements LoaderManager
                 startActivity(new Intent(NewsFeedActivity.this, ProfilePageActivity.class));
             }
         });
-
 
         ArrayList<HeritageItem> items = new ArrayList<HeritageItem>();
 
@@ -114,17 +112,6 @@ public class NewsFeedActivity extends AppCompatActivity implements LoaderManager
     @Override
     public void onLoaderReset(Loader<ArrayList<HeritageItem>> loader) {
         itemAdapter.clear();
-    }
-
-    private boolean isConnectedToInternet(){
-
-        ConnectivityManager cm = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
-
-        NetworkInfo ni = cm.getActiveNetworkInfo();
-        if (ni == null) {
-            return false;
-        }
-        return ni.isConnected() ;
     }
 
     //    This method is not to show the login page to a logged in user.

@@ -25,6 +25,7 @@ import android.widget.ProgressBar;
 import android.widget.Toast;
 
 import com.culturage.oceans_eleven.culturage.R;
+import com.culturage.oceans_eleven.culturage.baseClasses.ProfilePage;
 import com.culturage.oceans_eleven.culturage.network.PostJSON;
 import com.culturage.oceans_eleven.culturage.network.ProfilePageLoader;
 import com.culturage.oceans_eleven.culturage.signup_login.LoginActivity;
@@ -188,8 +189,7 @@ public class ProfilePageActivity extends AppCompatActivity implements LoaderMana
         bitmap.compress(Bitmap.CompressFormat.JPEG, 70, stream);
         byte[] byteFormat = stream.toByteArray();
         // get the base 64 string
-        String imgString = Base64.encodeToString(byteFormat, Base64.NO_WRAP);
-        return imgString;
+        return Base64.encodeToString(byteFormat, Base64.NO_WRAP);
     }
 
     @SuppressWarnings("deprecation")
@@ -318,7 +318,7 @@ public class ProfilePageActivity extends AppCompatActivity implements LoaderMana
         private boolean uploadProfile(String token) {
 
 
-            String result = null;
+            String result;
 
             try {
                 result = PostJSON.postToApi(constructTheJSON(),apiURL,token);

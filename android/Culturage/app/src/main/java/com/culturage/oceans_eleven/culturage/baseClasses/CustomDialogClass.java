@@ -1,4 +1,4 @@
-package com.culturage.oceans_eleven.culturage.newsFeed;
+package com.culturage.oceans_eleven.culturage.baseClasses;
 
 import android.app.Activity;
 import android.app.Dialog;
@@ -13,6 +13,7 @@ import android.widget.ScrollView;
 import android.widget.Toast;
 
 import com.culturage.oceans_eleven.culturage.R;
+import com.culturage.oceans_eleven.culturage.adapters.CommentAdapter;
 
 import java.util.ArrayList;
 
@@ -22,7 +23,7 @@ public class CustomDialogClass extends Dialog implements
     //    private final String LOG_TAG = "dialog_tag";
     private Activity activity;
 
-    CustomDialogClass(Activity activity) {
+    public CustomDialogClass(Activity activity) {
         super(activity);
         this.activity = activity;
     }

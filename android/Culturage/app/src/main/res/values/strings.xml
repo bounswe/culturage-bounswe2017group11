@@ -29,6 +29,9 @@
     <string name="search_text">Search</string>
     <string name="upload_profile_pic">Search</string>
     <string name="prompt_email">Email</string>
+    <string name="description">Description</string>
+    <string name="date">Date</string>
+    <string name="location">Location</string>
 
     <string-array name="days">
         <item>--</item>

@@ -1,9 +1,9 @@
-package com.culturage.oceans_eleven.culturage.newsFeed;
+package com.culturage.oceans_eleven.culturage.baseClasses;
 
 public class Comment {
     private String content, username, imageUri;
 
-    public Comment(String content, String username, String imageUri) {
+    Comment(String content, String username, String imageUri) {
         this.content = content;
         this.imageUri = imageUri;
         this.username = username;

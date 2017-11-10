@@ -1,8 +1,5 @@
-package com.culturage.oceans_eleven.culturage.newsFeed;
+package com.culturage.oceans_eleven.culturage.baseClasses;
 
-/**
- * Created by BARIN on 23.10.2017.
- */
 
 public class ProfilePage {
 

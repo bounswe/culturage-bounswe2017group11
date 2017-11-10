@@ -3,7 +3,7 @@ package com.culturage.oceans_eleven.culturage.network;
 import android.content.AsyncTaskLoader;
 import android.content.Context;
 
-import com.culturage.oceans_eleven.culturage.newsFeed.HeritageItem;
+import com.culturage.oceans_eleven.culturage.baseClasses.HeritageItem;
 
 import java.util.ArrayList;
 

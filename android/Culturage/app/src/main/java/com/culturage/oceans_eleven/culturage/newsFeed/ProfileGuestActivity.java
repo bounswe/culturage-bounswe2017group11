@@ -1,11 +1,8 @@
 package com.culturage.oceans_eleven.culturage.newsFeed;
 
 import android.app.LoaderManager;
-import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
-import android.net.ConnectivityManager;
-import android.net.NetworkInfo;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
@@ -16,15 +13,11 @@ import android.widget.ProgressBar;
 import android.widget.TextView;
 
 import com.culturage.oceans_eleven.culturage.R;
+import com.culturage.oceans_eleven.culturage.baseClasses.ProfilePage;
 import com.culturage.oceans_eleven.culturage.network.ProfilePageLoader;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
-
-/**
- * Created by BARIN on 7.11.2017.
- */
-
 
 public class ProfileGuestActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<ArrayList<ProfilePage>> {
 
@@ -139,18 +132,6 @@ public class ProfileGuestActivity extends AppCompatActivity implements LoaderMan
     @Override
     public void onLoaderReset(Loader<ArrayList<ProfilePage>> loader) {
 
-    }
-
-
-    private boolean isConnectedToInternet() {
-
-        ConnectivityManager cm = (ConnectivityManager) this.getSystemService(Context.CONNECTIVITY_SERVICE);
-
-        NetworkInfo ni = cm.getActiveNetworkInfo();
-        if (ni == null) {
-            return false;
-        }
-        return ni.isConnected();
     }
 
     @Override
