@@ -7,11 +7,13 @@ import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.culturage.oceans_eleven.culturage.R;
+import com.culturage.oceans_eleven.culturage.baseClasses.CustomDialogClass;
 import com.squareup.picasso.Picasso;
 
 public class HeritageItemViewActivity extends AppCompatActivity {
@@ -19,22 +21,36 @@ public class HeritageItemViewActivity extends AppCompatActivity {
     private int heritageItemPostID = -1;
     private String creator_id;
     private String creator_username;
-    Button showComments;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_heritage_item_view);
 
-        showComments = (Button) findViewById(R.id.showComments);
-        showComments.setOnClickListener(new View.OnClickListener() {
+        LinearLayout frame = (LinearLayout) findViewById(R.id.item_like_comment_buttons_container);
+        LinearLayout commentContainer = (LinearLayout) findViewById(R.id.comment_container);
+        commentContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-//                R.id.TXT_Exit:
                 CustomDialogClass cdd = new CustomDialogClass(HeritageItemViewActivity.this);
                 cdd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 cdd.show();
             }
         });
+
+        TextView commentCount = (TextView) commentContainer.findViewById(R.id.comment_count);
+        commentCount.setText(0 + "");
+
+        LinearLayout likeContainer = (LinearLayout) frame.findViewById(R.id.like_container);
+        likeContainer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(HeritageItemViewActivity.this, "Will like soon", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        TextView likeCount = (TextView) likeContainer.findViewById(R.id.like_count);
+        likeCount.setText(0 + "");
         Bundle extras = getIntent().getExtras();
         if (extras != null) {
             this.heritageItemPostID = extras.getInt("postID");

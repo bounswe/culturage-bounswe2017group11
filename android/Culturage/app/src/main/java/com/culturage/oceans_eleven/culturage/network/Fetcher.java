@@ -6,7 +6,7 @@ import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.culturage.oceans_eleven.culturage.newsFeed.HeritageItem;
+import com.culturage.oceans_eleven.culturage.baseClasses.HeritageItem;
 
 import org.json.JSONArray;
 import org.json.JSONObject;

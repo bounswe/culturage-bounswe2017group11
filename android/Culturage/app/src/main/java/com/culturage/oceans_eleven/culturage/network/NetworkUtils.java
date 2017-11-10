@@ -6,7 +6,7 @@ import android.preference.PreferenceManager;
 import android.text.TextUtils;
 import android.util.Log;
 
-import com.culturage.oceans_eleven.culturage.newsFeed.ProfilePage;
+import com.culturage.oceans_eleven.culturage.baseClasses.ProfilePage;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -21,14 +21,14 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 
-public class Utils {
+class NetworkUtils {
 
     /**
      * Tag for the log messages
      */
-    public static final String LOG_TAG = Utils.class.getSimpleName();
+    private static final String LOG_TAG = NetworkUtils.class.getSimpleName();
 
-    public static ArrayList<ProfilePage> fetchProfilePageData(String requestUrl, Context context) {
+    static ArrayList<ProfilePage> fetchProfilePageData(String requestUrl, Context context) {
         // Create URL object
         URL url = createUrl(requestUrl);
 
@@ -41,10 +41,8 @@ public class Utils {
         }
 
         // Extract relevant fields from the JSON response and create an {@link Event} object
-        ArrayList<ProfilePage> profilePages = extractProfilePageFromJson(jsonResponse);
-
         // Return the {@link Event}
-        return profilePages;
+        return extractProfilePageFromJson(jsonResponse);
     }
 
     /**

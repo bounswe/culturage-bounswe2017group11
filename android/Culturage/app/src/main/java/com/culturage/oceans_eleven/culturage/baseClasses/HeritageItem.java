@@ -1,4 +1,4 @@
-package com.culturage.oceans_eleven.culturage.newsFeed;
+package com.culturage.oceans_eleven.culturage.baseClasses;
 
 
 public class HeritageItem {

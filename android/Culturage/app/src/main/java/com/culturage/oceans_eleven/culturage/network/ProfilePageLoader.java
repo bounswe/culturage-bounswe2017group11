@@ -4,13 +4,9 @@ import android.content.AsyncTaskLoader;
 import android.content.Context;
 import android.util.Log;
 
-import com.culturage.oceans_eleven.culturage.newsFeed.ProfilePage;
+import com.culturage.oceans_eleven.culturage.baseClasses.ProfilePage;
 
 import java.util.ArrayList;
-
-/**
- * Created by BARIN on 23.10.2017.
- */
 
 public class ProfilePageLoader extends AsyncTaskLoader<ArrayList<ProfilePage>> {
 
@@ -31,6 +27,6 @@ public class ProfilePageLoader extends AsyncTaskLoader<ArrayList<ProfilePage>> {
     @Override
     public ArrayList<ProfilePage> loadInBackground() {
         Log.v("ProfilePageLoader", "okey");
-        return Utils.fetchProfilePageData(Url, context);
+        return NetworkUtils.fetchProfilePageData(Url, context);
     }
 }

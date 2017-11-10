@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/like_comment_buttons_container"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dummy_layout_size"
+        android:background="@color/separator_grey"
+        android:clickable="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/like_container"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <ImageButton
+                android:id="@+id/like_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:paddingStart="65dp"
+                android:paddingEnd="0dp"
+                android:src="@drawable/ic_like"
+                android:textAlignment="textStart"
+                android:textColor="@color/primary_blue"
+                android:clickable="false"
+                tools:text="225" />
+
+            <TextView
+                android:id="@+id/like_count"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:paddingStart="10dp"
+                android:paddingEnd="0dp"
+                android:clickable="false"
+                tools:text="225" />
+
+        </LinearLayout>
+
+        <TextView
+            android:layout_width="@dimen/dummy_layout_size"
+            android:layout_height="match_parent"
+            android:background="@color/separator_grey" />
+
+        <LinearLayout
+            android:id="@+id/comment_container"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:focusable="true"
+            android:descendantFocusability="blocksDescendants">
+
+            <ImageButton
+                android:id="@+id/comment_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:paddingStart="65dp"
+                android:paddingEnd="0dp"
+                android:src="@drawable/ic_comment"
+                android:textAlignment="textStart"
+                android:clickable="false"
+                android:textColor="@color/primary_blue" />
+
+            <TextView
+                android:id="@+id/comment_count"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:clickable="false"
+                tools:text="225" />
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>
