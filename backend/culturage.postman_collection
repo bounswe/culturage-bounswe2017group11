@@ -264,9 +264,93 @@
 			"response": []
 		},
 		{
+			"name": "Rate on Item",
+			"request": {
+				"url": "{{url}}/api/items/40/rates",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "JWT {{token}}",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"rate\" : 4\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Rates of Item",
+			"request": {
+				"url": "{{url}}/api/items/40/rates",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "JWT {{token}}",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"rate\" : 4\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
 			"name": "Comments of Item",
 			"request": {
 				"url": "{{url}}/api/items/40/comments",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "JWT {{token}}",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Recommendation for User",
+			"request": {
+				"url": "{{url}}/api/recommendation",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "JWT {{token}}",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Recommendation for Item",
+			"request": {
+				"url": "{{url}}/api/recommendation/item/40",
 				"method": "GET",
 				"header": [
 					{
@@ -351,9 +435,9 @@
 						},
 						{
 							"key": "image",
+							"value": "",
 							"description": "",
-							"type": "file",
-							"src": "Screen Shot 2017-10-24 at 16.03.58.png"
+							"type": "file"
 						},
 						{
 							"key": "location",
