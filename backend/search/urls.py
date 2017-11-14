@@ -1,9 +1,8 @@
-from django.conf.urls import url, include
+from django.conf.urls import url
 from . import views
 
 urlpatterns = [
-    url(r'^item', views.searchItem, name='searchItem'),
-    url(r'^user', views.searchUser, name='searchUser'),
-    url(r'^location', views.searchLocation, name='searchLocation'),
+	url(r'^item', views.SearchItem.as_view()),
+	url(r'^user', views.SearchUser.as_view()),
+	url(r'^location', views.SearchLocation.as_view()),
 ]
-
