@@ -11,12 +11,29 @@
         android:orientation="vertical">
 
         <!-- To be changed -->
-        <TextView
-            android:id="@+id/guest_profile"
+
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            tools:text="username"
-            android:textSize="0.15in" />
+            android:layout_margin="@dimen/small_padding"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:id="@+id/guest_profile_pict"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/ic_no_image" />
+
+            <TextView
+                android:id="@+id/guest_profile"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textSize="0.15in"
+                tools:text="username" />
+
+        </LinearLayout>
 
         <TextView
             android:id="@+id/her_item_Title"
@@ -150,6 +167,72 @@
 
                 </LinearLayout>
             </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/small_padding"
+            android:background="@drawable/blue_border"
+            android:padding="@dimen/small_padding"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/small_padding"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/recomendation_itempage"
+                    style="?android:textAppearanceMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/small_padding"
+                    android:layout_marginBottom="@dimen/small_padding"
+                    android:gravity="start"
+                    android:textColor="@color/login_page_text_color"
+                    android:text="Recommended for You" />
+
+                <LinearLayout
+                    android:id="@+id/dummyViewH"
+                    android:layout_width="0dp"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
+                    android:focusable="true"
+                    android:focusableInTouchMode="true"
+                    android:orientation="horizontal" />
+
+                <TextView
+                    android:id="@+id/more_itempage"
+                    style="?android:textAppearanceMedium"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="@dimen/small_padding"
+                    android:layout_marginBottom="@dimen/small_padding"
+                    android:textColor="#006400"
+                    android:text="MORE" />
+
+
+            </LinearLayout>
+
+
+            <ListView xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/her_item_recomendation"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:dividerHeight="@dimen/medium_padding"
+                android:drawSelectorOnTop="true"
+                android:orientation="horizontal" />
+
+            <!--<android.support.v4.view.ViewPager
+                android:id="@+id/her_item_recomendation"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:dividerHeight="@dimen/medium_padding"
+                android:drawSelectorOnTop="true"
+                android:orientation="horizontal"/>-->
+
         </LinearLayout>
 
     </LinearLayout>
