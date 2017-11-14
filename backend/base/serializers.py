@@ -48,6 +48,11 @@ class TimelineSerializer(serializers.Serializer):
 		model = Location
 		fields =('id','name','text','startDate', 'endDate')
 
+class NewsfeedSerializer(serializers.HyperlinkedModelSerializer):
+    class Meta:
+        model = Item
+        fields = ('id', 'name', 'description', 'featured_img', 'created_at')
+
 class ItemSerializer(serializers.ModelSerializer):
 	created_by = UserSerializer(required=False)
 	timelines = TimelineSerializer(many=True, read_only=True)

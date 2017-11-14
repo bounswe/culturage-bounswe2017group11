@@ -1,9 +1,14 @@
 from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.models import User
+from django.core import serializers
+from django.db.models import Q
 from base.models import Item
 from base.models import Profile
 from base.serializers import ItemSerializer
 from base.serializers import UserSerializer
+from base.serializers import NewsfeedSerializer
+from rest_framework.response import Response
+from rest_framework.views import APIView
 from rest_framework.parsers import JSONParser
 from rest_framework_jwt.settings import api_settings
 from rest_framework import viewsets
@@ -11,6 +16,7 @@ from rest_framework import permissions
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 import datetime
+import json
 
 import base64
 from django.core.files.base import ContentFile
@@ -38,14 +44,11 @@ class ItemViewSet(viewsets.ModelViewSet):
 		serializer.save(featured_img=image, created_by=self.request.user, date = date, location = location, tags = tags)
 
 
-
-def newsfeed(request):
-	"""
-    API endpoint that returned newsfeed.
-    """
-	if request.method == 'GET':
-		return JsonResponse(serializer.errors, status=400)
-	return HttpResponse("GET method not allowed")
+class NewsfeedList(APIView):
+	def get(self, request):
+		users = Item.objects.all()
+		serializer = NewsfeedSerializer(users, many=True, context={'request': request})
+		return Response(serializer.data)
 
 @api_view(['GET','POST'])
 @permission_classes((IsAuthenticated, ))
