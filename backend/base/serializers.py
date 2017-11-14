@@ -1,7 +1,10 @@
-from base.models import Item, Location, Timeline, Tag, Comment
+from base.models import Item, Location, Timeline, Tag, Comment, UserRatedItem
+from django.db.models import Count, Min, Sum, Avg
 from django.contrib.auth.models import User
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
+
+
 
 class UserSerializer(serializers.Serializer):
 	id = serializers.IntegerField(read_only=True)
@@ -95,4 +98,23 @@ class ItemSerializer(serializers.ModelSerializer):
 		return item
 
 
+class UserRatedItemSerializer(serializers.ModelSerializer):
+	class Meta:
+		model = UserRatedItem
+		fields = ('id','rate','user_id','item_id')
+	def create(self, validated_data):
+		user= self.context.get('user_id')
+		item= self.context.get('item_id')
+		userRatedItem = UserRatedItem.create(**validated_data)
+		userRatedItem.user_id = user
+		userRatedItem.item_id = item
 
+		#new rate calculation
+		item_id = userRatedItem.item_id
+		rate = userRatedItem.rate
+		total_rate = UserRatedItem.objects.filter(item_id = item_id).aggregate(Sum('rate'))
+		count = UserRatedItem.objects.filter(item_id = item_id).count
+		AVGrate = (total_rate+rate)/count
+		Item.objects.filter(id= item_id).update(rate = AVGrate)
+		#return new calculated rate
+		return  AVGrate

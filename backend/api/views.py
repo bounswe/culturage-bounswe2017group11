@@ -9,6 +9,7 @@ from base.serializers import ItemSerializer
 from base.serializers import UserSerializer
 from base.serializers import NewsfeedSerializer
 from base.serializers import CommentSerializer
+from base.serializers import UserRatedItemSerializer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.parsers import JSONParser
@@ -135,4 +136,11 @@ class CommentList(APIView):
 		item = Item.objects.get(id=itemID)
 		comments = Comment.objects.filter(related_item = itemID)
 		serializer = CommentSerializer(comments, many=True)
+		return Response(serializer.data)
+
+class UserRatedItem(APIView):
+	def post(self, request, itemID):
+		item = Item.objects.get(id= itemID)
+		user = request.user
+		serializer = UserRatedItemSerializer(data=request.data,context={'user_id':user, 'item_id':item})
 		return Response(serializer.data)

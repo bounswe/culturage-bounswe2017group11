@@ -37,7 +37,7 @@ class Item(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField(null=True, blank=True)
     featured_img = models.FileField(upload_to='item', null=True, blank=True)
-    rate = models.IntegerField(null=True, blank=True)
+    rate = models.FloatField(null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True, blank=True)
     updated_at = models.DateTimeField(null=True, blank=True)
     created_by = models.ForeignKey(User, related_name='items_created', on_delete=models.SET_NULL, null=True)
