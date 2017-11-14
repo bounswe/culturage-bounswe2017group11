@@ -37,24 +37,6 @@ class ItemViewSet(viewsets.ModelViewSet):
 		# serializer.save(featured_img=self.request.data.get('image'), created_by=self.request.user, date = date, location = location, tags = tags)
 		serializer.save(featured_img=image, created_by=self.request.user, date = date, location = location, tags = tags)
 
-def register(request):
-	"""
-    API endpoint that user can be registered.
-    """
-	if request.method == 'POST':
-		data = JSONParser().parse(request)
-		serializer = UserSerializer(data=data)
-		if serializer.is_valid():
-			user = serializer.save()
-			jwt_payload_handler = api_settings.JWT_PAYLOAD_HANDLER
-			jwt_encode_handler = api_settings.JWT_ENCODE_HANDLER
-			payload = jwt_payload_handler(user)
-			token = jwt_encode_handler(payload)
-			data = serializer.data
-			data['token'] = token
-			return JsonResponse(data, status=201)
-		return JsonResponse(serializer.errors, status=400)
-	return HttpResponse("GET method not allowed")
 
 
 def newsfeed(request):
@@ -71,11 +53,17 @@ def profile(request, id = ''):
 	"""
     API endpoint that returns profile page.
     """
-	if request.method == 'GET':
-		if id:
+	if id:
+		try:
 			user = User.objects.get(pk=id)
-		else:
-			user = request.user
+		except User.DoesNotExist:
+			user = None
+	else:
+		user = request.user
+	if not user:
+		return HttpResponse("User not found with given id: " + id, status = 404)
+
+	if request.method == 'GET':
 		response_data = {}
 		response_data["username"] = user.username
 		response_data["email"] = user.email
@@ -90,10 +78,6 @@ def profile(request, id = ''):
 		return JsonResponse(response_data)
 	else:
 		response_data = {}
-		if id:
-			user = User.objects.get(pk=id)
-		else:
-			user = request.user
 		photo_ch = False
 		data = JSONParser().parse(request)
 		for key in data:
@@ -101,7 +85,7 @@ def profile(request, id = ''):
 				response_data["username"] = data.get(key)
 				user.username = data.get(key)
 			if key == "email":
-				response_data[email] = data.get(key)
+				response_data["email"] = data.get(key)
 				user.email = data.get(key)
 			if hasattr(user,"profile"):
 				if key == "birthday":
