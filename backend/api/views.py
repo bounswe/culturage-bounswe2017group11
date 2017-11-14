@@ -4,9 +4,11 @@ from django.core import serializers
 from django.db.models import Q
 from base.models import Item
 from base.models import Profile
+from base.models import Comment
 from base.serializers import ItemSerializer
 from base.serializers import UserSerializer
 from base.serializers import NewsfeedSerializer
+from base.serializers import CommentSerializer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.parsers import JSONParser
@@ -118,3 +120,19 @@ def profile(request, id = ''):
 
 		return JsonResponse(response_data)
 
+class CommentList(APIView):
+	def post(self, request, itemID):
+		item = Item.objects.get(id=itemID)
+		user = request.user
+		serializer = CommentSerializer(data=request.data,context={'related_item': item, 'written_by':user})
+		if serializer.is_valid():
+			serializer.save()
+			return Response(serializer.data)
+		else:
+			return Response(serializer.errors)
+
+	def get(self, request, itemID):
+		item = Item.objects.get(id=itemID)
+		comments = Comment.objects.filter(related_item = itemID)
+		serializer = CommentSerializer(comments, many=True)
+		return Response(serializer.data)

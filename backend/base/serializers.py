@@ -1,4 +1,4 @@
-from base.models import Item, Location, Timeline, Tag
+from base.models import Item, Location, Timeline, Tag, Comment
 from django.contrib.auth.models import User
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
@@ -53,13 +53,31 @@ class NewsfeedSerializer(serializers.HyperlinkedModelSerializer):
         model = Item
         fields = ('id', 'name', 'description', 'featured_img', 'created_at')
 
+class CommentSerializer(serializers.ModelSerializer):
+	written_by= UserSerializer( required = False)
+	#related_item= ItemSerializer(required = False)
+	class Meta:
+		model = Comment
+		fields = ('id','text','written_by','related_item','rate','created_at')
+	def create(self, validated_data):
+		#item = validated_data.pop('item')
+		item = self.context.get('related_item')
+		user = self.context.get('written_by')
+		comment = Comment.objects.create(**validated_data)
+		comment.related_item = item
+		comment.written_by = user
+		#comment.save()
+		return comment
+
+
 class ItemSerializer(serializers.ModelSerializer):
 	created_by = UserSerializer(required=False)
 	timelines = TimelineSerializer(many=True, read_only=True)
 	tags = TagSerializer(many=True, read_only=True)
+	comments = CommentSerializer(many=True, read_only=True)
 	class Meta:
 		model = Item
-		fields = ('id','name', 'description', 'featured_img', 'timelines', 'tags', 'rate', 'created_at', 'created_by')
+		fields = ('id','name', 'description', 'featured_img', 'timelines', 'tags', 'rate', 'created_at', 'created_by', 'comments')
 
 	def create(self, validated_data):
 		location_name = validated_data.pop('location')
@@ -75,4 +93,6 @@ class ItemSerializer(serializers.ModelSerializer):
 			tag, created = Tag.objects.get_or_create(name = tag_name, defaults={'created_by': item.created_by})
 			item.tags.add(tag)
 		return item
+
+
 
