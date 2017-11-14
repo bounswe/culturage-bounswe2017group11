@@ -9,14 +9,6 @@ from base.serializers import LocationSerializer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-# class searchItem(APIView):
-# 	def get(self, request):
-# 		data = JSONParser().parse(request)
-# 		query = data.get("query")
-# 		users = Item.objects.filter(Q(name__icontains=query) | Q(description__icontains=query))
-# 		serializer = NewsfeedSerializer(users, many=True, context={'request': request})
-# 		return Response(serializer.data)
-
 class SearchItem(APIView):
 	"""
     API endpoint that search items.
