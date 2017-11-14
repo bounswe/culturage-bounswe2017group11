@@ -14,5 +14,8 @@ urlpatterns = [
     url(r'^auth/register', views.register, name='register'),
     url(r'^auth/addLoc', views.register, name='addLoc'),
     url(r'^profile/?([0-9]+)?', views.profile, name='profile'),
+    url(r'^newsfeed', views.newsfeed, name='newsfeed'),
+    url(r'^search/', include('search.urls')),
+    url(r'^recommendation/', include('recommendation.urls')),
 ]
 

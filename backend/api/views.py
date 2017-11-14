@@ -57,16 +57,11 @@ def register(request):
 	return HttpResponse("GET method not allowed")
 
 
-def addLoc(request):
+def newsfeed(request):
 	"""
-    API endpoint that a location can be created.
+    API endpoint that returned newsfeed.
     """
-	if request.method == 'POST':
-		data = JSONParser().parse(request)
-		serializer = LocationSerializer(data=data)
-		if serializer.is_valid():
-			location = serializer.save()
-			return JsonResponse(data, status=201)
+	if request.method == 'GET':
 		return JsonResponse(serializer.errors, status=400)
 	return HttpResponse("GET method not allowed")
 
@@ -133,6 +128,6 @@ def profile(request, id = ''):
 		user.save()
 		if(photo_ch):
 			response_data["photo"] = request.META['HTTP_HOST']+user.profile.photo.url
-		
+
 		return JsonResponse(response_data)
 
