@@ -50,8 +50,9 @@ class ItemViewSet(viewsets.ModelViewSet):
 
 class NewsfeedList(APIView):
 	def get(self, request):
-		users = Item.objects.order_by('-created_at').all()
-		serializer = NewsfeedSerializer(users, many=True, context={'request': request})
+		items = Item.objects.order_by('-created_at').all()
+		items = NewsfeedSerializer.setup_eager_loading(items)  # Set up eager loading to avoid N+1 selects
+		serializer = NewsfeedSerializer(items, many=True, context={'request': request})
 		return Response(serializer.data)
 
 @api_view(['GET','POST'])

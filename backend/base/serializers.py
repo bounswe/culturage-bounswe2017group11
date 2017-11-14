@@ -1,10 +1,9 @@
 from base.models import Item, Location, Timeline, Tag, Comment, UserRatedItem
 from django.db.models import Count, Min, Sum, Avg
 from django.contrib.auth.models import User
+from django.db.models import Prefetch
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
-
-
 
 class UserSerializer(serializers.Serializer):
 	id = serializers.IntegerField(read_only=True)
@@ -51,11 +50,6 @@ class TimelineSerializer(serializers.Serializer):
 		model = Location
 		fields =('id','name','text','startDate', 'endDate')
 
-class NewsfeedSerializer(serializers.HyperlinkedModelSerializer):
-    class Meta:
-        model = Item
-        fields = ('id', 'name', 'description', 'featured_img', 'created_at')
-
 class CommentSerializer(serializers.ModelSerializer):
 	written_by= UserSerializer( required = False)
 	#related_item= ItemSerializer(required = False)
@@ -97,7 +91,6 @@ class ItemSerializer(serializers.ModelSerializer):
 			item.tags.add(tag)
 		return item
 
-
 class UserRatedItemSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = UserRatedItem
@@ -116,3 +109,27 @@ class UserRatedItemSerializer(serializers.ModelSerializer):
 		item.rate = new_rate
 		item.save()
 		return  userRatedItem
+
+class NewsfeedSerializer(serializers.ModelSerializer):
+	raters = serializers.SerializerMethodField('_get_raters')
+	is_rated = serializers.SerializerMethodField('_get_is_rated')
+
+	def _get_raters(self, item):
+		serializer = UserRatedItemSerializer(item.rated_item, many=True)
+		return [i["user"] for i in serializer.data]
+
+	def _get_is_rated(self, item):
+		user = self.context['request'].user
+		raters = self._get_raters(item)
+		return user.id in raters
+
+	@staticmethod
+	def setup_eager_loading(queryset):
+		""" Perform necessary eager loading of data. """
+		queryset = queryset.prefetch_related('rated_item')
+		return queryset
+
+	class Meta:
+		model = Item
+		fields = ('id', 'name', 'description', 'featured_img', 'created_at', 'raters', 'is_rated')
+
