@@ -5,6 +5,7 @@ from django.db.models import Q
 from base.models import Item
 from base.models import Profile
 from base.models import Comment
+from base.models import UserRatedItem
 from base.serializers import ItemSerializer
 from base.serializers import UserSerializer
 from base.serializers import NewsfeedSerializer
@@ -138,9 +139,19 @@ class CommentList(APIView):
 		serializer = CommentSerializer(comments, many=True)
 		return Response(serializer.data)
 
-class UserRatedItem(APIView):
+class RateItem(APIView):
 	def post(self, request, itemID):
 		item = Item.objects.get(id= itemID)
 		user = request.user
-		serializer = UserRatedItemSerializer(data=request.data,context={'user_id':user, 'item_id':item})
+		serializer = UserRatedItemSerializer(data=request.data, context={ 'user':user, 'item':item })
+		if serializer.is_valid():
+			serializer.save()
+			return Response(item.rate)
+		else:
+			return Response(serializer.errors)
+
+	def get(self, request, itemID):
+		item = Item.objects.get(id=itemID)
+		serializer = UserRatedItemSerializer(item.rated_item, many=True)
 		return Response(serializer.data)
+

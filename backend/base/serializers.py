@@ -69,7 +69,7 @@ class CommentSerializer(serializers.ModelSerializer):
 		comment = Comment.objects.create(**validated_data)
 		comment.related_item = item
 		comment.written_by = user
-		#comment.save()
+		comment.save()
 		return comment
 
 
@@ -101,20 +101,18 @@ class ItemSerializer(serializers.ModelSerializer):
 class UserRatedItemSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = UserRatedItem
-		fields = ('id','rate','user_id','item_id')
-	def create(self, validated_data):
-		user= self.context.get('user_id')
-		item= self.context.get('item_id')
-		userRatedItem = UserRatedItem.create(**validated_data)
-		userRatedItem.user_id = user
-		userRatedItem.item_id = item
+		fields = ('id','rate','user','item')
 
-		#new rate calculation
-		item_id = userRatedItem.item_id
-		rate = userRatedItem.rate
-		total_rate = UserRatedItem.objects.filter(item_id = item_id).aggregate(Sum('rate'))
-		count = UserRatedItem.objects.filter(item_id = item_id).count
-		AVGrate = (total_rate+rate)/count
-		Item.objects.filter(id= item_id).update(rate = AVGrate)
-		#return new calculated rate
-		return  AVGrate
+	def create(self, validated_data):
+		user = self.context.get('user')
+		item = self.context.get('item')
+		userRatedItem = UserRatedItem.objects.create(**validated_data)
+		userRatedItem.user = user
+		userRatedItem.item = item
+		userRatedItem.save()
+
+		# new rate calculation
+		new_rate = UserRatedItem.objects.filter(item_id = item.id).aggregate(rate=Avg('rate'))["rate"]
+		item.rate = new_rate
+		item.save()
+		return  userRatedItem
