@@ -14,6 +14,7 @@ class UserRecommendation(APIView):
 	def get(self, request):
 		user = request.user
 		items = Item.objects.order_by('-created_at').all()[:10]
+		items = NewsfeedSerializer.setup_eager_loading(items)  # Set up eager loading to avoid N+1 selects
 		serializer = NewsfeedSerializer(items, many=True, context={'request': request})
 		return Response(serializer.data)
 
@@ -24,5 +25,6 @@ class ItemRecommendation(APIView):
 	def get(self, request, itemID):
 		item = Item.objects.get(id=itemID)
 		items = Item.objects.order_by('-created_at').all()[:10]
+		items = NewsfeedSerializer.setup_eager_loading(items)  # Set up eager loading to avoid N+1 selects
 		serializer = NewsfeedSerializer(items, many=True, context={'request': request})
 		return Response(serializer.data)

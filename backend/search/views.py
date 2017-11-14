@@ -16,6 +16,7 @@ class SearchItem(APIView):
 	def get(self, request):
 		query = request.GET.get('q', '')
 		items = Item.objects.order_by('-created_at').filter(Q(name__icontains=query) | Q(description__icontains=query))
+		items = NewsfeedSerializer.setup_eager_loading(items)  # Set up eager loading to avoid N+1 selects
 		serializer = NewsfeedSerializer(items, many=True, context={'request': request})
 		return Response(serializer.data)
 
