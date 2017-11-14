@@ -48,7 +48,7 @@ class ItemViewSet(viewsets.ModelViewSet):
 
 class NewsfeedList(APIView):
 	def get(self, request):
-		users = Item.objects.all()
+		users = Item.objects.order_by('-created_at').all()
 		serializer = NewsfeedSerializer(users, many=True, context={'request': request})
 		return Response(serializer.data)
 
