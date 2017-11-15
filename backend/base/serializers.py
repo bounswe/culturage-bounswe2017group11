@@ -71,10 +71,26 @@ class ItemSerializer(serializers.ModelSerializer):
 	created_by = UserSerializer(required=False)
 	timelines = TimelineSerializer(many=True, read_only=True)
 	tags = TagSerializer(many=True, read_only=True)
-	comments = CommentSerializer(many=True, read_only=True)
+	raters = serializers.SerializerMethodField('_get_raters')
+	is_rated = serializers.SerializerMethodField('_get_is_rated')
+	comments = serializers.SerializerMethodField('_get_comments')
+
 	class Meta:
 		model = Item
-		fields = ('id','name', 'description', 'featured_img', 'timelines', 'tags', 'rate', 'created_at', 'created_by', 'comments')
+		fields = ('id','name', 'description', 'featured_img', 'timelines', 'tags', 'rate', 'created_at', 'created_by', 'comments', 'raters', 'is_rated')
+
+	def _get_comments(self, item):
+		serializer = CommentSerializer(item.commented_item, many=True)
+		return serializer.data
+
+	def _get_raters(self, item):
+		serializer = UserRatedItemSerializer(item.rated_item, many=True)
+		return [i["user"] for i in serializer.data]
+
+	def _get_is_rated(self, item):
+		user = self.context['request'].user
+		raters = self._get_raters(item)
+		return user.id in raters
 
 	def create(self, validated_data):
 		location_name = validated_data.pop('location')
