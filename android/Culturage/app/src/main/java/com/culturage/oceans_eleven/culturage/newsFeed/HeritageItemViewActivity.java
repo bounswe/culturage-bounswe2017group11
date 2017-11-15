@@ -8,6 +8,8 @@ import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
@@ -17,7 +19,9 @@ import android.widget.Toast;
 
 import com.culturage.oceans_eleven.culturage.R;
 import com.culturage.oceans_eleven.culturage.adapters.HeritageItemAdapter;
+import com.culturage.oceans_eleven.culturage.adapters.HorizontalRecyclerViewAdapter;
 import com.culturage.oceans_eleven.culturage.baseClasses.CustomDialogClass;
+import com.culturage.oceans_eleven.culturage.baseClasses.HeritageItem;
 import com.culturage.oceans_eleven.culturage.baseClasses.ProfilePage;
 import com.culturage.oceans_eleven.culturage.network.ProfilePageLoader;
 import com.squareup.picasso.Picasso;
@@ -32,13 +36,18 @@ public class HeritageItemViewActivity extends AppCompatActivity {
     private ImageView photo;
     private String profileURL = "http://18.220.108.135/api/profile/";
     private static final String itemUrl = "http://18.220.108.135/api/items";
+    private RecyclerView mRecyclerView;
+    private RecyclerView.Adapter mAdapter;
+    private RecyclerView.LayoutManager mLayoutManager;
 
     private HeritageItemAdapter itemAdapter;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_heritage_item_view);
+
 
         LinearLayout frame = (LinearLayout) findViewById(R.id.item_like_comment_buttons_container);
         LinearLayout commentContainer = (LinearLayout) findViewById(R.id.comment_container);
@@ -142,6 +151,22 @@ public class HeritageItemViewActivity extends AppCompatActivity {
 
         //getLoaderManager().initLoader(2,null, heritageItemLoader);
 
+        mRecyclerView = (RecyclerView) findViewById(R.id.recommendation_view);
+        // use this setting to improve performance if you know that changes
+        // in content do not change the layout size of the RecyclerView
+        // use a linear layout manager
+        mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        mRecyclerView.setLayoutManager(mLayoutManager);
+        ArrayList<HeritageItem> recommendations = new ArrayList<HeritageItem>();
+        recommendations.add(new HeritageItem(1, "", "", "", true));
+        recommendations.add(new HeritageItem(1, "", "", "", true));
+        recommendations.add(new HeritageItem(1, "", "", "", true));
+        recommendations.add(new HeritageItem(1, "", "", "", true));
+        recommendations.add(new HeritageItem(1, "", "", "", true));
+        recommendations.add(new HeritageItem(1, "", "", "", true));
+
+        mAdapter = new HorizontalRecyclerViewAdapter(recommendations);
+        mRecyclerView.setAdapter(mAdapter);
     }
 
 
@@ -205,7 +230,6 @@ public class HeritageItemViewActivity extends AppCompatActivity {
 
 
     }; */
-
 
 
 }
