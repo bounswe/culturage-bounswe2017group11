@@ -89,7 +89,7 @@ class Comment extends React.Component {
                         <div class="comment-body">
                             <div class="comment-heading">
                                 <h4 class="user">{comment.written_by.username}</h4>
-                                <h5 class="time">5 minutes ago</h5>
+                                <h5 class="time">{comment.created_at.substring(0,10)} {comment.created_at.substring(11,16)}</h5>
                             </div>
                             <p>{comment.text}</p>
                         </div>
