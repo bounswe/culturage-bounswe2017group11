@@ -2,12 +2,13 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import Navbar from '../Home/components/Navbar.jsx';
 import Body from './components/Body.jsx';
-import Comment from './components/Comment.jsx';
+import Comment from './components/Comment.js';
+import Like from './components/Likebtn.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './utils/font-awesome-4.7.0/css/font-awesome.min.css'
+import './utils/font-awesome-4.7.0/css/font-awesome.css'
 
 import './utils/mycss.css';
-
+import $ from 'jquery';
 
 class Item extends React.Component {
 	constructor(props){
@@ -41,7 +42,7 @@ class Item extends React.Component {
 		return(
 
 			<div>
-				<Navbar page={"home"} /> 
+				<Navbar/> 
 			   		<div class="mycontainer">
 			   		   			<div class="col-md-8">
 
@@ -49,7 +50,7 @@ class Item extends React.Component {
                   <Body item={this.state.items} />
                   </div>
                      			<div class="col-md-4">
-
+                  <Like item={this.state.items} />
                   <Comment item={this.state.items} />
                   </div>
 

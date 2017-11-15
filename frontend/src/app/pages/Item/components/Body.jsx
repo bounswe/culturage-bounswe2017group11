@@ -18,7 +18,6 @@ class Body extends React.Component {
                })}
       			<hr />
             	<div class="img">
-            	<br />
             	<img src={this.props.item.featured_img} class="cover"/>
             	</div>                    
             	<div class="jumbotron">
