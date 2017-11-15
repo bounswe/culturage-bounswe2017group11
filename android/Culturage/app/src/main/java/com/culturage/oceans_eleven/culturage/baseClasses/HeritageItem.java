@@ -3,20 +3,8 @@ package com.culturage.oceans_eleven.culturage.baseClasses;
 
 public class HeritageItem {
 
-    private long mPostId;
-    private String mTitle;
-    private String mDescription;
-    private int mResourceId;
-    private long mLikeCount;
-    private long mCommentCount;
-    private String mDate;
-    private String mLocation;
-    private String mImageBase64String;
-    private String rate;
-    private String createdAt;
-    private String mTags;
-    private String creator_id;
-    private String creator_username;
+    private int mPostId, mLikeCount, mCommentCount, mResourceId, creatorId;
+    private String mTitle, mDescription, mDate, mLocation, mImageBase64String, rate, createdAt, mTags, creatorUsername;
     private String mImageUrl;
     private boolean isRated;
 
@@ -34,7 +22,7 @@ public class HeritageItem {
     }
 
 
-    public HeritageItem(long mPostId, String mTitle, String mDescription, int mResourceId, long mLikeCount, long mCommentCount) {
+    public HeritageItem(int mPostId, String mTitle, String mDescription, int mResourceId, int mLikeCount, int mCommentCount) {
         this.mPostId = mPostId;
         this.mTitle = mTitle;
         this.mDescription = mDescription;
@@ -43,6 +31,7 @@ public class HeritageItem {
         this.mCommentCount = mCommentCount;
     }
 
+    // Used in news feed
     public HeritageItem(int postID, String title, String description, String imageURL, boolean isRated) {
         this.mPostId = postID;
         this.mTitle = title;
@@ -51,20 +40,27 @@ public class HeritageItem {
         this.isRated = isRated;
     }
 
-    public String getCreatorId() {
-        return creator_id;
+    // Used by recommendation slider
+    public HeritageItem(int postID, String title, String imageURL) {
+        this.mPostId = postID;
+        this.mTitle = title;
+        this.mImageUrl = imageURL;
     }
 
-    public void setCreatorId(String creator_id) {
-        this.creator_id = creator_id;
+    public int getCreatorId() {
+        return creatorId;
+    }
+
+    public void setCreatorId(int creator_id) {
+        this.creatorId = creator_id;
     }
 
     public String getCreatorUsername() {
-        return creator_username;
+        return creatorUsername;
     }
 
     public void setCreatorUsername(String creator_username) {
-        this.creator_username = creator_username;
+        this.creatorUsername = creator_username;
     }
 
     public String getmDate() {
@@ -114,7 +110,7 @@ public class HeritageItem {
     }
 
 
-    public long getmPostId() {
+    public int getmPostId() {
         return mPostId;
     }
 
@@ -127,11 +123,11 @@ public class HeritageItem {
         return mResourceId;
     }
 
-    public long getmLikeCount() {
+    public int getmLikeCount() {
         return mLikeCount;
     }
 
-    public long getmCommentCount() {
+    public int getmCommentCount() {
         return mCommentCount;
     }
 
@@ -139,7 +135,7 @@ public class HeritageItem {
         return mTags;
     }
 
-    public void setmPostId(long mPostId) {
+    public void setmPostId(int mPostId) {
         this.mPostId = mPostId;
     }
 
@@ -151,11 +147,11 @@ public class HeritageItem {
         this.mDescription = mDescription;
     }
 
-    public void setmLikeCount(long likeCount) {
+    public void setmLikeCount(int likeCount) {
         this.mLikeCount = likeCount;
     }
 
-    public void setmCommentCount(long commentCount) {
+    public void setmCommentCount(int commentCount) {
         this.mCommentCount = commentCount;
     }
 

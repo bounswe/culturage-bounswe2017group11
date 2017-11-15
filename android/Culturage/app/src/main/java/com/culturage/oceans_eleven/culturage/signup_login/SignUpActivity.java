@@ -71,7 +71,7 @@ public class SignUpActivity extends AppCompatActivity {
         String returnedToken;
         Context mContext;
 
-        public SignupRequest(Context context) {
+        SignupRequest(Context context) {
             mContext = context;
         }
 

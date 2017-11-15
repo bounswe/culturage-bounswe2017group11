@@ -1,5 +1,6 @@
 package com.culturage.oceans_eleven.culturage.adapters;
 
+import android.app.Activity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -9,11 +10,13 @@ import android.widget.TextView;
 
 import com.culturage.oceans_eleven.culturage.R;
 import com.culturage.oceans_eleven.culturage.baseClasses.HeritageItem;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
 public class HorizontalRecyclerViewAdapter extends RecyclerView.Adapter<HorizontalRecyclerViewAdapter.ViewHolder> {
-    public static ArrayList<HeritageItem> recommendations;
+    private static ArrayList<HeritageItem> recommendations;
+    private Activity context;
 
     // Provide a reference to the views for each data item
     // Complex data items may need more than one view per item, and
@@ -31,48 +34,51 @@ public class HorizontalRecyclerViewAdapter extends RecyclerView.Adapter<Horizont
             mImage = (ImageView) v.findViewById(R.id.recommendation_image);
         }
 
-        public void add(int position, HeritageItem item) {
-            recommendations.add(position, item);
-            notifyItemInserted(position);
-        }
 
-        public void remove(int position) {
-            recommendations.remove(position);
-            notifyItemRemoved(position);
-        }
     }
 
     // Provide a suitable constructor (depends on the kind of dataset)
-    public HorizontalRecyclerViewAdapter(ArrayList<HeritageItem> recommendations) {
-        this.recommendations = recommendations;
+    public HorizontalRecyclerViewAdapter(Activity context, ArrayList<HeritageItem> _recommendations) {
+        recommendations = _recommendations;
+        this.context = context;
     }
 
     // Create new views (invoked by the layout manager)
     @Override
-    public HorizontalRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent,
-                                                                       int viewType) {
-        LayoutInflater inflater = LayoutInflater.from(
-                parent.getContext());
-        View v =
-                inflater.inflate(R.layout.horizontal_list_item, parent, false);
-        // set the view's size, margins, paddings and layout parameters
-        ViewHolder vh = new ViewHolder(v);
-        return vh;
+    public HorizontalRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        LayoutInflater inflater = LayoutInflater.from(parent.getContext());
+        View v = inflater.inflate(R.layout.horizontal_list_item, parent, false);
+        return new ViewHolder(v);
     }
 
-    // Replace the contents of a view (invoked by the layout manager)
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        // - get element from your dataset at this position
-        // - replace the contents of the view with that element
-        holder.mTitle.setText("Title will go here");
-        holder.mImage.setImageResource(R.drawable.sample_3);
-
+        HeritageItem item = recommendations.get(position);
+        Picasso.with(context).load(item.getmImageUrl()).resize(144, 144).into(holder.mImage);
+        holder.mTitle.setText(item.getmTitle());
     }
 
     // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
         return recommendations.size();
+    }
+
+    public void addAll(ArrayList<HeritageItem> item) {
+        recommendations.addAll(item);
+    }
+
+    public void clear() {
+        recommendations.clear();
+    }
+
+    public void add(int position, HeritageItem item) {
+        recommendations.add(position, item);
+        notifyItemInserted(position);
+    }
+
+    public void remove(int position) {
+        recommendations.remove(position);
+        notifyItemRemoved(position);
     }
 }

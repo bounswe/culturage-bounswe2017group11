@@ -28,7 +28,7 @@ import java.util.ArrayList;
  * does some other url stuff internally
  */
 
-class Fetcher {
+public class Fetcher {
     /**
      * Tag for the log messages
      */
@@ -44,7 +44,7 @@ class Fetcher {
         // Perform HTTP request to the URL and receive a JSON response back
         String jsonResponse = null;
         try {
-            jsonResponse = makeHttpRequest(url, context);
+            jsonResponse = getJSON(url, context);
         } catch (IOException e) {
             Log.e(LOG_TAG, "Error closing input stream", e);
         }
@@ -54,7 +54,7 @@ class Fetcher {
     /**
      * Returns new URL object from the given string URL.
      */
-    private static URL createUrl(String stringUrl) {
+    public static URL createUrl(String stringUrl) {
         URL url = null;
         try {
             url = new URL(stringUrl);
@@ -68,14 +68,12 @@ class Fetcher {
     /**
      * Make an HTTP request to the given URL and return a String as the response.
      */
-    private static String makeHttpRequest(URL url, Context context) throws IOException {
+    public static String getJSON(URL url, Context context) throws IOException {
         String jsonResponse = "";
-
         // If the URL is null, then return early.
         if (url == null) {
             return jsonResponse;
         }
-
         HttpURLConnection urlConnection = null;
         InputStream inputStream = null;
         try {
@@ -84,18 +82,17 @@ class Fetcher {
             urlConnection.setConnectTimeout(15000 /* milliseconds */);
             urlConnection.setRequestMethod("GET");
 
-
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
             String token = preferences.getString("token", "null");
             // String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyMiwidXNlcm5hbWUiOiJha29rc2FsIiwiZW1haWwiOiJha29rc2FsQGEuY29tIiwiZXhwIjoyNTA4Njc4OTE1fQ.PgPIJppA9u5umhrHGxPmv7_1Hi2ItASDgd7NH4DHcO0";
             urlConnection.setRequestProperty("Authorization", "JWT " + token);
             urlConnection.connect();
-
             // If the request was successful (response code 200),
             // then read the input stream and parse the response.
             if (urlConnection.getResponseCode() == 200) {
                 inputStream = urlConnection.getInputStream();
                 jsonResponse = readFromStream(inputStream);
+                Log.v(LOG_TAG, "Fetched succesfully " + jsonResponse);
             } else {
                 Log.e(LOG_TAG, "Error response code: " + urlConnection.getResponseCode());
             }
@@ -109,6 +106,7 @@ class Fetcher {
                 inputStream.close();
             }
         }
+        Log.v(LOG_TAG, "resulting json " + jsonResponse);
         return jsonResponse;
     }
 

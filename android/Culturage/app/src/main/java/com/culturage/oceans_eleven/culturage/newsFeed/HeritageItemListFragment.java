@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.LoaderManager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -61,6 +62,7 @@ public abstract class HeritageItemListFragment extends Fragment implements Loade
                 intent.putExtra("title", item.getmTitle());
                 intent.putExtra("description", item.getmDescription());
                 intent.putExtra("imageUrl", item.getmImageUrl());
+                Log.v("newsFeed", "postid " + item.getmPostId());
 //                intent.putExtra("date", item.getmDate());
 //                intent.putExtra("location", item.getmLocation());
 //                intent.putExtra("tags", item.getMTags());
