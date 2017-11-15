@@ -31,7 +31,7 @@
                 android:background="@android:color/white"
                 android:paddingStart="65dp"
                 android:paddingEnd="0dp"
-                android:src="@drawable/ic_like"
+                android:src="@drawable/ic_notlike"
                 android:textAlignment="textStart"
                 android:textColor="@color/primary_blue"
                 android:clickable="false"

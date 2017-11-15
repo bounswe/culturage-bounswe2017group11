@@ -47,6 +47,12 @@ public class HeritageItem {
         this.mImageUrl = imageURL;
     }
 
+    // Used for guest profile
+    public HeritageItem(int creatorId, String creatorUsername) {
+        this.creatorId = creatorId;
+        this.creatorUsername = creatorUsername;
+    }
+
     public int getCreatorId() {
         return creatorId;
     }

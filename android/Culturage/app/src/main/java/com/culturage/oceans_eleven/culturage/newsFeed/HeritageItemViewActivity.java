@@ -3,17 +3,21 @@ package com.culturage.oceans_eleven.culturage.newsFeed;
 
 import android.app.Activity;
 import android.app.LoaderManager;
+import android.content.Context;
 import android.content.Intent;
 import android.content.Loader;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
@@ -25,27 +29,32 @@ import com.culturage.oceans_eleven.culturage.baseClasses.CustomDialogClass;
 import com.culturage.oceans_eleven.culturage.baseClasses.HeritageItem;
 import com.culturage.oceans_eleven.culturage.baseClasses.ProfilePage;
 import com.culturage.oceans_eleven.culturage.network.Fetcher;
+import com.culturage.oceans_eleven.culturage.network.PostJSON;
 import com.culturage.oceans_eleven.culturage.network.ProfilePageLoader;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 public class HeritageItemViewActivity extends AppCompatActivity {
 
-    private int heritageItemPostID;
-    private String creator_id;
+    private int heritageItemPostID, like_count;
+    private int creator_id;
     private String creator_username;
     private ImageView photo;
+    private HeritageItem guestProfile;
     private static RecyclerView mRecyclerView;
     private static ArrayList<HeritageItem> recommendations = new ArrayList<>();
     private static HorizontalRecyclerViewAdapter recommendationAdapter;
 
     private String profileURL = "http://18.220.108.135/api/profile/";
     private String recommendationsUrl = "http://18.220.108.135/api/recommendation/item/";
-    private static final String itemUrl = "http://18.220.108.135/api/items";
+    private String ratesUrl = "http://18.220.108.135/api/items/";
+    private String itemUrl = "http://18.220.108.135/api/items/";
     private static final String LOG_TAG = "heritageItem";
 
     @Override
@@ -72,7 +81,14 @@ public class HeritageItemViewActivity extends AppCompatActivity {
         likeContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(HeritageItemViewActivity.this, "Will like soon", Toast.LENGTH_SHORT).show();
+                try {
+
+                    new likeAction(HeritageItemViewActivity.this).execute();
+                } catch (Exception e) {
+                    Log.v("UploadLikeButton", "caught exception");
+                    finish();
+                }
+                //Toast.makeText(HeritageItemViewActivity.this, "Will like soon", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -126,7 +142,7 @@ public class HeritageItemViewActivity extends AppCompatActivity {
 //        creator_username = getIntent().getStringExtra("creator_username");
         TextView guest = (TextView) findViewById(R.id.guest_profile);
         ImageView guestPic = (ImageView) findViewById(R.id.guest_profile_pict);
-//        guest.setText(" " + creator_username);
+        guest.setText(" " + creator_username);
         guest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -146,8 +162,8 @@ public class HeritageItemViewActivity extends AppCompatActivity {
             }
         });
 
-        profileURL = profileURL + creator_id;
-
+        //Will be implemented soon!!
+        this.itemUrl = itemUrl + heritageItemPostID;
         //Profile Loader
         getLoaderManager().initLoader(1, null, profileLoader);
 
@@ -178,6 +194,28 @@ public class HeritageItemViewActivity extends AppCompatActivity {
 
         public Loader<ArrayList<ProfilePage>> onCreateLoader(int i, Bundle bundle) {
             Log.v("LoaderProfilePage", "hello");
+
+            String result = null;
+            try {
+                result = Fetcher.getJSON(Fetcher.createUrl(itemUrl), HeritageItemViewActivity.this);
+                Log.v(LOG_TAG, "resulting json " + result);
+            } catch (Exception e) {
+                Log.v(LOG_TAG, "exception" + Log.getStackTraceString(e));
+                Log.v("heritageItem", "invalid url: " + itemUrl);
+            }
+            try {
+                Log.v(LOG_TAG, "resulting json " + result);
+                JSONObject values = new JSONObject(result);
+                creator_username = values.getJSONObject("created_by").getString("username");
+                creator_id = values.getJSONObject("created_by").getInt("id");
+                //guestProfile = new HeritageItem(creator_id, username);
+
+            } catch (Exception e) {
+                Log.v("heritageItem", "error parsing guestProfile:");
+            }
+
+            profileURL = profileURL + creator_id;
+
             return new ProfilePageLoader(HeritageItemViewActivity.this, profileURL);
         }
 
@@ -191,7 +229,6 @@ public class HeritageItemViewActivity extends AppCompatActivity {
                 Log.v("Uploadtag", imageUri);
                 Picasso.with(getBaseContext()).load(imageUri).into(photo);
                 // String imageUri = baseURL + profilePages.get(0).getPhoto();
-
             }
         }
 
@@ -253,36 +290,95 @@ public class HeritageItemViewActivity extends AppCompatActivity {
         }
 
     }
+
+
     /*
-    public void updateUi(ArrayList<HeritageItem> heritageItems) {
-        itemAdapter.clear();
-        if (heritageItems != null || heritageItems.size() > 0) {
-            itemAdapter.addAll(heritageItems);
+    Will be implemented soon Send token of the user to like or not.
+     */
+    private class likeAction extends AsyncTask<String, String, String> {
+
+        Context mContext;
+        boolean LikeSuccessful;
+        boolean isLiked;
+
+        private likeAction(Context context) {
+            mContext = context;
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+                String token = preferences.getString("token", "null");
+                LikeSuccessful = uploadLike(token);
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return "";
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            if (LikeSuccessful) {
+                //Post Execute
+                ImageButton likeButton = (ImageButton) findViewById(R.id.like_btn);
+                if (isLiked) {
+                    likeButton.setImageResource(R.drawable.ic_notlike);
+                } else {
+                    likeButton.setImageResource(R.drawable.ic_like);
+                }
+
+            } else {
+                Toast.makeText(mContext, "Like unsuccessful", Toast.LENGTH_LONG).show();
+            }
+        }
+
+        @Override
+        protected void onPreExecute() {
+
+        }
+
+        private boolean uploadLike(String token) {
+            String result;
+            ratesUrl = "http://18.220.108.135/api/items/";
+            ratesUrl = ratesUrl + heritageItemPostID + "/rates";
+            try {
+                result = PostJSON.postToApi(constructTheJSON(), ratesUrl, token);
+            } catch (IOException e) {
+                e.printStackTrace();
+                return false;
+
+            }
+            if (result == null || result.equals("400")) {
+                return false;
+            }
+
+            return true;
+
+        }
+
+        private JSONObject constructTheJSON() {
+
+            JSONObject json = new JSONObject();
+            try {
+
+                if (json.getInt("rate") == 1) {
+                    json.put("rate", 0);
+                    isLiked = false;
+                } else {
+                    json.put("rate", 1);
+                    isLiked = true;
+                }
+
+                Log.v("RATE TAG", "" + json.getInt("rate"));
+
+
+                return json;
+            } catch (JSONException e) {
+                Log.v("upload", "Error in json construction");
+            }
+            return json;
         }
     }
-
-    //WILL BE IMPLEMENT SOON
-    private LoaderManager.LoaderCallbacks<ArrayList<HeritageItem>> heritageItemLoader
-            = new LoaderManager.LoaderCallbacks<ArrayList<HeritageItem>>() {
-
-            public Loader<ArrayList<HeritageItem>> onCreateLoader(int i, Bundle bundle) {
-                return new HeritageItemListFragment();
-
-            }
-
-            @Override
-            public void onLoadFinished(Loader<ArrayList<HeritageItem>> loader, ArrayList<HeritageItem> heritageItems) {
-                if (heritageItems == null) return;
-                updateUi(heritageItems);
-            }
-
-            @Override
-            public void onLoaderReset(Loader<ArrayList<HeritageItem>> loader) {
-                itemAdapter.clear();
-            }
-
-
-    }; */
-
 
 }
