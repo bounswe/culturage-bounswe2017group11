@@ -9,9 +9,47 @@ class Comment extends React.Component {
 
       this.handleCommentChange = this.handleCommentChange.bind(this);
       this.handleSubmit = this.handleSubmit.bind(this);
+      this.handleKeyPress = this.handleKeyPress.bind(this);
    }
 
    handleCommentChange(event){this.setState({myComment: event.target.value});};
+
+   handleKeyPress(e){
+        if(e.key === 'Enter'){
+            var myHeaders = new Headers();
+
+        var comment1 = {
+        "text" : this.state.myComment
+        };
+        var url = 'http://18.220.108.135/api/items/' + this.props.item.id + '/comments';
+      //console.log(data);
+      var token = getCookie('token');
+      fetch(url,
+      {
+
+      headers: {
+        'Accept': 'application/json',
+        'Content-Type': 'application/json',
+        'Authorization': 'JWT ' + token
+      },
+
+        method: 'POST',
+        body: JSON.stringify(comment1)
+      })
+
+      .then(function(res){
+        if(res.ok){
+            window.location.reload();
+        } else {
+          alert("Couldn't complete :(");
+        }
+      })
+      .catch((error) => {
+        console.error(error);
+      })
+
+        }
+   }
 
    handleSubmit(e){
         e.preventDefault();
@@ -75,7 +113,7 @@ class Comment extends React.Component {
             </div>
             <div class="post-footer">
                 <div class="input-group"> 
-                    <input class="form-control" placeholder="Add a comment" type="text" value = {this.state.myComment} onChange={ this.handleCommentChange }/>
+                    <input class="form-control" placeholder="Add a comment" type="text" value = {this.state.myComment} onChange={ this.handleCommentChange } onKeyPress={this.handleKeyPress}/>
                     <span class="input-group-addon" onClick = {this.handleSubmit}>
                         <a href="#"><i class="fa fa-edit"></i></a>  
                     </span>
