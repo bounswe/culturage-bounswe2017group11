@@ -47,6 +47,7 @@ public class HeritageItemViewActivity extends AppCompatActivity {
     private String creator_username;
     private ImageView photo;
     private HeritageItem guestProfile;
+    private boolean isLiked;
     private static RecyclerView mRecyclerView;
     private static ArrayList<HeritageItem> recommendations = new ArrayList<>();
     private static HorizontalRecyclerViewAdapter recommendationAdapter;
@@ -299,7 +300,6 @@ public class HeritageItemViewActivity extends AppCompatActivity {
 
         Context mContext;
         boolean LikeSuccessful;
-        boolean isLiked;
 
         private likeAction(Context context) {
             mContext = context;
@@ -310,7 +310,14 @@ public class HeritageItemViewActivity extends AppCompatActivity {
             try {
                 SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
                 String token = preferences.getString("token", "null");
-                LikeSuccessful = uploadLike(token);
+                LikeSuccessful = uploadLikePic(token);
+                if (LikeSuccessful) {
+                    try {
+                        LikeSuccessful = uploadLikeCount(token);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
             } catch (Exception e) {
                 e.printStackTrace();
             }
@@ -338,12 +345,11 @@ public class HeritageItemViewActivity extends AppCompatActivity {
 
         }
 
-        private boolean uploadLike(String token) {
+        private boolean uploadLikePic(String token) {
             String result;
-            ratesUrl = "http://18.220.108.135/api/items/";
-            ratesUrl = ratesUrl + heritageItemPostID + "/rates";
+            itemUrl = "http://18.220.108.135/api/items/" + heritageItemPostID;
             try {
-                result = PostJSON.postToApi(constructTheJSON(), ratesUrl, token);
+                result = PostJSON.postToApi(constructTheJSONLikePic(), itemUrl, token);
             } catch (IOException e) {
                 e.printStackTrace();
                 return false;
@@ -357,17 +363,57 @@ public class HeritageItemViewActivity extends AppCompatActivity {
 
         }
 
-        private JSONObject constructTheJSON() {
+        private JSONObject constructTheJSONLikePic() {
+
+            Log.v("HeritageItemLike", "" + getIntent().getBooleanExtra("is_rated", false));
+            JSONObject json = new JSONObject();
+            try {
+
+                if (getIntent().getBooleanExtra("is_rated", false)) {
+                    json.put("is_rated", false);
+                    isLiked = false;
+                } else {
+                    json.put("is_rated", true);
+                    isLiked = true;
+                }
+
+                Log.v("RATE TAG", "" + json.getBoolean("is_rated"));
+
+
+                return json;
+            } catch (JSONException e) {
+                Log.v("like", "Error in json construction");
+            }
+            return json;
+        }
+
+        private boolean uploadLikeCount(String token) {
+            String result;
+            ratesUrl = "http://18.220.108.135/api/items/" + heritageItemPostID + "/rates";
+            try {
+                result = PostJSON.postToApi(constructTheJSONLikeCount(), ratesUrl, token);
+            } catch (IOException e) {
+                e.printStackTrace();
+                return false;
+
+            }
+            if (result == null || result.equals("400")) {
+                return false;
+            }
+
+            return true;
+
+        }
+
+        private JSONObject constructTheJSONLikeCount() {
 
             JSONObject json = new JSONObject();
             try {
 
-                if (json.getInt("rate") == 1) {
-                    json.put("rate", 0);
-                    isLiked = false;
+                if (!isLiked) {
+                    json.put("rate", json.getInt("rate") - 1);
                 } else {
-                    json.put("rate", 1);
-                    isLiked = true;
+                    json.put("rate", json.getInt("rate") + 1);
                 }
 
                 Log.v("RATE TAG", "" + json.getInt("rate"));
@@ -375,7 +421,7 @@ public class HeritageItemViewActivity extends AppCompatActivity {
 
                 return json;
             } catch (JSONException e) {
-                Log.v("upload", "Error in json construction");
+                Log.v("like", "Error in json construction");
             }
             return json;
         }
