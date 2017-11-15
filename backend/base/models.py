@@ -111,7 +111,6 @@ class UserRatedItem(models.Model):
     user = models.ForeignKey(User, related_name='item_rating_user', on_delete=models.CASCADE, null=True)
     item = models.ForeignKey(Item, related_name='rated_item', on_delete=models.CASCADE, null=True)
 
-
 class UserRatedComment(models.Model):
     rate = models.IntegerField(null=True, blank=True)
     user = models.ForeignKey(User, related_name='comment_rating_user', on_delete=models.CASCADE, null=True)

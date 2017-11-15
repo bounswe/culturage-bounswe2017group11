@@ -57,7 +57,6 @@ class CommentSerializer(serializers.ModelSerializer):
 		model = Comment
 		fields = ('id','text','written_by','related_item','rate','created_at')
 	def create(self, validated_data):
-		#item = validated_data.pop('item')
 		item = self.context.get('related_item')
 		user = self.context.get('written_by')
 		comment = Comment.objects.create(**validated_data)
@@ -115,6 +114,7 @@ class UserRatedItemSerializer(serializers.ModelSerializer):
 	def create(self, validated_data):
 		user = self.context.get('user')
 		item = self.context.get('item')
+
 		userRatedItem = UserRatedItem.objects.create(**validated_data)
 		userRatedItem.user = user
 		userRatedItem.item = item

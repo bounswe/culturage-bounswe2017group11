@@ -1,7 +1,5 @@
 from django.http import HttpResponse, JsonResponse
 from django.contrib.auth.models import User
-from django.core import serializers
-from django.db.models import Q
 from base.models import Item
 from base.models import Profile
 from base.models import Comment
@@ -12,9 +10,9 @@ from base.serializers import NewsfeedSerializer
 from base.serializers import CommentSerializer
 from base.serializers import UserRatedItemSerializer
 from rest_framework.response import Response
+from rest_framework import status
 from rest_framework.views import APIView
 from rest_framework.parsers import JSONParser
-from rest_framework_jwt.settings import api_settings
 from rest_framework import viewsets
 from rest_framework import permissions
 from rest_framework.decorators import api_view, permission_classes
@@ -144,6 +142,15 @@ class RateItem(APIView):
 	def post(self, request, itemID):
 		item = Item.objects.get(id= itemID)
 		user = request.user
+
+		try:
+			rate = UserRatedItem.objects.get(item=itemID, user = request.user.id)
+		except UserRatedItem.DoesNotExist:
+			rate = None
+
+		if rate:
+			return Response({"error" : "You already rated this item"}, status=status.HTTP_403_FORBIDDEN)
+
 		serializer = UserRatedItemSerializer(data=request.data, context={ 'user':user, 'item':item })
 		if serializer.is_valid():
 			serializer.save()
