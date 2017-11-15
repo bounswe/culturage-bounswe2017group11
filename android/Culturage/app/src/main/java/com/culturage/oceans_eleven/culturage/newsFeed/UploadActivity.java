@@ -280,13 +280,13 @@ public class UploadActivity extends Activity {
 
                 json.put("name", itemToUpload.getmTitle());
                 json.put("description", itemToUpload.getmDescription());
-                json.put("image", "image/png;base64," + itemToUpload.getmImageString());
+                json.put("image", "image/png;base64," + itemToUpload.getmImageBase64String());
                 json.put("location", itemToUpload.getmLocation());
                 json.put("date", itemToUpload.getmDate());
                 JSONArray tags = new JSONArray(itemToUpload.getMTags().split("\\s"));
                 Log.v("upload-tag", tags.toString());
                 json.put("tags", tags);
-                Log.v("upload", itemToUpload.getmImageString());
+                Log.v("upload", itemToUpload.getmImageBase64String());
                 return json;
             } catch (JSONException e) {
                 Log.v("upload", "Error in json construction");

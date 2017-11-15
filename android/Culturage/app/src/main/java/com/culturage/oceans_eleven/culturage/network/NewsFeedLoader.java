@@ -7,11 +7,6 @@ import com.culturage.oceans_eleven.culturage.baseClasses.HeritageItem;
 
 import java.util.ArrayList;
 
-/**
- * by gry on 21.10.2017.
- */
-
-
 public class NewsFeedLoader extends AsyncTaskLoader<ArrayList<HeritageItem> > {
 
     private String Url;

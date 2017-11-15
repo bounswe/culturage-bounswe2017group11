@@ -52,7 +52,7 @@ public class HeritageItemAdapter extends ArrayAdapter {
 
 //        imageView.setImageResource(R.drawable.sample_0);
 
-        String imageUri = currentItem.getmImageString();
+        String imageUri = currentItem.getmImageUrl();
         // 400 looks cool
         Picasso.with(this.getContext()).load(imageUri).resize(400, 0).into(imageView);
 

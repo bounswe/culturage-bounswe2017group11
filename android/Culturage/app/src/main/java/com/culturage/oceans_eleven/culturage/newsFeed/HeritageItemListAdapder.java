@@ -5,11 +5,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.culturage.oceans_eleven.culturage.R;
-
-/**
- * Created by me on 10.11.2017.
- */
+import com.culturage.oceans_eleven.culturage.baseClasses.HeritageItem;
 
 /**
  * {@link HeritageItemListAdapder} is a {@link FragmentPagerAdapter} that can provide the layout for

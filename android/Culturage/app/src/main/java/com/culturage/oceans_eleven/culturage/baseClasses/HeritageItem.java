@@ -11,19 +11,21 @@ public class HeritageItem {
     private long mCommentCount;
     private String mDate;
     private String mLocation;
-    private String mImageString;
+    private String mImageBase64String;
     private String rate;
     private String createdAt;
     private String mTags;
     private String creator_id;
     private String creator_username;
+    private String mImageUrl;
+    private boolean isRated;
 
     //dummy item; this constructor is not to be used, temporary
     public HeritageItem(String title, String description, String imageString, String rate, String createdAt, String date, String location, String tags) {
         this.mTitle = title;
         this.createdAt = createdAt;
         this.mDescription = description;
-        this.mImageString = imageString;
+        this.mImageBase64String = imageString;
         this.rate = rate;
         this.mDate = date;
         this.mLocation = location;
@@ -39,6 +41,14 @@ public class HeritageItem {
         this.mResourceId = mResourceId;
         this.mLikeCount = mLikeCount;
         this.mCommentCount = mCommentCount;
+    }
+
+    public HeritageItem(int postID, String title, String description, String imageURL, boolean isRated) {
+        this.mPostId = postID;
+        this.mTitle = title;
+        this.mDescription = description;
+        this.mImageUrl = imageURL;
+        this.isRated = isRated;
     }
 
     public String getCreatorId() {
@@ -75,12 +85,12 @@ public class HeritageItem {
     }
 
 
-    public String getmImageString() {
-        return mImageString;
+    public String getmImageBase64String() {
+        return mImageBase64String;
     }
 
-    public void setmImageString(String mImageString) {
-        this.mImageString = mImageString;
+    public void setmImageBase64String(String mImageBase64String) {
+        this.mImageBase64String = mImageBase64String;
     }
 
     public String getRate() {
@@ -149,4 +159,19 @@ public class HeritageItem {
         this.mCommentCount = commentCount;
     }
 
+    public String getmImageUrl() {
+        return mImageUrl;
+    }
+
+    public void setmImageUrl(String mImageUrl) {
+        this.mImageUrl = mImageUrl;
+    }
+
+    public boolean isRated() {
+        return isRated;
+    }
+
+    public void setRated(boolean rated) {
+        isRated = rated;
+    }
 }

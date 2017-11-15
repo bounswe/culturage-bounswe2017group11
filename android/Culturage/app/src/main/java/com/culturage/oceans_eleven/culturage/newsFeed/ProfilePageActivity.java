@@ -316,10 +316,7 @@ public class ProfilePageActivity extends AppCompatActivity implements LoaderMana
         }
 
         private boolean uploadProfile(String token) {
-
-
             String result;
-
             try {
                 result = PostJSON.postToApi(constructTheJSON(),apiURL,token);
             } catch (IOException e) {
@@ -327,7 +324,6 @@ public class ProfilePageActivity extends AppCompatActivity implements LoaderMana
                 return false;
 
             }
-
             if(result == null || result.equals("400")){
                 return false;
             }

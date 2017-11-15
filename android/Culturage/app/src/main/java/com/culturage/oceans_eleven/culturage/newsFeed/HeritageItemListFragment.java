@@ -60,12 +60,12 @@ public abstract class HeritageItemListFragment extends Fragment implements Loade
                 intent.putExtra("postId", item.getmPostId());
                 intent.putExtra("title", item.getmTitle());
                 intent.putExtra("description", item.getmDescription());
-                intent.putExtra("imageUrl", item.getmImageString());
-                intent.putExtra("date", item.getmDate());
-                intent.putExtra("location", item.getmLocation());
-                intent.putExtra("tags", item.getMTags());
-                intent.putExtra("creator_id", item.getCreatorId()); //New
-                intent.putExtra("creator_username", item.getCreatorUsername()); //New
+                intent.putExtra("imageUrl", item.getmImageUrl());
+//                intent.putExtra("date", item.getmDate());
+//                intent.putExtra("location", item.getmLocation());
+//                intent.putExtra("tags", item.getMTags());
+//                intent.putExtra("creator_id", item.getCreatorId()); //New
+//                intent.putExtra("creator_username", item.getCreatorUsername()); //New
                 startActivity(intent);
             }
         });

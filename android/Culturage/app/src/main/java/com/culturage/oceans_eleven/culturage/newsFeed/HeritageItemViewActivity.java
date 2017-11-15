@@ -95,27 +95,27 @@ public class HeritageItemViewActivity extends AppCompatActivity {
         date_title.setText("Date");
 
         TextView date = (TextView) findViewById(R.id.her_item_date);
-        date.setText(getIntent().getStringExtra("date"));
+//        date.setText(getIntent().getStringExtra("date"));
 
         TextView loc_title = (TextView) findViewById(R.id.her_item_location_title);
 //        loc_title.setText("ANY KNOWN LOCATION?");
         loc_title.setText("Location");
 
         TextView loc = (TextView) findViewById(R.id.her_item_location);
-        loc.setText(getIntent().getStringExtra("location"));
+//        loc.setText(getIntent().getStringExtra("location"));
 
         TextView tags = (TextView) findViewById(R.id.her_item_tags);
-        tags.setText(getIntent().getStringExtra("tags"));
+//        tags.setText(getIntent().getStringExtra("tags"));
 
 
         /**
          * Guest User Profile
          */
-        creator_id = getIntent().getStringExtra("creator_id");
-        creator_username = getIntent().getStringExtra("creator_username");
+//        creator_id = getIntent().getStringExtra("creator_id");
+//        creator_username = getIntent().getStringExtra("creator_username");
         TextView guest = (TextView) findViewById(R.id.guest_profile);
         ImageView guestPic = (ImageView) findViewById(R.id.guest_profile_pict);
-        guest.setText(" " + creator_username);
+//        guest.setText(" " + creator_username);
         guest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

@@ -40,9 +40,7 @@ class Fetcher {
     static ArrayList<HeritageItem> fetchNewsFeedData(String requestUrl, Context context) {
 
         // Create URL object
-        //FIXME
         URL url = createUrl(requestUrl);
-
         // Perform HTTP request to the URL and receive a JSON response back
         String jsonResponse = null;
         try {
@@ -50,8 +48,6 @@ class Fetcher {
         } catch (IOException e) {
             Log.e(LOG_TAG, "Error closing input stream", e);
         }
-        // Extract relevant fields from the JSON response and create an {@link Event} object
-        // Return the {@link Event}
         return extractHeritageItemsFromJson(jsonResponse);
     }
 
@@ -147,34 +143,33 @@ class Fetcher {
         // Create an empty ArrayList that we can start adding HeritageItem's to
         ArrayList<HeritageItem> heritageItems = new ArrayList<>();
         try {
-
             JSONArray items = new JSONArray(newsFeedJSON);
             for (int i = 0; i < items.length(); i++) {
                 JSONObject values = items.getJSONObject(i);
-                JSONObject creator = values.getJSONObject("created_by");  //Change
                 String title, description, imageURL, rate, createdAt, date, location = "", stringTags = "";
-
                 title = values.getString("name");
                 description = values.getString("description");
                 imageURL = values.getString("featured_img");
-                rate = values.getString("rate");
-                createdAt = values.getString("created_at");
-                JSONArray timelines = values.getJSONArray("timelines");
-                date = parseDate(timelines);
-                try {
-                    location = timelines.getJSONObject(0).getJSONObject("location").getString("name");
-                } catch (Exception e) {
-                    Log.v("fetcher", "error parsing location.");
-                }
-                JSONArray tags = values.getJSONArray("tags");
-                try {
-                    stringTags = parseTags(tags);
-                } catch (Exception e) {
-                    Log.v("fetcher", "error parsing tags.");
-                }
-                heritageItems.add(new HeritageItem(title.trim(), description.trim(), imageURL, rate, createdAt, date, location, stringTags));
-                heritageItems.get(i).setCreatorId(creator.getString("id")); //New
-                heritageItems.get(i).setCreatorUsername(creator.getString("username"));
+                boolean isRated = values.getBoolean("is_rated");
+                int postID = values.getInt("id");
+//                createdAt = values.getString("created_at");
+//                JSONArray timelines = values.getJSONArray("timelines");
+//                date = parseDate(timelines);
+//                try {
+//                    location = timelines.getJSONObject(0).getJSONObject("location").getString("name");
+//                } catch (Exception e) {
+//                    Log.v("fetcher", "error parsing location.");
+//                }
+//                JSONArray tags = values.getJSONArray("tags");
+//                try {
+//                    stringTags = parseTags(tags);
+//                } catch (Exception e) {
+//                    Log.v("fetcher", "error parsing tags.");
+//                }
+
+                heritageItems.add(new HeritageItem(postID, title.trim(), description.trim(), imageURL, isRated));
+                //heritageItems.get(i).setCreatorId(creator.getString("id")); //New
+                //heritageItems.get(i).setCreatorUsername(creator.getString("username"));
             }
         } catch (Exception e) {
             Log.v(LOG_TAG, "Error in populating heritage items");
