@@ -1,42 +1,37 @@
+.home-body{
+    background: #f2f2f2;
+    padding-bottom: 20px;
+}
 
-.navbar {
+.my-navbar {
     margin-bottom: 0;
     border-radius: 0;
     background-color: #17a2b8;
     border-color: #003300;   
 }
 
-.navbar-default .navbar-nav li a{
+.my-navbar li a{
     color: #ffffff;
 }
 
-.navbar-default .navbar-nav .active a{
+.my-navbar .active a{
     background-color: #8ee4f1;
     color: #ffffff;
 }
 
-.navbar-default .navbar-nav li a:hover,
-.navbar-default .navbar-nav .active a:hover{
+.my-navbar li a:hover,
+.my-navbar a:hover{
 	background-color: #102310;
 	color: #ffffff;
 }
 
-.navbar-default .navbar-brand{
-	color: white;
+.my-navbar .navbar-brand{
+    color: #ffffff;
 }
 
-.navbar-default .navbar-brand:hover{
+.my-navbar .navbar-brand:hover{
+    background-color: #17a2b8;
 	color: #ff6600;
-}
-    
-/* Set height of the grid so .sidenav can be 100% (adjust as needed) */
-.row.content {height: 450px}
-    
-/* Set gray background color and 100% height */
-.sidenav {
-    padding-top: 20px;
-    background-color: #f1f1f1;
-    height: 100%;
 }
 
 .navbar-form{
@@ -47,19 +42,22 @@
     margin-left: 120px;
     margin-top: 20px;
     width: 60%;
+    background: white;
+    border: 1px solid #e6e6e6;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 .newsfeed-item{
     height: 250px;
     width: 100%;
-    margin-top: 5px;
-    padding-left: 10px;
+    padding-top: 20px;
+    border-bottom: 1px dashed #e6e6e6;
 }
 
 .newsfeed-item h1{
     font-family: Calibri, Candara, Segoe, 'Segoe UI', Optima, Arial, sans-serif;
     font-size: 24px;
-    padding-left: 20px;
 }
 
 .newsfeed-item h2{
@@ -69,11 +67,9 @@
     margin-top: 5px;
 }
 
-
 .newsfeed-item p{
     font-family: Calibri, Candara, Segoe, 'Segoe UI', Optima, Arial, sans-serif;
     font-size: 15px;
-    padding-left: 15px;
 }
 
 .newsfeed-item img{
@@ -81,27 +77,4 @@
     max-width: 100%; 
     display: block;
     margin: 0 auto;
-}
-
-/* Set black background color, white text and some padding */
-footer {
-    background-color: #4CAF50;
-    color: white;
-    padding: 15px;
-    position:absolute;
-    bottom: 0;
-    width:100%;
-}
-
-img{
-    padding: 15px;
-}
-
-/* On small screens, set height to 'auto' for sidenav and grid */
-@media screen and (max-width: 767px) {
-    .sidenav {
-        height: auto;
-        padding: 15px;
-    }
-    .row.content {height:auto;} 
 }
