@@ -30,6 +30,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = bool(int(os.getenv('DEBUG', False)))
 
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS').split(',') if os.getenv('ALLOWED_HOSTS') else []
+CURRENT_DOMAIN = os.getenv('CURRENT_DOMAIN', 'http://127.0.0.1:8000')
 
 INTERNAL_IPS = '127.0.0.1'
 

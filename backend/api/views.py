@@ -172,6 +172,7 @@ class RateItem(APIView):
 
 	def get(self, request, itemID):
 		item = Item.objects.get(id=itemID)
-		serializer = UserRatedItemSerializer(item.rated_item, many=True)
+		rates = UserRatedItemSerializer.setup_eager_loading(item.rated_item)  # Set up eager loading to avoid N+1 selects
+		serializer = UserRatedItemSerializer(rates, many=True)
 		return Response(serializer.data)
 

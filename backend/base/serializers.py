@@ -1,5 +1,6 @@
 from base.models import Item, Location, Timeline, Tag, Comment, UserRatedItem
 from django.contrib.auth.models import User
+from django.conf import settings
 from django.db.models import Prefetch
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
@@ -33,10 +34,9 @@ class UserSerializer(serializers.Serializer):
 		return obj.profile.birthday if hasattr(obj, 'profile') else None
 
 	def _get_photo(self, obj):
-		request = self.context.get("request")
 		if hasattr(obj, 'profile'):
 			if obj.profile.photo:
-				return request.META['HTTP_HOST'] + obj.profile.photo.url
+				return settings.CURRENT_DOMAIN + obj.profile.photo.url
 		return None
 
 	@staticmethod
@@ -114,7 +114,7 @@ class ItemSerializer(serializers.ModelSerializer):
 	def setup_eager_loading(queryset):
 		""" Perform necessary eager loading of data. """
 		queryset = queryset.prefetch_related(
-			'created_by', 'created_by__profile', 'timelines', 'timelines__location', 'tags', 'commented_item', 'commented_item__written_by', 'commented_item__written_by__profile', 'rated_item'
+			'created_by', 'created_by__profile', 'timelines', 'timelines__location', 'tags', 'commented_item', 'commented_item__written_by', 'commented_item__written_by__profile', 'rated_item', 'rated_item__user', 'rated_item__user__profile'
 		)
 		return queryset
 
@@ -151,9 +151,17 @@ class ItemSerializer(serializers.ModelSerializer):
 		return item
 
 class UserRatedItemSerializer(serializers.ModelSerializer):
+	user = UserSerializer(required=False)
+
 	class Meta:
 		model = UserRatedItem
 		fields = ('id','rate','user','item')
+
+	@staticmethod
+	def setup_eager_loading(queryset):
+		""" Perform necessary eager loading of data. """
+		queryset = queryset.prefetch_related('user', 'user__profile')
+		return queryset
 
 	def create(self, validated_data):
 		user = self.context.get('user')
