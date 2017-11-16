@@ -168,25 +168,24 @@ class UserRatedItemSerializer(serializers.ModelSerializer):
 		return  userRatedItem
 
 class NewsfeedSerializer(serializers.ModelSerializer):
-	raters = serializers.SerializerMethodField('_get_raters')
+	comment_count = serializers.SerializerMethodField('_get_comment_count')
 	is_rated = serializers.SerializerMethodField('_get_is_rated')
 
-	def _get_raters(self, item):
-		serializer = UserRatedItemSerializer(item.rated_item, many=True)
-		return [i["user"] for i in serializer.data]
+	def _get_comment_count(self, item):
+		return len(item.get_commenters())
 
 	def _get_is_rated(self, item):
 		user = self.context['request'].user
-		raters = self._get_raters(item)
+		raters = item.get_raters()
 		return user.id in raters
 
 	@staticmethod
 	def setup_eager_loading(queryset):
 		""" Perform necessary eager loading of data. """
-		queryset = queryset.prefetch_related('rated_item')
+		queryset = queryset.prefetch_related('rated_item', 'commented_item')
 		return queryset
 
 	class Meta:
 		model = Item
-		fields = ('id', 'name', 'description', 'featured_img', 'created_at', 'raters', 'is_rated')
+		fields = ('id', 'name', 'rate', 'description', 'featured_img', 'created_at', 'is_rated', 'comment_count')
 

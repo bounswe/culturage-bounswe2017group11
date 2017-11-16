@@ -37,7 +37,7 @@ class Item(models.Model):
     name = models.CharField(max_length=200)
     description = models.TextField(null=True, blank=True)
     featured_img = models.FileField(upload_to='item', null=True, blank=True)
-    rate = models.FloatField(null=True, blank=True)
+    rate = models.FloatField(default=0)
     created_at = models.DateTimeField(auto_now_add=True, blank=True)
     updated_at = models.DateTimeField(null=True, blank=True)
     created_by = models.ForeignKey(User, related_name='items_created', on_delete=models.SET_NULL, null=True)
@@ -51,6 +51,12 @@ class Item(models.Model):
         self.rate = new_rate
         self.save()
         return self.rate
+
+    def get_raters(self):
+        return [i.user_id for i in self.rated_item.all()]
+
+    def get_commenters(self):
+        return [i.written_by_id for i in self.commented_item.all()]
 
     # TO BE USED LATER
     def publish(self):
