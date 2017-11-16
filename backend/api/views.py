@@ -144,12 +144,19 @@ class RateItem(APIView):
 		user = request.user
 
 		try:
-			rate = UserRatedItem.objects.get(item=itemID, user = request.user.id)
+			rate = UserRatedItem.objects.filter(item=itemID, user = request.user.id).first()
 		except UserRatedItem.DoesNotExist:
 			rate = None
 
 		if rate:
-			return Response({"error" : "You already rated this item"}, status=status.HTTP_403_FORBIDDEN)
+			if request.data["rate"]:
+				return Response({"error" : "You already rated this item"}, status=status.HTTP_403_FORBIDDEN)
+			else:
+				rate.delete()
+				item.calculateRate()
+				return Response(item.rate)
+		if not request.data["rate"]:
+			return Response({"error" : "You can't unlike item without like it"}, status=status.HTTP_403_FORBIDDEN)
 
 		serializer = UserRatedItemSerializer(data=request.data, context={ 'user':user, 'item':item })
 		if serializer.is_valid():

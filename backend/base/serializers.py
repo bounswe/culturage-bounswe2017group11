@@ -1,5 +1,4 @@
 from base.models import Item, Location, Timeline, Tag, Comment, UserRatedItem
-from django.db.models import Count, Min, Sum, Avg
 from django.contrib.auth.models import User
 from django.db.models import Prefetch
 from rest_framework import serializers
@@ -157,10 +156,7 @@ class UserRatedItemSerializer(serializers.ModelSerializer):
 		userRatedItem.item = item
 		userRatedItem.save()
 
-		# new rate calculation
-		new_rate = UserRatedItem.objects.filter(item_id = item.id).aggregate(rate=Sum('rate'))["rate"]
-		item.rate = new_rate
-		item.save()
+		item.calculateRate()
 		return  userRatedItem
 
 class NewsfeedSerializer(serializers.ModelSerializer):

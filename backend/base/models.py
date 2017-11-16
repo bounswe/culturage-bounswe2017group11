@@ -3,6 +3,7 @@ from django.contrib.auth.models import User
 from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils import timezone
+from django.db.models import Sum
 
 
 class Profile(models.Model):
@@ -44,6 +45,12 @@ class Item(models.Model):
     tags = models.ManyToManyField(Tag)
     def __str__(self):
         return self.name
+
+    def calculateRate(self):
+        new_rate = UserRatedItem.objects.filter(item_id = self.id).aggregate(rate=Sum('rate'))["rate"]
+        self.rate = new_rate
+        self.save()
+        return self.rate
 
     # TO BE USED LATER
     def publish(self):
