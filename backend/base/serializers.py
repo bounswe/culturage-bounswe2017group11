@@ -67,7 +67,7 @@ class LocationSerializer(serializers.Serializer):
 class TagSerializer(serializers.Serializer):
 	id = serializers.IntegerField(read_only=True)
 	name = serializers.CharField(required=True, max_length=200)
-	created_by = UserSerializer(required=False)
+	# created_by = UserSerializer(required=False)
 	class Meta:
 		model = Tag
 		fields =('id','name','created_by')
@@ -75,7 +75,7 @@ class TagSerializer(serializers.Serializer):
 	@staticmethod
 	def setup_eager_loading(queryset):
 		""" Perform necessary eager loading of data. """
-		queryset = queryset.prefetch_related('created_by', 'created_by__profile')
+		# queryset = queryset.prefetch_related('created_by', 'created_by__profile')
 		return queryset
 
 class TimelineSerializer(serializers.Serializer):
@@ -109,6 +109,14 @@ class ItemSerializer(serializers.ModelSerializer):
 	raters = serializers.SerializerMethodField('_get_raters')
 	is_rated = serializers.SerializerMethodField('_get_is_rated')
 	comments = serializers.SerializerMethodField('_get_comments')
+
+	@staticmethod
+	def setup_eager_loading(queryset):
+		""" Perform necessary eager loading of data. """
+		queryset = queryset.prefetch_related(
+			'created_by', 'created_by__profile', 'timelines', 'timelines__location', 'tags', 'commented_item', 'commented_item__written_by', 'commented_item__written_by__profile', 'rated_item'
+		)
+		return queryset
 
 	class Meta:
 		model = Item

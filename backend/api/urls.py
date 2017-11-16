@@ -12,6 +12,7 @@ urlpatterns = [
     url(r'^auth/', include('auth.urls')),
     url(r'^search/', include('search.urls')),
     url(r'^recommendation/', include('recommendation.urls')),
+    url(r'^filter/', include('filter.urls')),
     url(r'^items/(?P<itemID>[0-9]+)/comments', views.CommentList.as_view(), name='itemComment'),
     url(r'^items/(?P<itemID>[0-9]+)/rates', views.RateItem.as_view(), name='itemRate'),
 ]

@@ -31,6 +31,11 @@ class ItemViewSet(viewsets.ModelViewSet):
 	serializer_class = ItemSerializer
 	permission_classes = (permissions.IsAuthenticated,)
 
+	def get_queryset(self):
+		queryset = Item.objects.all().order_by('-created_at')
+		queryset = self.get_serializer_class().setup_eager_loading(queryset)
+		return queryset
+
 	def perform_create(self, serializer):
 		location = self.request.data.get('location');
 		date = self.request.data.get('date');
