@@ -48,7 +48,7 @@ class UserSerializer(serializers.Serializer):
 
 	def create(self, validated_data):
 		"""
-		Create and return a new `Location` instance, given the validated data.
+		Create and return a new `User` instance, given the validated data.
 		"""
 		user = User(
 			username=validated_data['username'],
@@ -78,7 +78,6 @@ class TagSerializer(serializers.Serializer):
 		""" Perform necessary eager loading of data. """
 		queryset = queryset.prefetch_related('created_by', 'created_by__profile')
 		return queryset
-
 
 class TimelineSerializer(serializers.Serializer):
 	id = serializers.IntegerField(read_only=True)
@@ -159,7 +158,7 @@ class UserRatedItemSerializer(serializers.ModelSerializer):
 		userRatedItem.save()
 
 		# new rate calculation
-		new_rate = UserRatedItem.objects.filter(item_id = item.id).aggregate(rate=Avg('rate'))["rate"]
+		new_rate = UserRatedItem.objects.filter(item_id = item.id).aggregate(rate=Sum('rate'))["rate"]
 		item.rate = new_rate
 		item.save()
 		return  userRatedItem
