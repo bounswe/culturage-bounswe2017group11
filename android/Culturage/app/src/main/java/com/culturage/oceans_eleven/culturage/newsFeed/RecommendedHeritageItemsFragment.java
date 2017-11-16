@@ -14,7 +14,7 @@ import java.util.ArrayList;
 
 public class RecommendedHeritageItemsFragment extends HeritageItemListFragment {
 
-    private static final String apiURL = "http://18.220.108.135/api/items";
+    private static final String apiURL = "http://18.220.108.135/api/recommendation";
     @Override
     public android.support.v4.content.Loader<ArrayList<HeritageItem>> onCreateLoader(int id, Bundle args) {
         return new NewsFeedLoader(getContext(), apiURL);

@@ -74,40 +74,41 @@ public class HeritageItemViewActivity extends AppCompatActivity {
 
         // Secondly get necessary fields from the backend.
         //TODO: implement API code here.
-        TextView date = (TextView) findViewById(R.id.her_item_date);
+//        TextView date = (TextView) findViewById(R.id.her_item_date);
+//
+//        TextView loc = (TextView) findViewById(R.id.her_item_location);
+//
+//        TextView tags = (TextView) findViewById(R.id.her_item_tags);
+//
+//        LinearLayout likeCommentFrame = (LinearLayout) findViewById(R.id.item_like_comment_buttons_container);
+//        LinearLayout commentContainer = (LinearLayout) likeCommentFrame.findViewById(R.id.comment_container);
+//        TextView commentCount = (TextView) commentContainer.findViewById(R.id.comment_count);
+//
+//        LinearLayout likeContainer = (LinearLayout) likeCommentFrame.findViewById(R.id.like_container);
+//        TextView likeCount = (TextView) likeContainer.findViewById(R.id.like_count);
+//
+//        TextView guest = (TextView) findViewById(R.id.guest_profile);
+//        ImageView guestPic = (ImageView) findViewById(R.id.guest_profile_pict);
+//
+//        // Now implement listeners.
+//        commentContainer.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                CustomDialogClass cdd = new CustomDialogClass(HeritageItemViewActivity.this);
+//                cdd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+//                cdd.show();
+//            }
+//        });
+//
+//        likeContainer.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                new likeAction(HeritageItemViewActivity.this).execute();
+//                //Toast.makeText(HeritageItemViewActivity.this, "Will like soon", Toast.LENGTH_SHORT).show();
+//            }
+//        });
 
-        TextView loc = (TextView) findViewById(R.id.her_item_location);
-
-        TextView tags = (TextView) findViewById(R.id.her_item_tags);
-
-        LinearLayout likeCommentFrame = (LinearLayout) findViewById(R.id.item_like_comment_buttons_container);
-        LinearLayout commentContainer = (LinearLayout) likeCommentFrame.findViewById(R.id.comment_container);
-        TextView commentCount = (TextView) commentContainer.findViewById(R.id.comment_count);
-
-        LinearLayout likeContainer = (LinearLayout) likeCommentFrame.findViewById(R.id.like_container);
-        TextView likeCount = (TextView) likeContainer.findViewById(R.id.like_count);
-
-        TextView guest = (TextView) findViewById(R.id.guest_profile);
-        ImageView guestPic = (ImageView) findViewById(R.id.guest_profile_pict);
-
-        // Now implement listeners.
-        commentContainer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                CustomDialogClass cdd = new CustomDialogClass(HeritageItemViewActivity.this);
-                cdd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
-                cdd.show();
-            }
-        });
-
-        likeContainer.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                new likeAction(HeritageItemViewActivity.this).execute();
-                //Toast.makeText(HeritageItemViewActivity.this, "Will like soon", Toast.LENGTH_SHORT).show();
-            }
-        });
-
+        new FullItemLoader().execute(heritageItemPostID);
         //new likeCountLoader().execute();
         new profileLoader().execute();
         //Will be implemented soon!!
@@ -148,6 +149,83 @@ public class HeritageItemViewActivity extends AppCompatActivity {
         recommendationAdapter = new HorizontalRecyclerViewAdapter(HeritageItemViewActivity.this, recommendations);
         mRecyclerView.setAdapter(recommendationAdapter);
     }
+
+    private class FullItemLoader extends AsyncTask<Integer, Void, String> {
+
+        @Override
+        protected String doInBackground(Integer... itemID) {
+            try {
+                return Fetcher.getJSON(Fetcher.createUrl(getResources().getString(R.string.itemsEndPoint) + itemID[0]), HeritageItemViewActivity.this);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(String jsonStr) {
+            try {
+
+                JSONObject itemJson = new JSONObject(jsonStr);
+
+                JSONArray timelines = itemJson.getJSONArray("timelines");
+                JSONObject timeLine0 = timelines.getJSONObject(0);
+                JSONObject loc0 = timeLine0.getJSONObject("location");
+
+                JSONArray tags = itemJson.getJSONArray("tags");
+
+                JSONArray comments = itemJson.getJSONArray("comments");
+
+
+                TextView date = (TextView) findViewById(R.id.her_item_date);
+                date.setText(timeLine0.getString("startDate"));
+
+                TextView loc = (TextView) findViewById(R.id.her_item_location);
+                loc.setText(loc0.getString("name"));
+
+                TextView tagsView = (TextView) findViewById(R.id.her_item_tags);
+                String tagsConcat = "";
+                for (int i = 0; i < tags.length(); i++) {
+                    tagsConcat += tags.getJSONObject(i).getString("name") + " ";
+
+                }
+                tagsView.setText(tagsConcat);
+
+                LinearLayout likeCommentFrame = (LinearLayout) findViewById(R.id.item_like_comment_buttons_container);
+                LinearLayout commentContainer = (LinearLayout) likeCommentFrame.findViewById(R.id.comment_container);
+                TextView commentCount = (TextView) commentContainer.findViewById(R.id.comment_count);
+                commentCount.setText(comments.length() + "");
+
+                LinearLayout likeContainer = (LinearLayout) likeCommentFrame.findViewById(R.id.like_container);
+                TextView likeCount = (TextView) likeContainer.findViewById(R.id.like_count);
+                //FIXME change the default 0
+                likeCount.setText("0");
+
+                // Now implement listeners.
+                commentContainer.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        CustomDialogClass cdd = new CustomDialogClass(HeritageItemViewActivity.this);
+                        cdd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        cdd.show();
+                    }
+                });
+
+                likeContainer.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        new likeAction(HeritageItemViewActivity.this).execute();
+                        //Toast.makeText(HeritageItemViewActivity.this, "Will like soon", Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+    }
+
 
     private class profileLoader extends AsyncTask<String, String, String> {
 
