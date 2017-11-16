@@ -62,7 +62,7 @@ public abstract class HeritageItemListFragment extends Fragment implements Loade
                 intent.putExtra("title", item.getmTitle());
                 intent.putExtra("description", item.getmDescription());
                 intent.putExtra("imageUrl", item.getmImageUrl());
-                Log.v("newsFeed", "postid " + item.getmPostId());
+                Log.v("newsFeed", "postId " + item.getmPostId());
 //                intent.putExtra("date", item.getmDate());
 //                intent.putExtra("location", item.getmLocation());
 //                intent.putExtra("tags", item.getMTags());

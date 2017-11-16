@@ -35,17 +35,14 @@ import java.util.ArrayList;
 
 public class HeritageItemViewActivity extends AppCompatActivity {
 
-    private int heritageItemPostID;
-    private String creator_id;
-    private String creator_username;
-    private ImageView photo;
-    private static RecyclerView mRecyclerView;
-    private static ArrayList<HeritageItem> recommendations = new ArrayList<>();
-    private static HorizontalRecyclerViewAdapter recommendationAdapter;
+    private RecyclerView mRecyclerView;
+    private ArrayList<HeritageItem> recommendations = new ArrayList<>();
+    private HorizontalRecyclerViewAdapter recommendationAdapter;
 
     private String profileURL = "http://18.220.108.135/api/profile/";
     private String recommendationsUrl = "http://18.220.108.135/api/recommendation/item/";
-    private static final String itemUrl = "http://18.220.108.135/api/items";
+//        String itemUrl = "http://18.220.108.135/api/items";
+
     private static final String LOG_TAG = "heritageItem";
 
     @Override
@@ -54,8 +51,40 @@ public class HeritageItemViewActivity extends AppCompatActivity {
         setContentView(R.layout.activity_heritage_item_view);
 
 
-        LinearLayout frame = (LinearLayout) findViewById(R.id.item_like_comment_buttons_container);
-        LinearLayout commentContainer = (LinearLayout) findViewById(R.id.comment_container);
+        // First get necessary values from the incoming intent and place them.
+        Intent incomingIntent = getIntent();
+        int heritageItemPostID = incomingIntent.getIntExtra("postId", -1);
+
+        ImageView iw = (ImageView) findViewById(R.id.her_item_photo);
+        String imageUri = incomingIntent.getStringExtra("imageUrl");
+        // 400 looks cool
+        Picasso.with(this).load(imageUri).resize(400, 0).into(iw);
+
+        TextView title = (TextView) findViewById(R.id.her_item_Title);
+        title.setText(incomingIntent.getStringExtra("title"));
+
+        TextView desc_view = (TextView) findViewById(R.id.her_item_description);
+        desc_view.setText(incomingIntent.getStringExtra("description"));
+
+        // Secondly get necessary fields from the backend.
+        //TODO: implement API code here.
+        TextView date = (TextView) findViewById(R.id.her_item_date);
+
+        TextView loc = (TextView) findViewById(R.id.her_item_location);
+
+        TextView tags = (TextView) findViewById(R.id.her_item_tags);
+
+        LinearLayout likeCommentFrame = (LinearLayout) findViewById(R.id.item_like_comment_buttons_container);
+        LinearLayout commentContainer = (LinearLayout) likeCommentFrame.findViewById(R.id.comment_container);
+        TextView commentCount = (TextView) commentContainer.findViewById(R.id.comment_count);
+
+        LinearLayout likeContainer = (LinearLayout) likeCommentFrame.findViewById(R.id.like_container);
+        TextView likeCount = (TextView) likeContainer.findViewById(R.id.like_count);
+
+        TextView guest = (TextView) findViewById(R.id.guest_profile);
+        ImageView guestPic = (ImageView) findViewById(R.id.guest_profile_pict);
+
+        // Now implement listeners.
         commentContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -65,10 +94,6 @@ public class HeritageItemViewActivity extends AppCompatActivity {
             }
         });
 
-        TextView commentCount = (TextView) commentContainer.findViewById(R.id.comment_count);
-        commentCount.setText(0 + "");
-
-        LinearLayout likeContainer = (LinearLayout) frame.findViewById(R.id.like_container);
         likeContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -76,90 +101,38 @@ public class HeritageItemViewActivity extends AppCompatActivity {
             }
         });
 
-        TextView likeCount = (TextView) likeContainer.findViewById(R.id.like_count);
-        likeCount.setText(0 + "");
-        heritageItemPostID = getIntent().getIntExtra("postId", -1);
-        Log.v(LOG_TAG, "item post id" + heritageItemPostID);
-        TextView title = (TextView) findViewById(R.id.her_item_Title);
-        title.setText(getIntent().getStringExtra("title"));
-
-        ImageView iw = (ImageView) findViewById(R.id.her_item_photo);
-        int defaultImageId = R.drawable.culturage;
-
-        String imageUri = getIntent().getStringExtra("imageUrl");
-        // 400 looks cool
-        Picasso.with(this).load(imageUri).resize(400, 0).into(iw);
-
-//        iw.setImageResource(getIntent().getIntExtra("resourceID", defaultImageId));
-
-//        String desc_tit = "WHAT IS IT?";
-        String desc_tit = "Description?";
-
-        TextView desc_tit_view = (TextView) findViewById(R.id.her_item_description_title);
-        desc_tit_view.setText(desc_tit);
-
-        TextView desc_view = (TextView) findViewById(R.id.her_item_description);
-        desc_view.setText(getIntent().getStringExtra("description"));
-
-        TextView date_title = (TextView) findViewById(R.id.her_item_date_title);
-//        date_title.setText("SO ACTUALLY WHEN ARE WE TALKING ABOUT?");
-        date_title.setText("Date");
-
-        TextView date = (TextView) findViewById(R.id.her_item_date);
-//        date.setText(getIntent().getStringExtra("date"));
-
-        TextView loc_title = (TextView) findViewById(R.id.her_item_location_title);
-//        loc_title.setText("ANY KNOWN LOCATION?");
-        loc_title.setText("Location");
-
-        TextView loc = (TextView) findViewById(R.id.her_item_location);
-//        loc.setText(getIntent().getStringExtra("location"));
-
-        TextView tags = (TextView) findViewById(R.id.her_item_tags);
-//        tags.setText(getIntent().getStringExtra("tags"));
-
-
-        /**
-         * Guest User Profile
-         */
-//        creator_id = getIntent().getStringExtra("creator_id");
+        // This part waits API code as well
+//        int creator_id = getIntent().getIntExtra("creator_id");
 //        creator_username = getIntent().getStringExtra("creator_username");
-        TextView guest = (TextView) findViewById(R.id.guest_profile);
-        ImageView guestPic = (ImageView) findViewById(R.id.guest_profile_pict);
 //        guest.setText(" " + creator_username);
-        guest.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(HeritageItemViewActivity.this, ProfileGuestActivity.class));
-                Intent intent = new Intent(HeritageItemViewActivity.this, ProfileGuestActivity.class);
-                intent.putExtra("creator_id", creator_id); //New
-                startActivity(intent);
-            }
-        });
-        guestPic.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                startActivity(new Intent(HeritageItemViewActivity.this, ProfileGuestActivity.class));
-                Intent intent = new Intent(HeritageItemViewActivity.this, ProfileGuestActivity.class);
-                intent.putExtra("creator_id", creator_id); //New
-                startActivity(intent);
-            }
-        });
-
-        profileURL = profileURL + creator_id;
+        profileURL = profileURL + 1;
+//        guest.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                startActivity(new Intent(HeritageItemViewActivity.this, ProfileGuestActivity.class));
+//                Intent intent = new Intent(HeritageItemViewActivity.this, ProfileGuestActivity.class);
+//                intent.putExtra("creator_id", creator_id); //New
+//                startActivity(intent);
+//            }
+//        });
+//        guestPic.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//                startActivity(new Intent(HeritageItemViewActivity.this, ProfileGuestActivity.class));
+//                Intent intent = new Intent(HeritageItemViewActivity.this, ProfileGuestActivity.class);
+//                intent.putExtra("creator_id", creator_id); //New
+//                startActivity(intent);
+//            }
+//        });
 
         //Profile Loader
-        getLoaderManager().initLoader(1, null, profileLoader);
-
+//        getLoaderManager().initLoader(1, null, profileLoader);
         //getLoaderManager().initLoader(2,null, heritageItemLoader);
 
+        // Lastly, populate recommendations
         mRecyclerView = (RecyclerView) findViewById(R.id.recommendation_view);
-        // use this setting to improve performance if you know that changes
-        // in content do not change the layout size of the RecyclerView
-        // use a linear layout manager
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         mRecyclerView.setLayoutManager(mLayoutManager);
-
 //        ArrayList<HeritageItem> recommendations = new ArrayList<HeritageItem>();
 //        recommendations.add(new HeritageItem(1, "", "", "", true));
 //        recommendations.add(new HeritageItem(1, "", "", "", true));
@@ -175,7 +148,6 @@ public class HeritageItemViewActivity extends AppCompatActivity {
     private LoaderManager.LoaderCallbacks<ArrayList<ProfilePage>> profileLoader
             = new LoaderManager.LoaderCallbacks<ArrayList<ProfilePage>>() {
 
-
         public Loader<ArrayList<ProfilePage>> onCreateLoader(int i, Bundle bundle) {
             Log.v("LoaderProfilePage", "hello");
             return new ProfilePageLoader(HeritageItemViewActivity.this, profileURL);
@@ -186,7 +158,7 @@ public class HeritageItemViewActivity extends AppCompatActivity {
             if (profilePages == null) return;
 
             if (!profilePages.get(0).getPhoto().equals("-1")) {
-                photo = (ImageView) findViewById(R.id.guest_profile_pict);
+                ImageView photo = (ImageView) findViewById(R.id.guest_profile_pict);
                 String imageUri = "http://" + profilePages.get(0).getPhoto();
                 Log.v("Uploadtag", imageUri);
                 Picasso.with(getBaseContext()).load(imageUri).into(photo);
@@ -202,10 +174,10 @@ public class HeritageItemViewActivity extends AppCompatActivity {
 
     };
 
-    private static class RecommendationRequest extends AsyncTask<String, String, String> {
+    private class RecommendationRequest extends AsyncTask<Void, Void, Void> {
         private String url;
         private Activity context;
-        static ArrayList<HeritageItem> tempRecommendations;
+        private ArrayList<HeritageItem> tempRecommendations;
 
         RecommendationRequest(Activity context, String url) {
             this.context = context;
@@ -213,9 +185,17 @@ public class HeritageItemViewActivity extends AppCompatActivity {
         }
 
         @Override
-        protected String doInBackground(String... strings) {
+        protected Void doInBackground(Void... voids) {
             getRecommendations(this.url);
-            return "";
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void voids) {
+            recommendations = tempRecommendations;
+            recommendationAdapter.clear();
+            recommendationAdapter.addAll(recommendations);
+            mRecyclerView.setAdapter(recommendationAdapter);
         }
 
         private void getRecommendations(String url) {
@@ -242,14 +222,6 @@ public class HeritageItemViewActivity extends AppCompatActivity {
                 Log.v("heritageItem", "error parsing recomm:");
             }
 
-        }
-
-        @Override
-        protected void onPostExecute(String result) {
-            recommendations = tempRecommendations;
-            recommendationAdapter.clear();
-            recommendationAdapter.addAll(recommendations);
-            mRecyclerView.setAdapter(recommendationAdapter);
         }
 
     }

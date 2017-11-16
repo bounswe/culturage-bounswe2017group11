@@ -32,6 +32,7 @@
     <string name="description">Description</string>
     <string name="date">Date</string>
     <string name="location">Location</string>
+    <string name="recommendation">Similar to this culture...</string>
 
     <string-array name="days">
         <item>--</item>

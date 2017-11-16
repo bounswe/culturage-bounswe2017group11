@@ -1,7 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="wrap_content"
-    android:layout_height="80dp"
+    android:layout_height="@dimen/large_edit_text_height"
+    xmlns:tools="http://schemas.android.com/tools"
     android:orientation="vertical"
     android:layout_marginEnd="@dimen/small_padding"
     android:layout_marginStart="@dimen/small_padding">
@@ -16,5 +17,5 @@
         android:id="@+id/recommendation_image"
         android:layout_width="@dimen/large_edit_text_height"
         android:layout_height="@dimen/large_edit_text_height"
-        android:gravity="center" />
+        tools:src="@mipmap/hagia_sophia" />
 </LinearLayout>

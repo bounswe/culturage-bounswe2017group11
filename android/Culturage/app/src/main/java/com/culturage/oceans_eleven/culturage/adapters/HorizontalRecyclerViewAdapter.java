@@ -18,32 +18,24 @@ public class HorizontalRecyclerViewAdapter extends RecyclerView.Adapter<Horizont
     private static ArrayList<HeritageItem> recommendations;
     private Activity context;
 
-    // Provide a reference to the views for each data item
-    // Complex data items may need more than one view per item, and
-    // you provide access to all the views for a data item in a view holder
-    public class ViewHolder extends RecyclerView.ViewHolder {
-        // each data item is just a string in this case
+    class ViewHolder extends RecyclerView.ViewHolder {
         private TextView mTitle;
         private ImageView mImage;
-        private View frame;
+//        private View frame;
 
         private ViewHolder(View v) {
             super(v);
-            frame = v;
+//            frame = v;
             mTitle = (TextView) v.findViewById(R.id.recommendation_title);
             mImage = (ImageView) v.findViewById(R.id.recommendation_image);
         }
-
-
     }
 
-    // Provide a suitable constructor (depends on the kind of dataset)
     public HorizontalRecyclerViewAdapter(Activity context, ArrayList<HeritageItem> _recommendations) {
         recommendations = _recommendations;
         this.context = context;
     }
 
-    // Create new views (invoked by the layout manager)
     @Override
     public HorizontalRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
@@ -54,11 +46,10 @@ public class HorizontalRecyclerViewAdapter extends RecyclerView.Adapter<Horizont
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
         HeritageItem item = recommendations.get(position);
-        Picasso.with(context).load(item.getmImageUrl()).resize(144, 144).into(holder.mImage);
+        Picasso.with(context).load(item.getmImageUrl()).resize(144, 0).into(holder.mImage);
         holder.mTitle.setText(item.getmTitle());
     }
 
-    // Return the size of your dataset (invoked by the layout manager)
     @Override
     public int getItemCount() {
         return recommendations.size();
@@ -72,13 +63,4 @@ public class HorizontalRecyclerViewAdapter extends RecyclerView.Adapter<Horizont
         recommendations.clear();
     }
 
-    public void add(int position, HeritageItem item) {
-        recommendations.add(position, item);
-        notifyItemInserted(position);
-    }
-
-    public void remove(int position) {
-        recommendations.remove(position);
-        notifyItemRemoved(position);
-    }
 }

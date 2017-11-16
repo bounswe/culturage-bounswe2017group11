@@ -167,16 +167,24 @@
 
                 </LinearLayout>
             </LinearLayout>
+
+            <TextView
+                android:id="@+id/rec_title"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/label_height"
+                android:gravity="start"
+                android:paddingTop="@dimen/tiny_padding"
+                android:text="@string/recommendation"
+                android:textColor="@color/hint_color"
+                android:textStyle="italic" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recommendation_view"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/large_edit_text_height"
+                android:background="@drawable/blue_border"
+                android:padding="@dimen/small_padding"
+                android:scrollbars="horizontal" />
         </LinearLayout>
-
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recommendation_view"
-            android:layout_width="wrap_content"
-            android:layout_height="@dimen/large_edit_text_height"
-            android:background="@drawable/blue_border"
-            android:scrollbars="horizontal"
-            android:padding="@dimen/small_padding"
-            android:layout_margin="@dimen/tiny_padding" />
-
     </LinearLayout>
 </ScrollView>
