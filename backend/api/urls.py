@@ -15,5 +15,6 @@ urlpatterns = [
     url(r'^filter/', include('filter.urls')),
     url(r'^items/(?P<itemID>[0-9]+)/comments', views.CommentList.as_view(), name='itemComment'),
     url(r'^items/(?P<itemID>[0-9]+)/rates', views.RateItem.as_view(), name='itemRate'),
+    url(r'^comments/(?P<commentID>[0-9]+)', views.CommentDetailView.as_view(), name='comment'),
 ]
 

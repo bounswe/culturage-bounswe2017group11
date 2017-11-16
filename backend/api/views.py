@@ -176,3 +176,18 @@ class RateItem(APIView):
 		serializer = UserRatedItemSerializer(rates, many=True)
 		return Response(serializer.data)
 
+
+class CommentDetailView(APIView):
+	def delete(self, request, commentID):
+		try:
+			comment = Comment.objects.get(id=commentID)
+		except Comment.DoesNotExist:
+			comment = None
+
+		if not comment:
+			return Response({"error" : "We couldn't find comment with given ID:" + commentID}, status=status.HTTP_404_NOT_FOUND)
+
+		if request.user.id == comment.written_by_id:
+			comment.delete()
+			return Response({"success" : "Your comment is deleted successfully"})
+		return Response({"error" : "You can't delete other user's comments"} , status=status.HTTP_403_FORBIDDEN)
