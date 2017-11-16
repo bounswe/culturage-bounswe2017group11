@@ -2,10 +2,8 @@ package com.culturage.oceans_eleven.culturage.newsFeed;
 
 
 import android.app.Activity;
-import android.app.LoaderManager;
 import android.content.Context;
 import android.content.Intent;
-import android.content.Loader;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -27,10 +25,8 @@ import com.culturage.oceans_eleven.culturage.R;
 import com.culturage.oceans_eleven.culturage.adapters.HorizontalRecyclerViewAdapter;
 import com.culturage.oceans_eleven.culturage.baseClasses.CustomDialogClass;
 import com.culturage.oceans_eleven.culturage.baseClasses.HeritageItem;
-import com.culturage.oceans_eleven.culturage.baseClasses.ProfilePage;
 import com.culturage.oceans_eleven.culturage.network.Fetcher;
 import com.culturage.oceans_eleven.culturage.network.PostJSON;
-import com.culturage.oceans_eleven.culturage.network.ProfilePageLoader;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -48,10 +44,12 @@ public class HeritageItemViewActivity extends AppCompatActivity {
 
     private String profileURL = "http://18.220.108.135/api/profile/";
     private String recommendationsUrl = "http://18.220.108.135/api/recommendation/item/";
-    private static String itemUrl = "http://18.220.108.135/api/items";
+    private static String itemUrl = "http://18.220.108.135/api/items/";
     private static final String LOG_TAG = "heritageItem";
 
     private boolean isLiked;
+    private int creator_id;
+    private int totalLikeCount;
     private int heritageItemPostID;
 
     @Override
@@ -105,39 +103,35 @@ public class HeritageItemViewActivity extends AppCompatActivity {
         likeContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(HeritageItemViewActivity.this, "Will like soon", Toast.LENGTH_SHORT).show();
+                new likeAction(HeritageItemViewActivity.this).execute();
+                //Toast.makeText(HeritageItemViewActivity.this, "Will like soon", Toast.LENGTH_SHORT).show();
             }
         });
 
+        //new likeCountLoader().execute();
+        new profileLoader().execute();
         //Will be implemented soon!!
-        itemUrl = itemUrl + heritageItemPostID;
+        itemUrl = "http://18.220.108.135/api/items/" + heritageItemPostID;
         // This part waits API code as well
-//        int creator_id = getIntent().getIntExtra("creator_id");
-//        creator_username = getIntent().getStringExtra("creator_username");
-//        guest.setText(" " + creator_username);
-        profileURL = profileURL + 1;
-//        guest.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                startActivity(new Intent(HeritageItemViewActivity.this, ProfileGuestActivity.class));
-//                Intent intent = new Intent(HeritageItemViewActivity.this, ProfileGuestActivity.class);
-//                intent.putExtra("creator_id", creator_id); //New
-//                startActivity(intent);
-//            }
-//        });
-//        guestPic.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                startActivity(new Intent(HeritageItemViewActivity.this, ProfileGuestActivity.class));
-//                Intent intent = new Intent(HeritageItemViewActivity.this, ProfileGuestActivity.class);
-//                intent.putExtra("creator_id", creator_id); //New
-//                startActivity(intent);
-//            }
-//        });
 
-        //Profile Loader
-//        getLoaderManager().initLoader(1, null, profileLoader);
-        //getLoaderManager().initLoader(2,null, heritageItemLoader);
+        /*guest.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(HeritageItemViewActivity.this, ProfileGuestActivity.class));
+                Intent intent = new Intent(HeritageItemViewActivity.this, ProfileGuestActivity.class);
+                intent.putExtra("creator_id", creator_id); //New
+                startActivity(intent);
+            }
+        });
+        guestPic.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivity(new Intent(HeritageItemViewActivity.this, ProfileGuestActivity.class));
+                Intent intent = new Intent(HeritageItemViewActivity.this, ProfileGuestActivity.class);
+                intent.putExtra("creator_id", creator_id); //New
+                startActivity(intent);
+            }
+        }); */
 
         // Lastly, populate recommendations
         mRecyclerView = (RecyclerView) findViewById(R.id.recommendation_view);
@@ -155,57 +149,79 @@ public class HeritageItemViewActivity extends AppCompatActivity {
         mRecyclerView.setAdapter(recommendationAdapter);
     }
 
-    private LoaderManager.LoaderCallbacks<ArrayList<ProfilePage>> profileLoader
-            = new LoaderManager.LoaderCallbacks<ArrayList<ProfilePage>>() {
+    private class profileLoader extends AsyncTask<String, String, String> {
 
-        public Loader<ArrayList<ProfilePage>> onCreateLoader(int i, Bundle bundle) {
-            Log.v("LoaderProfilePage", "hello");
+        private String creator_username;
+        private String creator_photo;
 
-            String result = null;
-            try {
-                result = Fetcher.getJSON(Fetcher.createUrl(itemUrl), HeritageItemViewActivity.this);
-                Log.v(LOG_TAG, "resulting json " + result);
-            } catch (Exception e) {
-                Log.v(LOG_TAG, "exception" + Log.getStackTraceString(e));
-                Log.v("heritageItem", "invalid url: " + itemUrl);
-            }
-            String creator_username;
-            int creator_id = -1;
-            try {
-                Log.v(LOG_TAG, "resulting json " + result);
-                JSONObject values = new JSONObject(result);
-                creator_username = values.getJSONObject("created_by").getString("username");
-                creator_id = values.getJSONObject("created_by").getInt("id");
-                //guestProfile = new HeritageItem(creator_id, username);
-
-            } catch (Exception e) {
-                Log.v("heritageItem", "error parsing guestProfile:");
-            }
-
-            profileURL = profileURL + creator_id;
-
-            return new ProfilePageLoader(HeritageItemViewActivity.this, profileURL);
+        private profileLoader() {
         }
 
         @Override
-        public void onLoadFinished(Loader<ArrayList<ProfilePage>> loader, ArrayList<ProfilePage> profilePages) {
-            if (profilePages == null) return;
+        protected String doInBackground(String... params) {
+            Log.v("LoaderProfilePage", "hello");
+            Log.v(LOG_TAG, "resulting json before itemUrl " + itemUrl);
+            String result = null;
+            try {
+                result = Fetcher.getJSON(Fetcher.createUrl(itemUrl), HeritageItemViewActivity.this);
+                Log.v(LOG_TAG, "resulting json for itemUrl " + result);
+            } catch (Exception e) {
+                Log.v(LOG_TAG, "exception" + Log.getStackTraceString(e));
+                Log.v("heritageItem", "invalid url: " + itemUrl);
+                Log.v("heritageItem", "result: " + result);
+            }
+            creator_id = -1;
+            try {
+                Log.v(LOG_TAG, "resulting json " + result);
+                JSONObject values = new JSONObject(result);
+                creator_id = values.getJSONObject("created_by").getInt("id");
 
-            if (!profilePages.get(0).getPhoto().equals("-1")) {
+            } catch (Exception e) {
+                Log.v("heritageItem", "error parsing guestProfile:" + creator_id);
+            }
+            profileURL = "http://18.220.108.135/api/profile/" + creator_id;
+
+            ViewGuestProfie(profileURL);
+
+            return null;
+
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+
+            if (!creator_photo.equals("-1")) {
                 ImageView photo = (ImageView) findViewById(R.id.guest_profile_pict);
-                String imageUri = "http://" + profilePages.get(0).getPhoto();
+                String imageUri = "http://" + creator_photo;
                 Log.v("Uploadtag", imageUri);
                 Picasso.with(getBaseContext()).load(imageUri).into(photo);
                 // String imageUri = baseURL + profilePages.get(0).getPhoto();
             }
+            TextView guest = (TextView) findViewById(R.id.guest_profile);
+            guest.setText(" " + creator_username);
         }
 
-        @Override
-        public void onLoaderReset(Loader<ArrayList<ProfilePage>> loader) {
+        private void ViewGuestProfie(String profileUrl) {
+            String result = "";
+            try {
+                result = Fetcher.getJSON(Fetcher.createUrl(profileUrl), HeritageItemViewActivity.this);
+                Log.v(LOG_TAG, "resulting json for profileUrl " + result);
+            } catch (Exception e) {
+                Log.v(LOG_TAG, "exception" + Log.getStackTraceString(e));
+                Log.v("heritageItem", "invalid url: " + profileUrl);
+                Log.v("heritageItem", "result: " + result);
+            }
+            try {
+                Log.v(LOG_TAG, "resulting json " + result);
+                JSONObject values = new JSONObject(result);
+                creator_username = values.getString("username");
+                creator_photo = values.getString("photo");
 
+            } catch (Exception e) {
+                Log.v("heritageItem", "error parsing guestProfile:" + creator_username);
+            }
         }
-
-    };
+    }
 
     private class RecommendationRequest extends AsyncTask<Void, Void, Void> {
         private String url;
@@ -287,7 +303,7 @@ public class HeritageItemViewActivity extends AppCompatActivity {
             try {
                 SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
                 String token = preferences.getString("token", "null");
-                LikeSuccessful = uploadLikePic(token);
+                LikeSuccessful = uploadLikePic();
                 if (LikeSuccessful) {
                     try {
                         LikeSuccessful = uploadLikeCount(token);
@@ -307,46 +323,39 @@ public class HeritageItemViewActivity extends AppCompatActivity {
                 //Post Execute
                 ImageButton likeButton = (ImageButton) findViewById(R.id.like_btn);
                 if (isLiked) {
-                    likeButton.setImageResource(R.drawable.ic_notlike);
-                } else {
                     likeButton.setImageResource(R.drawable.ic_like);
+                } else {
+                    likeButton.setImageResource(R.drawable.ic_notlike);
                 }
             } else {
                 Toast.makeText(mContext, "Like unsuccessful", Toast.LENGTH_LONG).show();
             }
         }
 
-        private boolean uploadLikePic(String token) {
+        private boolean uploadLikePic() {
             String result;
             itemUrl = "http://18.220.108.135/api/items/" + heritageItemPostID;
             try {
-                result = PostJSON.postToApi(constructTheJSONLikePic(), itemUrl, token);
+                result = Fetcher.getJSON(Fetcher.createUrl(itemUrl), HeritageItemViewActivity.this);
             } catch (IOException e) {
                 e.printStackTrace();
                 return false;
-
             }
-            return !(result == null || result.equals("400"));
-        }
-
-        private JSONObject constructTheJSONLikePic() {
-
-            Log.v("HeritageItemLike", "" + getIntent().getBooleanExtra("is_rated", false));
-            JSONObject json = new JSONObject();
             try {
-                if (getIntent().getBooleanExtra("is_rated", false)) {
-                    json.put("is_rated", false);
+                Log.v(LOG_TAG, "resulting json on like button " + result);
+                JSONObject values = new JSONObject(result);
+                isLiked = values.getBoolean("is_rated");
+                if (isLiked) {
                     isLiked = false;
                 } else {
-                    json.put("is_rated", true);
                     isLiked = true;
                 }
-                Log.v("RATE TAG", "" + json.getBoolean("is_rated"));
-                return json;
-            } catch (JSONException e) {
-                Log.v("like", "Error in json construction");
+
+            } catch (Exception e) {
+                Log.v("likeItem", "error parsing like:");
             }
-            return json;
+            return !(result == null || result.equals("400"));
+
         }
 
         private boolean uploadLikeCount(String token) {
@@ -384,5 +393,56 @@ public class HeritageItemViewActivity extends AppCompatActivity {
             return json;
         }
     }
+
+    //Will be implemented soon!
+    /*private class likeCountLoader extends AsyncTask<String, String, String> {
+
+        private String ratesUrl = "http://18.220.108.135/api/items/" + heritageItemPostID + "/rates";
+
+        private likeCountLoader() { }
+
+        @Override
+        protected String doInBackground(String... params) {
+            Log.v("LoaderProfilePage", "hello");
+            Log.v(LOG_TAG, "resulting json before itemUrl " + ratesUrl);
+            String result = null;
+            try {
+                result = Fetcher.getJSON(Fetcher.createUrl(ratesUrl), HeritageItemViewActivity.this);
+                Log.v(LOG_TAG, "resulting json for ratesUrl " + result);
+            } catch (Exception e) {
+                Log.v(LOG_TAG, "exception" + Log.getStackTraceString(e));
+                Log.v("heritageItem", "invalid url: " + ratesUrl);
+                Log.v("heritageItem", "result: " + result);
+            }
+            try {
+                Log.v(LOG_TAG, "resulting json " + result);
+                JSONObject values = new JSONObject(result);
+                if(!values.isNull("rate")){
+                    totalLikeCount = values.getInt("rate");
+                }
+                else{
+                    totalLikeCount = 0;
+                }
+                Log.v("heritageItem", "success parsing totalLikeCount:" + totalLikeCount);
+
+            } catch (Exception e) {
+                Log.v("heritageItem", "error parsing totalLikeCount:" + totalLikeCount);
+            }
+
+            return null;
+
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+
+            LinearLayout likeCommentFrame = (LinearLayout) findViewById(R.id.item_like_comment_buttons_container);
+            LinearLayout likeContainer = (LinearLayout) likeCommentFrame.findViewById(R.id.like_container);
+            TextView likeCount = (TextView) likeContainer.findViewById(R.id.like_count);
+            likeCount.setText(totalLikeCount);
+
+        }
+
+    } */
 
 }
