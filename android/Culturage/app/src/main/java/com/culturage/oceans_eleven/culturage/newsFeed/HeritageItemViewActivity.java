@@ -48,18 +48,20 @@ public class HeritageItemViewActivity extends AppCompatActivity {
 
     private String profileURL = "http://18.220.108.135/api/profile/";
     private String recommendationsUrl = "http://18.220.108.135/api/recommendation/item/";
-    private static final String itemUrl = "http://18.220.108.135/api/items";
+    private static String itemUrl = "http://18.220.108.135/api/items";
     private static final String LOG_TAG = "heritageItem";
+
+    private boolean isLiked;
+    private int heritageItemPostID;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_heritage_item_view);
 
-
         // First get necessary values from the incoming intent and place them.
         Intent incomingIntent = getIntent();
-        int heritageItemPostID = incomingIntent.getIntExtra("postId", -1);
+        heritageItemPostID = incomingIntent.getIntExtra("postId", -1);
 
         ImageView iw = (ImageView) findViewById(R.id.her_item_photo);
         String imageUri = incomingIntent.getStringExtra("imageUrl");
@@ -108,7 +110,7 @@ public class HeritageItemViewActivity extends AppCompatActivity {
         });
 
         //Will be implemented soon!!
-        this.itemUrl = itemUrl + heritageItemPostID;
+        itemUrl = itemUrl + heritageItemPostID;
         // This part waits API code as well
 //        int creator_id = getIntent().getIntExtra("creator_id");
 //        creator_username = getIntent().getStringExtra("creator_username");
@@ -167,6 +169,8 @@ public class HeritageItemViewActivity extends AppCompatActivity {
                 Log.v(LOG_TAG, "exception" + Log.getStackTraceString(e));
                 Log.v("heritageItem", "invalid url: " + itemUrl);
             }
+            String creator_username;
+            int creator_id = -1;
             try {
                 Log.v(LOG_TAG, "resulting json " + result);
                 JSONObject values = new JSONObject(result);
@@ -307,15 +311,9 @@ public class HeritageItemViewActivity extends AppCompatActivity {
                 } else {
                     likeButton.setImageResource(R.drawable.ic_like);
                 }
-
             } else {
                 Toast.makeText(mContext, "Like unsuccessful", Toast.LENGTH_LONG).show();
             }
-        }
-
-        @Override
-        protected void onPreExecute() {
-
         }
 
         private boolean uploadLikePic(String token) {
@@ -328,12 +326,7 @@ public class HeritageItemViewActivity extends AppCompatActivity {
                 return false;
 
             }
-            if (result == null || result.equals("400")) {
-                return false;
-            }
-
-            return true;
-
+            return !(result == null || result.equals("400"));
         }
 
         private JSONObject constructTheJSONLikePic() {
@@ -341,7 +334,6 @@ public class HeritageItemViewActivity extends AppCompatActivity {
             Log.v("HeritageItemLike", "" + getIntent().getBooleanExtra("is_rated", false));
             JSONObject json = new JSONObject();
             try {
-
                 if (getIntent().getBooleanExtra("is_rated", false)) {
                     json.put("is_rated", false);
                     isLiked = false;
@@ -349,10 +341,7 @@ public class HeritageItemViewActivity extends AppCompatActivity {
                     json.put("is_rated", true);
                     isLiked = true;
                 }
-
                 Log.v("RATE TAG", "" + json.getBoolean("is_rated"));
-
-
                 return json;
             } catch (JSONException e) {
                 Log.v("like", "Error in json construction");
@@ -362,7 +351,7 @@ public class HeritageItemViewActivity extends AppCompatActivity {
 
         private boolean uploadLikeCount(String token) {
             String result;
-            ratesUrl = "http://18.220.108.135/api/items/" + heritageItemPostID + "/rates";
+            String ratesUrl = "http://18.220.108.135/api/items/" + heritageItemPostID + "/rates";
             try {
                 result = PostJSON.postToApi(constructTheJSONLikeCount(), ratesUrl, token);
             } catch (IOException e) {
@@ -370,11 +359,7 @@ public class HeritageItemViewActivity extends AppCompatActivity {
                 return false;
 
             }
-            if (result == null || result.equals("400")) {
-                return false;
-            }
-
-            return true;
+            return !(result == null || result.equals("400"));
 
         }
 
