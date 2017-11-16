@@ -5,14 +5,46 @@ from django.db.models import Prefetch
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
 
+class ProfileSerializer(serializers.Serializer):
+	class Meta:
+		model = Tag
+		fields =('id','fullName','location', 'birthday', 'moderatorDate', 'photo')
+
 class UserSerializer(serializers.Serializer):
 	id = serializers.IntegerField(read_only=True)
 	username = serializers.CharField(required=True, max_length=100, validators=[UniqueValidator(queryset=User.objects.all())])
 	email = serializers.EmailField(required=True, max_length=100, validators=[UniqueValidator(queryset=User.objects.all())])
 	password = serializers.CharField(required=True, max_length=100, write_only=True)
+	fullName = serializers.SerializerMethodField('_get_fullName')
+	location = serializers.SerializerMethodField('_get_location')
+	birthday = serializers.SerializerMethodField('_get_birthday')
+	photo = serializers.SerializerMethodField('_get_photo')
+
 	class Meta:
 		model = User
-		fields = ('id','username','email', 'password')
+		fields = ('id','username','email', 'password', 'profile', 'full_name', 'location', 'birthday', 'photo')
+
+	def _get_fullName(self, obj):
+		return obj.profile.fullName if hasattr(obj, 'profile') else None
+
+	def _get_location(self, obj):
+		return obj.profile.location if hasattr(obj, 'profile') else None
+
+	def _get_birthday(self, obj):
+		return obj.profile.birthday if hasattr(obj, 'profile') else None
+
+	def _get_photo(self, obj):
+		request = self.context.get("request")
+		if hasattr(obj, 'profile'):
+			if obj.profile.photo:
+				return request.META['HTTP_HOST'] + obj.profile.photo.url
+		return None
+
+	@staticmethod
+	def setup_eager_loading(queryset):
+		""" Perform necessary eager loading of data. """
+		queryset = queryset.prefetch_related('profile')
+		return queryset
 
 	def create(self, validated_data):
 		"""
@@ -41,6 +73,13 @@ class TagSerializer(serializers.Serializer):
 		model = Tag
 		fields =('id','name','created_by')
 
+	@staticmethod
+	def setup_eager_loading(queryset):
+		""" Perform necessary eager loading of data. """
+		queryset = queryset.prefetch_related('created_by', 'created_by__profile')
+		return queryset
+
+
 class TimelineSerializer(serializers.Serializer):
 	id = serializers.IntegerField(read_only=True)
 	name = serializers.CharField(required=True, max_length=200)
@@ -64,7 +103,6 @@ class CommentSerializer(serializers.ModelSerializer):
 		comment.written_by = user
 		comment.save()
 		return comment
-
 
 class ItemSerializer(serializers.ModelSerializer):
 	created_by = UserSerializer(required=False)

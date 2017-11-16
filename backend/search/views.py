@@ -3,9 +3,11 @@ from django.db.models import Q
 from django.contrib.auth.models import User
 from base.models import Item
 from base.models import Location
+from base.models import Tag
 from base.serializers import NewsfeedSerializer
 from base.serializers import UserSerializer
 from base.serializers import LocationSerializer
+from base.serializers import TagSerializer
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
@@ -26,7 +28,8 @@ class SearchUser(APIView):
     """
 	def get(self, request):
 		query = request.GET.get('q', '')
-		users = User.objects.order_by('-date_joined').filter(Q(username__icontains=query) | Q(email__icontains=query))
+		users = User.objects.order_by('-date_joined').filter(Q(username__icontains=query) | Q(email__icontains=query) | Q(profile__fullName__icontains=query))
+		users = UserSerializer.setup_eager_loading(users)
 		serializer = UserSerializer(users, many=True, context={'request': request})
 		return Response(serializer.data)
 
@@ -38,4 +41,15 @@ class SearchLocation(APIView):
 		query = request.GET.get('q', '')
 		locations = Location.objects.order_by('-id').filter(Q(name__icontains=query))
 		serializer = LocationSerializer(locations, many=True, context={'request': request})
+		return Response(serializer.data)
+
+class SearchTag(APIView):
+	"""
+    API endpoint that search tag.
+    """
+	def get(self, request):
+		query = request.GET.get('q', '')
+		tags = Tag.objects.order_by('-id').filter(Q(name__icontains=query))
+		tags = TagSerializer.setup_eager_loading(tags)  # Set up eager loading to avoid N+1 selects
+		serializer = TagSerializer(tags, many=True, context={'request': request})
 		return Response(serializer.data)
