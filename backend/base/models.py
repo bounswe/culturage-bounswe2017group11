@@ -48,7 +48,7 @@ class Item(models.Model):
 
     def calculateRate(self):
         new_rate = UserRatedItem.objects.filter(item_id = self.id).aggregate(rate=Sum('rate'))["rate"]
-        self.rate = new_rate
+        self.rate = new_rate if new_rate else 0
         self.save()
         return self.rate
 
