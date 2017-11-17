@@ -6,7 +6,10 @@ import android.support.design.widget.TabLayout;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.culturage.oceans_eleven.culturage.R;
 
@@ -18,6 +21,26 @@ public class NewsFeedActivity extends AppCompatActivity {
 
         // Set the content of the activity to use the activity_main.xml layout file
         setContentView(R.layout.activity_fragment_work_around);
+
+
+        ImageButton searchButton = (ImageButton) findViewById(R.id.searchButton);
+        searchButton.setOnClickListener(new ImageButton.OnClickListener() {
+
+            @Override
+            public void onClick(View v) {
+                EditText searchBar = (EditText) findViewById(R.id.search_bar);
+                final String stringToSearch = searchBar.getText().toString();
+                if (stringToSearch.length() == 0) {
+
+                    /*if no query search is provided than do not search*/
+                    Toast.makeText(NewsFeedActivity.this, "Please enter a search query", Toast.LENGTH_LONG).show();
+                    return;
+                }
+                Intent newIntent = new Intent(NewsFeedActivity.this, SearchActivity.class);
+                newIntent.putExtra("stringToSearch", stringToSearch);
+                startActivity(newIntent);
+            }
+        });
 
         ImageView profileIcon = (ImageView) findViewById(R.id.profileIcon);
         profileIcon.setOnClickListener(new View.OnClickListener() {

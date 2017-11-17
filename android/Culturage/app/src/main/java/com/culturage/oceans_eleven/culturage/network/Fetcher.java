@@ -95,6 +95,7 @@ public class Fetcher {
                 Log.v(LOG_TAG, "Fetched succesfully " + jsonResponse);
             } else {
                 Log.e(LOG_TAG, "Error response code: " + urlConnection.getResponseCode());
+                Log.e(LOG_TAG, url.toString());
             }
         } catch (IOException e) {
             Log.e(LOG_TAG, "Problem retrieving the news feed JSON results.", e);

@@ -34,6 +34,7 @@
             android:windowSoftInputMode="stateHidden"
         </activity>
         <activity android:name=".newsFeed.HeritageItemViewActivity" />
+        <activity android:name=".newsFeed.SearchActivity" />
     </application>
 
 

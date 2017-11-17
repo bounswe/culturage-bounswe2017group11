@@ -1,4 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="itemsEndPoint">http://18.220.108.135/api/items/</string>
+    <string name="newsfeedEndPoint">http://18.220.108.135/api/newsfeed/</string>
+    <string name="search_item_EndPoint">http://18.220.108.135/api/search/item?q=</string>
+
+
 </resources>
