@@ -1,6 +1,7 @@
 package com.culturage.oceans_eleven.culturage.adapters;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +11,7 @@ import android.widget.TextView;
 
 import com.culturage.oceans_eleven.culturage.R;
 import com.culturage.oceans_eleven.culturage.baseClasses.HeritageItem;
+import com.culturage.oceans_eleven.culturage.newsFeed.HeritageItemViewActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -21,6 +23,7 @@ public class HorizontalRecyclerViewAdapter extends RecyclerView.Adapter<Horizont
     class ViewHolder extends RecyclerView.ViewHolder {
         private TextView mTitle;
         private ImageView mImage;
+        private View.OnClickListener listener;
 //        private View frame;
 
         private ViewHolder(View v) {
@@ -45,9 +48,22 @@ public class HorizontalRecyclerViewAdapter extends RecyclerView.Adapter<Horizont
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        HeritageItem item = recommendations.get(position);
+        final HeritageItem item = recommendations.get(position);
         Picasso.with(context).load(item.getmImageUrl()).resize(144, 0).into(holder.mImage);
         holder.mTitle.setText(item.getmTitle());
+        View.OnClickListener listener = new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(context, HeritageItemViewActivity.class);
+                i.putExtra("postId", item.getmPostId());
+                i.putExtra("title", item.getmTitle());
+                i.putExtra("description", item.getmDescription());
+                i.putExtra("imageUrl", item.getmImageUrl());
+                context.startActivity(i);
+            }
+        };
+        holder.mTitle.setOnClickListener(listener);
+        holder.mImage.setOnClickListener(listener);
     }
 
     @Override

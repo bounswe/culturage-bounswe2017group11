@@ -175,6 +175,7 @@ public class HeritageItemViewActivity extends AppCompatActivity {
         new RecommendationRequest(HeritageItemViewActivity.this, recommendationsUrl + heritageItemPostID).execute();
         recommendationAdapter = new HorizontalRecyclerViewAdapter(HeritageItemViewActivity.this, recommendations);
         mRecyclerView.setAdapter(recommendationAdapter);
+
     }
 
     private class FullItemLoader extends AsyncTask<Integer, Void, String> {
@@ -369,8 +370,9 @@ public class HeritageItemViewActivity extends AppCompatActivity {
                     JSONObject values = json_result.getJSONObject(i);
                     String title = values.getString("name");
                     String imageURL = values.getString("featured_img");
+                    String description = values.getString("description");
                     int postID = values.getInt("id");
-                    tempRecommendations.add(new HeritageItem(postID, title.trim(), imageURL));
+                    tempRecommendations.add(new HeritageItem(postID, title.trim(), description.trim(), imageURL));
                 }
             } catch (Exception e) {
                 Log.v("heritageItem", "error parsing recomm:");

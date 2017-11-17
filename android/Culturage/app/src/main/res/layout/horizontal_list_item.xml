@@ -11,11 +11,17 @@
         android:id="@+id/recommendation_title"
         android:layout_width="@dimen/large_edit_text_height"
         android:layout_height="wrap_content"
-        android:text="Large Text" />
+        android:maxHeight="20dp"
+        tools:text="Large Text"
+        android:paddingStart="@dimen/small_padding"
+        android:textColor="@color/primary_blue"
+        android:textStyle="bold" />
 
     <ImageView
         android:id="@+id/recommendation_image"
         android:layout_width="@dimen/large_edit_text_height"
-        android:layout_height="@dimen/large_edit_text_height"
-        tools:src="@mipmap/hagia_sophia" />
+        android:layout_height="120dp"
+        android:layout_marginTop="4dp"
+        tools:src="@mipmap/hagia_sophia"
+        android:layout_gravity="center" />
 </LinearLayout>

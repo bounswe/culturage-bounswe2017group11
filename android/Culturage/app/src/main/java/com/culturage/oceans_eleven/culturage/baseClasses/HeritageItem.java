@@ -41,9 +41,10 @@ public class HeritageItem {
     }
 
     // Used by recommendation slider
-    public HeritageItem(int postID, String title, String imageURL) {
+    public HeritageItem(int postID, String title, String mDescription, String imageURL) {
         this.mPostId = postID;
         this.mTitle = title;
+        this.mDescription = mDescription;
         this.mImageUrl = imageURL;
     }
 
