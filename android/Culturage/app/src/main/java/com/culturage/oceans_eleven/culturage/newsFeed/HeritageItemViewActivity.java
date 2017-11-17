@@ -2,7 +2,9 @@ package com.culturage.oceans_eleven.culturage.newsFeed;
 
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -14,6 +16,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -51,7 +54,6 @@ public class HeritageItemViewActivity extends AppCompatActivity {
     private String profileURL = "http://18.220.108.135/api/profile/";
     private String recommendationsUrl = "http://18.220.108.135/api/recommendation/item/";
     private static String itemUrl = "http://18.220.108.135/api/items/";
-//    private static final String LOG_TAG = "heritageItem";
 
     private boolean isLiked;
     private int creator_id;
@@ -68,7 +70,7 @@ public class HeritageItemViewActivity extends AppCompatActivity {
         heritageItemPostID = incomingIntent.getIntExtra("postId", -1);
 
         ImageView iw = (ImageView) findViewById(R.id.her_item_photo);
-        String imageUri = incomingIntent.getStringExtra("imageUrl");
+        final String imageUri = incomingIntent.getStringExtra("imageUrl");
         // 400 looks cool
         Picasso.with(this).load(imageUri).resize(400, 0).into(iw);
 
@@ -78,9 +80,62 @@ public class HeritageItemViewActivity extends AppCompatActivity {
         TextView desc_view = (TextView) findViewById(R.id.her_item_description);
         desc_view.setText(incomingIntent.getStringExtra("description"));
 
-        // Secondly get necessary fields from the backend and set them to views
-        new FullItemLoader().execute(heritageItemPostID);
+        // Secondly get necessary fields from the backend.
+        //TODO: implement API code here.
+//        TextView date = (TextView) findViewById(R.id.her_item_date);
+//
+//        TextView loc = (TextView) findViewById(R.id.her_item_location);
+//
+//        TextView tags = (TextView) findViewById(R.id.her_item_tags);
+//
+        LinearLayout likeCommentFrame = (LinearLayout) findViewById(R.id.item_like_comment_buttons_container);
+        LinearLayout commentContainer = (LinearLayout) likeCommentFrame.findViewById(R.id.comment_container);
+        TextView commentCount = (TextView) commentContainer.findViewById(R.id.comment_count);
 
+        LinearLayout likeContainer = (LinearLayout) likeCommentFrame.findViewById(R.id.like_container);
+        TextView likeCount = (TextView) likeContainer.findViewById(R.id.like_count);
+//
+//        TextView guest = (TextView) findViewById(R.id.guest_profile);
+//        ImageView guestPic = (ImageView) findViewById(R.id.guest_profile_pict);
+//
+        // Now implement listeners.
+        iw.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                final AlertDialog.Builder imageDialog = new AlertDialog.Builder(HeritageItemViewActivity.this, R.style.BlackDialogTheme);
+//                imageDialog.create().getWindow().setLayout(600, 1200);
+                View view = LayoutInflater.from(HeritageItemViewActivity.this).inflate(R.layout.image_dialog, null);
+                ImageView image = (ImageView) view.findViewById(R.id.alertedImage);
+                Picasso.with(HeritageItemViewActivity.this).load(imageUri).resize(0, 1500).into(image);
+                imageDialog.setView(view);
+                imageDialog.setNegativeButton("Close", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+                imageDialog.show();
+            }
+        });
+
+        commentContainer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CustomDialogClass cdd = new CustomDialogClass(HeritageItemViewActivity.this);
+                cdd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                cdd.show();
+            }
+        });
+
+        likeContainer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //new likeAction(HeritageItemViewActivity.this).execute();
+                Toast.makeText(HeritageItemViewActivity.this, "Will like soon", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        new FullItemLoader().execute(heritageItemPostID);
         //new likeCountLoader().execute();
         new profileLoader().execute();
         //Will be implemented soon!!
