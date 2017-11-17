@@ -268,7 +268,7 @@ public class HeritageItemViewActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
 
-            if (!creator_photo.equals("-1")) {
+            if (creator_photo != null && !creator_photo.equals("-1")) {
                 ImageView photo = (ImageView) findViewById(R.id.guest_profile_pict);
                 String imageUri = "http://" + creator_photo;
                 Log.v("Uploadtag", imageUri);
