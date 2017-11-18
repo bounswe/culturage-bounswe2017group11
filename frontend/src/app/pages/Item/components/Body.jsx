@@ -10,20 +10,23 @@ class Body extends React.Component {
 
    render() {
       let body;
+    if(typeof this.props.item.tags != "undefined") {
       body=	<div class="containter-fluid">
       			<h1>{this.props.item.name}</h1>
-      			<a href="#"><span class="badge badge-info">#cullture</span></a>
-      			<a href="#"><span class="badge badge-info">#myheritage</span></a>
-      			<a href="#"><span class="badge badge-info">#mustseen</span></a>
+               {this.props.item.tags.map(function(data){
+                     return <a href="#"><span class="badge badge-info">#{data.name}</span></a>
+               })}
       			<hr />
             	<div class="img">
-            	<br />
             	<img src={this.props.item.featured_img} class="cover"/>
             	</div>                    
             	<div class="jumbotron">
             		<p>{this.props.item.description}</p>
             	</div>
             </div>	
+      } else {
+         body = null;
+      }      
       return (
             <div>
                {body}

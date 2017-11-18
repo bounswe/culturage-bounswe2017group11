@@ -1,6 +1,6 @@
 import React from 'react';
 import Navbar from './components/Navbar.jsx';
-import NewsFeedItem from './components/NewsFeedItem.jsx';
+import NewsFeed from './components/NewsFeed.jsx';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './utils/home-styles.css';
 import { Link } from 'react-router-dom';
@@ -33,14 +33,9 @@ class Home extends React.Component {
 
 	render() {
 		return(
-			<div>
+			<div class="home-body">
 				<Navbar page={"home"}/>
-				<div class = "newsfeed">
-					{this.state.itemlist.map(function(groupItem, key){ return (
-			            <NewsFeedItem item={groupItem} key={key}/>
-			        );})}
-
-				</div>
+				<NewsFeed itemlist={this.state.itemlist}/>
 			</div>
 		);
 	}
