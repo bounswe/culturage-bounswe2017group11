@@ -55,10 +55,8 @@ public class HeritageItemViewActivity extends AppCompatActivity {
     private String recommendationsUrl = "http://18.220.108.135/api/recommendation/item/";
     private static String itemUrl = "http://18.220.108.135/api/items/";
 
-    private boolean isLiked;
-    private int creator_id;
-    private int totalLikeCount;
     private int heritageItemPostID;
+    private boolean isRated;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -68,6 +66,14 @@ public class HeritageItemViewActivity extends AppCompatActivity {
         // First get necessary values from the incoming intent and place them.
         Intent incomingIntent = getIntent();
         heritageItemPostID = incomingIntent.getIntExtra("postId", -1);
+        isRated = incomingIntent.getBooleanExtra("israted", false);
+        ImageButton likeButton_ = (ImageButton) findViewById(R.id.like_btn);
+        if (isRated) {
+            likeButton_.setImageResource(R.drawable.ic_like);
+        } else {
+            likeButton_.setImageResource(R.drawable.ic_notlike);
+        }
+
 
         ImageView iw = (ImageView) findViewById(R.id.her_item_photo);
         final String imageUri = incomingIntent.getStringExtra("imageUrl");
@@ -130,36 +136,33 @@ public class HeritageItemViewActivity extends AppCompatActivity {
         likeContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //new likeAction(HeritageItemViewActivity.this).execute();
-                Toast.makeText(HeritageItemViewActivity.this, "Will like soon", Toast.LENGTH_SHORT).show();
+                new likeAction(HeritageItemViewActivity.this).execute();
+                new likeCountLoader().execute();
+                //Toast.makeText(HeritageItemViewActivity.this, "Will like soon", Toast.LENGTH_SHORT).show();
             }
         });
 
         new FullItemLoader().execute(heritageItemPostID);
-        //new likeCountLoader().execute();
-        new profileLoader().execute();
+
+        new likeCountLoader().execute();
+        new profileLoader(false).execute();
         //Will be implemented soon!!
         itemUrl = "http://18.220.108.135/api/items/" + heritageItemPostID;
-        // This part waits API code as well
 
-        /*guest.setOnClickListener(new View.OnClickListener() {
+        TextView guest = (TextView) findViewById(R.id.guest_profile);
+        guest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(HeritageItemViewActivity.this, ProfileGuestActivity.class));
-                Intent intent = new Intent(HeritageItemViewActivity.this, ProfileGuestActivity.class);
-                intent.putExtra("creator_id", creator_id); //New
-                startActivity(intent);
+                new profileLoader(true).execute();
             }
         });
+        ImageView guestPic = (ImageView) findViewById(R.id.guest_profile_pict);
         guestPic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(HeritageItemViewActivity.this, ProfileGuestActivity.class));
-                Intent intent = new Intent(HeritageItemViewActivity.this, ProfileGuestActivity.class);
-                intent.putExtra("creator_id", creator_id); //New
-                startActivity(intent);
+                new profileLoader(true).execute();
             }
-        }); */
+        });
 
         // Lastly, populate recommendations
         mRecyclerView = (RecyclerView) findViewById(R.id.recommendation_view);
@@ -199,6 +202,7 @@ public class HeritageItemViewActivity extends AppCompatActivity {
                 JSONArray timelines = itemJson.getJSONArray("timelines");
                 JSONObject timeLine0 = timelines.getJSONObject(0);
                 JSONObject loc0 = timeLine0.getJSONObject("location");
+                //JSONObject likeTotalCount = itemJson.getJSONObject("rate");
 
                 JSONArray tags = itemJson.getJSONArray("tags");
 
@@ -227,7 +231,7 @@ public class HeritageItemViewActivity extends AppCompatActivity {
                 LinearLayout likeContainer = (LinearLayout) likeCommentFrame.findViewById(R.id.like_container);
                 TextView likeCount = (TextView) likeContainer.findViewById(R.id.like_count);
                 //FIXME change the default 0
-                likeCount.setText("0");
+                //likeCount.setText(likeTotalCount + "");
 
                 // Now implement listeners.
                 commentContainer.setOnClickListener(new View.OnClickListener() {
@@ -239,13 +243,13 @@ public class HeritageItemViewActivity extends AppCompatActivity {
                     }
                 });
 
-                likeContainer.setOnClickListener(new View.OnClickListener() {
+                /*likeContainer.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
                         new likeAction(HeritageItemViewActivity.this).execute();
                         //Toast.makeText(HeritageItemViewActivity.this, "Will like soon", Toast.LENGTH_SHORT).show();
                     }
-                });
+                });*/
 
 
             } catch (JSONException e) {
@@ -254,13 +258,15 @@ public class HeritageItemViewActivity extends AppCompatActivity {
         }
     }
 
-
     private class profileLoader extends AsyncTask<String, String, String> {
 
         private String creator_username;
         private String creator_photo;
+        private String creator_id;
+        private boolean onclick;
 
-        private profileLoader() {
+        private profileLoader(boolean onclick) {
+            this.onclick = onclick;
         }
 
         @Override
@@ -276,11 +282,11 @@ public class HeritageItemViewActivity extends AppCompatActivity {
                 Log.v("heritageItem", "invalid url: " + itemUrl);
                 Log.v("heritageItem", "result: " + result);
             }
-            creator_id = -1;
+            this.creator_id = "-1";
             try {
                 Log.v(LOG_TAG, "resulting json " + result);
                 JSONObject values = new JSONObject(result);
-                creator_id = values.getJSONObject("created_by").getInt("id");
+                this.creator_id = "" + values.getJSONObject("created_by").getInt("id");
 
             } catch (Exception e) {
                 Log.v("heritageItem", "error parsing guestProfile:" + creator_id);
@@ -305,6 +311,14 @@ public class HeritageItemViewActivity extends AppCompatActivity {
             }
             TextView guest = (TextView) findViewById(R.id.guest_profile);
             guest.setText(" " + creator_username);
+
+            if (onclick) {
+                Log.v("creatoridtag", creator_id);
+                startActivity(new Intent(HeritageItemViewActivity.this, ProfileGuestActivity.class));
+                Intent intent = new Intent(HeritageItemViewActivity.this, ProfileGuestActivity.class);
+                intent.putExtra("creator_id", creator_id); //New
+                startActivity(intent);
+            }
         }
 
         private void ViewGuestProfie(String profileUrl) {
@@ -398,8 +412,9 @@ public class HeritageItemViewActivity extends AppCompatActivity {
      */
     private class likeAction extends AsyncTask<String, String, String> {
 
-        Context mContext;
-        boolean LikeSuccessful;
+        private Context mContext;
+        private boolean LikeSuccessful;
+        private boolean isLiked;
 
         private likeAction(Context context) {
             mContext = context;
@@ -434,6 +449,7 @@ public class HeritageItemViewActivity extends AppCompatActivity {
                 } else {
                     likeButton.setImageResource(R.drawable.ic_notlike);
                 }
+
             } else {
                 Toast.makeText(mContext, "Like unsuccessful", Toast.LENGTH_LONG).show();
             }
@@ -454,8 +470,10 @@ public class HeritageItemViewActivity extends AppCompatActivity {
                 isLiked = values.getBoolean("is_rated");
                 if (isLiked) {
                     isLiked = false;
+                    Log.v("ISLIKED", "is rated :  Dislikinng now");
                 } else {
                     isLiked = true;
+                    Log.v("ISLIKED", "is rated :  Liking now");
                 }
 
             } catch (Exception e) {
@@ -485,12 +503,12 @@ public class HeritageItemViewActivity extends AppCompatActivity {
             try {
 
                 if (!isLiked) {
-                    json.put("rate", json.getInt("rate") - 1);
+                    json.put("rate", 0);
                 } else {
-                    json.put("rate", json.getInt("rate") + 1);
+                    json.put("rate", 1);
                 }
 
-                Log.v("RATE TAG", "" + json.getInt("rate"));
+                Log.v("RATEImplemented", "" + json.getInt("rate"));
 
 
                 return json;
@@ -502,33 +520,36 @@ public class HeritageItemViewActivity extends AppCompatActivity {
     }
 
     //Will be implemented soon!
-    /*private class likeCountLoader extends AsyncTask<String, String, String> {
+    private class likeCountLoader extends AsyncTask<String, String, String> {
 
         private String ratesUrl = "http://18.220.108.135/api/items/" + heritageItemPostID + "/rates";
+        private int totalLikeCount;
 
         private likeCountLoader() { }
 
         @Override
         protected String doInBackground(String... params) {
-            Log.v("LoaderProfilePage", "hello");
-            Log.v(LOG_TAG, "resulting json before itemUrl " + ratesUrl);
+            Log.v("LoaderLikeCount", "hello");
+            Log.v(LOG_TAG, "resulting json before ratesUrl " + ratesUrl);
             String result = null;
+            totalLikeCount = 0;
             try {
                 result = Fetcher.getJSON(Fetcher.createUrl(ratesUrl), HeritageItemViewActivity.this);
                 Log.v(LOG_TAG, "resulting json for ratesUrl " + result);
             } catch (Exception e) {
                 Log.v(LOG_TAG, "exception" + Log.getStackTraceString(e));
                 Log.v("heritageItem", "invalid url: " + ratesUrl);
-                Log.v("heritageItem", "result: " + result);
             }
             try {
-                Log.v(LOG_TAG, "resulting json " + result);
-                JSONObject values = new JSONObject(result);
-                if(!values.isNull("rate")){
-                    totalLikeCount = values.getInt("rate");
-                }
-                else{
-                    totalLikeCount = 0;
+                Log.v(LOG_TAG, "resulting json after likeCount: " + result);
+                JSONArray valuesArray = new JSONArray(result);
+                for (int i = 0; i < valuesArray.length(); i++) {
+                    JSONObject values = valuesArray.getJSONObject(i);
+                    if (!values.isNull("rate")) {
+                        totalLikeCount += values.getInt("rate");
+                    } else {
+                        totalLikeCount += 0;
+                    }
                 }
                 Log.v("heritageItem", "success parsing totalLikeCount:" + totalLikeCount);
 
@@ -542,14 +563,18 @@ public class HeritageItemViewActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String result) {
+            try {
+                LinearLayout likeCommentFrame = (LinearLayout) findViewById(R.id.item_like_comment_buttons_container);
+                LinearLayout likeContainer = (LinearLayout) likeCommentFrame.findViewById(R.id.like_container);
+                TextView likeCount = (TextView) likeContainer.findViewById(R.id.like_count);
+                likeCount.setText("" + totalLikeCount);
+            } catch (Exception e) {
+                Log.v("heritageItem", "error setting totalLikeCount:" + totalLikeCount);
+            }
 
-            LinearLayout likeCommentFrame = (LinearLayout) findViewById(R.id.item_like_comment_buttons_container);
-            LinearLayout likeContainer = (LinearLayout) likeCommentFrame.findViewById(R.id.like_container);
-            TextView likeCount = (TextView) likeContainer.findViewById(R.id.like_count);
-            likeCount.setText(totalLikeCount);
 
         }
 
-    } */
+    }
 
 }
