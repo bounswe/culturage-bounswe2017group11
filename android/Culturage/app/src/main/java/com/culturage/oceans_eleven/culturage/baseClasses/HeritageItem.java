@@ -32,12 +32,14 @@ public class HeritageItem {
     }
 
     // Used in news feed
-    public HeritageItem(int postID, String title, String description, String imageURL, boolean isRated) {
+    public HeritageItem(int postID, String title, String description, String imageURL, boolean isRated, int mLikeCount, int mCommentCount) {
         this.mPostId = postID;
         this.mTitle = title;
         this.mDescription = description;
         this.mImageUrl = imageURL;
         this.isRated = isRated;
+        this.mLikeCount = mLikeCount;
+        this.mCommentCount = mCommentCount;
     }
 
     // Used by recommendation slider

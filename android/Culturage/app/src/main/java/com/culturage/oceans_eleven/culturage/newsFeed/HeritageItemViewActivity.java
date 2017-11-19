@@ -72,13 +72,8 @@ public class HeritageItemViewActivity extends AppCompatActivity {
         // First get necessary values from the incoming intent and place them.
         Intent incomingIntent = getIntent();
         heritageItemPostID = incomingIntent.getIntExtra("postId", -1);
-        isRated = incomingIntent.getBooleanExtra("israted", false);
-        ImageButton likeButton_ = (ImageButton) findViewById(R.id.like_btn);
-        if (isRated) {
-            likeButton_.setImageResource(R.drawable.ic_like);
-        } else {
-            likeButton_.setImageResource(R.drawable.ic_notlike);
-        }
+
+        new getLikeStatus().execute();
 
 
         ImageView iw = (ImageView) findViewById(R.id.her_item_photo);
@@ -505,6 +500,7 @@ public class HeritageItemViewActivity extends AppCompatActivity {
                 Log.v(LOG_TAG, "resulting json on like button " + result);
                 JSONObject values = new JSONObject(result);
                 isLiked = values.getBoolean("is_rated");
+                isLiked = getIsLikedTemp();     //Needs to be removed!!
                 if (isLiked) {
                     isLiked = false;
                     Log.v("ISLIKED", "is rated :  Dislikinng now");
@@ -518,6 +514,33 @@ public class HeritageItemViewActivity extends AppCompatActivity {
             }
             return !(result == null || result.equals("400"));
 
+        }
+
+        //NEeds to be removed when item is returned is_liked true...
+        private boolean getIsLikedTemp() {
+            String tempResult;
+            boolean isLiked;
+            String newsUrl = "http://18.220.108.135/api/newsfeed";
+            try {
+                tempResult = Fetcher.getJSON(Fetcher.createUrl(newsUrl), HeritageItemViewActivity.this); //temporary result
+            } catch (IOException e) {
+                e.printStackTrace();
+                return false;
+            }
+            try {
+                JSONArray values_array = new JSONArray(tempResult); //temporary
+                // Temporary loop
+                for (int i = 0; i < values_array.length(); i++) {
+                    JSONObject tempValues = values_array.getJSONObject(i);
+                    if (tempValues.getInt("id") == heritageItemPostID) {
+                        isLiked = tempValues.getBoolean("is_rated");
+                        return isLiked;
+                    }
+                }
+            } catch (Exception e) {
+                Log.v("likeItem", "error parsing like:");
+            }
+            return false;
         }
 
         private boolean uploadLikeCount(String token) {
@@ -556,7 +579,47 @@ public class HeritageItemViewActivity extends AppCompatActivity {
         }
     }
 
-    //Will be implemented soon!
+    private class getLikeStatus extends AsyncTask<String, String, String> {
+
+        private boolean isLiked;
+        private String result;
+        private String newsUrl = "http://18.220.108.135/api/newsfeed";  // Temporary url
+
+        private getLikeStatus() {
+            this.isLiked = false;
+        }
+
+        protected String doInBackground(String... params) {
+            try {
+                result = Fetcher.getJSON(Fetcher.createUrl(newsUrl), HeritageItemViewActivity.this); //temporary result
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                JSONArray values_array = new JSONArray(result); //temporary
+                // Temporary loop
+                for (int i = 0; i < values_array.length(); i++) {
+                    JSONObject tempValues = values_array.getJSONObject(i);
+                    if (tempValues.getInt("id") == heritageItemPostID) {
+                        isLiked = tempValues.getBoolean("is_rated");
+                    }
+                }
+            } catch (Exception e) {
+                Log.v("likeItem", "error parsing like:");
+            }
+            return null;
+        }
+
+        protected void onPostExecute(String result) {
+            ImageButton likeButton_ = (ImageButton) findViewById(R.id.like_btn);
+            if (isLiked) {
+                likeButton_.setImageResource(R.drawable.ic_like);
+            } else {
+                likeButton_.setImageResource(R.drawable.ic_notlike);
+            }
+        }
+    }
+
     private class likeCountLoader extends AsyncTask<String, String, String> {
 
         private String ratesUrl = "http://18.220.108.135/api/items/" + heritageItemPostID + "/rates";

@@ -35,6 +35,7 @@
         </activity>
         <activity android:name=".newsFeed.HeritageItemViewActivity" />
         <activity android:name=".newsFeed.SearchActivity" />
+        <activity android:name=".newsFeed.LikeActivity" />
     </application>
 
 

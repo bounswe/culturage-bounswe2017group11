@@ -1,6 +1,7 @@
 package com.culturage.oceans_eleven.culturage.adapters;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.support.annotation.NonNull;
@@ -9,14 +10,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.culturage.oceans_eleven.culturage.R;
 import com.culturage.oceans_eleven.culturage.baseClasses.CustomDialogClass;
 import com.culturage.oceans_eleven.culturage.baseClasses.HeritageItem;
+import com.culturage.oceans_eleven.culturage.newsFeed.LikeActivity;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
@@ -40,7 +42,7 @@ public class HeritageItemAdapter extends ArrayAdapter {
                     R.layout.list_item_news_feed, parent, false);
         }
 
-        HeritageItem currentItem = (HeritageItem) getItem(position);
+        final HeritageItem currentItem = (HeritageItem) getItem(position);
 
         TextView titleView = (TextView) listItemView.findViewById(R.id.title);
         titleView.setText(currentItem.getmTitle());
@@ -71,17 +73,27 @@ public class HeritageItemAdapter extends ArrayAdapter {
         likeContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(context, "Will like soon", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(context, "Will like soon", Toast.LENGTH_SHORT).show();
+                Intent intent = new Intent(getContext(), LikeActivity.class);
+                intent.putExtra("postId", currentItem.getmPostId());
+                intent.putExtra("is_rated", currentItem.isRated());
+                context.startActivity(intent);
             }
         });
 
+        ImageButton likeButton_ = (ImageButton) listItemView.findViewById(R.id.like_btn);
+        if (currentItem.isRated()) {
+            likeButton_.setImageResource(R.drawable.ic_like);
+        } else {
+            likeButton_.setImageResource(R.drawable.ic_notlike);
+        }
+
         TextView commentCount = (TextView) listItemView.findViewById(R.id.comment_count);
-        commentCount.setText(0 + "");
+        commentCount.setText(currentItem.getmCommentCount() + "");
         TextView likeCount = (TextView) listItemView.findViewById(R.id.like_count);
-        likeCount.setText(0 + "");
+        likeCount.setText(currentItem.getmLikeCount() + "");
 
         return listItemView;
     }
-
 
 }
