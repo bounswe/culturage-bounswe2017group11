@@ -63,7 +63,7 @@ public class HeritageItemAdapter extends ArrayAdapter {
         commentContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CustomDialogClass cdd = new CustomDialogClass(context);
+                CustomDialogClass cdd = new CustomDialogClass(context, currentItem.getmPostId());
                 cdd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 cdd.show();
             }

@@ -128,7 +128,7 @@ public class HeritageItemViewActivity extends AppCompatActivity {
         commentContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CustomDialogClass cdd = new CustomDialogClass(HeritageItemViewActivity.this);
+                CustomDialogClass cdd = new CustomDialogClass(HeritageItemViewActivity.this, heritageItemPostID);
                 cdd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 cdd.show();
             }
@@ -138,14 +138,14 @@ public class HeritageItemViewActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 new likeAction(HeritageItemViewActivity.this).execute();
-                new likeCountLoader().execute();
+                new likeCommentCountLoader().execute();
                 //Toast.makeText(HeritageItemViewActivity.this, "Will like soon", Toast.LENGTH_SHORT).show();
             }
         });
 
 //        new FullItemLoader().execute(heritageItemPostID);
 
-        new likeCountLoader().execute();
+        new likeCommentCountLoader().execute();
         new profileLoader(false).execute();
         //Will be implemented soon!!
         itemUrl = "http://18.220.108.135/api/items/" + heritageItemPostID;
@@ -269,7 +269,7 @@ public class HeritageItemViewActivity extends AppCompatActivity {
                 commentContainer.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        CustomDialogClass cdd = new CustomDialogClass(HeritageItemViewActivity.this);
+                        CustomDialogClass cdd = new CustomDialogClass(HeritageItemViewActivity.this, heritageItemPostID);
                         cdd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                         cdd.show();
                     }
@@ -620,19 +620,22 @@ public class HeritageItemViewActivity extends AppCompatActivity {
         }
     }
 
-    private class likeCountLoader extends AsyncTask<String, String, String> {
+    private class likeCommentCountLoader extends AsyncTask<String, String, String> {
 
-        private String ratesUrl = "http://18.220.108.135/api/items/" + heritageItemPostID + "/rates";
+        private String ratesUrl = "http://18.220.108.135/api/items/" + heritageItemPostID;
         private int totalLikeCount;
+        private int totalCommentCount;
 
-        private likeCountLoader() { }
+        private likeCommentCountLoader() {
+        }
 
         @Override
         protected String doInBackground(String... params) {
-            Log.v("LoaderLikeCount", "hello");
-            Log.v(LOG_TAG, "resulting json before ratesUrl " + ratesUrl);
+            Log.v("LoaderLikeCommentCount", "hello");
+            Log.v(LOG_TAG, "resulting json before itemsUrl " + ratesUrl);
             String result = null;
             totalLikeCount = 0;
+            totalCommentCount = 0;
             try {
                 result = Fetcher.getJSON(Fetcher.createUrl(ratesUrl), HeritageItemViewActivity.this);
                 Log.v(LOG_TAG, "resulting json for ratesUrl " + result);
@@ -642,16 +645,16 @@ public class HeritageItemViewActivity extends AppCompatActivity {
             }
             try {
                 Log.v(LOG_TAG, "resulting json after likeCount: " + result);
-                JSONArray valuesArray = new JSONArray(result);
-                for (int i = 0; i < valuesArray.length(); i++) {
-                    JSONObject values = valuesArray.getJSONObject(i);
-                    if (!values.isNull("rate")) {
-                        totalLikeCount += values.getInt("rate");
-                    } else {
-                        totalLikeCount += 0;
-                    }
+                JSONObject values = new JSONObject(result);
+
+                if (!values.isNull("rate")) {
+                    totalLikeCount = values.getInt("rate");
                 }
-                Log.v("heritageItem", "success parsing totalLikeCount:" + totalLikeCount);
+                JSONArray comment_ = values.getJSONArray("comments");
+                totalCommentCount = comment_.length();
+
+
+                Log.v("heritageItem", "success parsing totalCommentCount:" + totalCommentCount);
 
             } catch (Exception e) {
                 Log.v("heritageItem", "error parsing totalLikeCount:" + totalLikeCount);
@@ -666,8 +669,11 @@ public class HeritageItemViewActivity extends AppCompatActivity {
             try {
                 LinearLayout likeCommentFrame = (LinearLayout) findViewById(R.id.item_like_comment_buttons_container);
                 LinearLayout likeContainer = (LinearLayout) likeCommentFrame.findViewById(R.id.like_container);
+                LinearLayout commentContainer = (LinearLayout) likeCommentFrame.findViewById(R.id.comment_container);
                 TextView likeCount = (TextView) likeContainer.findViewById(R.id.like_count);
                 likeCount.setText("" + totalLikeCount);
+                TextView commentCount = (TextView) commentContainer.findViewById(R.id.comment_count);
+                commentCount.setText("" + totalCommentCount);
             } catch (Exception e) {
                 Log.v("heritageItem", "error setting totalLikeCount:" + totalLikeCount);
             }
@@ -676,5 +682,6 @@ public class HeritageItemViewActivity extends AppCompatActivity {
         }
 
     }
+
 
 }

@@ -60,7 +60,7 @@ public class CommentAdapter extends ArrayAdapter {
 //        imageView.setImageResource(R.drawable.sample_0);
         String imageUri = currentComment.getImageUri();
         // 400 looks cool
-        Picasso.with(this.getContext()).load(imageUri).resize(40, 0).into(userImage);
+        Picasso.with(this.getContext()).load(imageUri).resize(120, 0).into(userImage);
         Log.v("adapter", "view rendering done");
         return listItemView;
     }
