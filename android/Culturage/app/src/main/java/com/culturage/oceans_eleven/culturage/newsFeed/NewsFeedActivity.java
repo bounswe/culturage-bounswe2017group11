@@ -38,6 +38,7 @@ public class NewsFeedActivity extends AppCompatActivity {
                 }
                 Intent newIntent = new Intent(NewsFeedActivity.this, SearchActivity.class);
                 newIntent.putExtra("stringToSearch", stringToSearch);
+                newIntent.putExtra("endPoint", getResources().getString(R.string.search_item_EndPoint));
                 startActivity(newIntent);
             }
         });

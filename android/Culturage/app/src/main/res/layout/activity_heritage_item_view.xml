@@ -71,6 +71,24 @@
             android:orientation="vertical">
 
             <TextView
+                android:id="@+id/tagsText"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/label_height"
+                android:gravity="start"
+                android:paddingTop="@dimen/tiny_padding"
+                android:text="TAGS"
+                android:textColor="@color/hint_color"
+                android:textStyle="italic" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/tagsRecycleView"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/large_edit_text_height"
+                android:background="@drawable/blue_border"
+                android:padding="@dimen/small_padding"
+                android:scrollbars="horizontal" />
+
+            <TextView
                 android:id="@+id/her_item_tags"
                 style="?android:textAppearanceMedium"
                 android:layout_width="match_parent"

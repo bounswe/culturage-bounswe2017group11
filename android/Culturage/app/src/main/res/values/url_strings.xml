@@ -3,6 +3,7 @@
     <string name="itemsEndPoint">http://18.220.108.135/api/items/</string>
     <string name="newsfeedEndPoint">http://18.220.108.135/api/newsfeed/</string>
     <string name="search_item_EndPoint">http://18.220.108.135/api/search/item?q=</string>
+    <string name="search_tag_EndPoint">http://18.220.108.135/api/search/tag?q=</string>
 
 
 </resources>

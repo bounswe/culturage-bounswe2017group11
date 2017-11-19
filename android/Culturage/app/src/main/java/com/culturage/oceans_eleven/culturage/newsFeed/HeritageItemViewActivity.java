@@ -26,8 +26,10 @@ import android.widget.Toast;
 
 import com.culturage.oceans_eleven.culturage.R;
 import com.culturage.oceans_eleven.culturage.adapters.HorizontalRecyclerViewAdapter;
+import com.culturage.oceans_eleven.culturage.adapters.TagsViewAdapter;
 import com.culturage.oceans_eleven.culturage.baseClasses.CustomDialogClass;
 import com.culturage.oceans_eleven.culturage.baseClasses.HeritageItem;
+import com.culturage.oceans_eleven.culturage.baseClasses.Tag;
 import com.culturage.oceans_eleven.culturage.network.Fetcher;
 import com.culturage.oceans_eleven.culturage.network.PostJSON;
 import com.squareup.picasso.Picasso;
@@ -50,6 +52,10 @@ public class HeritageItemViewActivity extends AppCompatActivity {
     private RecyclerView mRecyclerView;
     private ArrayList<HeritageItem> recommendations = new ArrayList<>();
     private HorizontalRecyclerViewAdapter recommendationAdapter;
+
+    private RecyclerView tagsView;
+    private ArrayList<Tag> tagsList = new ArrayList<>();
+    private TagsViewAdapter tagsAdapter;
 
     private String profileURL = "http://18.220.108.135/api/profile/";
     private String recommendationsUrl = "http://18.220.108.135/api/recommendation/item/";
@@ -142,7 +148,7 @@ public class HeritageItemViewActivity extends AppCompatActivity {
             }
         });
 
-        new FullItemLoader().execute(heritageItemPostID);
+//        new FullItemLoader().execute(heritageItemPostID);
 
         new likeCountLoader().execute();
         new profileLoader(false).execute();
@@ -163,6 +169,21 @@ public class HeritageItemViewActivity extends AppCompatActivity {
                 new profileLoader(true).execute();
             }
         });
+
+
+        //TODO do thiss down
+        tagsView = (RecyclerView) findViewById(R.id.tagsRecycleView);
+        RecyclerView.LayoutManager tagsLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        tagsView.setLayoutManager(tagsLayoutManager);
+//
+        new FullItemLoader().execute(heritageItemPostID);
+//
+        tagsAdapter = new TagsViewAdapter(HeritageItemViewActivity.this, tagsList);
+        tagsView.setAdapter(tagsAdapter);
+        //TODO do thiss up
+
+
+
 
         // Lastly, populate recommendations
         mRecyclerView = (RecyclerView) findViewById(R.id.recommendation_view);
@@ -190,6 +211,7 @@ public class HeritageItemViewActivity extends AppCompatActivity {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            //if can't return Fetcher.getJSON because of exception
             return null;
         }
 
@@ -215,13 +237,28 @@ public class HeritageItemViewActivity extends AppCompatActivity {
                 TextView loc = (TextView) findViewById(R.id.her_item_location);
                 loc.setText(loc0.getString("name"));
 
-                TextView tagsView = (TextView) findViewById(R.id.her_item_tags);
+                tagsList.clear();
+
+
+                TextView tagsView_old = (TextView) findViewById(R.id.her_item_tags);
                 String tagsConcat = "";
                 for (int i = 0; i < tags.length(); i++) {
-                    tagsConcat += tags.getJSONObject(i).getString("name") + " ";
+                    String tempTag = tags.getJSONObject(i).getString("name");
+                    tagsConcat += tempTag + " ";
+                    if (tempTag.startsWith("#")) {
+                        tagsList.add(new Tag(tempTag));
+                    } else {
+                        tagsList.add(new Tag("#" + tempTag));
+                    }
 
                 }
-                tagsView.setText(tagsConcat);
+                tagsView_old.setText(tagsConcat);
+
+
+                //tagsList is already set to the adaper so these two below are not needed
+                // tagsAdapter.clear();
+                // tagsAdapter.addAll(tagsList);
+                tagsView.setAdapter(tagsAdapter);
 
                 LinearLayout likeCommentFrame = (LinearLayout) findViewById(R.id.item_like_comment_buttons_container);
                 LinearLayout commentContainer = (LinearLayout) likeCommentFrame.findViewById(R.id.comment_container);

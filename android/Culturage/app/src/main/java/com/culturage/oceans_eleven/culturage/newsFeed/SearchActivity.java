@@ -30,6 +30,7 @@ public class SearchActivity extends AppCompatActivity implements LoaderManager.L
     private HeritageItemAdapter itemAdapter;
 
 
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -87,7 +88,8 @@ public class SearchActivity extends AppCompatActivity implements LoaderManager.L
     @Override
     public Loader<ArrayList<HeritageItem>> onCreateLoader(int id, Bundle args) {
         String stringToSearch = getIntent().getStringExtra("stringToSearch");
-        return new SearchLoader(SearchActivity.this, getResources().getString(R.string.search_item_EndPoint) + stringToSearch);
+        String endPoint = getIntent().getStringExtra("endPoint");
+        return new SearchLoader(SearchActivity.this, endPoint + stringToSearch);
     }
 
     @Override
