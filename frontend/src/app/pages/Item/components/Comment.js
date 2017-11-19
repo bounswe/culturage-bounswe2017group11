@@ -12,6 +12,10 @@ class Comment extends React.Component {
       this.handleKeyPress = this.handleKeyPress.bind(this);
    }
 
+   componentWillMount(){
+        console.log(this.props.item);
+   }
+
    handleCommentChange(event){this.setState({myComment: event.target.value});};
 
    handleKeyPress(e){
