@@ -132,7 +132,7 @@ class ItemSerializer(serializers.ModelSerializer):
 
 	def _get_is_rated(self, item):
 		user = self.context['request'].user
-		raters = self._get_raters(item)
+		raters = item._get_raters() #argument deleted.
 		return user.id in raters
 
 	def create(self, validated_data):

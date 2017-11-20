@@ -147,12 +147,10 @@ class RateItem(APIView):
 	def post(self, request, itemID):
 		item = Item.objects.get(id= itemID)
 		user = request.user
-
 		try:
 			rate = UserRatedItem.objects.filter(item=itemID, user = request.user.id).first()
 		except UserRatedItem.DoesNotExist:
 			rate = None
-
 		if rate:
 			if request.data["rate"]:
 				return Response({"error" : "You already rated this item"}, status=status.HTTP_403_FORBIDDEN)
