@@ -235,11 +235,11 @@ public class HeritageItemViewActivity extends AppCompatActivity {
                 tagsList.clear();
 
 
-                TextView tagsView_old = (TextView) findViewById(R.id.her_item_tags);
-                String tagsConcat = "";
+//                TextView tagsView_old = (TextView) findViewById(R.id.her_item_tags);
+//                String tagsConcat = "";
                 for (int i = 0; i < tags.length(); i++) {
                     String tempTag = tags.getJSONObject(i).getString("name");
-                    tagsConcat += tempTag + " ";
+//                    tagsConcat += tempTag + " ";
                     if (tempTag.startsWith("#")) {
                         tagsList.add(new Tag(tempTag));
                     } else {
@@ -247,12 +247,16 @@ public class HeritageItemViewActivity extends AppCompatActivity {
                     }
 
                 }
-                tagsView_old.setText(tagsConcat);
+//                tagsView_old.setText(tagsConcat);
 
 
                 //tagsList is already set to the adaper so these two below are not needed
                 // tagsAdapter.clear();
                 // tagsAdapter.addAll(tagsList);
+                if (tagsList.isEmpty()) {
+                    tagsList.add(new Tag("#beFirstOneToTag"));
+
+                }
                 tagsView.setAdapter(tagsAdapter);
 
                 LinearLayout likeCommentFrame = (LinearLayout) findViewById(R.id.item_like_comment_buttons_container);

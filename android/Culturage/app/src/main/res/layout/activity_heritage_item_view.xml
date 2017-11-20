@@ -83,22 +83,24 @@
             <android.support.v7.widget.RecyclerView
                 android:id="@+id/tagsRecycleView"
                 android:layout_width="wrap_content"
-                android:layout_height="@dimen/large_edit_text_height"
+                android:layout_height="wrap_content"
                 android:background="@drawable/blue_border"
                 android:padding="@dimen/small_padding"
+                android:layout_gravity="center"
                 android:scrollbars="horizontal" />
 
-            <TextView
-                android:id="@+id/her_item_tags"
-                style="?android:textAppearanceMedium"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="@dimen/small_padding"
-                android:background="@drawable/blue_border"
-                android:gravity="start"
-                android:padding="@dimen/small_padding"
-                android:textColor="@color/login_page_text_color"
-                tools:text="#someTags #someMoreTags #hereIsAnotherTag" />
+            <!--not used any more-->
+            <!--<TextView-->
+            <!--android:id="@+id/her_item_tags"-->
+            <!--style="?android:textAppearanceMedium"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginBottom="@dimen/small_padding"-->
+            <!--android:background="@drawable/blue_border"-->
+            <!--android:gravity="start"-->
+            <!--android:padding="@dimen/small_padding"-->
+            <!--android:textColor="@color/login_page_text_color"-->
+            <!--tools:text="#someTags #someMoreTags #hereIsAnotherTag" />-->
 
             <TextView
                 android:id="@+id/her_item_description_title"
