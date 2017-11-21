@@ -12,7 +12,6 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.net.HttpURLConnection;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.nio.charset.Charset;
 
@@ -81,6 +80,54 @@ public class PostJSON {
         }
         Log.v("postApi-read", "stream is read. output:" + output);
         return output.toString();
+    }
+
+    public static String deleteToApi(String url, String token) throws IOException {
+        HttpURLConnection urlConnection;
+        //String url = baseURI + endpoint;
+        //String data = json.toString();
+        String result = null;
+        InputStream inputStream = null;
+        Log.v("deleteApi", url);
+        urlConnection = (HttpURLConnection) ((new URL(url).openConnection()));
+        Log.v("deleteApi", " " + (urlConnection == null));
+        try {
+            //Connect
+            urlConnection.setDoInput(true); // Allow Inputs
+            urlConnection.setDoOutput(true);
+            urlConnection.setRequestProperty("Content-Type", "application/json");
+            urlConnection.setRequestProperty("Accept", "application/json");
+            urlConnection.setRequestMethod("DELETE");
+            urlConnection.setRequestProperty("Authorization", "JWT " + token);
+            urlConnection.connect();
+            Log.v("deleteApi", "url connected");
+            //Write
+            OutputStream outputStream = urlConnection.getOutputStream();
+            //BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(outputStream, "UTF-8"));
+            //writer.write(data);
+            //writer.close();
+            outputStream.close();
+            Log.v("deleteApi", "output closed");
+
+
+            if (urlConnection.getResponseCode() == 201 || urlConnection.getResponseCode() == 200) {
+                inputStream = urlConnection.getInputStream();
+                result = readFromStream(inputStream);
+            } else {
+                //Log.v("deleteApi", json.toString());
+                Log.v("deleteApi", urlConnection.getResponseCode() + "");
+                Log.v("deleteApi-response", urlConnection.getResponseMessage());
+                result = readFromStream(urlConnection.getErrorStream());
+                Log.v("deleteApi-result", result);
+                return "400";
+            }
+
+        } catch (Exception e) {
+            Log.v("deleteApi", "error in connection. Result: " + result);
+            e.printStackTrace();
+        }
+        return result;
+
     }
 
 

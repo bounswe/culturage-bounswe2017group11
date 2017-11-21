@@ -125,10 +125,10 @@ public class CustomDialogClass extends Dialog implements
             try {
                 Log.v("CommentLoader", "resulting json after commentsUrl: " + result);
                 JSONArray valuesArray = new JSONArray(result);
-                for (int i = 0; i < valuesArray.length(); i++) {
+                for (int i = valuesArray.length() - 1; i >= 0; i--) {
                     JSONObject values = valuesArray.getJSONObject(i);
                     JSONObject user = values.getJSONObject("written_by");
-                    comments.add(new Comment(values.getString("text"), user.getString("username"), user.getString("photo")));
+                    comments.add(new Comment(values.getString("text"), user.getString("username"), user.getString("photo"), values.getInt("id")));
                 }
 
             } catch (Exception e) {

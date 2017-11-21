@@ -84,7 +84,7 @@ public class CustomLikeClass extends Dialog implements
                 JSONArray raters = values_.getJSONArray("raters");
                 for (int i = 0; i < raters.length(); i++) {
                     JSONObject values = raters.getJSONObject(i);
-                    comments.add(new Comment("", values.getString("username"), values.getString("photo")));
+                    comments.add(new Comment("", values.getString("username"), values.getString("photo"), -1));
                 }
 
             } catch (Exception e) {
