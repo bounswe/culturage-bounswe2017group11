@@ -217,8 +217,16 @@ public class HeritageItemViewActivity extends AppCompatActivity {
                 JSONObject itemJson = new JSONObject(jsonStr);
 
                 JSONArray timelines = itemJson.getJSONArray("timelines");
-                JSONObject timeLine0 = timelines.getJSONObject(0);
-                JSONObject loc0 = timeLine0.getJSONObject("location");
+                JSONObject timeLine0 = null;
+                JSONObject loc0 = null;
+                try {
+                    timeLine0 = timelines.getJSONObject(0);
+                    loc0 = timeLine0.getJSONObject("location");
+                } catch (Exception e) {
+                    Log.e(LOG_TAG + "timeline", "onPostExecute: ");
+                }
+
+
                 //JSONObject likeTotalCount = itemJson.getJSONObject("rate");
 
                 JSONArray tags = itemJson.getJSONArray("tags");
@@ -227,10 +235,23 @@ public class HeritageItemViewActivity extends AppCompatActivity {
 
 
                 TextView date = (TextView) findViewById(R.id.her_item_date);
-                date.setText(timeLine0.getString("startDate"));
+
+                try {
+                    date.setText(timeLine0.getString("startDate"));
+
+                } catch (Exception e) {
+                    date.setText("unknown");
+
+                }
 
                 TextView loc = (TextView) findViewById(R.id.her_item_location);
-                loc.setText(loc0.getString("name"));
+                try {
+                    loc.setText(loc0.getString("name"));
+
+                } catch (Exception e) {
+                    loc.setText("unknown");
+
+                }
 
                 tagsList.clear();
 

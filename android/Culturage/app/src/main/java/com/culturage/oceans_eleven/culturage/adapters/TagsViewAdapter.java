@@ -61,9 +61,13 @@ public class TagsViewAdapter extends RecyclerView.Adapter<TagsViewAdapter.ViewHo
 
                 Log.v(LOG_TAG, "onClick: search for this tag");
                 Intent i = new Intent(context, SearchActivity.class);
-                i.putExtra("stringToSearch", tag.toString());
+                String tagStr = tag.toString();
+                if (tagStr.startsWith("#")) { //actually we are sure that this will happen
+                    tagStr = tagStr.substring(1, tagStr.length());
+                }
+                i.putExtra("stringToSearch", tagStr);
                 //TODO make the search with proper endpoint!
-                i.putExtra("endPoint", context.getResources().getString(R.string.search_item_EndPoint));
+                i.putExtra("endPoint", context.getResources().getString(R.string.search_tag_EndPoint));
                 context.startActivity(i);
             }
         };
