@@ -109,6 +109,7 @@ class ItemSerializer(serializers.ModelSerializer):
 	raters = serializers.SerializerMethodField('_get_raters')
 	is_rated = serializers.SerializerMethodField('_get_is_rated')
 	comments = serializers.SerializerMethodField('_get_comments')
+	comment_count = serializers.SerializerMethodField('_get_comment_count')
 
 	@staticmethod
 	def setup_eager_loading(queryset):
@@ -120,11 +121,14 @@ class ItemSerializer(serializers.ModelSerializer):
 
 	class Meta:
 		model = Item
-		fields = ('id','name', 'description', 'featured_img', 'timelines', 'tags', 'rate', 'created_at', 'created_by', 'comments', 'raters', 'is_rated')
+		fields = ('id','name', 'description', 'featured_img', 'timelines', 'tags', 'rate', 'created_at', 'created_by', 'comments', 'raters', 'is_rated', 'comment_count')
 
 	def _get_comments(self, item):
 		serializer = CommentSerializer(item.commented_item, many=True)
 		return serializer.data
+
+	def _get_comment_count(self, item):
+		return len(item.get_commenters())
 
 	def _get_raters(self, item):
 		serializer = UserRatedItemSerializer(item.rated_item, many=True)
@@ -132,7 +136,7 @@ class ItemSerializer(serializers.ModelSerializer):
 
 	def _get_is_rated(self, item):
 		user = self.context['request'].user
-		raters = item._get_raters() #argument deleted.
+		raters = item.get_raters()
 		return user.id in raters
 
 	def create(self, validated_data):
