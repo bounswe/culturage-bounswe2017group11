@@ -16,7 +16,9 @@ urlpatterns = [
     url(r'^items/(?P<itemID>[0-9]+)/comments', views.CommentList.as_view(), name='itemComment'),
     url(r'^items/(?P<itemID>[0-9]+)/rates', views.RateItem.as_view(), name='itemRate'),
     url(r'^items/(?P<itemID>[0-9]+)/timelines', views.ItemTimeline.as_view(), name='itemTimeline'),
+    url(r'^items/(?P<itemID>[0-9]+)/medias', views.ItemMedia.as_view(), name='itemMedia'),
     url(r'^comments/(?P<commentID>[0-9]+)', views.CommentDetailView.as_view(), name='comment'),
     url(r'^timelines/(?P<timelineID>[0-9]+)', views.TimelineDetailView.as_view(), name='timeline'),
+    url(r'^medias/(?P<mediaID>[0-9]+)', views.MediaDetailView.as_view(), name='media'),
 ]
 

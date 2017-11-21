@@ -6,12 +6,14 @@ from base.models import Comment
 from base.models import UserRatedItem
 from base.models import Timeline
 from base.models import Location
+from base.models import Media
 from base.serializers import ItemSerializer
 from base.serializers import UserSerializer
 from base.serializers import NewsfeedSerializer
 from base.serializers import CommentSerializer
 from base.serializers import UserRatedItemSerializer
 from base.serializers import TimelineSerializer
+from base.serializers import MediaSerializer
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
@@ -170,6 +172,22 @@ class ItemTimeline(APIView):
 		serializer = TimelineSerializer(item.timelines, many=True)
 		return Response(serializer.data)
 
+class ItemMedia(APIView):
+	def post(self, request, itemID):
+		item = Item.objects.get(id=itemID)
+		user = request.user
+		serializer = MediaSerializer(data=request.data,context={'item': item, 'user':user})
+		if serializer.is_valid():
+			serializer.save()
+			return Response(serializer.data)
+		else:
+			return Response(serializer.errors)
+
+	def get(self, request, itemID):
+		item = Item.objects.get(id=itemID)
+		serializer = MediaSerializer(item.media_item, many=True)
+		return Response(serializer.data)
+
 class RateItem(APIView):
 	def post(self, request, itemID):
 		item = Item.objects.get(id= itemID)
@@ -231,3 +249,18 @@ class TimelineDetailView(APIView):
 			timeline.delete()
 			return Response({"success" : "Your timeline is deleted successfully"})
 		return Response({"error" : "You can't delete other user's timelines"} , status=status.HTTP_403_FORBIDDEN)
+
+class MediaDetailView(APIView):
+	def delete(self, request, mediaID):
+		try:
+			media = Media.objects.get(id=mediaID)
+		except Media.DoesNotExist:
+			media = None
+
+		if not media:
+			return Response({"error" : "We couldn't find media with given ID:" + mediaID}, status=status.HTTP_404_NOT_FOUND)
+
+		if request.user.id == media.created_by_id:
+			media.delete()
+			return Response({"success" : "Your media is deleted successfully"})
+		return Response({"error" : "You can't delete other user's medias"} , status=status.HTTP_403_FORBIDDEN)

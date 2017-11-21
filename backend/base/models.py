@@ -140,6 +140,8 @@ class Media(models.Model):
     mediaType = models.CharField(max_length=100)
     extension = models.CharField(max_length=100)
     name = models.CharField(max_length=200)
+    file = models.FileField(upload_to='item', null=True, blank=True)
+    url = models.URLField(null=True, blank=True)
     item = models.ForeignKey(Item, related_name='media_item', on_delete=models.CASCADE, null=True)
     created_by = models.ForeignKey(User, related_name='media_user', on_delete=models.SET_NULL, null=True)
     created_at = models.DateTimeField(auto_now_add=True, blank=True)
