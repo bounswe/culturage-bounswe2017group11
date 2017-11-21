@@ -57,14 +57,14 @@ class UserSerializer(serializers.Serializer):
 		user.save()
 		return user
 
-class LocationSerializer(serializers.Serializer):
+class LocationSerializer(serializers.ModelSerializer):
 	id = serializers.IntegerField(read_only=True)
 	name = serializers.CharField(required=True, max_length=200)
 	class Meta:
 		model = Location
-		fields =('id','name','longtitude','latitude')
+		fields =('id','name')
 
-class TagSerializer(serializers.Serializer):
+class TagSerializer(serializers.ModelSerializer):
 	id = serializers.IntegerField(read_only=True)
 	name = serializers.CharField(required=True, max_length=200)
 	# created_by = UserSerializer(required=False)
@@ -78,14 +78,27 @@ class TagSerializer(serializers.Serializer):
 		# queryset = queryset.prefetch_related('created_by', 'created_by__profile')
 		return queryset
 
-class TimelineSerializer(serializers.Serializer):
+class TimelineSerializer(serializers.ModelSerializer):
 	id = serializers.IntegerField(read_only=True)
 	name = serializers.CharField(required=True, max_length=200)
+	text = serializers.CharField(required=False)
 	startDate = serializers.CharField(required=True, max_length=200)
-	location = LocationSerializer(required=False)
+	location = LocationSerializer(required=False, read_only=True)
 	class Meta:
-		model = Location
-		fields =('id','name','text','startDate', 'endDate')
+		model = Timeline
+		fields =('id','name','text','startDate', 'endDate', 'location')
+
+	def create(self, validated_data):
+		item = self.context.get('item')
+		user = self.context.get('user')
+		location = self.context.get('location')
+		timeline = Timeline.objects.create(**validated_data)
+		timeline.item = item
+		timeline.created_by = user
+		timeline.location = location
+		timeline.save()
+		return timeline
+
 
 class CommentSerializer(serializers.ModelSerializer):
 	written_by= UserSerializer( required = False)

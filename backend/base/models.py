@@ -28,6 +28,7 @@ def save_user_profile(sender, instance, **kwargs):
 class Tag(models.Model):
     name = models.CharField(max_length=200)
     created_by = models.ForeignKey(User, related_name='tagging_user', on_delete=models.SET_NULL, null=True)
+    created_at = models.DateTimeField(auto_now_add=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -80,6 +81,8 @@ class Location(models.Model):
     name = models.CharField(max_length=200)
     longtitude = models.FloatField(null=True, blank=True)
     latitude = models.FloatField(null=True, blank=True)
+    created_by = models.ForeignKey(User, related_name='location_user', on_delete=models.SET_NULL, null=True)
+    created_at = models.DateTimeField(auto_now_add=True, blank=True)
 
     def __str__(self):
         return self.name
@@ -91,6 +94,8 @@ class Timeline(models.Model):
     endDate = models.DateField(auto_now_add=False, null=True, blank=True)
     item = models.ForeignKey(Item, related_name='timelines', on_delete=models.CASCADE, null=True)
     location = models.ForeignKey(Location, related_name='timeline_location', on_delete=models.SET_NULL, null=True)
+    created_by = models.ForeignKey(User, related_name='timeline_user', on_delete=models.SET_NULL, null=True)
+    created_at = models.DateTimeField(auto_now_add=True, blank=True)
 
     def __str__(self):
         return self.name + " - " + self.startDate.strftime("%d.%m.%Y")
@@ -115,6 +120,7 @@ class UserRatedItem(models.Model):
     rate = models.IntegerField(null=True, blank=True)
     user = models.ForeignKey(User, related_name='item_rating_user', on_delete=models.CASCADE, null=True)
     item = models.ForeignKey(Item, related_name='rated_item', on_delete=models.CASCADE, null=True)
+    created_at = models.DateTimeField(auto_now_add=True, blank=True)
 
 class UserRatedComment(models.Model):
     rate = models.IntegerField(null=True, blank=True)
@@ -132,9 +138,11 @@ class TagList(models.Model):
 
 class Media(models.Model):
     mediaType = models.CharField(max_length=100)
-    formatExtend = models.CharField(max_length=100)
+    extension = models.CharField(max_length=100)
     name = models.CharField(max_length=200)
     item = models.ForeignKey(Item, related_name='media_item', on_delete=models.CASCADE, null=True)
+    created_by = models.ForeignKey(User, related_name='media_user', on_delete=models.SET_NULL, null=True)
+    created_at = models.DateTimeField(auto_now_add=True, blank=True)
 
 class VideoAnno(models.Model):
     text = models.CharField(max_length=500)

@@ -4,11 +4,14 @@ from base.models import Item
 from base.models import Profile
 from base.models import Comment
 from base.models import UserRatedItem
+from base.models import Timeline
+from base.models import Location
 from base.serializers import ItemSerializer
 from base.serializers import UserSerializer
 from base.serializers import NewsfeedSerializer
 from base.serializers import CommentSerializer
 from base.serializers import UserRatedItemSerializer
+from base.serializers import TimelineSerializer
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
@@ -39,7 +42,10 @@ class ItemViewSet(viewsets.ModelViewSet):
 	def perform_create(self, serializer):
 		location = self.request.data.get('location');
 		date = self.request.data.get('date');
-		tags = self.request.data.get('tags');
+		if type(self.request.data) is dict:
+			tags = self.request.data.get('tags');
+		else:
+			tags = self.request.data.getlist('tags');
 		image = None
 		if self.request.data.get('image'):
 			image = self.request.data.get('image');
@@ -143,6 +149,27 @@ class CommentList(APIView):
 		serializer = CommentSerializer(comments, many=True)
 		return Response(serializer.data)
 
+class ItemTimeline(APIView):
+	def post(self, request, itemID):
+		item = Item.objects.get(id=itemID)
+		user = request.user
+		location_name = request.data.get('location')
+		if location_name:
+			location, created = Location.objects.get_or_create(name = location_name)
+		else:
+			location = None
+		serializer = TimelineSerializer(data=request.data,context={'item': item, 'user':user, 'location':location})
+		if serializer.is_valid():
+			serializer.save()
+			return Response(serializer.data)
+		else:
+			return Response(serializer.errors)
+
+	def get(self, request, itemID):
+		item = Item.objects.get(id=itemID)
+		serializer = TimelineSerializer(item.timelines, many=True)
+		return Response(serializer.data)
+
 class RateItem(APIView):
 	def post(self, request, itemID):
 		item = Item.objects.get(id= itemID)
@@ -189,3 +216,18 @@ class CommentDetailView(APIView):
 			comment.delete()
 			return Response({"success" : "Your comment is deleted successfully"})
 		return Response({"error" : "You can't delete other user's comments"} , status=status.HTTP_403_FORBIDDEN)
+
+class TimelineDetailView(APIView):
+	def delete(self, request, timelineID):
+		try:
+			timeline = Timeline.objects.get(id=timelineID)
+		except Timeline.DoesNotExist:
+			timeline = None
+
+		if not timeline:
+			return Response({"error" : "We couldn't find timeline with given ID:" + timelineID}, status=status.HTTP_404_NOT_FOUND)
+
+		if request.user.id == timeline.created_by_id:
+			timeline.delete()
+			return Response({"success" : "Your timeline is deleted successfully"})
+		return Response({"error" : "You can't delete other user's timelines"} , status=status.HTTP_403_FORBIDDEN)
