@@ -1,8 +1,14 @@
 package com.culturage.oceans_eleven.culturage.network;
 
 import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.ConnectivityManager;
+import android.os.Build;
 import android.preference.PreferenceManager;
+import android.provider.Settings;
+import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
 import android.util.Log;
 
@@ -21,7 +27,7 @@ import java.net.URL;
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 
-class NetworkUtils {
+public class NetworkUtils {
 
     /**
      * Tag for the log messages
@@ -182,5 +188,26 @@ class NetworkUtils {
 
         // Return the list of profilePages
         return profilepages;
+    }
+
+    public static void forceInternetConnection(final Context context) {
+        ConnectivityManager conMan = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+        if (conMan.getActiveNetworkInfo() == null || !conMan.getActiveNetworkInfo().isConnected()) {
+            AlertDialog.Builder builder;
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+                builder = new AlertDialog.Builder(context, android.R.style.Theme_Material_Dialog_Alert);
+            } else {
+                builder = new AlertDialog.Builder(context);
+            }
+            builder.setTitle("No Internet Connection")
+                    .setMessage("Please connect to the internet")
+                    .setPositiveButton("Connect to Wi-Fi", new DialogInterface.OnClickListener() {
+                        public void onClick(DialogInterface dialog, int which) {
+                            context.startActivity(new Intent(Settings.ACTION_WIFI_SETTINGS));
+                        }
+                    })
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+        }
     }
 }
