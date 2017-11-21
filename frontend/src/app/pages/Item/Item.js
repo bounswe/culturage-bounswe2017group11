@@ -5,7 +5,9 @@ import Body from './components/Body.jsx';
 import Comment from './components/Comment.js';
 import Like from './components/Likebtn.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './utils/font-awesome-4.7.0/css/font-awesome.css'
+import './utils/font-awesome-4.7.0/css/font-awesome.css';
+import SuggestedItems from './components/SuggestedItems.js';
+
 
 import './utils/mycss.css';
 import $ from 'jquery';
@@ -13,7 +15,9 @@ import $ from 'jquery';
 class Item extends React.Component {
 	constructor(props){
    		super(props);
-   		this.state = {items: []};
+   		this.state = {items: [],
+   			suggestedItems: []
+   		};
 	}
 
 	componentWillMount(){
@@ -39,6 +43,21 @@ class Item extends React.Component {
   			console.log('There has been a problem with your fetch operation: ' + error.message);
 		});
 
+	var link2 = 'http://18.220.108.135/api/recommendation/item/' + id;
+		fetch(link2 , {
+        	method: 'GET',
+        	headers: myHeaders
+        })
+    	.then(response => response.json())
+    	.then(function(data){
+      		_this.setState({suggestedItems: data});
+      		console.log(data)
+      	})
+
+		.catch(function(error) {
+  			console.log('There has been a problem with your fetch operation: ' + error.message);
+		});
+
     }
 
 	render() {
@@ -57,7 +76,9 @@ class Item extends React.Component {
                   <Like item={this.state.items} />
                   <Comment item={this.state.items} />
                   </div>
-
+                  <div class = "col-md-8">	
+                  <SuggestedItems item={this.state.suggestedItems} />
+                  </div>
                   </div>
 			</div>
 		);
