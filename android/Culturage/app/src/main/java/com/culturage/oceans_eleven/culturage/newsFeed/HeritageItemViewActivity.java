@@ -26,6 +26,7 @@ import com.culturage.oceans_eleven.culturage.adapters.HeritageImageAdapter;
 import com.culturage.oceans_eleven.culturage.adapters.RecommendationRecyclerViewAdapter;
 import com.culturage.oceans_eleven.culturage.adapters.TagsViewAdapter;
 import com.culturage.oceans_eleven.culturage.baseClasses.CustomDialogClass;
+import com.culturage.oceans_eleven.culturage.baseClasses.CustomLikeClass;
 import com.culturage.oceans_eleven.culturage.baseClasses.HeritageItem;
 import com.culturage.oceans_eleven.culturage.baseClasses.Tag;
 import com.culturage.oceans_eleven.culturage.network.Fetcher;
@@ -120,7 +121,7 @@ public class HeritageItemViewActivity extends AppCompatActivity {
         commentContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                CustomDialogClass cdd = new CustomDialogClass(HeritageItemViewActivity.this, heritageItemPostID);
+                CustomDialogClass cdd = new CustomDialogClass(HeritageItemViewActivity.this, heritageItemPostID, null);
                 cdd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 cdd.show();
             }
@@ -132,6 +133,16 @@ public class HeritageItemViewActivity extends AppCompatActivity {
                 new likeAction(HeritageItemViewActivity.this).execute();
                 new likeCommentCountLoader().execute();
                 //Toast.makeText(HeritageItemViewActivity.this, "Will like soon", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        LinearLayout like_number_container = (LinearLayout) likeCommentFrame.findViewById(R.id.like_number_container);
+        like_number_container.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                CustomLikeClass cdd = new CustomLikeClass(HeritageItemViewActivity.this, heritageItemPostID);
+                cdd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                cdd.show();
             }
         });
 
@@ -291,7 +302,17 @@ public class HeritageItemViewActivity extends AppCompatActivity {
                 commentContainer.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        CustomDialogClass cdd = new CustomDialogClass(HeritageItemViewActivity.this, heritageItemPostID);
+                        CustomDialogClass cdd = new CustomDialogClass(HeritageItemViewActivity.this, heritageItemPostID, null);
+                        cdd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
+                        cdd.show();
+                    }
+                });
+
+                LinearLayout like_number_container = (LinearLayout) likeCommentFrame.findViewById(R.id.like_number_container);
+                like_number_container.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        CustomLikeClass cdd = new CustomLikeClass(HeritageItemViewActivity.this, heritageItemPostID);
                         cdd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                         cdd.show();
                     }
@@ -522,7 +543,7 @@ public class HeritageItemViewActivity extends AppCompatActivity {
                 Log.v(LOG_TAG, "resulting json on like button " + result);
                 JSONObject values = new JSONObject(result);
                 isLiked = values.getBoolean("is_rated");
-                isLiked = getIsLikedTemp();     //Needs to be removed!!
+                //isLiked = getIsLikedTemp();     //Needs to be removed!!
                 if (isLiked) {
                     isLiked = false;
                     Log.v("ISLIKED", "is rated :  Dislikinng now");
@@ -536,33 +557,6 @@ public class HeritageItemViewActivity extends AppCompatActivity {
             }
             return !(result == null || result.equals("400"));
 
-        }
-
-        //NEeds to be removed when item is returned is_liked true...
-        private boolean getIsLikedTemp() {
-            String tempResult;
-            boolean isLiked;
-            String newsUrl = "http://18.220.108.135/api/newsfeed";
-            try {
-                tempResult = Fetcher.getJSON(Fetcher.createUrl(newsUrl), HeritageItemViewActivity.this); //temporary result
-            } catch (IOException e) {
-                e.printStackTrace();
-                return false;
-            }
-            try {
-                JSONArray values_array = new JSONArray(tempResult); //temporary
-                // Temporary loop
-                for (int i = 0; i < values_array.length(); i++) {
-                    JSONObject tempValues = values_array.getJSONObject(i);
-                    if (tempValues.getInt("id") == heritageItemPostID) {
-                        isLiked = tempValues.getBoolean("is_rated");
-                        return isLiked;
-                    }
-                }
-            } catch (Exception e) {
-                Log.v("likeItem", "error parsing like:");
-            }
-            return false;
         }
 
         private boolean uploadLikeCount(String token) {
@@ -605,7 +599,7 @@ public class HeritageItemViewActivity extends AppCompatActivity {
 
         private boolean isLiked;
         private String result;
-        private String newsUrl = "http://18.220.108.135/api/newsfeed";  // Temporary url
+        private String item_url = "http://18.220.108.135/api/items/" + heritageItemPostID;  // Temporary url
 
         private getLikeStatus() {
             this.isLiked = false;
@@ -613,19 +607,13 @@ public class HeritageItemViewActivity extends AppCompatActivity {
 
         protected String doInBackground(String... params) {
             try {
-                result = Fetcher.getJSON(Fetcher.createUrl(newsUrl), HeritageItemViewActivity.this); //temporary result
+                result = Fetcher.getJSON(Fetcher.createUrl(item_url), HeritageItemViewActivity.this); //temporary result
             } catch (IOException e) {
                 e.printStackTrace();
             }
             try {
-                JSONArray values_array = new JSONArray(result); //temporary
-                // Temporary loop
-                for (int i = 0; i < values_array.length(); i++) {
-                    JSONObject tempValues = values_array.getJSONObject(i);
-                    if (tempValues.getInt("id") == heritageItemPostID) {
-                        isLiked = tempValues.getBoolean("is_rated");
-                    }
-                }
+                JSONObject values = new JSONObject(result);
+                isLiked = values.getBoolean("is_rated");
             } catch (Exception e) {
                 Log.v("likeItem", "error parsing like:");
             }
@@ -696,6 +684,11 @@ public class HeritageItemViewActivity extends AppCompatActivity {
                 likeCount.setText("" + totalLikeCount);
                 TextView commentCount = (TextView) commentContainer.findViewById(R.id.comment_count);
                 commentCount.setText("" + totalCommentCount);
+
+                LinearLayout like_number_container = (LinearLayout) likeCommentFrame.findViewById(R.id.like_number_container);
+
+                TextView show_likes = (TextView) like_number_container.findViewById(R.id.show_likes);
+                show_likes.setText("  Liked by " + totalLikeCount + " people");
             } catch (Exception e) {
                 Log.v("heritageItem", "error setting totalLikeCount:" + totalLikeCount);
             }

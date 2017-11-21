@@ -2,6 +2,7 @@ package com.culturage.oceans_eleven.culturage.baseClasses;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Rect;
 import android.os.AsyncTask;
@@ -21,6 +22,7 @@ import com.culturage.oceans_eleven.culturage.R;
 import com.culturage.oceans_eleven.culturage.adapters.CommentAdapter;
 import com.culturage.oceans_eleven.culturage.network.Fetcher;
 import com.culturage.oceans_eleven.culturage.network.PostJSON;
+import com.culturage.oceans_eleven.culturage.newsFeed.HeritageItemViewActivity;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -35,11 +37,13 @@ public class CustomDialogClass extends Dialog implements
     //    private final String LOG_TAG = "dialog_tag";
     private Activity activity;
     private int postId;
+    private HeritageItem currentItem;
 
-    public CustomDialogClass(Activity activity, int postId) {
+    public CustomDialogClass(Activity activity, int postId, HeritageItem currentItem) {
         super(activity);
         this.activity = activity;
         this.postId = postId;
+        this.currentItem = currentItem;
     }
 
     @Override
@@ -65,6 +69,15 @@ public class CustomDialogClass extends Dialog implements
                     Toast.makeText(activity, "Comment is not allowed", Toast.LENGTH_SHORT).show();
                 }
                 dismiss();
+                if (currentItem != null) {
+                    Intent intent = new Intent(getContext(), HeritageItemViewActivity.class);
+                    intent.putExtra("postId", currentItem.getmPostId());
+                    intent.putExtra("title", currentItem.getmTitle());
+                    intent.putExtra("description", currentItem.getmDescription());
+                    intent.putExtra("imageUrl", currentItem.getmImageUrl());
+                    intent.putExtra("israted", currentItem.isRated());
+                    getContext().startActivity(intent);
+                }
             }
         });
         cancelCommentBtn.setOnClickListener(new View.OnClickListener() {
