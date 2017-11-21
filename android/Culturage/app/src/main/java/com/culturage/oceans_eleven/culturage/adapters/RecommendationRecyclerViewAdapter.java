@@ -16,14 +16,13 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class HorizontalRecyclerViewAdapter extends RecyclerView.Adapter<HorizontalRecyclerViewAdapter.ViewHolder> {
+public class RecommendationRecyclerViewAdapter extends RecyclerView.Adapter<RecommendationRecyclerViewAdapter.ViewHolder> {
     private static ArrayList<HeritageItem> recommendations;
     private Activity context;
 
     class ViewHolder extends RecyclerView.ViewHolder {
         private TextView mTitle;
         private ImageView mImage;
-        private View.OnClickListener listener;
 //        private View frame;
 
         private ViewHolder(View v) {
@@ -34,15 +33,15 @@ public class HorizontalRecyclerViewAdapter extends RecyclerView.Adapter<Horizont
         }
     }
 
-    public HorizontalRecyclerViewAdapter(Activity context, ArrayList<HeritageItem> _recommendations) {
+    public RecommendationRecyclerViewAdapter(Activity context, ArrayList<HeritageItem> _recommendations) {
         recommendations = _recommendations;
         this.context = context;
     }
 
     @Override
-    public HorizontalRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public RecommendationRecyclerViewAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         LayoutInflater inflater = LayoutInflater.from(parent.getContext());
-        View v = inflater.inflate(R.layout.horizontal_list_item, parent, false);
+        View v = inflater.inflate(R.layout.recommendation_horizontal_list_item, parent, false);
         return new ViewHolder(v);
     }
 

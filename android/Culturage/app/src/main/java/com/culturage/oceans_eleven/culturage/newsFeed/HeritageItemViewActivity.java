@@ -2,9 +2,7 @@ package com.culturage.oceans_eleven.culturage.newsFeed;
 
 
 import android.app.Activity;
-import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
@@ -16,7 +14,6 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -25,7 +22,8 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.culturage.oceans_eleven.culturage.R;
-import com.culturage.oceans_eleven.culturage.adapters.HorizontalRecyclerViewAdapter;
+import com.culturage.oceans_eleven.culturage.adapters.HeritageImageAdapter;
+import com.culturage.oceans_eleven.culturage.adapters.RecommendationRecyclerViewAdapter;
 import com.culturage.oceans_eleven.culturage.adapters.TagsViewAdapter;
 import com.culturage.oceans_eleven.culturage.baseClasses.CustomDialogClass;
 import com.culturage.oceans_eleven.culturage.baseClasses.HeritageItem;
@@ -46,23 +44,20 @@ public class HeritageItemViewActivity extends AppCompatActivity {
     /**
      * Tag for the log messages
      */
-    private static final String LOG_TAG = Fetcher.class.getSimpleName();
+    private static final String LOG_TAG = HeritageItemViewActivity.class.getSimpleName();
 
 
-    private RecyclerView mRecyclerView;
+    private RecyclerView mRecommendationView;
     private ArrayList<HeritageItem> recommendations = new ArrayList<>();
-    private HorizontalRecyclerViewAdapter recommendationAdapter;
+    private RecommendationRecyclerViewAdapter recommendationAdapter;
 
     private RecyclerView tagsView;
     private ArrayList<Tag> tagsList = new ArrayList<>();
     private TagsViewAdapter tagsAdapter;
 
-    private String profileURL = "http://18.220.108.135/api/profile/";
-    private String recommendationsUrl = "http://18.220.108.135/api/recommendation/item/";
     private static String itemUrl = "http://18.220.108.135/api/items/";
 
     private int heritageItemPostID;
-    private boolean isRated;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,14 +67,11 @@ public class HeritageItemViewActivity extends AppCompatActivity {
         // First get necessary values from the incoming intent and place them.
         Intent incomingIntent = getIntent();
         heritageItemPostID = incomingIntent.getIntExtra("postId", -1);
-
         new getLikeStatus().execute();
-
-
-        ImageView iw = (ImageView) findViewById(R.id.her_item_photo);
+//        ImageView iw = (ImageView) findViewById(R.id.her_item_photo);
         final String imageUri = incomingIntent.getStringExtra("imageUrl");
         // 400 looks cool
-        Picasso.with(this).load(imageUri).resize(400, 0).into(iw);
+//        Picasso.with(this).load(imageUri).resize(400, 0).into(iw);
 
         TextView title = (TextView) findViewById(R.id.her_item_Title);
         title.setText(incomingIntent.getStringExtra("title"));
@@ -87,8 +79,8 @@ public class HeritageItemViewActivity extends AppCompatActivity {
         TextView desc_view = (TextView) findViewById(R.id.her_item_description);
         desc_view.setText(incomingIntent.getStringExtra("description"));
 
+        tagsView = (RecyclerView) findViewById(R.id.tagsRecycleView);
         // Secondly get necessary fields from the backend.
-        //TODO: implement API code here.
 //        TextView date = (TextView) findViewById(R.id.her_item_date);
 //
 //        TextView loc = (TextView) findViewById(R.id.her_item_location);
@@ -106,24 +98,24 @@ public class HeritageItemViewActivity extends AppCompatActivity {
 //        ImageView guestPic = (ImageView) findViewById(R.id.guest_profile_pict);
 //
         // Now implement listeners.
-        iw.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                final AlertDialog.Builder imageDialog = new AlertDialog.Builder(HeritageItemViewActivity.this, R.style.BlackDialogTheme);
-//                imageDialog.create().getWindow().setLayout(600, 1200);
-                View view = LayoutInflater.from(HeritageItemViewActivity.this).inflate(R.layout.image_dialog, null);
-                ImageView image = (ImageView) view.findViewById(R.id.alertedImage);
-                Picasso.with(HeritageItemViewActivity.this).load(imageUri).resize(0, 1500).into(image);
-                imageDialog.setView(view);
-                imageDialog.setNegativeButton("Close", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.dismiss();
-                    }
-                });
-                imageDialog.show();
-            }
-        });
+//        iw.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                final AlertDialog.Builder imageDialog = new AlertDialog.Builder(HeritageItemViewActivity.this, R.style.BlackDialogTheme);
+////                imageDialog.create().getWindow().setLayout(600, 1200);
+//                View view = LayoutInflater.from(HeritageItemViewActivity.this).inflate(R.layout.image_dialog, null);
+//                ImageView image = (ImageView) view.findViewById(R.id.alertedImage);
+//                Picasso.with(HeritageItemViewActivity.this).load(imageUri).resize(0, 1500).into(image);
+//                imageDialog.setView(view);
+//                imageDialog.setNegativeButton("Close", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        dialog.dismiss();
+//                    }
+//                });
+//                imageDialog.show();
+//            }
+//        });
 
         commentContainer.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -167,7 +159,7 @@ public class HeritageItemViewActivity extends AppCompatActivity {
 
 
         //TODO do thiss down
-        tagsView = (RecyclerView) findViewById(R.id.tagsRecycleView);
+
         RecyclerView.LayoutManager tagsLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         tagsView.setLayoutManager(tagsLayoutManager);
 //
@@ -177,13 +169,10 @@ public class HeritageItemViewActivity extends AppCompatActivity {
         tagsView.setAdapter(tagsAdapter);
         //TODO do thiss up
 
-
-
-
         // Lastly, populate recommendations
-        mRecyclerView = (RecyclerView) findViewById(R.id.recommendation_view);
+        mRecommendationView = (RecyclerView) findViewById(R.id.recommendation_view);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        mRecyclerView.setLayoutManager(mLayoutManager);
+        mRecommendationView.setLayoutManager(mLayoutManager);
 //        ArrayList<HeritageItem> recommendations = new ArrayList<HeritageItem>();
 //        recommendations.add(new HeritageItem(1, "", "", "", true));
 //        recommendations.add(new HeritageItem(1, "", "", "", true));
@@ -191,10 +180,23 @@ public class HeritageItemViewActivity extends AppCompatActivity {
 //        recommendations.add(new HeritageItem(1, "", "", "", true));
 //        recommendations.add(new HeritageItem(1, "", "", "", true));
 //        recommendations.add(new HeritageItem(1, "", "", "", true));
+        String recommendationsUrl = "http://18.220.108.135/api/recommendation/item/";
         new RecommendationRequest(HeritageItemViewActivity.this, recommendationsUrl + heritageItemPostID).execute();
-        recommendationAdapter = new HorizontalRecyclerViewAdapter(HeritageItemViewActivity.this, recommendations);
-        mRecyclerView.setAdapter(recommendationAdapter);
+        recommendationAdapter = new RecommendationRecyclerViewAdapter(HeritageItemViewActivity.this, recommendations);
+        mRecommendationView.setAdapter(recommendationAdapter);
 
+        ArrayList<String> imageUrls = new ArrayList<>();
+        imageUrls.add(imageUri);
+        imageUrls.add(imageUri);
+        imageUrls.add(imageUri);
+        imageUrls.add(imageUri);
+        imageUrls.add(imageUri);
+        imageUrls.add(imageUri);
+        RecyclerView imageList = (RecyclerView) findViewById(R.id.her_item_image_list);
+        RecyclerView.LayoutManager mLayoutManager2 = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        imageList.setLayoutManager(mLayoutManager2);
+        HeritageImageAdapter imageAdapter = new HeritageImageAdapter(this, imageUrls);
+        imageList.setAdapter(imageAdapter);
     }
 
     private class FullItemLoader extends AsyncTask<Integer, Void, String> {
@@ -213,9 +215,7 @@ public class HeritageItemViewActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String jsonStr) {
             try {
-
                 JSONObject itemJson = new JSONObject(jsonStr);
-
                 JSONArray timelines = itemJson.getJSONArray("timelines");
                 JSONObject timeLine0 = null;
                 JSONObject loc0 = null;
@@ -228,11 +228,8 @@ public class HeritageItemViewActivity extends AppCompatActivity {
 
 
                 //JSONObject likeTotalCount = itemJson.getJSONObject("rate");
-
                 JSONArray tags = itemJson.getJSONArray("tags");
-
                 JSONArray comments = itemJson.getJSONArray("comments");
-
 
                 TextView date = (TextView) findViewById(R.id.her_item_date);
 
@@ -348,9 +345,9 @@ public class HeritageItemViewActivity extends AppCompatActivity {
             } catch (Exception e) {
                 Log.v("heritageItem", "error parsing guestProfile:" + creator_id);
             }
-            profileURL = "http://18.220.108.135/api/profile/" + creator_id;
+            String profileURL = "http://18.220.108.135/api/profile/" + creator_id;
 
-            ViewGuestProfie(profileURL);
+            ViewGuestProfile(profileURL);
 
             return null;
 
@@ -378,7 +375,7 @@ public class HeritageItemViewActivity extends AppCompatActivity {
             }
         }
 
-        private void ViewGuestProfie(String profileUrl) {
+        private void ViewGuestProfile(String profileUrl) {
             String result = "";
             try {
                 result = Fetcher.getJSON(Fetcher.createUrl(profileUrl), HeritageItemViewActivity.this);
@@ -421,7 +418,7 @@ public class HeritageItemViewActivity extends AppCompatActivity {
             recommendations = tempRecommendations;
             recommendationAdapter.clear();
             recommendationAdapter.addAll(recommendations);
-            mRecyclerView.setAdapter(recommendationAdapter);
+            mRecommendationView.setAdapter(recommendationAdapter);
         }
 
         private void getRecommendations(String url) {

@@ -4,8 +4,7 @@ package com.culturage.oceans_eleven.culturage.baseClasses;
 public class HeritageItem {
 
     private int mPostId, mLikeCount, mCommentCount, mResourceId, creatorId;
-    private String mTitle, mDescription, mDate, mLocation, mImageBase64String, rate, createdAt, mTags, creatorUsername;
-    private String mImageUrl;
+    private String mTitle, mDescription, mDate, mLocation, mImageBase64String, rate, createdAt, mTags, creatorUsername, mImageUrl;
     private boolean isRated;
 
     //dummy item; this constructor is not to be used, temporary
