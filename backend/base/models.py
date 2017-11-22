@@ -29,7 +29,6 @@ class Tag(models.Model):
     name = models.CharField(max_length=200)
     created_by = models.ForeignKey(User, related_name='tagging_user', on_delete=models.SET_NULL, null=True)
     created_at = models.DateTimeField(auto_now_add=True, blank=True)
-
     def __str__(self):
         return self.name
 

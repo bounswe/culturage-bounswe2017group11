@@ -7,6 +7,8 @@ from base.models import UserRatedItem
 from base.models import Timeline
 from base.models import Location
 from base.models import Media
+from base.models import Tag
+from base.models import TagList
 from base.serializers import ItemSerializer
 from base.serializers import UserSerializer
 from base.serializers import NewsfeedSerializer
@@ -269,8 +271,20 @@ class MediaDetailView(APIView):
 
 
 class ItemTag(APIView):
-	def delete(self,request, itemID):
-		return Response({"return": "Not implemented yet"}, status=None)
+	def delete(self, request, itemID):
+		try:
+			item = Item.objects.get(id=itemID)
+			tag = Tag.objects.get(name=request.data.get('name'))
+			#tagToDelete = TagList.objects.get(item = item, tag = tag)
+		except Tag.DoesNotExist:
+			tag = None
+
+		if not tag:
+			return Response({"error" : "We couldn't find the tag for given Item" + itemID}, status=status.HTTP_404_NOT_FOUND)
+		item.tags.remove(tag)
+		#tagToDelete.delete()
+		return Response({"success" : "Your tag is deleted successfully"})
+
 	def post(self, request, itemID):
 		item = Item.objects.get(id=itemID)
 		serializer = TagSerializer(data=request.data, context={'item':item})

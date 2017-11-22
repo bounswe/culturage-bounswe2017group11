@@ -1,4 +1,4 @@
-from base.models import Item, Location, Timeline, Tag, Comment, UserRatedItem, Media
+from base.models import Item, Location, Timeline, Tag, Comment, UserRatedItem, Media, TagList
 from django.contrib.auth.models import User
 from django.conf import settings
 from django.db.models import Prefetch
@@ -82,9 +82,9 @@ class TagSerializer(serializers.ModelSerializer):
 		item = self.context.get('item')
 		tag = validated_data.pop('name')
 		newTag, created = Tag.objects.get_or_create(name = tag, defaults={'created_by': item.created_by})
+		#taglistunit, created = TagList.objects.get_or_create(item=item, tag = tag)
 		item.tags.add(newTag)
 		return item
-
 
 class TimelineSerializer(serializers.ModelSerializer):
 	id = serializers.IntegerField(read_only=True)
@@ -230,6 +230,7 @@ class ItemSerializer(serializers.ModelSerializer):
 		Timeline.objects.create(item=item, startDate = date, location = location, name = "Item is created")
 		for tag_name in tags:
 			tag, created = Tag.objects.get_or_create(name = tag_name, defaults={'created_by': item.created_by})
+			taglist, created = TagList.objects.get_or_create(tag = tag, item = item)
 			item.tags.add(tag)
 		return item
 
