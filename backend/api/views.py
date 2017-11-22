@@ -14,6 +14,7 @@ from base.serializers import CommentSerializer
 from base.serializers import UserRatedItemSerializer
 from base.serializers import TimelineSerializer
 from base.serializers import MediaSerializer
+from base.serializers import TagSerializer
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
@@ -27,6 +28,7 @@ import json
 
 import base64
 from django.core.files.base import ContentFile
+
 
 class ItemViewSet(viewsets.ModelViewSet):
 	"""
@@ -264,3 +266,17 @@ class MediaDetailView(APIView):
 			media.delete()
 			return Response({"success" : "Your media is deleted successfully"})
 		return Response({"error" : "You can't delete other user's medias"} , status=status.HTTP_403_FORBIDDEN)
+
+
+class ItemTag(APIView):
+	def delete(self,request, itemID):
+		return Response({"return": "Not implemented yet"}, status=None)
+	def post(self, request, itemID):
+		item = Item.objects.get(id=itemID)
+		serializer = TagSerializer(data=request.data, context={'item':item})
+		if serializer.is_valid():
+			serializer.save()
+			return Response(serializer.data)
+		else:
+			return Response(serializer.errors)
+#	def get(self):

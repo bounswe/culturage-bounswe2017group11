@@ -78,6 +78,13 @@ class TagSerializer(serializers.ModelSerializer):
 		""" Perform necessary eager loading of data. """
 		# queryset = queryset.prefetch_related('created_by', 'created_by__profile')
 		return queryset
+	def create(self, validated_data):
+		item = self.context.get('item')
+		tag = validated_data.pop('name')
+		newTag, created = Tag.objects.get_or_create(name = tag, defaults={'created_by': item.created_by})
+		item.tags.add(newTag)
+		return item
+
 
 class TimelineSerializer(serializers.ModelSerializer):
 	id = serializers.IntegerField(read_only=True)
@@ -209,6 +216,7 @@ class ItemSerializer(serializers.ModelSerializer):
 		user = self.context['request'].user
 		raters = item.get_raters()
 		return user.id in raters
+
 
 	def create(self, validated_data):
 		location_name = validated_data.pop('location')

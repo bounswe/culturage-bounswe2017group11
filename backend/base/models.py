@@ -58,6 +58,8 @@ class Item(models.Model):
     def get_commenters(self):
         return [i.written_by_id for i in self.commented_item.all()]
 
+    def get_tags(self):
+        return  [i.tag for i in self.tagged_item.all()]
     # TO BE USED LATER
     def publish(self):
         self.published_date = timezone.now()
