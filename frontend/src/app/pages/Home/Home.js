@@ -1,6 +1,7 @@
 import React from 'react';
 import Navbar from './components/Navbar.jsx';
 import NewsFeed from './components/NewsFeed.jsx';
+import RecommendedList from './components/RecommendedList.jsx';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './utils/home-styles.css';
 import { Link } from 'react-router-dom';
@@ -8,7 +9,10 @@ import { Link } from 'react-router-dom';
 class Home extends React.Component {
 	constructor(){
    		super();
-   		this.state = {itemlist: []};
+   		this.state = {
+   						itemlist: [],
+   						recommended: [] 
+   					};
 	}
 
 	componentDidMount(){
@@ -29,14 +33,32 @@ class Home extends React.Component {
   			console.log('There has been a problem with your fetch operation: ' + error.message);
 		});
 
+		fetch('http://18.220.108.135/api/recommendation', {
+        	method: 'GET',
+        	headers: myHeaders
+        })
+    	.then(response => response.json())
+    	.then(function(data){
+    			console.log(data);
+      		_this.setState({recommended: data});
+      	})
+
+		.catch(function(error) {
+  			console.log('There has been a problem with your fetch operation: ' + error.message);
+		});
+
     }
 
 	render() {
 		return(
-			<div class="home-body">
+			<div>
 				<Navbar page={"home"}/>
-				<NewsFeed itemlist={this.state.itemlist}/>
+				<div class="home-body">
+					<RecommendedList recommended={this.state.recommended}/>
+					<NewsFeed itemlist={this.state.itemlist}/>
+				</div>
 			</div>
+			
 		);
 	}
 }

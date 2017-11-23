@@ -1,6 +1,11 @@
 .home-body{
     background: #f2f2f2;
+    margin:0px;
+    padding:0px;
     padding-bottom: 20px;
+    display: flex;
+
+    font-family: Calibri, Candara, Segoe, 'Segoe UI', Optima, Arial, sans-serif;
 }
 
 .my-navbar {
@@ -38,37 +43,92 @@
     width: 300px;
 }
 
+.recommended-list{
+    width:30%;
+    height: 100%;
+    margin-left: 5%;
+}
+
+.recommended-list h1{
+    font-size: 20px;
+    margin-left: 5%;
+}
+
 .newsfeed{
-    margin-left: 120px;
-    margin-top: 20px;
-    width: 60%;
+    width:70%;
+    margin-left: 2%;
+    margin-right: 5%;
+    padding-left: 1%;
+    padding-right: 1%;
+}
+
+.recommended-list,
+.newsfeed{
     background: white;
+    box-shadow: 0px 0px 15px #888888;
     border: 1px solid #e6e6e6;
-    padding-left: 20px;
-    padding-right: 20px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+@media screen and (max-width: 500px) { 
+    .home-body {
+        flex-direction: column-reverse;
+    }
+    .recommended-list,
+    .newsfeed{
+        margin-left: 0;
+        margin-right: 0;
+        width: auto;
+    }
+}
+
+.recommended-list-item{
+    background-color: #17a2b8;
+}
+
+.recommended-list-item:hover{
+    background-color: white;
+}
+
+.recommended-list-item:hover h2{
+    color:#17a2b8;
+}
+
+.recommended-list-item h2{
+    font-size:16px;
+    color:white;
+    margin:0;
+}
+
+.recommended-list-item img{
+    max-height: 20px;
+    max-width: 100%; 
+    display: block;
+    margin: 0 auto;
+    vertical-align: center;
 }
 
 .newsfeed-item{
-    height: 250px;
+    min-height: 250px;
     width: 100%;
     padding-top: 20px;
+    padding-bottom: 20px;
     border-bottom: 1px dashed #e6e6e6;
 }
 
+
 .newsfeed-item h1{
-    font-family: Calibri, Candara, Segoe, 'Segoe UI', Optima, Arial, sans-serif;
     font-size: 24px;
 }
 
 .newsfeed-item h2{
-    font-family: Calibri, Candara, Segoe, 'Segoe UI', Optima, Arial, sans-serif;
     padding-left: 30px;
     font-size: 12px;
     margin-top: 5px;
 }
 
 .newsfeed-item p{
-    font-family: Calibri, Candara, Segoe, 'Segoe UI', Optima, Arial, sans-serif;
     font-size: 15px;
 }
 
@@ -77,4 +137,9 @@
     max-width: 100%; 
     display: block;
     margin: 0 auto;
+    vertical-align: center;
+}
+
+.my-input-group{
+    width: 200%;
 }

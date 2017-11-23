@@ -107,11 +107,6 @@ h3{
     width: 300px;
 }
 
-.newsfeed{
-    margin-left: 120px;
-    margin-top: 20px;
-    width: 55%;
-}
 
 .form-group{
   width: 40%;
@@ -119,30 +114,7 @@ h3{
    padding-top: 20px;
 }
 
-.newsfeed-item{
-    height: 300px;
-    width: 100%;
-    margin-top: 5px;
-    padding-left: 10px;
-}
 
-.newsfeed-item h1{
-    font-family: Calibri, Candara, Segoe, 'Segoe UI', Optima, Arial, sans-serif;
-    font-size: 24px;
-    padding-left: 20px;
-}
-
-.newsfeed-item p, a{
-    font-family: Calibri, Candara, Segoe, 'Segoe UI', Optima, Arial, sans-serif;
-    font-size: 15px;
-    padding-left: 15px;
-}
-
-.newsfeed-item img{
-    padding-right: 5px;
-    margin-top: 15px;
-    height: 220px;
-}
 
 /* Set black background color, white text and some padding */
 footer {
