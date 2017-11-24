@@ -1,8 +1,8 @@
 import React from 'react';
-import Navbar from '../Home/components/Navbar.jsx';
+import Navbar from '../Navbar/components/Navbar.jsx';
 import NewsFeed from './components/NewsFeed.jsx';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './utils/home-styles.css';
+import '../Home/utils/home-styles.css';
 import { Link } from 'react-router-dom';
 
 class SearchTag extends React.Component {

@@ -1,5 +1,5 @@
 import React from 'react';
-import Navbar from './components/Navbar.jsx';
+import Navbar from '../Navbar/components/Navbar.jsx';
 import NewsFeed from './components/NewsFeed.jsx';
 import RecommendedList from './components/RecommendedList.jsx';
 import 'bootstrap/dist/css/bootstrap.min.css';
