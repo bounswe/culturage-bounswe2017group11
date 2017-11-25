@@ -35,10 +35,13 @@ class SearchTag extends React.Component {
 
 	render() {
 		return(
-			<div class="home-body">
-				<Navbar page={"home"}/>
-				<NewsFeed itemlist={this.state.itemlist}/>
-			</div>
+      <div>
+        <Navbar page={"home"}/>
+        <div class="home-body">
+          
+          <NewsFeed itemlist={this.state.itemlist}/>
+        </div>
+      </div>
 		);
 	}
 }
