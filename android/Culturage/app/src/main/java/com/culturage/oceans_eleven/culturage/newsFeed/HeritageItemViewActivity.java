@@ -56,7 +56,7 @@ public class HeritageItemViewActivity extends AppCompatActivity {
     private ArrayList<Tag> tagsList = new ArrayList<>();
     private TagsViewAdapter tagsAdapter;
 
-    private static String itemUrl = "http://18.220.108.135/api/items/";
+    private static String itemUrl = "http://52.90.34.144:85/api/items/";
 
     private int heritageItemPostID;
 

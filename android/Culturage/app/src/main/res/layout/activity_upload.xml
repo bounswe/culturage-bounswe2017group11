@@ -148,14 +148,14 @@
                 android:layout_width="0dp"
                 android:layout_height="@dimen/edit_text_height"
                 android:layout_weight="1"
-                android:entries="@array/days"></Spinner>
+                android:entries="@array/days" />
 
             <Spinner
                 android:id="@+id/monthSpinner"
                 android:layout_width="0dp"
                 android:layout_height="@dimen/edit_text_height"
                 android:layout_weight="1"
-                android:entries="@array/months"></Spinner>
+                android:entries="@array/months" />
 
             <EditText
                 android:id="@+id/upload_year"

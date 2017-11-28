@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:id="@+id/imageUploadLayout"
+    android:layout_width="@dimen/large_edit_text_height"
+    android:layout_height="@dimen/large_edit_text_height"
+    android:orientation="vertical"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <ImageButton
+        android:id="@+id/herItemTakePhoto"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#FFFFFF"
+        android:paddingTop="20dp"
+        android:src="@mipmap/ic_camera" />
+
+    <ImageButton
+        android:id="@+id/herItemSelectPhoto"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:background="#FFFFFF"
+        android:paddingBottom="20dp"
+        android:src="@mipmap/ic_attach" />
+</LinearLayout>

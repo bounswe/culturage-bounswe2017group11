@@ -10,8 +10,9 @@
     <ImageView
         android:id="@+id/heritage_image"
         android:layout_width="@dimen/large_edit_text_height"
-        android:layout_height="140dp"
-        android:layout_marginTop="4dp"
+        android:layout_height="142dp"
+        android:layout_marginTop="1dp"
+        android:layout_marginBottom="1dp"
         tools:src="@mipmap/hagia_sophia"
         android:layout_gravity="center" />
 </LinearLayout>

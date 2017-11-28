@@ -96,7 +96,7 @@ public class LoginActivity extends AppCompatActivity {
         String returnedToken;
         Context mContext;
 
-        public LoginRequest(Context context) {
+        LoginRequest(Context context) {
             mContext = context;
         }
 
