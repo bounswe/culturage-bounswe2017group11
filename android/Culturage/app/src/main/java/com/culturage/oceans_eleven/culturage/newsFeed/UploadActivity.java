@@ -191,7 +191,6 @@ public class UploadActivity extends Activity {
 
         File destination = new File(Environment.getExternalStorageDirectory(),
                 System.currentTimeMillis() + ".jpg");
-
         FileOutputStream fo;
         try {
             destination.createNewFile();
@@ -201,13 +200,11 @@ public class UploadActivity extends Activity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         mImageView.setImageBitmap(thumbnail);
     }
 
     @SuppressWarnings("deprecation")
     private void onSelectFromGalleryResult(Intent data) {
-
         Bitmap bm = null;
         if (data != null) {
             try {
@@ -216,7 +213,6 @@ public class UploadActivity extends Activity {
                 e.printStackTrace();
             }
         }
-
         mImageView.setImageBitmap(bm);
     }
 

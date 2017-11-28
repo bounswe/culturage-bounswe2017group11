@@ -20,7 +20,7 @@ import java.util.ArrayList;
 public class HeritageImageAdapter extends RecyclerView.Adapter<HeritageImageAdapter.ViewHolder> {
     private static ArrayList<String> imageUrls;
     private Activity mContext;
-    private int REQUEST_CAMERA = 0, SELECT_FILE = 1;
+    public static final int REQUEST_CAMERA = 0, SELECT_FILE = 1;
 
     class ViewHolder extends RecyclerView.ViewHolder {
         private ImageView mImage;
@@ -115,7 +115,7 @@ public class HeritageImageAdapter extends RecyclerView.Adapter<HeritageImageAdap
     private void startGalleryIntent() {
         Intent intent = new Intent();
         intent.setType("image/*");
-        intent.setAction(Intent.ACTION_GET_CONTENT);//
+        intent.setAction(Intent.ACTION_PICK);
         mContext.startActivityForResult(Intent.createChooser(intent, "Select File"), SELECT_FILE);
     }
 

@@ -5,11 +5,16 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.database.Cursor;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Environment;
 import android.preference.PreferenceManager;
+import android.provider.MediaStore;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -37,6 +42,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
@@ -46,7 +54,6 @@ public class HeritageItemViewActivity extends AppCompatActivity {
      * Tag for the log messages
      */
     private static final String LOG_TAG = HeritageItemViewActivity.class.getSimpleName();
-    private int REQUEST_CAMERA = 0, SELECT_FILE = 1;
 
     private RecyclerView mRecommendationView;
     private ArrayList<HeritageItem> recommendations = new ArrayList<>();
@@ -90,10 +97,10 @@ public class HeritageItemViewActivity extends AppCompatActivity {
 //
         LinearLayout likeCommentFrame = (LinearLayout) findViewById(R.id.item_like_comment_buttons_container);
         LinearLayout commentContainer = (LinearLayout) likeCommentFrame.findViewById(R.id.comment_container);
-        TextView commentCount = (TextView) commentContainer.findViewById(R.id.comment_count);
+//        TextView commentCount = (TextView) commentContainer.findViewById(R.id.comment_count);
 
         LinearLayout likeContainer = (LinearLayout) likeCommentFrame.findViewById(R.id.like_container);
-        TextView likeCount = (TextView) likeContainer.findViewById(R.id.like_count);
+//        TextView likeCount = (TextView) likeContainer.findViewById(R.id.like_count);
 //
 //        TextView guest = (TextView) findViewById(R.id.guest_profile);
 //        ImageView guestPic = (ImageView) findViewById(R.id.guest_profile_pict);
@@ -216,14 +223,74 @@ public class HeritageItemViewActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == SELECT_FILE) {
-                //onSelectFromGalleryResult(data);
+            if (requestCode == HeritageImageAdapter.SELECT_FILE) {
+                onSelectFromGalleryResult(data);
                 Toast.makeText(this, "Picked from gallery", Toast.LENGTH_SHORT).show();
-            } else if (requestCode == REQUEST_CAMERA) {
+            } else if (requestCode == HeritageImageAdapter.REQUEST_CAMERA) {
                 Toast.makeText(this, "taken by camera", Toast.LENGTH_SHORT).show();
-                //onCaptureImageResult(data);
+                onCaptureImageResult(data);
             }
         }
+    }
+
+    private void onCaptureImageResult(Intent data) {
+        Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        thumbnail.compress(Bitmap.CompressFormat.JPEG, 70, bytes);
+
+        File destination = new File(Environment.getExternalStorageDirectory(),
+                System.currentTimeMillis() + ".jpg");
+
+        FileOutputStream fo;
+        try {
+            destination.createNewFile();
+            fo = new FileOutputStream(destination);
+            fo.write(bytes.toByteArray());
+            fo.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        String fullPath = getRealPathFromURIForCamera(data.getData());
+        Log.v(LOG_TAG, fullPath);
+    }
+
+    @SuppressWarnings("deprecation")
+    private void onSelectFromGalleryResult(Intent data) {
+        String fullPath = getRealPathFromURIForGallery(data.getData());
+        Log.v(LOG_TAG, "full path " + fullPath);
+        Bitmap bm = null;
+        if (data != null) {
+            try {
+                bm = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), data.getData());
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+
+//        mImageView.setImageBitmap(bm);
+    }
+
+    private String getRealPathFromURIForCamera(Uri contentURI) {
+        String result;
+        Cursor cursor = getContentResolver().query(contentURI, null, null, null, null);
+        if (cursor == null) { // Source is Dropbox or other similar local file path
+            result = contentURI.getPath();
+        } else {
+            cursor.moveToFirst();
+            int idx = cursor.getColumnIndex(MediaStore.Images.ImageColumns.DATA);
+            result = cursor.getString(idx);
+            cursor.close();
+        }
+        return result;
+    }
+
+    private String getRealPathFromURIForGallery(Uri uri) {
+        String[] projection = {MediaStore.Images.Media.DATA};
+        @SuppressWarnings("deprecation")
+        Cursor cursor = managedQuery(uri, projection, null, null, null);
+        int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
+        cursor.moveToFirst();
+        return cursor.getString(column_index);
     }
 
     private class FullItemLoader extends AsyncTask<Integer, Void, String> {
@@ -486,6 +553,7 @@ public class HeritageItemViewActivity extends AppCompatActivity {
         }
 
     }
+
     /*
     public void updateUi(ArrayList<HeritageItem> heritageItems) {
         itemAdapter.clear();
