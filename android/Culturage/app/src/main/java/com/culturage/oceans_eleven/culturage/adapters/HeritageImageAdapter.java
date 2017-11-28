@@ -3,13 +3,14 @@ package com.culturage.oceans_eleven.culturage.adapters;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.provider.MediaStore;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.culturage.oceans_eleven.culturage.R;
 import com.squareup.picasso.Picasso;
@@ -19,6 +20,7 @@ import java.util.ArrayList;
 public class HeritageImageAdapter extends RecyclerView.Adapter<HeritageImageAdapter.ViewHolder> {
     private static ArrayList<String> imageUrls;
     private Activity mContext;
+    private int REQUEST_CAMERA = 0, SELECT_FILE = 1;
 
     class ViewHolder extends RecyclerView.ViewHolder {
         private ImageView mImage;
@@ -77,13 +79,13 @@ public class HeritageImageAdapter extends RecyclerView.Adapter<HeritageImageAdap
             holder.mTakePhoto.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(mContext, "Button is clicked", Toast.LENGTH_LONG).show();
+                    startCameraIntent();
                 }
             });
             holder.mChoosePhoto.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    Toast.makeText(mContext, "choose Button is clicked", Toast.LENGTH_LONG).show();
+                    startGalleryIntent();
                 }
             });
         }
@@ -108,5 +110,17 @@ public class HeritageImageAdapter extends RecyclerView.Adapter<HeritageImageAdap
             return R.layout.heritage_item_image_list_last_button;
         }
         return R.layout.heritage_image_horizontal_list_item;
+    }
+
+    private void startGalleryIntent() {
+        Intent intent = new Intent();
+        intent.setType("image/*");
+        intent.setAction(Intent.ACTION_GET_CONTENT);//
+        mContext.startActivityForResult(Intent.createChooser(intent, "Select File"), SELECT_FILE);
+    }
+
+    private void startCameraIntent() {
+        Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        mContext.startActivityForResult(intent, REQUEST_CAMERA);
     }
 }

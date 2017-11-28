@@ -71,7 +71,7 @@ public class UploadActivity extends Activity {
         btnTakePhoto.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                cameraIntent();
+                startCameraIntent();
             }
         });
 
@@ -79,7 +79,7 @@ public class UploadActivity extends Activity {
         btnSelectPhoto.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                galleryIntent();
+                startGalleryIntent();
             }
         });
 
@@ -150,9 +150,9 @@ public class UploadActivity extends Activity {
 //            case NewsFeedUtils.MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE:
 //                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 //                    if (userChosenTask.equals("Take Photo"))
-//                        cameraIntent();
+//                        startCameraIntent();
 //                    else if (userChosenTask.equals("Choose from Gallery"))
-//                        galleryIntent();
+//                        startGalleryIntent();
 //                } else {
 //                    //code for deny
 //                }
@@ -160,14 +160,14 @@ public class UploadActivity extends Activity {
 //        }
 //    }
 
-    private void galleryIntent() {
+    private void startGalleryIntent() {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);//
         startActivityForResult(Intent.createChooser(intent, "Select File"), SELECT_FILE);
     }
 
-    private void cameraIntent() {
+    private void startCameraIntent() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(intent, REQUEST_CAMERA);
     }

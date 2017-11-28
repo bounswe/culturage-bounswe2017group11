@@ -46,7 +46,7 @@ public class HeritageItemViewActivity extends AppCompatActivity {
      * Tag for the log messages
      */
     private static final String LOG_TAG = HeritageItemViewActivity.class.getSimpleName();
-
+    private int REQUEST_CAMERA = 0, SELECT_FILE = 1;
 
     private RecyclerView mRecommendationView;
     private ArrayList<HeritageItem> recommendations = new ArrayList<>();
@@ -208,6 +208,22 @@ public class HeritageItemViewActivity extends AppCompatActivity {
         imageList.setLayoutManager(mLayoutManager2);
         HeritageImageAdapter imageAdapter = new HeritageImageAdapter(this, imageUrls);
         imageList.setAdapter(imageAdapter);
+    }
+
+    // This is used when uploading new image
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if (resultCode == Activity.RESULT_OK) {
+            if (requestCode == SELECT_FILE) {
+                //onSelectFromGalleryResult(data);
+                Toast.makeText(this, "Picked from gallery", Toast.LENGTH_SHORT).show();
+            } else if (requestCode == REQUEST_CAMERA) {
+                Toast.makeText(this, "taken by camera", Toast.LENGTH_SHORT).show();
+                //onCaptureImageResult(data);
+            }
+        }
     }
 
     private class FullItemLoader extends AsyncTask<Integer, Void, String> {
