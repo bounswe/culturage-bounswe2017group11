@@ -26,7 +26,7 @@ class SearchItem(APIView):
 		for q in queryList:
 			if q in model:
 				queryModel.append(q)
-		print(queryModel)
+		#print(queryModel)
 
 		if len(queryModel) is 0:
 			items = Item.objects.order_by('-created_at').filter(Q(name__icontains=query) | Q(description__icontains=query))	
@@ -42,33 +42,39 @@ class SearchItem(APIView):
 		for item in items:
 			avSim = 0
 			count = 0
-			print(item)
+			#print(item)
 			for tag in item.tags.all():
 				for tagPart in tag.name.split():
-					print("--------",tagPart)
+					#print("--------",tagPart)
 					if tagPart in model:
 						for q in queryModel:
-							print(q,"--------",tagPart)
+							#print(q,"--------",tagPart)
 							avSim = avSim + model.similarity(q,tagPart)
 							count = count + 1
-							print(",",avSim)
-							print(",",count)
-			print("*****",count)
+							#print(",",avSim)
+							#print(",",count)
+			#print("*****",count)
 			if count==0:
 				avSim = 0
 			else:
 				avSim = avSim/count
 			
-			print(avSim)
+			#print(avSim)
 			returnedItems.append(item)
 			scores.append(avSim)
 		#returnedItems = NewsfeedSerializer.setup_eager_loading(returnedItems)  # Set up eager loading to avoid N+1 selects
 		
-		print(returnedItems)
-		print(scores)
+		#print(returnedItems)
+		#print(scores)
 		returnedItems = [x for _, x in sorted(zip(scores,returnedItems), key = lambda pair: pair[0], reverse = True)]
-		print(returnedItems)
-		returnedItems = returnedItems[0:10]
+		#print(returnedItems)
+		returnedItems = returnedItems[0:15]
+		if (sum(scores[0:15])<0.1):
+			items = Item.objects.order_by('-created_at').filter(Q(name__icontains=query) | Q(description__icontains=query))	
+			items = NewsfeedSerializer.setup_eager_loading(items)  # Set up eager loading to avoid N+1 selects
+			serializer = NewsfeedSerializer(items, many=True, context={'request': request})
+			return Response(serializer.data)
+		
 		serializer = NewsfeedSerializer(returnedItems, many=True, context={'request': request})
 		return Response(serializer.data)
 
