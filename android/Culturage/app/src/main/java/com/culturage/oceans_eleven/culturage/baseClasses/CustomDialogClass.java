@@ -69,7 +69,8 @@ public class CustomDialogClass extends Dialog implements
                 } else {
                     Toast.makeText(activity, "Comment is not allowed", Toast.LENGTH_SHORT).show();
                 }
-                dismiss();
+
+
                 if (currentItem != null) {
                     currentItem.setmCommentCount(currentItem.getmCommentCount() + 1);
                     Intent intent = new Intent(getContext(), HeritageItemViewActivity.class);
@@ -79,7 +80,12 @@ public class CustomDialogClass extends Dialog implements
                     intent.putExtra("imageUrl", currentItem.getmImageUrl());
                     intent.putExtra("israted", currentItem.isRated());
                     getContext().startActivity(intent);
+                } else if (activity instanceof HeritageItemViewActivity) {
+                    activity.finish();
+                    activity.startActivity(activity.getIntent());
                 }
+
+                dismiss();
             }
         });
 
