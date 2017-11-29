@@ -14,7 +14,7 @@ class SearchTag extends React.Component {
 	componentDidMount(){
 		var _this = this;
     	var myHeaders = new Headers();
-      var link = 'http://18.220.108.135/api/filter/tag/items?q=' + this.props.match.params.tag;
+      var link = 'http://52.90.34.144:85/api/filter/tag/items?q=' + this.props.match.params.tag;
       var token = "JWT " + getCookie('token');
     	myHeaders.append("Authorization",token);
     	fetch(link , {
