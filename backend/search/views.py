@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from django.db.models import Q
 from django.contrib.auth.models import User
+from django.conf import settings
 from base.models import Item
 from base.models import Location
 from base.models import Tag
@@ -10,16 +11,65 @@ from base.serializers import LocationSerializer
 from base.serializers import TagSerializer
 from rest_framework.response import Response
 from rest_framework.views import APIView
+import gensim
+import os
 
 class SearchItem(APIView):
 	"""
     API endpoint that search items.
     """
 	def get(self, request):
-		query = request.GET.get('q', '')
-		items = Item.objects.order_by('-created_at').filter(Q(name__icontains=query) | Q(description__icontains=query))
-		items = NewsfeedSerializer.setup_eager_loading(items)  # Set up eager loading to avoid N+1 selects
-		serializer = NewsfeedSerializer(items, many=True, context={'request': request})
+		model = gensim.models.KeyedVectors.load(os.path.join(settings.BASE_DIR,"50k"))
+		query = request.GET.get('q', '').lower()
+		queryList = query.split()
+		queryModel = []
+		for q in queryList:
+			if q in model:
+				queryModel.append(q)
+		print(queryModel)
+
+		if len(queryModel) is 0:
+			items = Item.objects.order_by('-created_at').filter(Q(name__icontains=query) | Q(description__icontains=query))	
+			items = NewsfeedSerializer.setup_eager_loading(items)  # Set up eager loading to avoid N+1 selects
+			serializer = NewsfeedSerializer(items, many=True, context={'request': request})
+			return Response(serializer.data)
+
+		items = Item.objects.order_by('-created_at').filter()#(Q(name__icontains=query) | Q(description__icontains=query))
+		
+
+		returnedItems = []
+		scores = []
+		for item in items:
+			avSim = 0
+			count = 0
+			print(item)
+			for tag in item.tags.all():
+				for tagPart in tag.name.split():
+					print("--------",tagPart)
+					if tagPart in model:
+						for q in queryModel:
+							print(q,"--------",tagPart)
+							avSim = avSim + model.similarity(q,tagPart)
+							count = count + 1
+							print(",",avSim)
+							print(",",count)
+			print("*****",count)
+			if count==0:
+				avSim = 0
+			else:
+				avSim = avSim/count
+			
+			print(avSim)
+			returnedItems.append(item)
+			scores.append(avSim)
+		#returnedItems = NewsfeedSerializer.setup_eager_loading(returnedItems)  # Set up eager loading to avoid N+1 selects
+		
+		print(returnedItems)
+		print(scores)
+		returnedItems = [x for _, x in sorted(zip(scores,returnedItems), key = lambda pair: pair[0], reverse = True)]
+		print(returnedItems)
+		returnedItems = returnedItems[0:10]
+		serializer = NewsfeedSerializer(returnedItems, many=True, context={'request': request})
 		return Response(serializer.data)
 
 class SearchUser(APIView):
