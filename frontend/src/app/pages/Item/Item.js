@@ -22,7 +22,7 @@ class Item extends React.Component {
 
 	componentWillMount(){
     var id = this.props.match.params.id;
-    var link = 'http://18.220.108.135/api/items/' + id;
+    var link = 'http://52.90.34.144:85/api/items/' + id;
 		var _this = this;
     	var myHeaders = new Headers();
     	var token = "JWT " + getCookie('token');
@@ -43,7 +43,7 @@ class Item extends React.Component {
   			console.log('There has been a problem with your fetch operation: ' + error.message);
 		});
 
-	var link2 = 'http://18.220.108.135/api/recommendation/item/' + id;
+	var link2 = 'http://52.90.34.144:85/api/recommendation/item/' + id;
 		fetch(link2 , {
         	method: 'GET',
         	headers: myHeaders
