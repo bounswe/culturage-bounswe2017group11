@@ -169,16 +169,16 @@ public class HeritageItemViewActivity extends AppCompatActivity {
         });
 
 
-        //TODO do thiss down
 
+        /*handle tags recycle view start*/
         RecyclerView.LayoutManager tagsLayoutManager = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
         tagsView.setLayoutManager(tagsLayoutManager);
-//
+
         new FullItemLoader().execute(heritageItemPostID);
-//
+
         tagsAdapter = new TagsViewAdapter(HeritageItemViewActivity.this, tagsList);
         tagsView.setAdapter(tagsAdapter);
-        //TODO do thiss up
+        /*handle tags recycle view end*/
 
         // Lastly, populate recommendations
         mRecommendationView = (RecyclerView) findViewById(R.id.recommendation_view);
@@ -249,6 +249,7 @@ public class HeritageItemViewActivity extends AppCompatActivity {
 
                 } catch (Exception e) {
                     date.setText("unknown");
+                    Log.e(LOG_TAG + " start date", e.getMessage());
 
                 }
 
@@ -258,6 +259,8 @@ public class HeritageItemViewActivity extends AppCompatActivity {
 
                 } catch (Exception e) {
                     loc.setText("unknown");
+                    Log.e(LOG_TAG + " location", e.getMessage());
+
 
                 }
 
@@ -283,7 +286,7 @@ public class HeritageItemViewActivity extends AppCompatActivity {
                 // tagsAdapter.clear();
                 // tagsAdapter.addAll(tagsList);
                 if (tagsList.isEmpty()) {
-                    tagsList.add(new Tag("#beFirstOneToTag"));
+                    tagsList.add(new Tag("noTagsGiven"));
 
                 }
                 tagsView.setAdapter(tagsAdapter);

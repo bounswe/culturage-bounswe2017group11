@@ -18,6 +18,8 @@ import com.culturage.oceans_eleven.culturage.adapters.HeritageItemAdapter;
 import com.culturage.oceans_eleven.culturage.baseClasses.HeritageItem;
 import com.culturage.oceans_eleven.culturage.network.SearchLoader;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 /**
@@ -88,15 +90,20 @@ public class SearchActivity extends AppCompatActivity implements LoaderManager.L
     @Override
     public Loader<ArrayList<HeritageItem>> onCreateLoader(int id, Bundle args) {
         String stringToSearch = getIntent().getStringExtra("stringToSearch");
+
+        try {
+            stringToSearch = URLEncoder.encode(stringToSearch, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
         String endPoint = getIntent().getStringExtra("endPoint");
         return new SearchLoader(SearchActivity.this, endPoint + stringToSearch);
     }
 
     @Override
     public void onLoadFinished(Loader<ArrayList<HeritageItem>> loader, ArrayList<HeritageItem> heritageItems) {
-        if (heritageItems == null) {
-            return;
-        } else if (heritageItems.isEmpty()) {
+        if (heritageItems == null || heritageItems.isEmpty()) {
             String stringToSearch = getIntent().getStringExtra("stringToSearch");
             Toast.makeText(SearchActivity.this, "Sorry we have got nothing to show about " + stringToSearch, Toast.LENGTH_LONG).show();
 
@@ -113,7 +120,7 @@ public class SearchActivity extends AppCompatActivity implements LoaderManager.L
             };
 
             thread.start();
-
+            return;
         }
         updateUi(heritageItems);
     }

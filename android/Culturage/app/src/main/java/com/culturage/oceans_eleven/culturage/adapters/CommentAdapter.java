@@ -27,8 +27,11 @@ public class CommentAdapter extends ArrayAdapter {
 
     private final static String LOG_TAG = "commentAdapter";
 
+    Activity activity;
+
     public CommentAdapter(Activity context, ArrayList<Comment> comments) {
         super(context, 0, comments);
+        this.activity = context;
     }
 
     @NonNull
@@ -41,7 +44,9 @@ public class CommentAdapter extends ArrayAdapter {
             listItemView = LayoutInflater.from(getContext()).inflate(
                     R.layout.comment_item, parent, false);
         }
+        final View finalListItemView = listItemView; //needed to be able to pass it to other classes
         final Comment currentComment = (Comment) getItem(position);
+
 
         TextView usernameView = (TextView) listItemView.findViewById(R.id.commentOwner);
         Log.v(LOG_TAG, usernameView.toString());
@@ -63,12 +68,15 @@ public class CommentAdapter extends ArrayAdapter {
             }
         });
 
+
+        final CommentAdapter thisAdapter = this;
         // delete button. Needs to be revised.
         ImageButton deleteComment = (ImageButton) listItemView.findViewById(R.id.delete_comment);
+
         deleteComment.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                new deleteLoader(currentComment.getCommentId()).execute();
+                new deleteLoader(currentComment.getCommentId(), finalListItemView, thisAdapter, currentComment).execute();
             }
         });
 
@@ -84,10 +92,17 @@ public class CommentAdapter extends ArrayAdapter {
 
         private int deleteCommentId;
         private boolean isDeleted;
+        private View listItemView;
+        CommentAdapter theAdapter;
+        Comment currentComment;
 
-        private deleteLoader(int deleteCommentId) {
+        private deleteLoader(int deleteCommentId, View listItemView, CommentAdapter theAdapter, Comment currentComment) {
             this.deleteCommentId = deleteCommentId;
             this.isDeleted = false;
+            this.listItemView = listItemView;
+            this.theAdapter = theAdapter;
+            this.currentComment = currentComment;
+
         }
 
         @Override
@@ -108,6 +123,8 @@ public class CommentAdapter extends ArrayAdapter {
 
             if (isDeleted) {
                 Toast.makeText(getContext(), "Comment Deleted Successfuly", Toast.LENGTH_SHORT).show();
+                theAdapter.remove(currentComment);
+                listItemView.invalidate();
             } else {
                 Toast.makeText(getContext(), "Error", Toast.LENGTH_SHORT).show();
             }

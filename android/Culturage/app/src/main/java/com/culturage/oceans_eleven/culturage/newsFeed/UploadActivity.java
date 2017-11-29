@@ -107,7 +107,7 @@ public class UploadActivity extends Activity {
                 } catch (NumberFormatException e) {
                     year = "0000";
                 } catch (Exception e) {
-                    Log.v("upload", "Error in year parsing");
+                    Log.e("upload", "Error in year parsing");
                 }
                 if (day.equals("--")) {
                     day = "00";
@@ -283,7 +283,7 @@ public class UploadActivity extends Activity {
                 json.put("image", "image/png;base64," + itemToUpload.getmImageBase64String());
                 json.put("location", itemToUpload.getmLocation());
                 json.put("date", itemToUpload.getmDate());
-                JSONArray tags = new JSONArray(itemToUpload.getMTags().split("\\s"));
+                JSONArray tags = new JSONArray(itemToUpload.getMTags().replaceAll("#", "").split("\\s"));
                 Log.v("upload-tag", tags.toString());
                 json.put("tags", tags);
                 Log.v("upload", itemToUpload.getmImageBase64String());
