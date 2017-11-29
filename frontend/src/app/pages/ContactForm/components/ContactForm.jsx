@@ -139,21 +139,8 @@ class ContactForm extends React.Component {
               </div>
             </div>
 
-
-            <div className="col-md-6 ">
+            <div className="col-md-5 ">
                 <form>
-                {/*<div className="form-group">
-                  <label id="username">Username:</label>
-                  <input type="text" id="username" onChange={this.handleUsernameChange} placeholder={this.state.profileinfo.username}/>
-                  <input className="form-control"
-                    type="text"
-                    name="username"
-                    ref="username"
-                    placeholder = {this.props.username}
-                    value={ this.state.subject}
-                    onChange={ this.handleUsernameChange}
-                  required />
-                </div>*/}
                   <div className="form-group">
                     <label id="titleID">Title</label>
                     <input className="form-control"
