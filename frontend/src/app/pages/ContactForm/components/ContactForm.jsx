@@ -1,6 +1,6 @@
 import React from 'react';
-import $ from 'jquery';
-import _ from "lodash";
+import TagsInput from 'react-tagsinput'
+import 'react-tagsinput/react-tagsinput.css'
 
 class ContactForm extends React.Component {
     constructor(props) {
@@ -17,13 +17,19 @@ class ContactForm extends React.Component {
             tags: [],
             tag: '',
         }
-
+        this.handleUsernameChange = this.handleUsernameChange.bind(this);
         this.handleNameChange = this.handleNameChange.bind(this);
         this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
         this.handleTagsChange = this.handleTagsChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleClear = this.handleClear.bind(this);
+        this.handleChangeTaags = this.handleChangeTaags.bind(this);
     }
+
+    handleChangeTaags(tags) {this.setState({tags});}
+
+    handleUsernameChange(event){event.preventDefault();this.setState({username: event.target.value});};
+
 
     _handleSubmit(e) {
       e.preventDefault();
@@ -82,7 +88,7 @@ class ContactForm extends React.Component {
 
       //console.log(data);
       var token = getCookie('token');
-      fetch('http://18.220.108.135/api/items/',
+      fetch('http://52.90.34.144:85/api/items/',
       {
 
       headers: {
@@ -133,8 +139,7 @@ class ContactForm extends React.Component {
               </div>
             </div>
 
-
-            <div className="col-md-6 ">
+            <div className="col-md-5 ">
                 <form>
                   <div className="form-group">
                     <label id="titleID">Title</label>
@@ -158,17 +163,10 @@ class ContactForm extends React.Component {
                         required />
                   </div>
                   <div className="form-group">
-                      <label id="tagsID">Tags</label>
-                      <input className="form-control"
-                        type="text"
-                        name="tags"
-                        ref="tags"
-                        value={ this.state.subject }
-                        onChange={ this.handleTagsChange }
-                        required />
-                      <br/>
+                    <label id="tagsID">Tags</label>
+                    <TagsInput value={this.state.tags} onChange={this.handleChangeTaags} />
+                    <br/>
                   </div>
-
                   <button className="btn btn-primary custom"
                     onClick={ this.handleSubmit }>Submit</button>
                   <button className="btn btn-primary custom margin-left"
@@ -179,6 +177,7 @@ class ContactForm extends React.Component {
         );
     }
 }
+
 function getCookie(key) {
     var keyValue = document.cookie.match('(^|;) ?' + key + '=([^;]*)(;|$)');
     return keyValue ? keyValue[2] : null;

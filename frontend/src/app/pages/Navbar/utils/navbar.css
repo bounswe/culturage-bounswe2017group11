@@ -1,0 +1,34 @@
+.my-navbar {
+    margin-bottom: 0;
+    border-radius: 0;
+    background-color: #17a2b8;
+    border-color: #003300;   
+}
+
+.my-navbar li a{
+    color: #ffffff;
+}
+
+.my-navbar .active a{
+    background-color: #8ee4f1;
+    color: #ffffff;
+}
+
+.my-navbar li a:hover,
+.my-navbar a:hover{
+	background-color: #102310;
+	color: orange;
+}
+
+.my-navbar .navbar-brand{
+    color: #ffffff;
+}
+
+.my-navbar .navbar-brand:hover{
+    background-color: #17a2b8;
+	color: #ff6600;
+}
+
+.navbar-form{
+    width: 300px;
+}

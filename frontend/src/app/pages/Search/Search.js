@@ -1,8 +1,8 @@
 import React from 'react';
-import Navbar from '../Home/components/Navbar.jsx';
+import Navbar from '../Navbar/components/Navbar.jsx';
 import NewsFeed from './components/NewsFeed.jsx';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './utils/home-styles.css';
+import '../Home/utils/home-styles.css';
 import { Link } from 'react-router-dom';
 
 class SearchTag extends React.Component {
@@ -35,10 +35,13 @@ class SearchTag extends React.Component {
 
 	render() {
 		return(
-			<div class="home-body">
-				<Navbar page={"home"}/>
-				<NewsFeed itemlist={this.state.itemlist}/>
-			</div>
+      <div>
+        <Navbar page={"home"}/>
+        <div class="home-body">
+          
+          <NewsFeed itemlist={this.state.itemlist}/>
+        </div>
+      </div>
 		);
 	}
 }
