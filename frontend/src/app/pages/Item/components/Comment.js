@@ -126,7 +126,7 @@ class Comment extends React.Component {
                     {this.props.item.comments.map(function(comment){ return (
                         <li class="comment">
                         <a class="pull-left" href="#">
-                            <img class="avatar" src="http://bootdey.com/img/Content/user_1.jpg" alt="avatar"/>
+                            <img class="avatar" src= {(comment.written_by.photo) ? comment.written_by.photo : "http://bootdey.com/img/Content/user_1.jpg" }alt="avatar"/>
                         </a>
                         <div class="comment-body">
                             <div class="comment-heading">

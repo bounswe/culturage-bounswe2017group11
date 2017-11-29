@@ -71,13 +71,12 @@ class Item extends React.Component {
 
 
                   <Body item={this.state.items} />
+                  <SuggestedItems item={this.state.suggestedItems} />
+
                   </div>
                      			<div class="col-md-4">
                   <Like item={this.state.items} />
                   <Comment item={this.state.items} />
-                  </div>
-                  <div class = "col-md-8">	
-                  <SuggestedItems item={this.state.suggestedItems} />
                   </div>
                   </div>
 			</div>

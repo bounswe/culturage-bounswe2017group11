@@ -125,15 +125,12 @@ div.thumb {
     padding-bottom: 10px;
 }
 
-.thumb a {
-    display: block;
-    width: 100%;
-    height: 110px;
-    overflow: hidden;
-}
-
-.thumb a img {
+.thumb img {
     max-width: 100%;
+    height: 120px;
+    overflow: hidden;
+
+
 }
 
 .thumb div {
