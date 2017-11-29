@@ -20,7 +20,9 @@ export default class NewsFeedItem extends React.Component {
                <NewsFeedItemDesc description={this.props.item.description} id={this.props.item.id} />
             </div>
             <div class="col-sm-6">
-               <img src={this.props.item.featured_img}></img>
+               <Link to={"/item/" + this.props.item.id}>
+                  <img src={this.props.item.featured_img}></img>
+               </Link>
             </div>
          </div>
       )

@@ -1,4 +1,5 @@
 import React from 'react';
+import '../utils/navbar.css';
 
 class Navbar extends React.Component {
 	constructor(props){
@@ -33,8 +34,8 @@ class Navbar extends React.Component {
 							
 						</ul>
 						<div class="col-sm-3 col-md-3">
-							<form class="navbar-form" role="search">
-								<div class="input-group">
+							<form id="search-bar" class="navbar-form" role="search">
+								<div class="input-group my-input-group">
 									<input type="text" class="form-control" placeholder="Search" name="q"></input>
 									<div class="input-group-btn">
 										<button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>

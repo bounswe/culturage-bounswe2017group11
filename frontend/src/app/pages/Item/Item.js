@@ -1,26 +1,34 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Navbar from '../Home/components/Navbar.jsx';
+import Navbar from '../Navbar/components/Navbar.jsx';
 import Body from './components/Body.jsx';
-import Comment from './components/Comment.jsx';
+import Comment from './components/Comment.js';
+import Like from './components/Likebtn.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
-import './utils/font-awesome-4.7.0/css/font-awesome.min.css'
+import './utils/font-awesome-4.7.0/css/font-awesome.css';
+import SuggestedItems from './components/SuggestedItems.js';
+
 
 import './utils/mycss.css';
-
+import $ from 'jquery';
 
 class Item extends React.Component {
 	constructor(props){
    		super(props);
-   		this.state = {items: []};
+   		this.state = {items: [],
+   			suggestedItems: []
+   		};
 	}
 
-	componentDidMount(){
+	componentWillMount(){
     var id = this.props.match.params.id;
     var link = 'http://18.220.108.135/api/items/' + id;
 		var _this = this;
     	var myHeaders = new Headers();
-    	myHeaders.append("Authorization", "JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyMiwidXNlcm5hbWUiOiJha29rc2FsIiwiZW1haWwiOiJha29rc2FsQGEuY29tIiwiZXhwIjoyNTA4Njc4OTE1fQ.PgPIJppA9u5umhrHGxPmv7_1Hi2ItASDgd7NH4DHcO0");
+    	var token = "JWT " + getCookie('token');
+
+
+    	myHeaders.append("Authorization", token);
     	fetch(link , {
         	method: 'GET',
         	headers: myHeaders
@@ -35,9 +43,25 @@ class Item extends React.Component {
   			console.log('There has been a problem with your fetch operation: ' + error.message);
 		});
 
+	var link2 = 'http://18.220.108.135/api/recommendation/item/' + id;
+		fetch(link2 , {
+        	method: 'GET',
+        	headers: myHeaders
+        })
+    	.then(response => response.json())
+    	.then(function(data){
+      		_this.setState({suggestedItems: data});
+      		console.log(data)
+      	})
+
+		.catch(function(error) {
+  			console.log('There has been a problem with your fetch operation: ' + error.message);
+		});
+
     }
 
 	render() {
+		if(this.state.items){
 		return(
 
 			<div>
@@ -49,16 +73,26 @@ class Item extends React.Component {
                   <Body item={this.state.items} />
                   </div>
                      			<div class="col-md-4">
-
+                  <Like item={this.state.items} />
                   <Comment item={this.state.items} />
                   </div>
-
+                  <div class = "col-md-8">	
+                  <SuggestedItems item={this.state.suggestedItems} />
+                  </div>
                   </div>
 			</div>
 		);
 	}
+		else{
+			return(<div>Loading..</div>);
+		}
+	}
 }
 
+function getCookie(key) {
+    var keyValue = document.cookie.match('(^|;) ?' + key + '=([^;]*)(;|$)');
+    return keyValue ? keyValue[2] : null;
+}
 
 
 export default Item;

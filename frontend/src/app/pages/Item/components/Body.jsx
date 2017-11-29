@@ -14,11 +14,10 @@ class Body extends React.Component {
       body=	<div class="containter-fluid">
       			<h1>{this.props.item.name}</h1>
                {this.props.item.tags.map(function(data){
-                     return <a href="#"><span class="badge badge-info">#{data.name}</span></a>
+                     return <a href={"/searchTag/" + data.name}><span class="badge badge-info">#{data.name}</span></a>
                })}
       			<hr />
             	<div class="img">
-            	<br />
             	<img src={this.props.item.featured_img} class="cover"/>
             	</div>                    
             	<div class="jumbotron">

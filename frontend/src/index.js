@@ -7,6 +7,7 @@ import Login from './app/pages/Login/Login.js';
 import Home from './app/pages/Home/Home.js';
 import Upload from './app/pages/ContactForm/Upload.js';
 import Item from './app/pages/Item/Item.js';
+import SearchTag from './app/pages/Search/Search.js';
 
 
 ReactDOM.render(
@@ -16,6 +17,9 @@ ReactDOM.render(
     	<Route exact path="/login" component={Login} />
     	<Route exact path="/upload" component={Upload} />
     	<Route path="/item/:id" component={Item} />
+    	<Route path="/searchTag/:tag" component={SearchTag} />
+
+
   	</Switch>
   </BrowserRouter>,
   document.getElementById('app')
