@@ -27,11 +27,11 @@ class Navbar extends React.Component {
 					<div class="collapse navbar-collapse" id="myNavbar">
 						<ul class="nav navbar-nav">
 							<li class={(this.state.activeClassName == "home") ? "active" : ""}><a href="/">Home</a></li>
-							{ this.state.token 
+							{ this.state.token
 								? <li class={(this.state.activeClassName == "upload") ? "active" : ""}><a href="/Upload">Add an Item</a></li>
 								: ""
-							}	
-							
+							}
+
 						</ul>
 						<div class="col-sm-3 col-md-3">
 							<form id="search-bar" class="navbar-form" role="search">
@@ -44,7 +44,11 @@ class Navbar extends React.Component {
 							</form>
 						</div>
 						<ul class="nav navbar-nav navbar-right">
-						{ this.state.token 
+						{ this.state.token
+							? <li class={(this.state.activeClassName == "profile") ? "active" : ""}><a href="/Profile">Profile</a></li>
+							: ""
+						}
+						{ this.state.token
 							? <li onClick={this.handleClick}><a href="/login"><span class="glyphicon glyphicon-log-out"></span> Logout </a></li>
 							: <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
 						}
@@ -52,7 +56,7 @@ class Navbar extends React.Component {
 					</div>
 				</div>
 			</div>
-					
+
 		);
 	}
 }
