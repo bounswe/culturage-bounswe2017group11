@@ -27,11 +27,13 @@ public class CommentAdapter extends ArrayAdapter {
 
     private final static String LOG_TAG = "commentAdapter";
 
-    Activity activity;
+    private Activity activity;
+    private String username;
 
     public CommentAdapter(Activity context, ArrayList<Comment> comments) {
         super(context, 0, comments);
         this.activity = context;
+        username = PreferenceManager.getDefaultSharedPreferences(context).getString("username", "null");
     }
 
     @NonNull
@@ -71,14 +73,18 @@ public class CommentAdapter extends ArrayAdapter {
 
         final CommentAdapter thisAdapter = this;
         // delete button. Needs to be revised.
-        ImageButton deleteComment = (ImageButton) listItemView.findViewById(R.id.delete_comment);
-
-        deleteComment.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                new deleteLoader(currentComment.getCommentId(), finalListItemView, thisAdapter, currentComment).execute();
-            }
-        });
+        ImageButton deleteCommentBtn = (ImageButton) listItemView.findViewById(R.id.delete_comment);
+        if (username.equals(currentComment.getUsername())) {
+            deleteCommentBtn.setVisibility(View.VISIBLE);
+            deleteCommentBtn.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    new deleteLoader(currentComment.getCommentId(), finalListItemView, thisAdapter, currentComment).execute();
+                }
+            });
+        } else {
+            deleteCommentBtn.setVisibility(View.GONE);
+        }
 
 //        imageView.setImageResource(R.drawable.sample_0);
         String imageUri = currentComment.getImageUri();

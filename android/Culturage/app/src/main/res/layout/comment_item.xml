@@ -59,9 +59,10 @@
 
     <ImageButton
         android:id="@+id/delete_comment"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:src="@mipmap/ic_delete"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@color/fab_material_white"
+        android:src="@drawable/ic_delete"
         android:visibility="visible" />
 
 </LinearLayout>

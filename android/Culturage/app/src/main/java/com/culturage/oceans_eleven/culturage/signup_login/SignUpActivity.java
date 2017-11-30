@@ -93,6 +93,7 @@ public class SignUpActivity extends AppCompatActivity {
             if (returnedToken != null) {
                 editor = preferences.edit();
                 editor.putString("token", returnedToken);
+                editor.putString("username", username);
                 editor.apply();
                 startActivity(new Intent(SignUpActivity.this, NewsFeedActivity.class));
             } else {

@@ -80,13 +80,6 @@ public class LoginActivity extends AppCompatActivity {
         username = mUsernameView.getText().toString();
         password = mPasswordView.getText().toString();
 
-//        if (username.equals("r") && password.equals("1")) {
-//            Intent intent = new Intent(LoginActivity.this, NewsFeedActivity.class);
-//            startActivity(intent);
-//        } else {
-//            Toast.makeText(this, R.string.unsuccessful_login, Toast.LENGTH_SHORT).show();
-//            mUsernameView.requestFocus();
-//        }
         new LoginRequest(LoginActivity.this).execute();
     }
 
@@ -117,6 +110,7 @@ public class LoginActivity extends AppCompatActivity {
             if (returnedToken != null) {
                 editor = preferences.edit();
                 editor.putString("token", returnedToken);
+                editor.putString("username", username);
                 editor.apply();
                 startActivity(new Intent(LoginActivity.this, NewsFeedActivity.class));
             } else {
@@ -138,7 +132,6 @@ public class LoginActivity extends AppCompatActivity {
             json.put("password", password);
             Log.v("logintag: json", json.toString());
         } catch (JSONException e) {
-            // TODO: Handle exception
             Log.v("logintag", "Error in Json construction");
             e.printStackTrace();
         }
