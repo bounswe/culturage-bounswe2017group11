@@ -16,7 +16,7 @@ class Navbar extends React.Component {
 		_this.setState({token : tokenTemp});
 		var myHeaders = new Headers();
     	myHeaders.append("Authorization", "JWT " + tokenTemp);
-    	fetch('http://18.220.108.135/api/profile', {
+    	fetch('http://52.90.34.144:85/api/profile', {
         	method: 'GET',
         	headers: myHeaders
         })

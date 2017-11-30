@@ -20,14 +20,14 @@ class Home extends React.Component {
 		var _this = this;
 		var tokenTemp = getCookie("token");
 		if(tokenTemp == null){
-			tokenTemp = "JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyMiwidXNlcm5hbWUiOiJha29rc2FsIiwiZW1haWwiOiJha29rc2FsQGEuY29tIiwiZXhwIjoyNTA4Njc4OTE1fQ.PgPIJppA9u5umhrHGxPmv7_1Hi2ItASDgd7NH4DHcO0"
+			tokenTemp = "JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImhhbGlsa2Fsa2FuOTVAZ21haWwuY29tIiwidXNlcl9pZCI6MywiZXhwIjoxNTM3OTA1NDQ0LCJ1c2VybmFtZSI6ImhhbGlsIn0.hV0dPW3IsrqynXjwiycc5s25dtaReLP6J446soiwU2Y"
 		}else{
 			tokenTemp = "JWT " + tokenTemp;
 			_this.setState({loggedIn: 1});
 		}
     	var myHeaders = new Headers();
     	myHeaders.append("Authorization", tokenTemp);
-    	fetch('http://18.220.108.135/api/items', {
+    	fetch('http://52.90.34.144:85/api/items', {
         	method: 'GET',
         	headers: myHeaders
         })
@@ -40,7 +40,7 @@ class Home extends React.Component {
   			console.log('There has been a problem with your fetch operation: ' + error.message);
 		});
 
-		fetch('http://18.220.108.135/api/recommendation', {
+		fetch('http://52.90.34.144:85/api/recommendation', {
         	method: 'GET',
         	headers: myHeaders
         })
