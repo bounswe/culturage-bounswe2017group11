@@ -11,7 +11,7 @@
 .recommended-list{
     width:30%;
     height: 100%;
-    margin-left: 8%;
+    margin-left: 5%;
 }
 
 .recommended-list h1{
@@ -21,8 +21,8 @@
 
 .newsfeed{
     width:70%;
-    margin-left: 3%;
-    margin-right: 8%;
+    margin-left: 5%;
+    margin-right: 5%;
     padding-left: 1%;
     padding-right: 1%;
 }
