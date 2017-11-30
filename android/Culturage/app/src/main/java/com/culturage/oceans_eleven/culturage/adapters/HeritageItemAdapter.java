@@ -2,7 +2,6 @@ package com.culturage.oceans_eleven.culturage.adapters;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
@@ -19,13 +18,13 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.culturage.oceans_eleven.culturage.R;
 import com.culturage.oceans_eleven.culturage.baseClasses.CustomDialogClass;
 import com.culturage.oceans_eleven.culturage.baseClasses.CustomLikeClass;
 import com.culturage.oceans_eleven.culturage.baseClasses.HeritageItem;
 import com.culturage.oceans_eleven.culturage.network.PostJSON;
-import com.culturage.oceans_eleven.culturage.newsFeed.HeritageItemViewActivity;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
@@ -81,17 +80,12 @@ public class HeritageItemAdapter extends ArrayAdapter {
         });
 
         LinearLayout likeContainer = (LinearLayout) frame.findViewById(R.id.like_container);
+        final View finalListItemView = listItemView; //to be able to pass it to likeAction
         likeContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new likeAction(getContext(), currentItem.getmPostId(), currentItem.isRated()).execute();
-                Intent intent = new Intent(getContext(), HeritageItemViewActivity.class);
-                intent.putExtra("postId", currentItem.getmPostId());
-                intent.putExtra("title", currentItem.getmTitle());
-                intent.putExtra("description", currentItem.getmDescription());
-                intent.putExtra("imageUrl", currentItem.getmImageUrl());
-                intent.putExtra("israted", currentItem.isRated());
-                context.startActivity(intent);
+                new likeAction(getContext(), currentItem, finalListItemView).execute();
+
             }
         });
 
@@ -124,20 +118,25 @@ public class HeritageItemAdapter extends ArrayAdapter {
         return listItemView;
     }
 
-    private class likeAction extends AsyncTask<String, String, String> {
+    private class likeAction extends AsyncTask<String, String, Boolean> {
 
         private Context mContext;
         private boolean isLiked;
         private int heritageItemPostID;
+        HeritageItem currentItem;
+        View listItemView;
 
-        private likeAction(Context context, int heritageItemPostID, boolean isLiked) {
+
+        private likeAction(Context context, HeritageItem currentItem, View listItemView) {
             mContext = context;
-            this.heritageItemPostID = heritageItemPostID;
-            this.isLiked = isLiked;
+            this.heritageItemPostID = currentItem.getmPostId();
+            this.isLiked = currentItem.isRated();
+            this.currentItem = currentItem;
+            this.listItemView = listItemView;
         }
 
         @Override
-        protected String doInBackground(String... params) {
+        protected Boolean doInBackground(String... params) {
             try {
                 SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
                 String token = preferences.getString("token", "null");
@@ -146,12 +145,52 @@ public class HeritageItemAdapter extends ArrayAdapter {
 
             } catch (Exception e) {
                 e.printStackTrace();
+                return false;
             }
-            return "";
+            return true;
         }
 
         @Override
-        protected void onPostExecute(String result) {
+        protected void onPostExecute(Boolean result) {
+
+            if (result != true) { //if the action could not be performed then just report and quit
+                if (isLiked) {
+                    Toast.makeText(context, "uppss could not un-like", Toast.LENGTH_SHORT).show();
+
+                } else {
+                    Toast.makeText(context, "uppss could not like", Toast.LENGTH_SHORT).show();
+
+                }
+
+                return;
+            }
+
+            ImageButton likeButton_ = (ImageButton) listItemView.findViewById(R.id.like_btn);
+
+
+            TextView likeCount = (TextView) listItemView.findViewById(R.id.like_count);
+
+            TextView show_likes = (TextView) listItemView.findViewById(R.id.show_likes);
+
+
+            if (isLiked) { //meaning that we will unlike it
+                likeButton_.setImageResource(R.drawable.ic_notlike);
+                currentItem.setmLikeCount(currentItem.getmLikeCount() - 1);
+                currentItem.setRated(false);
+
+
+            } else { //THEN WE LIKE IT
+                likeButton_.setImageResource(R.drawable.ic_like);
+                currentItem.setmLikeCount(currentItem.getmLikeCount() + 1);
+                currentItem.setRated(true);
+
+
+            }
+
+            this.isLiked = !this.isLiked; //we toggle it
+            /*update views accordingly*/
+            likeCount.setText(currentItem.getmLikeCount() + "");
+            show_likes.setText("  Liked by " + currentItem.getmLikeCount() + " people");
 
         }
 
@@ -175,8 +214,10 @@ public class HeritageItemAdapter extends ArrayAdapter {
             try {
 
                 if (isLiked) {
+                    //then unlike
                     json.put("rate", 0);
                 } else {
+                    //like it
                     json.put("rate", 1);
                 }
 

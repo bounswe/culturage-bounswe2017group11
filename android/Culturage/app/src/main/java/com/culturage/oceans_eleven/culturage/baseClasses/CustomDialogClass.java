@@ -38,6 +38,7 @@ public class CustomDialogClass extends Dialog implements
     private Activity activity;
     private int postId;
     private HeritageItem currentItem;
+    private CommentAdapter commentAdapter;
 
     public CustomDialogClass(Activity activity, int postId, HeritageItem currentItem) {
         super(activity);
@@ -68,8 +69,10 @@ public class CustomDialogClass extends Dialog implements
                 } else {
                     Toast.makeText(activity, "Comment is not allowed", Toast.LENGTH_SHORT).show();
                 }
-                dismiss();
+
+
                 if (currentItem != null) {
+                    currentItem.setmCommentCount(currentItem.getmCommentCount() + 1);
                     Intent intent = new Intent(getContext(), HeritageItemViewActivity.class);
                     intent.putExtra("postId", currentItem.getmPostId());
                     intent.putExtra("title", currentItem.getmTitle());
@@ -77,12 +80,20 @@ public class CustomDialogClass extends Dialog implements
                     intent.putExtra("imageUrl", currentItem.getmImageUrl());
                     intent.putExtra("israted", currentItem.isRated());
                     getContext().startActivity(intent);
+                } else if (activity instanceof HeritageItemViewActivity) {
+                    activity.finish();
+                    activity.startActivity(activity.getIntent());
                 }
+
+                dismiss();
             }
         });
+
         cancelCommentBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                activity.finish();
+                activity.startActivity(activity.getIntent());
                 dismiss();
             }
         });
@@ -90,6 +101,8 @@ public class CustomDialogClass extends Dialog implements
         backBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                activity.finish();
+                activity.startActivity(activity.getIntent());
                 dismiss();
             }
         });
@@ -97,6 +110,15 @@ public class CustomDialogClass extends Dialog implements
 
         new commentLoader().execute();
 
+    }
+
+    @Override
+    public void onBackPressed() {
+        //refresh previous intend
+        dismiss();
+        activity.finish();
+        activity.startActivity(activity.getIntent());
+        //activity.startActivity(activity.getIntent());
     }
 
     @Override
@@ -169,7 +191,7 @@ public class CustomDialogClass extends Dialog implements
 
             });
 
-            CommentAdapter commentAdapter = new CommentAdapter(activity, comments);
+            commentAdapter = new CommentAdapter(activity, comments);
             commentLV.setAdapter(commentAdapter);
 
         }
@@ -177,7 +199,7 @@ public class CustomDialogClass extends Dialog implements
     }
 
 
-    private class postComment extends AsyncTask<String, String, String> {
+    private class postComment extends AsyncTask<String, String, Boolean> {
 
         private String commentsUrl = "http://18.220.108.135/api/items/" + postId + "/comments";
         private String text;
@@ -187,23 +209,27 @@ public class CustomDialogClass extends Dialog implements
         }
 
         @Override
-        protected String doInBackground(String... params) {
+        protected Boolean doInBackground(String... params) {
             Log.v("postComment", "resulting json before postComment " + commentsUrl);
-            String result = null;
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(getContext());
             String token = preferences.getString("token", "null");
             try {
                 PostJSON.postToApi(constructTheJSONLikeComment(), commentsUrl, token);
             } catch (IOException e) {
                 e.printStackTrace();
+                return false;
             }
-            return null;
+            return true;
 
         }
 
         @Override
-        protected void onPostExecute(String result) {
+        protected void onPostExecute(Boolean result) {
 
+            if (result == true) {
+                //TODO refresh dialog here
+
+            }
         }
 
         private JSONObject constructTheJSONLikeComment() {
