@@ -2,6 +2,7 @@ package com.culturage.oceans_eleven.culturage.newsFeed;
 
 
 import android.app.Activity;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -43,9 +44,14 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class HeritageItemViewActivity extends AppCompatActivity {
@@ -58,12 +64,13 @@ public class HeritageItemViewActivity extends AppCompatActivity {
     private RecyclerView mRecommendationView;
     private ArrayList<HeritageItem> recommendations = new ArrayList<>();
     private RecommendationRecyclerViewAdapter recommendationAdapter;
+    private RecyclerView imageList;
 
     private RecyclerView tagsView;
     private ArrayList<Tag> tagsList = new ArrayList<>();
     private TagsViewAdapter tagsAdapter;
 
-    private static String itemUrl = "http://52.90.34.144:85/api/items/";
+    private static String itemUrl = "http://18.220.108.135/api/items/";
 
     private int heritageItemPostID;
 
@@ -89,12 +96,12 @@ public class HeritageItemViewActivity extends AppCompatActivity {
 
         tagsView = (RecyclerView) findViewById(R.id.tagsRecycleView);
         // Secondly get necessary fields from the backend.
-//        TextView date = (TextView) findViewById(R.id.her_item_date);
 //
-//        TextView loc = (TextView) findViewById(R.id.her_item_location);
-//
-//        TextView tags = (TextView) findViewById(R.id.her_item_tags);
-//
+        imageList = (RecyclerView) findViewById(R.id.her_item_image_list);
+        RecyclerView.LayoutManager mLayoutManager2 = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
+        imageList.setLayoutManager(mLayoutManager2);
+        new AllMediasReceiver(HeritageItemViewActivity.this, heritageItemPostID, imageUri).execute();
+
         LinearLayout likeCommentFrame = (LinearLayout) findViewById(R.id.item_like_comment_buttons_container);
         LinearLayout commentContainer = (LinearLayout) likeCommentFrame.findViewById(R.id.comment_container);
 //        TextView commentCount = (TextView) commentContainer.findViewById(R.id.comment_count);
@@ -137,8 +144,8 @@ public class HeritageItemViewActivity extends AppCompatActivity {
         likeContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new likeAction(HeritageItemViewActivity.this).execute();
-                new likeCommentCountLoader().execute();
+                new LikeAction(HeritageItemViewActivity.this).execute();
+                new LikeCommentCountLoader().execute();
                 //Toast.makeText(HeritageItemViewActivity.this, "Will like soon", Toast.LENGTH_SHORT).show();
             }
         });
@@ -155,8 +162,8 @@ public class HeritageItemViewActivity extends AppCompatActivity {
 
 //        new FullItemLoader().execute(heritageItemPostID);
 
-        new likeCommentCountLoader().execute();
-        new profileLoader(false).execute();
+        new LikeCommentCountLoader().execute();
+        new ProfileLoader(false).execute();
         //Will be implemented soon!!
         itemUrl = "http://18.220.108.135/api/items/" + heritageItemPostID;
 
@@ -164,14 +171,14 @@ public class HeritageItemViewActivity extends AppCompatActivity {
         guest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new profileLoader(true).execute();
+                new ProfileLoader(true).execute();
             }
         });
         ImageView guestPic = (ImageView) findViewById(R.id.guest_profile_pict);
         guestPic.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                new profileLoader(true).execute();
+                new ProfileLoader(true).execute();
             }
         });
 
@@ -203,18 +210,6 @@ public class HeritageItemViewActivity extends AppCompatActivity {
         recommendationAdapter = new RecommendationRecyclerViewAdapter(HeritageItemViewActivity.this, recommendations);
         mRecommendationView.setAdapter(recommendationAdapter);
 
-        ArrayList<String> imageUrls = new ArrayList<>();
-        imageUrls.add(imageUri);
-        imageUrls.add(imageUri);
-        imageUrls.add(imageUri);
-        imageUrls.add(imageUri);
-        imageUrls.add(imageUri);
-        imageUrls.add(imageUri);
-        RecyclerView imageList = (RecyclerView) findViewById(R.id.her_item_image_list);
-        RecyclerView.LayoutManager mLayoutManager2 = new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false);
-        imageList.setLayoutManager(mLayoutManager2);
-        HeritageImageAdapter imageAdapter = new HeritageImageAdapter(this, imageUrls);
-        imageList.setAdapter(imageAdapter);
     }
 
     // This is used when uploading new image
@@ -225,9 +220,9 @@ public class HeritageItemViewActivity extends AppCompatActivity {
         if (resultCode == Activity.RESULT_OK) {
             if (requestCode == HeritageImageAdapter.SELECT_FILE) {
                 onSelectFromGalleryResult(data);
-                Toast.makeText(this, "Picked from gallery", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "Picked from gallery", Toast.LENGTH_SHORT).show();
             } else if (requestCode == HeritageImageAdapter.REQUEST_CAMERA) {
-                Toast.makeText(this, "taken by camera", Toast.LENGTH_SHORT).show();
+//                Toast.makeText(this, "taken by camera", Toast.LENGTH_SHORT).show();
                 onCaptureImageResult(data);
             }
         }
@@ -252,28 +247,20 @@ public class HeritageItemViewActivity extends AppCompatActivity {
         }
         String fullPath = getRealPathFromURIForCamera(data.getData());
         Log.v(LOG_TAG, fullPath);
+        new ImageUpload(HeritageItemViewActivity.this, fullPath, heritageItemPostID).execute();
     }
 
     @SuppressWarnings("deprecation")
     private void onSelectFromGalleryResult(Intent data) {
         String fullPath = getRealPathFromURIForGallery(data.getData());
+        new ImageUpload(HeritageItemViewActivity.this, fullPath, heritageItemPostID).execute();
         Log.v(LOG_TAG, "full path " + fullPath);
-        Bitmap bm = null;
-        if (data != null) {
-            try {
-                bm = MediaStore.Images.Media.getBitmap(getApplicationContext().getContentResolver(), data.getData());
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-
-//        mImageView.setImageBitmap(bm);
     }
 
     private String getRealPathFromURIForCamera(Uri contentURI) {
         String result;
         Cursor cursor = getContentResolver().query(contentURI, null, null, null, null);
-        if (cursor == null) { // Source is Dropbox or other similar local file path
+        if (cursor == null) {
             result = contentURI.getPath();
         } else {
             cursor.moveToFirst();
@@ -291,6 +278,159 @@ public class HeritageItemViewActivity extends AppCompatActivity {
         int column_index = cursor.getColumnIndexOrThrow(MediaStore.Images.Media.DATA);
         cursor.moveToFirst();
         return cursor.getString(column_index);
+    }
+
+    private class AllMediasReceiver extends AsyncTask<String, Void, ArrayList<String>> {
+        private Activity mContext;
+        private String mImageUri;
+        private int mItemID;
+
+        private AllMediasReceiver(Activity context, int itemID, String imageUri) {
+            this.mContext = context;
+            this.mItemID = itemID;
+            this.mImageUri = imageUri;
+        }
+
+        @Override
+        protected ArrayList<String> doInBackground(String... params) {
+            return getMediaUrls(mItemID);
+        }
+
+        private ArrayList<String> getMediaUrls(int mItemID) {
+            JSONArray json;
+            try {
+                json = new JSONArray(Fetcher.getJSON(new URL(getResources().getString(R.string.itemsEndPoint) + mItemID + "/medias"), mContext));
+                Log.v(LOG_TAG, "Error in get medias" + json.toString());
+                ArrayList<String> urls = new ArrayList<>();
+                urls.add(mImageUri);
+                for (int i = 0; i < json.length(); i++) {
+                    JSONObject temp = json.getJSONObject(i);
+                    if (temp.getString("mediaType").equals("image")) {
+                        urls.add(temp.getString("file_url"));
+                    }
+                }
+                return urls;
+            } catch (Exception e) {
+                Log.v(LOG_TAG, "Error in get medias" + e.getMessage());
+            }
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(ArrayList<String> urls) {
+            HeritageImageAdapter imageAdapter = new HeritageImageAdapter(mContext, urls);
+            imageList.setAdapter(imageAdapter);
+        }
+
+    }
+
+    private class ImageUpload extends AsyncTask<String, Void, Void> {
+        Context mContext;
+        String mFullPath;
+        int mItemID;
+        ProgressDialog dialog;
+
+        private ImageUpload(Context context, String fullPath, int itemID) {
+            this.mContext = context;
+            this.mFullPath = fullPath;
+            this.mItemID = itemID;
+        }
+
+        @Override
+        protected Void doInBackground(String... params) {
+            uploadFile(mFullPath, mItemID);
+
+            return null;
+        }
+
+        @Override
+        protected void onPostExecute(Void v) {
+            Intent intent = getIntent();
+            intent.addFlags(Intent.FLAG_ACTIVITY_NO_ANIMATION);
+            finish();
+            overridePendingTransition(0, 0);
+            startActivity(intent);
+            overridePendingTransition(0, 0);
+//            Toast.makeText(mContext, "File Upload Complete.", Toast.LENGTH_LONG).show();
+            dialog.dismiss();
+        }
+
+        @Override
+        protected void onPreExecute() {
+            dialog = ProgressDialog.show(mContext, "", "Image is being uploaded. Please wait...", true);
+        }
+
+        private void uploadFile(String fileName, int itemID) {
+            String upLoadServerUri = "http://18.220.108.135/api/items/" + itemID + "/medias";
+            int serverResponseCode = 0;
+            HttpURLConnection conn = null;
+            DataOutputStream dos = null;
+            String lineEnd = "\r\n";
+            String twoHyphens = "--";
+            String boundary = "*****";
+            int bytesRead, bytesAvailable, bufferSize;
+            byte[] buffer;
+            int maxBufferSize = 1 * 1024 * 1024;
+            File sourceFile = new File(fileName);
+            try {
+                FileInputStream fileInputStream = new FileInputStream(sourceFile);
+                URL url = new URL(upLoadServerUri);
+                conn = (HttpURLConnection) url.openConnection(); // Open a HTTP
+                conn.setDoInput(true); // Allow Inputs
+                conn.setDoOutput(true); // Allow Outputs
+                conn.setUseCaches(false); // Don't use a Cached Copy
+                conn.setRequestMethod("POST");
+                String token = PreferenceManager.getDefaultSharedPreferences(mContext).getString("token", "null");
+                conn.setRequestProperty("Authorization", "JWT " + token);
+                conn.setRequestProperty("Connection", "Keep-Alive");
+                conn.setRequestProperty("ENCTYPE", "multipart/form-data");
+                conn.setRequestProperty("Content-Type", "multipart/form-data;boundary=" + boundary);
+                conn.setRequestProperty("file", fileName);
+                dos = new DataOutputStream(conn.getOutputStream());
+
+                dos.writeBytes(twoHyphens + boundary + lineEnd);
+                dos.writeBytes("Content-Disposition: form-data; name=\"file\";filename=\""
+                        + fileName + "\"" + lineEnd);
+                dos.writeBytes(lineEnd);
+
+                bytesAvailable = fileInputStream.available(); // create a buffer of
+                // maximum size
+
+                bufferSize = Math.min(bytesAvailable, maxBufferSize);
+                buffer = new byte[bufferSize];
+
+                // read file and write it into form...
+                bytesRead = fileInputStream.read(buffer, 0, bufferSize);
+
+                while (bytesRead > 0) {
+                    dos.write(buffer, 0, bufferSize);
+                    bytesAvailable = fileInputStream.available();
+                    bufferSize = Math.min(bytesAvailable, maxBufferSize);
+                    bytesRead = fileInputStream.read(buffer, 0, bufferSize);
+                }
+
+                // send multipart form data necesssary after file data...
+                dos.writeBytes(lineEnd);
+                dos.writeBytes(twoHyphens + boundary + twoHyphens + lineEnd);
+
+                // Responses from the server (code and message)
+                serverResponseCode = conn.getResponseCode();
+                String serverResponseMessage = conn.getResponseMessage();
+
+                Log.v("uploadFile", "HTTP Response is : " + serverResponseMessage
+                        + ": " + serverResponseCode);
+                // close the streams //
+                fileInputStream.close();
+                dos.flush();
+                dos.close();
+
+            } catch (MalformedURLException ex) {
+                Log.v("uploadFile", "error: " + ex.getMessage(), ex);
+            } catch (Exception e) {
+                Log.v("uploadFile", "" + e.getMessage());
+            }
+            Log.v("uploadFile", serverResponseCode + "");
+        }
     }
 
     private class FullItemLoader extends AsyncTask<Integer, Void, String> {
@@ -407,7 +547,7 @@ public class HeritageItemViewActivity extends AppCompatActivity {
                 /*likeContainer.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        new likeAction(HeritageItemViewActivity.this).execute();
+                        new LikeAction(HeritageItemViewActivity.this).execute();
                         //Toast.makeText(HeritageItemViewActivity.this, "Will like soon", Toast.LENGTH_SHORT).show();
                     }
                 });*/
@@ -419,14 +559,14 @@ public class HeritageItemViewActivity extends AppCompatActivity {
         }
     }
 
-    private class profileLoader extends AsyncTask<String, String, String> {
+    private class ProfileLoader extends AsyncTask<String, String, String> {
 
         private String creator_username;
         private String creator_photo;
         private String creator_id;
         private boolean onclick;
 
-        private profileLoader(boolean onclick) {
+        private ProfileLoader(boolean onclick) {
             this.onclick = onclick;
         }
 
@@ -572,13 +712,13 @@ public class HeritageItemViewActivity extends AppCompatActivity {
     /*
     Will be implemented soon Send token of the user to like or not.
      */
-    private class likeAction extends AsyncTask<String, String, String> {
+    private class LikeAction extends AsyncTask<String, String, String> {
 
         private Context mContext;
         private boolean LikeSuccessful;
         private boolean isLiked;
 
-        private likeAction(Context context) {
+        private LikeAction(Context context) {
             mContext = context;
         }
 
@@ -717,13 +857,13 @@ public class HeritageItemViewActivity extends AppCompatActivity {
         }
     }
 
-    private class likeCommentCountLoader extends AsyncTask<String, String, String> {
+    private class LikeCommentCountLoader extends AsyncTask<String, String, String> {
 
         private String ratesUrl = "http://18.220.108.135/api/items/" + heritageItemPostID;
         private int totalLikeCount;
         private int totalCommentCount;
 
-        private likeCommentCountLoader() {
+        private LikeCommentCountLoader() {
         }
 
         @Override
@@ -779,11 +919,6 @@ public class HeritageItemViewActivity extends AppCompatActivity {
             } catch (Exception e) {
                 Log.v("heritageItem", "error setting totalLikeCount:" + totalLikeCount);
             }
-
-
         }
-
     }
-
-
 }

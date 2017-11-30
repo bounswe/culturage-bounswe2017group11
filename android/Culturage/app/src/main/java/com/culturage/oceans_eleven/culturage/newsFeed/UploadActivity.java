@@ -272,8 +272,6 @@ public class UploadActivity extends Activity {
         private JSONObject constructTheJSON() {
             JSONObject json = new JSONObject();
             try {
-
-
                 json.put("name", itemToUpload.getmTitle());
                 json.put("description", itemToUpload.getmDescription());
                 json.put("image", "image/png;base64," + itemToUpload.getmImageBase64String());
@@ -289,7 +287,5 @@ public class UploadActivity extends Activity {
             }
             return json;
         }
-
     }
-
 }
