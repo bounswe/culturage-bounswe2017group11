@@ -1,11 +1,15 @@
 import React from 'react';
 
+import DatePicker from 'react-datepicker';
+import moment from 'moment';
+import 'react-datepicker/dist/react-datepicker.css';
+
 class ProfilePage extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
 			profileinfo : props.profileinfo,
-			birthday : props.profileinfo.birhtday,
+			birthday : moment(),
 			email : props.profileinfo.email,
 			fullname: props.profileinfo.fullname,
 			location: props.profileinfo.location,
@@ -13,11 +17,15 @@ class ProfilePage extends React.Component {
 			username: props.profileinfo.username
 
 		}
+		this.handleDateChange = this.handleDateChange.bind(this);
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.handleClear = this.handleClear.bind(this);
 		{console.log(this.props.profileinfo)}
 	}
+
+	handleDateChange(date){this.setState({birthday: date});};
+
 
 	handleClear(e) { e.preventDefault();window.location.replace("/upload");};
 
@@ -77,6 +85,7 @@ class ProfilePage extends React.Component {
 
 
 	render() {
+
 		return(
 			<div className="App">
 				<Image src={this.props.profileinfo.photo} />
@@ -127,6 +136,12 @@ class Profile extends React.Component{
 					placeholder={this.props.profileinfo.email}
 					onChange={ this.handleChange }
 						/>
+			</div>
+			<div>
+			<DatePicker
+				dateFormat="YYYY-MM-DD"
+				selected={this.state.birthday}
+				onChange={this.handleDateChange} />
 			</div>
 				<button className="btn btn-primary custom"
 					onClick={ this.handleSubmit }>Submit</button>
