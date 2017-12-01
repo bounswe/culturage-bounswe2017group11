@@ -76,11 +76,6 @@ class SearchItem(APIView):
 		returnedItems = [x for _, x in sorted(zip(scores,returnedItems), key = lambda pair: pair[0], reverse = True)]
 		#print(returnedItems)
 		returnedItems = returnedItems[0:15]
-		if (sum(scores[0:15])<0.1):
-			items = Item.objects.order_by('-created_at').filter(Q(name__icontains=query) | Q(description__icontains=query))	
-			items = NewsfeedSerializer.setup_eager_loading(items)  # Set up eager loading to avoid N+1 selects
-			serializer = NewsfeedSerializer(items, many=True, context={'request': request})
-			return Response(serializer.data)
 		
 		serializer = NewsfeedSerializer(returnedItems, many=True, context={'request': request})
 		return Response(serializer.data)
