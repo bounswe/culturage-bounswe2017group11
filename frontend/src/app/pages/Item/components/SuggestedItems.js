@@ -28,10 +28,10 @@ class SuggestedItems extends React.Component {
     		      		<a href={"/item/" + myItem.id}>
 
     		    <div class="thumb">
-    		    <a><img class = "cover" src={myItem.featured_img}/></a>
+    		    <img class = "cover" src={myItem.featured_img}/>
     		    <div>
     		    <h4>{myItem.name}</h4>
-    		    <p>{(myItem.description == "") ? "No description" : myItem.description.substring(0,20)}</p>
+    		    <p>{(myItem.description == "") ? <i>No description</i> : myItem.description.substring(0,20)}</p>
 
     		    </div>
     		    </div>

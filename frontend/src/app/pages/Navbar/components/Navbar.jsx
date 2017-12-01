@@ -1,58 +1,60 @@
 import React from 'react';
 import '../utils/navbar.css';
+import NavbarDropdown from './NavbarDropdown.jsx';
+import NavbarSearch from './NavbarSearch.jsx';
 
 class Navbar extends React.Component {
 	constructor(props){
    		super(props);
    		this.state = {
    			activeClassName: this.props.page,
-   			token: ''
+   			token: '',
+   			user: ''
    		};
 	}
 	componentDidMount(){
+		var _this = this;
 		var tokenTemp = getCookie("token");
-		this.setState({token : tokenTemp});
-		console.log(this.token);
+		_this.setState({token : tokenTemp});
+		var myHeaders = new Headers();
+    	myHeaders.append("Authorization", "JWT " + tokenTemp);
+    	fetch('http://52.90.34.144:85/api/profile', {
+        	method: 'GET',
+        	headers: myHeaders
+        })
+    	.then(response => response.json())
+    	.then(function(data){
+      		_this.setState({user: data});
+      	})
+
+		.catch(function(error) {
+  			console.log('There has been a problem with your fetch operation: ' + error.message);
+		});
 	}
 	handleClick(){
 		removeCookie("token");
 	}
 	render() {
 		return (
-			<div class="my-navbar">
-				<div class="container-fluid">
-					<div class="navbar-header">
-						<a class="navbar-brand" href="#"><span class="glyphicon glyphicon-fire"></span></a>
+			<div className="my-navbar">
+				<div className="container-fluid">
+					<div className="navbar-header">
+						<a className="navbar-brand" href="#"><span className="glyphicon glyphicon-fire"></span></a>
 					</div>
-					<div class="collapse navbar-collapse" id="myNavbar">
-						<ul class="nav navbar-nav">
-							<li class={(this.state.activeClassName == "home") ? "active" : ""}><a href="/">Home</a></li>
-							{ this.state.token
-								? <li class={(this.state.activeClassName == "upload") ? "active" : ""}><a href="/Upload">Add an Item</a></li>
+					<div className="collapse navbar-collapse" id="myNavbar">
+						<ul className="nav navbar-nav">
+							<li className={(this.state.activeClassName == "home") ? "active" : ""}><a href="/">Home</a></li>
+							{ this.state.user.username
+								? <li className={(this.state.activeClassName == "upload") ? "active" : ""}><a href="/Upload">Add an Item</a></li>
 								: ""
 							}
 
 						</ul>
-						<div class="col-sm-3 col-md-3">
-							<form id="search-bar" class="navbar-form" role="search">
-								<div class="input-group my-input-group">
-									<input type="text" class="form-control" placeholder="Search" name="q"></input>
-									<div class="input-group-btn">
-										<button class="btn btn-default" type="submit"><i class="glyphicon glyphicon-search"></i></button>
-									</div>
-								</div>
-							</form>
-						</div>
-						<ul class="nav navbar-nav navbar-right">
-						{ this.state.token
-							? <li class={(this.state.activeClassName == "profile") ? "active" : ""}><a href="/Profile">Profile</a></li>
-							: ""
+						<NavbarSearch/>
+						{ this.state.user.username
+							? <NavbarDropdown user={this.state.user}/>
+							: <ul className="nav navbar-nav navbar-right"><li><a href="/login"><span className="glyphicon glyphicon-log-in"></span> Login</a></li></ul>
 						}
-						{ this.state.token
-							? <li onClick={this.handleClick}><a href="/login"><span class="glyphicon glyphicon-log-out"></span> Logout </a></li>
-							: <li><a href="/login"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-						}
-						</ul>
 					</div>
 				</div>
 			</div>

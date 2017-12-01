@@ -77,7 +77,7 @@
 }
 .login-page {
   width: 360px;
-  padding: 8% 0 0;
+  padding: 8% 0 0 0;
   margin: auto;
 }
 .form {
@@ -85,7 +85,7 @@
   z-index: 1;
   background: #FFFFFF;
   max-width: 360px;
-  margin: 0 auto 100px;
+  margin: 0 auto;
   padding: 45px;
   text-align: center;
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
@@ -123,7 +123,7 @@
   background: #43A047;
 }
 .login-form .intro {
-  margin: 15px 0 0;
+  margin: 15px 0 25px;
   font-size: 30px;
 }
 
@@ -167,9 +167,20 @@
 .container .info span .fa {
   color: #EF3B3A;
 }
+
+#app {
+      /* The image used */
+  background-image: url("https://i.hizliresim.com/lbr4Db.jpg");
+  /* Full height */
+  height: 100vh;
+  margin: 0;
+  /* Center and scale the image nicely */
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: cover;
+
+}
 body {
-  /*background-image: url("https://i.hizliresim.com/lbr4Db.jpg"); /* fallback for old browsers */
-  background-size: 100% 120%;
   font-family: "Roboto", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

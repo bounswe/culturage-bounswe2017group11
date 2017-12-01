@@ -52,7 +52,7 @@ class Like extends React.Component {
         var comment1 = {
         "rate" : 1
         };
-        var url = "http://18.220.108.135/api/items/" + this.props.item.id + "/rates";
+        var url = "http://52.90.34.144:85/api/items/" + this.props.item.id + "/rates";
       //console.log(data);
       var token = getCookie('token');
       fetch(url,
@@ -91,7 +91,7 @@ class Like extends React.Component {
         var comment1 = {
         "rate" : 0
         };
-        var url = 'http://18.220.108.135/api/items/' + this.props.item.id + '/rates';
+        var url = 'http://52.90.34.144:85/api/items/' + this.props.item.id + '/rates';
       //console.log(data);
       var token = getCookie('token');
       fetch(url,

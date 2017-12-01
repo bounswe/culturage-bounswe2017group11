@@ -12,7 +12,6 @@ export default class NewsFeedItem extends React.Component {
       return (
          <div class="newsfeed-item">
             <div class="col-sm-6">
-               {console.log("In item page: ", this.props.item)}
                <Link to={"/item/" + this.props.item.id}>
                   <h1>{this.props.item.name}</h1>
                </Link>            

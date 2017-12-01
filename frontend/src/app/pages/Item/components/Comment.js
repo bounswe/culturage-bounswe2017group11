@@ -25,7 +25,7 @@ class Comment extends React.Component {
         var comment1 = {
         "text" : this.state.myComment
         };
-        var url = 'http://18.220.108.135/api/items/' + this.props.item.id + '/comments';
+        var url = 'http://52.90.34.144:85/api/items/' + this.props.item.id + '/comments';
       //console.log(data);
       var token = getCookie('token');
       fetch(url,
@@ -62,7 +62,7 @@ class Comment extends React.Component {
         var comment1 = {
         "text" : this.state.myComment
         };
-        var url = 'http://18.220.108.135/api/items/' + this.props.item.id + '/comments';
+        var url = 'http://52.90.34.144:85/api/items/' + this.props.item.id + '/comments';
       //console.log(data);
       var token = getCookie('token');
       fetch(url,
@@ -126,7 +126,7 @@ class Comment extends React.Component {
                     {this.props.item.comments.map(function(comment){ return (
                         <li class="comment">
                         <a class="pull-left" href="#">
-                            <img class="avatar" src="http://bootdey.com/img/Content/user_1.jpg" alt="avatar"/>
+                            <img class="avatar" src= {(comment.written_by.photo) ? comment.written_by.photo : "http://bootdey.com/img/Content/user_1.jpg" }alt="avatar"/>
                         </a>
                         <div class="comment-body">
                             <div class="comment-heading">
