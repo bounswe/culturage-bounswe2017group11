@@ -67,20 +67,16 @@ class LoginForm extends React.Component {
       	<p class="intro">Start sharing knowledge about cultural heritage</p>
       	<input type="text" id="username" onChange={this.handleChange} placeholder="username"/>
       	<input type="password" id="password" onChange={this.handleChange} placeholder="password"/>
-	      <div class="row">
-        	<button class="loginBtn onClick={this.handleLogin} loginBtn--login">Login</button>
-      	</div>
-      	<div class="row">
-      	 	<SocialButton
-			      provider='facebook'
-			      appId='136076600389829'
-			      onLoginSuccess={this.handleFBLogin}
-			      onLoginFailure={this.handleFBFailure}
-			      className="loginBtn loginBtn--facebook"
-			    >
-			      Login with Facebook
-			    </SocialButton>
-      	</div>	
+      	<button class="loginBtn onClick={this.handleLogin} loginBtn--login">Login</button>
+    	 	<SocialButton
+		      provider='facebook'
+		      appId='136076600389829'
+		      onLoginSuccess={this.handleFBLogin}
+		      onLoginFailure={this.handleFBFailure}
+		      className="loginBtn loginBtn--facebook"
+		    >
+		      Login with Facebook
+		    </SocialButton>
 	      <p class="message">Not registered? <a href="#">Create an account</a></p>
 			</form>
 		);
