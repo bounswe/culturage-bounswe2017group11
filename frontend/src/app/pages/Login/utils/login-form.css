@@ -168,11 +168,12 @@
   color: #EF3B3A;
 }
 
-#app {
+.login-page {
       /* The image used */
   background-image: url("https://i.hizliresim.com/lbr4Db.jpg");
   /* Full height */
   height: 100vh;
+  width: 100%;
   margin: 0;
   /* Center and scale the image nicely */
   background-position: center;
