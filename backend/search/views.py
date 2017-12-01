@@ -35,33 +35,40 @@ class SearchItem(APIView):
 			return Response(serializer.data)
 
 		items = Item.objects.order_by('-created_at').filter()#(Q(name__icontains=query) | Q(description__icontains=query))
+		itemsTitle = Item.objects.order_by('-created_at').filter(Q(name__icontains=query) | Q(name__icontains=query.title()) )# | Q(description__icontains=query))
 		
 
 		returnedItems = []
 		scores = []
-		for item in items:
-			avSim = 0
-			count = 0
-			#print(item)
-			for tag in item.tags.all():
-				for tagPart in tag.name.split():
-					#print("--------",tagPart)
-					if tagPart in model:
-						for q in queryModel:
-							#print(q,"--------",tagPart)
-							avSim = avSim + model.similarity(q,tagPart)
-							count = count + 1
-							#print(",",avSim)
-							#print(",",count)
-			#print("*****",count)
-			if count==0:
-				avSim = 0
-			else:
-				avSim = avSim/count
-			
-			#print(avSim)
+
+		for item in itemsTitle:
 			returnedItems.append(item)
-			scores.append(avSim)
+			scores.append(1)
+		
+		for item in items:
+			if item not in itemsTitle:
+				avSim = 0
+				count = 0
+				#print(item)
+				for tag in item.tags.all():
+					for tagPart in tag.name.split():
+						#print("--------",tagPart)
+						if tagPart in model:
+							for q in queryModel:
+								#print(q,"--------",tagPart)
+								avSim = avSim + model.similarity(q,tagPart)
+								count = count + 1
+								#print(",",avSim)
+								#print(",",count)
+				#print("*****",count)
+				if count==0:
+					avSim = 0
+				else:
+					avSim = avSim/count
+				
+				#print(avSim)
+				returnedItems.append(item)
+				scores.append(avSim)
 		#returnedItems = NewsfeedSerializer.setup_eager_loading(returnedItems)  # Set up eager loading to avoid N+1 selects
 		
 		#print(returnedItems)
