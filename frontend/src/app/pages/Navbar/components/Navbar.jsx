@@ -1,5 +1,7 @@
 import React from 'react';
 import '../utils/navbar.css';
+import NavbarDropdown from './NavbarDropdown.jsx';
+import NavbarSearch from './NavbarSearch.jsx';
 
 class Navbar extends React.Component {
 	constructor(props){
@@ -23,7 +25,6 @@ class Navbar extends React.Component {
     	.then(response => response.json())
     	.then(function(data){
       		_this.setState({user: data});
-      		console.log(data)
       	})
 
 		.catch(function(error) {
@@ -43,36 +44,17 @@ class Navbar extends React.Component {
 					<div className="collapse navbar-collapse" id="myNavbar">
 						<ul className="nav navbar-nav">
 							<li className={(this.state.activeClassName == "home") ? "active" : ""}><a href="/">Home</a></li>
-							{ this.state.token
+							{ this.state.user.username
 								? <li className={(this.state.activeClassName == "upload") ? "active" : ""}><a href="/Upload">Add an Item</a></li>
 								: ""
 							}
 
 						</ul>
-						<div className="col-sm-3 col-md-3">
-							<form id="search-bar" className="navbar-form" role="search">
-								<div className="input-group my-input-group">
-									<input type="text" className="form-control" placeholder="Search" name="q"></input>
-									<div className="input-group-btn">
-										<button className="btn btn-default" type="submit"><i className="glyphicon glyphicon-search"></i></button>
-									</div>
-								</div>
-							</form>
-						</div>
-						<ul className="nav navbar-nav navbar-right">
-						{ this.state.user
-							? <p className="navbar-text navbar-p"><b>{this.state.user.username}</b></p>
-							: ""
+						<NavbarSearch/>
+						{ this.state.user.username
+							? <NavbarDropdown user={this.state.user}/>
+							: <ul className="nav navbar-nav navbar-right"><li><a href="/login"><span className="glyphicon glyphicon-log-in"></span> Login</a></li></ul>
 						}
-						{ this.state.token
-							? <li className={(this.state.activeClassName == "profile") ? "active" : ""}><a href="/Profile">Profile</a></li>
-							: ""
-						}
-						{ this.state.token
-							? <li onClick={this.handleClick}><a href="/login"><span className="glyphicon glyphicon-log-out"></span> Logout </a></li>
-							: <li><a href="/login"><span className="glyphicon glyphicon-log-in"></span> Login</a></li>
-						}
-						</ul>
 					</div>
 				</div>
 			</div>
