@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import Navbar from '../Navbar/components/Navbar.jsx';
-import Body from './components/Body.jsx';
+import Body from './components/Body.js';
 import Comment from './components/Comment.js';
 import Like from './components/Likebtn.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
