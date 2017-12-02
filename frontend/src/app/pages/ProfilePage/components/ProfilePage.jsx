@@ -1,44 +1,43 @@
 import React from 'react';
-
 import DatePicker from 'react-datepicker';
 import moment from 'moment';
 import 'react-datepicker/dist/react-datepicker.css';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import './style.css'
 
 class ProfilePage extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			profileinfo : props.profileinfo,
-			birthday : moment(),
-			email : props.profileinfo.email,
-			fullname: props.profileinfo.fullname,
-			location: props.profileinfo.location,
-			photo: props.profileinfo.photo,
-			username: props.profileinfo.username
-
+			username: props.profileinfo.username,
+			fullname: props.profileinfo.fullName,
+			email: props.profileinfo.email,
+			imagePreviewUrl: props.profileinfo.photo,
+			birthday : props.profileinfo.birthday
 		}
+
 		this.handleDateChange = this.handleDateChange.bind(this);
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.handleClear = this.handleClear.bind(this);
-		{console.log(this.props.profileinfo)}
+		{console.log("PROFILE")};
+		{console.log(this.props.profileinfo.username)};
+		{console.log("BIRTHDAY")};
+		{console.log(props.profileinfo.birthday)};
 	}
 
+	handleClear(e) { e.preventDefault();window.location.replace("/profile");};
+
 	handleDateChange(date){this.setState({birthday: date});};
-
-
-	handleClear(e) { e.preventDefault();window.location.replace("/upload");};
 
 	handleChange(event) {
 		event.preventDefault();
 		if(event.target.id == "username"){
 			this.setState({username: event.target.value});
 		} else if(event.target.id == "fullname"){
-			this.setState({password: event.target.value});
-		} else if(event.target.id == "email"){
-			this.setState({password: event.target.value});
-		}else if(event.target.id == "location"){
-			this.setState({password: event.target.value});
+			this.setState({fullname: event.target.value});
+		} else {
+			this.setState({email: event.target.value});
 		}
 	}
 
@@ -48,17 +47,15 @@ class ProfilePage extends React.Component {
 		var myHeaders = new Headers();
 
 		var payload = {
-			"birthday" : this.state.birthday,
-			"email": this.state.email,
-			"fullname": this.state.fullname,
-			"location": this.state.location,
-			"photo": this.props.profileinfo.photo,
-			"username": this.state.username
+			"email" : this.state.email,
+			"photo" : this.state.imagePreviewUrl,
+			"fullName": this.state.fullname,
+			"location": this.props.profileinfo.location,
 		};
 
 		//console.log(data);
 		var token = getCookie('token');
-		fetch('http://18.220.108.135/api/auth/register',
+		fetch('http://52.90.34.144:85/api/profile',
 		{
 
 		headers: {
@@ -83,75 +80,148 @@ class ProfilePage extends React.Component {
 		})
 	};
 
+	_handleImageChange(e) {
+		e.preventDefault();
+
+		let reader = new FileReader();
+		let file = e.target.files[0];
+
+		reader.onloadend = () => {
+			this.setState({
+				file: file,
+				imagePreviewUrl: reader.result
+			});
+		}
+
+		reader.readAsDataURL(file)
+	}
 
 	render() {
 
+		let {imagePreviewUrl} = this.state;
+		let $imagePreview = null;
+		if (imagePreviewUrl) {
+			var url = imagePreviewUrl;
+			$imagePreview = (<img src = {url} className = "avatar img-circle" alt ="avatar"  width="200" height="200"/>);
+		} else if(this.props.profileinfo.photo){
+			var url = '//' + this.props.profileinfo.photo;
+			$imagePreview = (<img src = {url} className = "avatar img-circle" alt ="avatar"  width="200" height="200"/>);
+		}else{
+			$imagePreview = (<img src="//placehold.it/100" className = "avatar img-circle" alt ="avatar"  width="200" height="200"/>);
+		}
+
 		return(
-			<div className="App">
-				<Image src={this.props.profileinfo.photo} />
-				<Profile profileinfo = {this.props.profileinfo}/>
+		<div className="container-fluid">
+	    <h1>Edit Profile</h1>
+	  	<hr/>
+			<div className="row">
+
+				<div className="col-md-4">
+					<div className="text-center">
+						 {$imagePreview}
+						<h6>Upload a different photo...</h6>
+
+						<form onSubmit={(e)=>this._handleSubmit(e)}>
+							<input className="form-control"
+								type="file"
+								onChange={(e)=>this._handleImageChange(e)} />
+						</form>
+
+					</div>
+				</div>
+
+				<div className="col-md-8 personal-info">
+
+				<h3>Personal info</h3>
+				<form className="form-horizontal" role="form">
+
+					<div className="form-group">
+						<label className="col-lg-3 control-label">Username:</label>
+						<div className="col-lg-8">
+							<input className="form-control"
+								type="text" id="username" onChange={this.handleChange} placeholder={this.props.profileinfo.username}
+								  />
+						</div>
+					</div>
+
+					<div className="form-group">
+						<label className="col-lg-3 control-label">Full Name:</label>
+						<div className="col-lg-8">
+							<input className="form-control"
+								type="text"
+								placeholder={this.props.profileinfo.fullName}
+								id="fullname"
+								name="title"
+								ref="title"
+								onChange={ this.handleChange }
+									/>
+						</div>
+					</div>
+
+					<div className="form-group">
+						<label className="col-lg-3 control-label">Email:</label>
+						<div className="col-lg-8">
+							<input className="form-control"
+								type="text"
+								placeholder={this.props.profileinfo.email}
+								id="email"
+								name="title"
+								ref="title"
+								onChange={ this.handleChange }
+									/>
+						</div>
+					</div>
+
+					<div className = "form-group">
+						<label className="col-lg-3 control-label">Birthday:</label>
+						<DatePicker
+							dateFormat="YYYY-MM-DD"
+							selected={this.state.birthday}
+							onChange={this.handleDateChange} />
+					</div>
+
+					<div class="form-group">
+						<label class="col-md-3 control-label"></label>
+						<div class="col-md-8">
+							<button className="btn btn-primary custom"
+								onClick={ this.handleSubmit }>Submit</button>
+							<span></span>
+							<button className="btn btn-primary custom margin-left"
+								onClick={ this.handleClear }>Clear</button>
+						</div>
+					</div>
+					</form>
+				</div>
 			</div>
+		</div>
 		);
 	}
 };
 
 class Image extends React.Component{
 	render() {
+
+		let {imagePreviewUrl} = this.props.src;
+		let $imagePreview = null;
+		if (imagePreviewUrl) {
+			$imagePreview = (<img src={imagePreviewUrl} />);
+		} else {
+			$imagePreview = (<img src="//placehold.it/100" className="avatar img-circle" alt ="avatar"/>);
+		}
+
 		return (
-		<div class="col-md-6">
-			<div className = "imgPreview">
-						<img src={this.props.src}></img>
+		<div className="col-md-3">
+			<div className="text-center">
+				<img src="//placehold.it/100" className="avatar img-circle" alt ="avatar"/>
+				<h6>Upload a different photo...</h6>
+
+				<input type="file" class="form-control"/>
 			</div>
 		</div>
 		);
 	}
 };
 
-class Profile extends React.Component{
-	render() {
-		return (
-		<div class="col-md-5">
-			<form >
-			<div className="form-group">
-			<label id="titleID">Username:</label>
-				<input className="form-control"
-					type="text" id="username" onChange={this.handleChange} placeholder={this.props.profileinfo.username}
-					  />
-			</div>
-			<div className="form-group">
-			<label id="titleID">Full Name:</label>
-				<input className="form-control"
-					type="text"
-					placeholder={this.props.profileinfo.fullname}
-					id="fullname"
-					name="title"
-					ref="title"
-					onChange={ this.handleChange }
-						/>
-			</div>
-			<div className="form-group">
-				<label id="titleID">Email:</label>
-				<input className="form-control"
-					type="text" 	id="email"
-					placeholder={this.props.profileinfo.email}
-					onChange={ this.handleChange }
-						/>
-			</div>
-			<div>
-			<DatePicker
-				dateFormat="YYYY-MM-DD"
-				selected={this.state.birthday}
-				onChange={this.handleDateChange} />
-			</div>
-				<button className="btn btn-primary custom"
-					onClick={ this.handleSubmit }>Submit</button>
-					<button className="btn btn-primary custom margin-left"
-						onClick={ this.handleClear }>Clear</button>
-			</form>
-		</div>
-		);
-	}
-};
 function getCookie(key) {
     var keyValue = document.cookie.match('(^|;) ?' + key + '=([^;]*)(;|$)');
     return keyValue ? keyValue[2] : null;

@@ -17,7 +17,7 @@ class Profile extends React.Component {
     //var myHeaders = new Headers();
     //myHeaders.append("Authorization", "JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyMiwidXNlcm5hbWUiOiJha29rc2FsIiwiZW1haWwiOiJha29rc2FsQGEuY29tIiwiZXhwIjoyNTA4Njc4OTE1fQ.PgPIJppA9u5umhrHGxPmv7_1Hi2ItASDgd7NH4DHcO0");
     var token = getCookie('token');
-		fetch('http://18.220.108.135/api/profile', {
+		fetch('http://52.90.34.144:85/api/profile', {
           headers: {
             'Accept': 'application/json',
             'Content-Type': 'application/json',
@@ -41,9 +41,7 @@ class Profile extends React.Component {
 		return(
 			<div >
 				<Navbar page={"profile"}/>
-				<div>
-					<ProfilePage profileinfo={this.state.profileinfo}/>
-				</div>
+				<ProfilePage profileinfo={this.state.profileinfo}/>
 			</div>
 		);
 	}

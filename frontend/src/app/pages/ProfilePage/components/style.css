@@ -12,6 +12,13 @@ $sandybrown: #F49D6E;
 		@content;
 	}
 }
+
+.containerC{
+
+		padding-left:15px;
+		padding-right:15px;
+}
+
 .imgPreview{
   text-align: center;
   margin: 5px 15px;
