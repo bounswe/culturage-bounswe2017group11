@@ -27,6 +27,7 @@ class Body extends React.Component {
             	</div> }                    
             	<div class="jumbotron">
             		<p>{this.props.item.description}</p>
+            		
             	</div>
             </div>	
       } else {
