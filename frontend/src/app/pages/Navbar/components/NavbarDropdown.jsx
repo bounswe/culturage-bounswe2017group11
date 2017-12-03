@@ -12,11 +12,18 @@ class NavbarDropdown extends React.Component {
 		removeCookie("token");
 	}
 	render() {
+
+		let $imagePreview = null;
+		if(this.state.user.photo){
+			var url = '//' + this.state.user.photo;
+			$imagePreview = (<img src = {url} className = "profile-image img-circle"  width="30" height="40"/>);
+		}else{
+			$imagePreview = (<img src="//placehold.it/100" className = "profile-image img-circle"  width="70" height="70"/>);
+		}
+
 		return (
 			<ul class = "navbar-dropdown nav navbar-nav navbar-right">
-				<div class = "navbar-dropbtn navbar-p navbar-text">
-					<b>{this.state.user.username}</b> <i class="fa fa-caret-down"></i>
-				</div>
+				<a href="#" class="navbar-dropbtn navbar-p navbar-text" >{$imagePreview} {this.state.user.username} <b class="caret"></b></a>
 				<div class="navbar-dropdown-content">
 					<li><a href="/Profile">Profile</a></li>
 					<li onClick={this.handleClick}><a href="/login"><span className="glyphicon glyphicon-log-out"></span> Logout </a></li>
