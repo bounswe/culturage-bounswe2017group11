@@ -7,6 +7,7 @@ class ContactForm extends React.Component {
         super(props);
 
         this.state = {
+            selectedValue: 'media',
             file: '',
             imagePreviewUrl: ' ',
             name: '',
@@ -17,25 +18,15 @@ class ContactForm extends React.Component {
             tags: [],
             tag: '',
         }
-        this.handleUsernameChange = this.handleUsernameChange.bind(this);
+        this.handleSelectedChange = this.handleSelectedChange.bind(this);
         this.handleNameChange = this.handleNameChange.bind(this);
         this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
-        this.handleTagsChange = this.handleTagsChange.bind(this);
+        this.handleChangeTags =  this.handleChangeTags.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleClear = this.handleClear.bind(this);
-        this.handleChangeTaags = this.handleChangeTaags.bind(this);
     }
 
-    handleChangeTaags(tags) {this.setState({tags});}
-
-    handleUsernameChange(event){event.preventDefault();this.setState({username: event.target.value});};
-
-
-    _handleSubmit(e) {
-      e.preventDefault();
-      // TODO: do something with -> this.state.file
-      console.log('handle uploading-', this.state.imagePreviewUrl);
-    }
+    handleChangeTags(tags) {this.setState({tags});}
 
     _handleImageChange(e) {
       e.preventDefault();
@@ -65,10 +56,7 @@ class ContactForm extends React.Component {
     handleDateChange(event){event.preventDefault();this.setState({date: event.target.value});};
     handleImageChange(event){event.preventDefault();this.setState({image: event.target.value});};
     handleTagsChange(event){event.preventDefault();this.setState({tags: event.target.value});};
-
-    handleChangeTags(event, tags) {event.preventDefault();this.setState({tags});};
-    handleChangeInput(event, tag) {event.preventDefault();this.setState({tag});};
-
+    handleSelectedChange(event) {this.setState({selectedValue: event.target.value});}
 
 
     // Handler for the button/submit event
@@ -86,7 +74,8 @@ class ContactForm extends React.Component {
         "tags": this.state.tags
       };
 
-      //console.log(data);
+      console.log("PAYLOAD");
+      console.log(payload);
       var token = getCookie('token');
       fetch('http://52.90.34.144:85/api/items/',
       {
@@ -124,10 +113,14 @@ class ContactForm extends React.Component {
       }
 
         return (
+
+        <div className="container-fluid">
+          <h1>Upload New Item</h1>
+          <hr/>
           <div className="row">
-            <div className="col-md-6" >
-              <div className="previewComponent">
-                <h1 align = "center"> Upload New Item</h1>
+
+            <div className="col-md-5" >
+              <div className="previewComponent text-center">
                 <form onSubmit={(e)=>this._handleSubmit(e)}>
                   <input className="fileInput"
                     type="file"
@@ -139,41 +132,57 @@ class ContactForm extends React.Component {
               </div>
             </div>
 
-            <div className="col-md-5 ">
-                <form>
+            <div className="col-md-6 ">
+                <form className="form-horizontal" role="form">
+
                   <div className="form-group">
-                    <label id="titleID">Title</label>
-                    <input className="form-control"
-                      type="text"
-                      name="title"
-                      ref="title"
-                      value={ this.state.subject }
-                      onChange={ this.handleNameChange }
-                    required />
-                  </div>
-                  <div className="form-group">
-                      <label id="descID">Description</label>
-                      <textArea className="form-control"
-                        rows="8"
+                    <label className="col-lg-3 control-label">Title:</label>
+                    <div className="col-lg-8">
+                      <input className="form-control"
                         type="text"
-                        name="description"
-                        ref="description"
+                        name="title"
+                        ref="title"
                         value={ this.state.subject }
-                        onChange={ this.handleDescriptionChange }
-                        required />
+                        onChange={ this.handleNameChange }
+                      required />
+                    </div>
                   </div>
+
                   <div className="form-group">
-                    <label id="tagsID">Tags</label>
-                    <TagsInput value={this.state.tags} onChange={this.handleChangeTaags} />
-                    <br/>
+                      <label className="col-lg-3 control-label">Description:</label>
+                      <div className="col-lg-8">
+                        <textArea className="form-control"
+                          rows="8"
+                          type="text"
+                          name="description"
+                          ref="description"
+                          value={ this.state.subject }
+                          onChange={ this.handleDescriptionChange }
+                          required />
+                      </div>
                   </div>
-                  <button className="btn btn-primary custom"
-                    onClick={ this.handleSubmit }>Submit</button>
-                  <button className="btn btn-primary custom margin-left"
-                    onClick={ this.handleClear }>Clear</button>
+
+                  <div className="form-group">
+                    <label className="col-lg-3 control-label">Tags:</label>
+                    <div className="col-lg-8">
+                      <TagsInput value={this.state.tags} onChange={this.handleChangeTags} />
+                      <br/>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+        						<label class="col-md-3 control-label"></label>
+        						<div class="col-md-8">
+                      <button className="btn btn-primary custom"
+                        onClick={ this.handleSubmit }>Submit</button>
+                      <button className="btn btn-primary custom margin-left"
+                        onClick={ this.handleClear }>Clear</button>
+                    </div>
+                  </div>
                 </form>
             </div>
           </div>
+        </div>
         );
     }
 }
