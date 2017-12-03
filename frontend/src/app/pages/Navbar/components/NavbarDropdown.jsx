@@ -18,7 +18,7 @@ class NavbarDropdown extends React.Component {
 			var url = '//' + this.state.user.photo;
 			$imagePreview = (<img src = {url} className = "profile-image img-circle"  width="30" height="40"/>);
 		}else{
-			$imagePreview = (<img src="//placehold.it/100" className = "profile-image img-circle"  width="70" height="70"/>);
+			$imagePreview = (<img src="//placehold.it/100" className = "profile-image img-circle"  width="30" height="40"/>);
 		}
 
 		return (
