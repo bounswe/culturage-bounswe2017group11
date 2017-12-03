@@ -26,6 +26,7 @@
     "react-scripts": "1.0.14",
     "react-slick": "^0.15.4",
     "react-social-login": "^3.4.1",
+    "react-tabs": "^2.1.1",
     "react-tagsinput": "^3.19.0",
     "style-loader": "^0.19.0",
     "webpack": "^3.8.1"

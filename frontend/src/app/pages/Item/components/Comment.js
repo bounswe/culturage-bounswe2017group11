@@ -4,7 +4,8 @@ class Comment extends React.Component {
     constructor(props){
       super(props);
       this.state = {
-        myComment: ''
+        myComment: '',
+        user: ""
       }
 
       this.handleCommentChange = this.handleCommentChange.bind(this);
@@ -12,8 +13,26 @@ class Comment extends React.Component {
       this.handleKeyPress = this.handleKeyPress.bind(this);
    }
 
-   componentWillMount(){
+   componentDidMount(){
         console.log(this.props.item);
+        var token = getCookie('token');
+        var myHeaders = new Headers();
+      myHeaders.append("Authorization", "JWT " + token);
+      fetch('http://52.90.34.144:85/api/profile', {
+          method: 'GET',
+          headers: myHeaders
+        })
+      .then(response => {
+        return response.json() })
+      .then((json) => {
+          this.setState({user: json});
+        })
+
+    .catch(function(error) {
+        console.log('There has been a problem with your fetch operation: ' + error.message);
+    });
+
+
    }
 
    handleCommentChange(event){this.setState({myComment: event.target.value});};
@@ -103,8 +122,11 @@ class Comment extends React.Component {
             <div class="panel-body">
             <h5 class="panel-title"><strong>Id:</strong> {this.props.item.id}</h5>
             <h5 class="panel-title"><strong>Created by:</strong> {this.props.item.created_by.username}</h5>
-
             <h5 class="panel-title"><strong>Created at:</strong> {this.props.item.created_at.substring(0,10)}</h5>
+            <div class = {(this.state.user.username == this.props.item.created_by.username) ? "" : "hidden"}> 
+            <hr></hr>
+            <a href={"/editItem/" + this.props.item.id} type="button" class="btn btn-danger btn-block">Add media</a>
+            </div>
 
             </div>
         </div>
