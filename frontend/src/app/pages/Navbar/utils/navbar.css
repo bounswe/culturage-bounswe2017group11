@@ -2,7 +2,7 @@
     margin-bottom: 0;
     border-radius: 0;
     background-color: #17a2b8;
-    border-color: #003300;   
+    border-color: #003300;
 }
 
 .my-navbar a{
@@ -51,6 +51,9 @@
 }
 
 .navbar-dropdown-content {
+    float: right !important;
+    right: 0;
+    left: auto;
     display: none;
     background-color: white;
     color:#17a2b8;
@@ -73,4 +76,3 @@
     background-color: #EEEEEE;
     color: orange;
 }
-
