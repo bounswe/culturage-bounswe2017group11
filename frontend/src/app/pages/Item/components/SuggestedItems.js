@@ -21,25 +21,22 @@ class SuggestedItems extends React.Component {
           	<h1>Suggested Items</h1>
       			<hr />
 
-            <div class="row">
 
     	{this.props.item.slice(0,8).map(function(myItem){ return (
-    		  <div class="col-md-3">
     		      		<a href={"/item/" + myItem.id}>
 
     		    <div class="thumb">
     		    <img class = "cover" src={myItem.featured_img}/>
     		    <div>
-    		    <h4>{myItem.name}</h4>
-    		    <p>{(myItem.description == "") ? <i>No description</i> : myItem.description.substring(0,20)}</p>
+    		    <h5><strong>{myItem.name}</strong></h5>
+    		    <p>{(myItem.description == "") ? <i>No description</i> : myItem.description}</p>
+    		    <i class="fa fa-thumbs-up">&nbsp;{myItem.rate}</i>&nbsp;<i class="fa fa-comment">&nbsp;{myItem.comment_count}</i>
 
     		    </div>
     		    </div>
     		        		 </a>     
 
-    		      </div>
         );})}
-</div>
 
 
 
