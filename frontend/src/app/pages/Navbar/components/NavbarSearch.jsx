@@ -15,40 +15,49 @@ class NavbarSearch extends React.Component {
 	// Handler for the button/submit event
 	handleSubmit(e){
 		e.preventDefault();
-
-		var link = 'http://52.90.34.144:85/api/search/item?q=' + this.state.searchText;
-		var _this = this;
-			var myHeaders = new Headers();
-			var token = "JWT " + getCookie('token');
-			myHeaders.append("Authorization", token);
-			fetch(link , {
-					method: 'GET',
-					headers: myHeaders
-				})
-			.then(response => response.json())
-			.then(function(data){
-					_this.setState({searchResults: data});
-					console.log(data)
-				})
-
-		.catch(function(error) {
-				console.log('There has been a problem with your fetch operation: ' + error.message);
-		});
-
+		var replaceWith = '/searchItem/' + this.state.searchText;
+		window.location.replace(replaceWith);
 	}
 
 	handleValueChange(e) {
 				e.preventDefault();
         this.setState({searchText: e.target.value});
+
+				var link = 'http://52.90.34.144:85/api/search/item?q=' + this.state.searchText;
+				var _this = this;
+					var myHeaders = new Headers();
+					var token = "JWT " + getCookie('token');
+					myHeaders.append("Authorization", token);
+					fetch(link , {
+							method: 'GET',
+							headers: myHeaders
+						})
+					.then(response => response.json())
+					.then(function(data){
+							_this.setState({searchResults: data});
+							console.log(data)
+						})
+
+				.catch(function(error) {
+						console.log('There has been a problem with your fetch operation: ' + error.message);
+				});
+
     }
 
 
 	render() {
+	  let {searchResults} = this.state;
+		let $returnValue = null;
+		if(searchResults){
+			$returnValue = searchResults.map(function(data){
+						return <li><a href={"/searchTag/" + data.name}>{data.name}</a></li>
+			})
+		}
 		return (
+
 			<div className="col-sm-3 col-md-3">
 				<form id="search-bar" className="navbar-form" role="search">
 					<div className="input-group my-input-group">
-
 							<input className="form-control"
 								type="text"
 								name="q"
@@ -59,8 +68,8 @@ class NavbarSearch extends React.Component {
 
 							<div className="input-group-btn">
 								<button className="btn btn-default" type="submit" onClick={ this.handleSubmit }><i className="glyphicon glyphicon-search"></i></button>
-
 							</div>
+
 					</div>
 				</form>
 			</div>
