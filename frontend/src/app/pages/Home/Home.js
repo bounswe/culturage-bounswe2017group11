@@ -20,7 +20,7 @@ class Home extends React.Component {
 		var _this = this;
 		var tokenTemp = getCookie("token");
 		if(tokenTemp == null){
-			tokenTemp = "JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImhhbGlsa2Fsa2FuOTVAZ21haWwuY29tIiwidXNlcl9pZCI6MywiZXhwIjoxNTM3OTA1NDQ0LCJ1c2VybmFtZSI6ImhhbGlsIn0.hV0dPW3IsrqynXjwiycc5s25dtaReLP6J446soiwU2Y"
+			tokenTemp = "JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imd1ZXN0QHRlc3QuY29tIiwidXNlcm5hbWUiOiJndWVzdCIsImV4cCI6MTUzODMxMTQ4MywidXNlcl9pZCI6MTd9.U2JUiiQXLkvAvmuXQogxp8MGuM4smV4HzWz1aGATmlA"
 		}else{
 			tokenTemp = "JWT " + tokenTemp;
 			_this.setState({loggedIn: 1});
