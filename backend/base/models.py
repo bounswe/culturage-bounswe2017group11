@@ -91,8 +91,8 @@ class Location(models.Model):
 class Timeline(models.Model):
     name = models.CharField(max_length=200)
     text = models.CharField(max_length=500, null=True, blank=True)
-    startDate = models.DateField(auto_now_add=False, null=True, blank=True)
-    endDate = models.DateField(auto_now_add=False, null=True, blank=True)
+    startDate = models.CharField(max_length=20, null=True, blank=True)
+    endDate = models.CharField(max_length=20, null=True, blank=True)
     item = models.ForeignKey(Item, related_name='timelines', on_delete=models.CASCADE, null=True)
     location = models.ForeignKey(Location, related_name='timeline_location', on_delete=models.SET_NULL, null=True)
     created_by = models.ForeignKey(User, related_name='timeline_user', on_delete=models.SET_NULL, null=True)
