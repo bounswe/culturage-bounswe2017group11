@@ -29,7 +29,7 @@ class SearchItem(APIView):
 		#print(queryModel)
 
 		if len(queryModel) is 0:
-			items = Item.objects.order_by('-created_at').filter(Q(name__icontains=query) | Q(description__icontains=query))	
+			items = Item.objects.order_by('-created_at').filter(Q(name__icontains=query)| Q(name__icontains=query.title())| Q(description__icontains=query))	
 			items = NewsfeedSerializer.setup_eager_loading(items)  # Set up eager loading to avoid N+1 selects
 			serializer = NewsfeedSerializer(items, many=True, context={'request': request})
 			return Response(serializer.data)
