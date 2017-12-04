@@ -13,18 +13,26 @@ class ProfilePage extends React.Component {
 			fullname: props.profileinfo.fullName,
 			email: props.profileinfo.email,
 			imagePreviewUrl: props.profileinfo.photo,
-			birthday : props.profileinfo.birthday
+			birthday : props.profileinfo.birthday,
+			day:'',
+			month:'',
+			year:'',
 		}
 
 		this.handleDateChange = this.handleDateChange.bind(this);
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.handleClear = this.handleClear.bind(this);
-		{console.log("PROFILE")};
-		{console.log(this.props.profileinfo.username)};
-		{console.log("BIRTHDAY")};
-		{console.log(props.profileinfo.birthday)};
+		this.handleYearChange = this.handleYearChange.bind(this);
+		this.handleMonthChange = this.handleMonthChange.bind(this);
+		this.handleDayChange = this.handleDayChange.bind(this);
 	}
+
+	handleYearChange(event){event.preventDefault();this.setState({year: event.target.value});};
+
+	handleMonthChange(event){event.preventDefault();  this.setState({month: event.target.value});};
+
+	handleDayChange(event){event.preventDefault();  this.setState({day: event.target.value});};
 
 	handleClear(e) { e.preventDefault();window.location.replace("/profile");};
 
@@ -46,14 +54,15 @@ class ProfilePage extends React.Component {
 
 		var myHeaders = new Headers();
 
+		var valueBirthday = this.state.year + '-' + this.state.month + '-' + this.state.day;
 		var payload = {
+			"birthday": valueBirthday,
 			"email" : this.state.email,
 			"photo" : this.state.imagePreviewUrl,
 			"fullName": this.state.fullname,
 			"location": this.props.profileinfo.location,
 		};
 
-		//console.log(data);
 		var token = getCookie('token');
 		fetch('http://52.90.34.144:85/api/profile',
 		{
@@ -97,6 +106,18 @@ class ProfilePage extends React.Component {
 	}
 
 	render() {
+
+		let vyear,vmonth,vday = null;
+		if(this.props.profileinfo.birthday){
+			var res = this.props.profileinfo.birthday.split("-");
+			vyear = res[0];
+			vmonth = res[1];
+			vday = res[2];
+		}else{
+			vyear = 'YYYY';
+			vmonth = 'MM';
+			vday = 'DD'
+		}
 
 		let {imagePreviewUrl} = this.state;
 		let $imagePreview = null;
@@ -172,12 +193,44 @@ class ProfilePage extends React.Component {
 						</div>
 					</div>
 
-					<div className = "form-group">
+					<div className="form-group">
 						<label className="col-lg-3 control-label">Birthday:</label>
-						<DatePicker
-							dateFormat="YYYY-MM-DD"
-							selected={this.state.birthday}
-							onChange={this.handleDateChange} />
+						<div className="col-lg-2">
+							<input className="form-control"
+								type="number"
+								name="day"
+								ref="day"
+								min="1"
+								max="31"
+								placeholder={vday}
+								value={ this.state.subject }
+								onChange={ this.handleDayChange }
+							required />
+						</div>
+						<div className="col-lg-2">
+							<input className="form-control"
+								type="number"
+								name="month"
+								ref="month"
+								min="1"
+								max="12"
+								placeholder={vmonth}
+								value={ this.state.subject }
+								onChange={ this.handleMonthChange }
+							required />
+						</div>
+						<div className="col-lg-2">
+							<input className="form-control"
+								type="number"
+								name="year"
+								ref="year"
+								min="0"
+								max="3000"
+								placeholder={vyear}
+								value={ this.state.subject }
+								onChange={ this.handleYearChange }
+							required />
+						</div>
 					</div>
 
 					<div class="form-group">
@@ -192,30 +245,6 @@ class ProfilePage extends React.Component {
 					</div>
 					</form>
 				</div>
-			</div>
-		</div>
-		);
-	}
-};
-
-class Image extends React.Component{
-	render() {
-
-		let {imagePreviewUrl} = this.props.src;
-		let $imagePreview = null;
-		if (imagePreviewUrl) {
-			$imagePreview = (<img src={imagePreviewUrl} />);
-		} else {
-			$imagePreview = (<img src="//placehold.it/100" className="avatar img-circle" alt ="avatar"/>);
-		}
-
-		return (
-		<div className="col-md-3">
-			<div className="text-center">
-				<img src="//placehold.it/100" className="avatar img-circle" alt ="avatar"/>
-				<h6>Upload a different photo...</h6>
-
-				<input type="file" class="form-control"/>
 			</div>
 		</div>
 		);

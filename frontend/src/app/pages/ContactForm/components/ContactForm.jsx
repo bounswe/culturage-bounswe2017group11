@@ -13,10 +13,13 @@ class ContactForm extends React.Component {
             name: '',
             description: '',
             location: '',
-            date:'2017-01-01',
+            day:'00',
+            month:'00',
+            year:'0000',
             image: '',
             tags: [],
             tag: '',
+            isChecked: false,
         }
         this.handleSelectedChange = this.handleSelectedChange.bind(this);
         this.handleNameChange = this.handleNameChange.bind(this);
@@ -24,6 +27,20 @@ class ContactForm extends React.Component {
         this.handleChangeTags =  this.handleChangeTags.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleClear = this.handleClear.bind(this);
+        this.toggleChange = this.toggleChange.bind(this);
+
+        this.handleYearChange = this.handleYearChange.bind(this);
+
+        this.handleMonthChange = this.handleMonthChange.bind(this);
+
+        this.handleDayChange =
+        this.handleDayChange.bind(this);
+    }
+
+    toggleChange = () => {
+      this.setState({
+        isChecked: !this.state.isChecked,
+      });
     }
 
     handleChangeTags(tags) {this.setState({tags});}
@@ -53,7 +70,13 @@ class ContactForm extends React.Component {
     // onChange handler saves subject to state
     handleDescriptionChange(event){event.preventDefault();this.setState({description: event.target.value});};
     handleLocationChange(event){event.preventDefault();this.setState({location: event.target.value});};
-    handleDateChange(event){event.preventDefault();this.setState({date: event.target.value});};
+
+    handleYearChange(event){event.preventDefault();this.setState({year: event.target.value});};
+
+    handleMonthChange(event){event.preventDefault();  this.setState({month: event.target.value});};
+
+    handleDayChange(event){event.preventDefault();  this.setState({day: event.target.value});};
+
     handleImageChange(event){event.preventDefault();this.setState({image: event.target.value});};
     handleTagsChange(event){event.preventDefault();this.setState({tags: event.target.value});};
     handleSelectedChange(event) {this.setState({selectedValue: event.target.value});}
@@ -64,12 +87,20 @@ class ContactForm extends React.Component {
       e.preventDefault();
 
       var myHeaders = new Headers();
+      var yearValue = this.state.year;
+      var yearInt = Number(yearValue) ;
+      if(this.state.isChecked){
+        yearInt = yearInt + 3000;
+      }
+      var dateUpload = yearInt.toString() + '-' + this.state.month + '-' + this.state.day;
+
+      console.log(dateUpload);
 
       var payload = {
         "name" : this.state.name,
         "description": this.state.description,
         "location": this.state.location,
-        "date": this.state.date,
+        "date": dateUpload,
         "image": this.state.imagePreviewUrl,
         "tags": this.state.tags
       };
@@ -160,6 +191,55 @@ class ContactForm extends React.Component {
                           onChange={ this.handleDescriptionChange }
                           required />
                       </div>
+                  </div>
+
+                  <div className="form-group">
+                    <label className="col-lg-3 control-label">Date:</label>
+                    <div className="col-lg-2">
+                      <label>
+                        <input type="checkbox"
+                          checked={this.state.isChecked}
+                          onChange={this.toggleChange}
+                        />
+                        BC
+                      </label>
+                    </div>
+                    <div className="col-lg-2">
+                      <input className="form-control"
+                        type="number"
+                        name="day"
+                        ref="day"
+                        min="1"
+                        max="31"
+                        placeholder="DD"
+                        value={ this.state.subject }
+                        onChange={ this.handleDayChange }
+                      required />
+                    </div>
+                    <div className="col-lg-2">
+                      <input className="form-control"
+                        type="number"
+                        name="month"
+                        ref="month"
+                        min="1"
+                        max="12"
+                        placeholder="MM"
+                        value={ this.state.subject }
+                        onChange={ this.handleMonthChange }
+                      required />
+                    </div>
+                    <div className="col-lg-2">
+                      <input className="form-control"
+                        type="number"
+                        name="year"
+                        ref="year"
+                        min="0"
+                        max="3000"
+                        placeholder="YYYY"
+                        value={ this.state.subject }
+                        onChange={ this.handleYearChange }
+                      required />
+                    </div>
                   </div>
 
                   <div className="form-group">

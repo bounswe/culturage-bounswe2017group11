@@ -1,5 +1,6 @@
 import React from 'react';
 import '../utils/navbar.css';
+import Autosuggest from 'react-autosuggest';
 
 class NavbarSearch extends React.Component {
 	constructor(){
@@ -26,7 +27,7 @@ class NavbarSearch extends React.Component {
 				var link = 'http://52.90.34.144:85/api/search/item?q=' + this.state.searchText;
 				var _this = this;
 					var myHeaders = new Headers();
-					var token = "JWT " + getCookie('token');
+					var token = "JWT " + "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJlbWFpbCI6Imd1ZXN0QHRlc3QuY29tIiwidXNlcm5hbWUiOiJndWVzdCIsImV4cCI6MTUzODMxMjMyNiwidXNlcl9pZCI6MTd9.xKhxAdDl8yKwEV4elrjXASIg8VhO8DwwEEd_xssoxiQ";
 					myHeaders.append("Authorization", token);
 					fetch(link , {
 							method: 'GET',
