@@ -30,7 +30,7 @@ class RegisterForm extends React.Component {
 		  	console.log();
 		  },
 		  success: (res) => {
-		  	var token = JSON.stringify(res.token);
+		  	var token = res.token;
 		  	console.log("SUCCESS! Token: " + token);
 		  	setCookie("token", token);
 		  	window.location.replace("/");
