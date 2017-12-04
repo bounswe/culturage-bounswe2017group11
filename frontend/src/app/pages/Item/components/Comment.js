@@ -64,7 +64,7 @@ class Comment extends React.Component {
         if(res.ok){
             window.location.reload();
         } else {
-          alert("Couldn't complete :(");
+          alert("Please login before :(");
         }
       })
       .catch((error) => {
@@ -101,7 +101,7 @@ class Comment extends React.Component {
         if(res.ok){
             window.location.reload();
         } else {
-          alert("Couldn't complete :(");
+          alert("Please login before :(");
         }
       })
       .catch((error) => {
@@ -123,7 +123,7 @@ class Comment extends React.Component {
             <h5 class="panel-title"><strong>Id:</strong> {this.props.item.id}</h5>
             <h5 class="panel-title"><strong>Created by:</strong> {this.props.item.created_by.username}</h5>
             <h5 class="panel-title"><strong>Created at:</strong> {this.props.item.created_at.substring(0,10)}</h5>
-            <div class = {(this.state.user.username == this.props.item.created_by.username) ? "" : "hidden"}> 
+            <div class = {(this.props.loginStatus == "1") ? "" : "hidden"}> 
             <hr></hr>
             <a href={"/editItem/" + this.props.item.id} type="button" class="btn btn-danger btn-block">Add media</a>
             </div>

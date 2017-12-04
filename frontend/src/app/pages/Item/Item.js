@@ -16,16 +16,23 @@ class Item extends React.Component {
 	constructor(props){
    		super(props);
    		this.state = {items: [],
-   			suggestedItems: []
+   			suggestedItems: [],
+        loggedIn:""
    		};
 	}
 
-	componentWillMount(){
+	componentDidMount(){
     var id = this.props.match.params.id;
     var link = 'http://52.90.34.144:85/api/items/' + id;
 		var _this = this;
     	var myHeaders = new Headers();
-    	var token = "JWT " + getCookie('token');
+    	var token = getCookie('token');
+      if(token == null){
+      token = "JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImhhbGlsa2Fsa2FuOTVAZ21haWwuY29tIiwidXNlcl9pZCI6MywiZXhwIjoxNTM3OTA1NDQ0LCJ1c2VybmFtZSI6ImhhbGlsIn0.hV0dPW3IsrqynXjwiycc5s25dtaReLP6J446soiwU2Y"
+    }else{
+      token = "JWT " + token;
+      this.setState({loggedIn: 1});
+    }
 
 
     	myHeaders.append("Authorization", token);
@@ -71,12 +78,12 @@ class Item extends React.Component {
 
 
                   <Body item={this.state.items} />
-                  <SuggestedItems item={this.state.suggestedItems} />
+                  <SuggestedItems item={this.state.suggestedItems}/>
 
                   </div>
                      			<div class="col-md-4">
-                  <Like item={this.state.items} />
-                  <Comment item={this.state.items} />
+                  <Like item={this.state.items} loginStatus={this.state.loggedIn} />
+                  <Comment item={this.state.items} loginStatus={this.state.loggedIn}/>
                   </div>
                   </div>
 			</div>

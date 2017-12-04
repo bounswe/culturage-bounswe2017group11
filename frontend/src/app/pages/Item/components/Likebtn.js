@@ -41,7 +41,7 @@ class Like extends React.Component {
   clickHandler() {
       var clk = this.state.count
       var add = 0;
-      if(!this.state.isLiked){
+      if(!this.state.isLiked && this.props.loginStatus == "1"){
         add = 1;
         this.setState({
           isLiked: true
@@ -79,7 +79,7 @@ class Like extends React.Component {
         console.error(error);
       })
       }
-      else{
+      else if(this.state.isLiked && this.props.loginStatus == "1"){
         add = -1;
         this.setState({
           isLiked: false
@@ -118,6 +118,11 @@ class Like extends React.Component {
         console.error(error);
       })
       }
+      else{
+          alert("Please login before :(");
+
+      }
+
       this.setState({
         count: clk + add
       });
