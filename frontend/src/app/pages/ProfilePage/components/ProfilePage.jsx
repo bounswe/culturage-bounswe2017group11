@@ -20,10 +20,10 @@ class ProfilePage extends React.Component {
 		this.handleChange = this.handleChange.bind(this);
 		this.handleSubmit = this.handleSubmit.bind(this);
 		this.handleClear = this.handleClear.bind(this);
-		{console.log("PROFILE")};
-		{console.log(this.props.profileinfo.username)};
+		{console.log("MOMENT")};
+		{console.log(moment())};
 		{console.log("BIRTHDAY")};
-		{console.log(props.profileinfo.birthday)};
+		{console.log(this.props.profileinfo)};
 	}
 
 	handleClear(e) { e.preventDefault();window.location.replace("/profile");};
@@ -53,7 +53,6 @@ class ProfilePage extends React.Component {
 			"location": this.props.profileinfo.location,
 		};
 
-		//console.log(data);
 		var token = getCookie('token');
 		fetch('http://52.90.34.144:85/api/profile',
 		{
@@ -192,30 +191,6 @@ class ProfilePage extends React.Component {
 					</div>
 					</form>
 				</div>
-			</div>
-		</div>
-		);
-	}
-};
-
-class Image extends React.Component{
-	render() {
-
-		let {imagePreviewUrl} = this.props.src;
-		let $imagePreview = null;
-		if (imagePreviewUrl) {
-			$imagePreview = (<img src={imagePreviewUrl} />);
-		} else {
-			$imagePreview = (<img src="//placehold.it/100" className="avatar img-circle" alt ="avatar"/>);
-		}
-
-		return (
-		<div className="col-md-3">
-			<div className="text-center">
-				<img src="//placehold.it/100" className="avatar img-circle" alt ="avatar"/>
-				<h6>Upload a different photo...</h6>
-
-				<input type="file" class="form-control"/>
 			</div>
 		</div>
 		);
