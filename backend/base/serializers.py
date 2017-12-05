@@ -4,7 +4,7 @@ from django.conf import settings
 from django.db.models import Prefetch
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
-import os
+import os, calendar
 
 class ProfileSerializer(serializers.Serializer):
 	class Meta:
@@ -91,10 +91,48 @@ class TimelineSerializer(serializers.ModelSerializer):
 	name = serializers.CharField(required=True, max_length=200)
 	text = serializers.CharField(required=False)
 	startDate = serializers.CharField(required=True, max_length=200)
+	startLabel = serializers.SerializerMethodField('_get_start_label')
+	endLabel = serializers.SerializerMethodField('_get_end_label')
 	location = LocationSerializer(required=False, read_only=True)
 	class Meta:
 		model = Timeline
-		fields =('id','name','text','startDate', 'endDate', 'location')
+		fields =('id','name','text','startDate', 'endDate', 'location', 'startLabel', 'endLabel')
+
+	def _get_start_label(self, obj):
+		if obj.startDate is None:
+			return None
+		else:
+			date = obj.startDate
+			result = ""
+			if date[0] == "-":
+				date = date[1:]
+				result += "BC"
+			year, month, day = date.split("-")
+			if day != "00":
+				result = result + " " + str(int(day))
+			if month != "00":
+				result = result + " " + calendar.month_name[int(month)]
+			if year != "0000":
+				result = result + " " + str(int(year))
+			return result.strip()
+
+	def _get_end_label(self, obj):
+		if obj.endDate is None:
+			return None
+		else:
+			date = obj.endDate
+			result = ""
+			if date[0] == "-":
+				date = date[1:]
+				result += "BC"
+			year, month, day = date.split("-")
+			if day != "00":
+				result = result + " " + str(int(day))
+			if month != "00":
+				result = result + " " + calendar.month_name[int(month)]
+			if year != "0000":
+				result = result + " " + str(int(year))
+			return result.strip()
 
 	def create(self, validated_data):
 		item = self.context.get('item')
