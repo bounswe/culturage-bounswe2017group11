@@ -88,11 +88,10 @@ class ContactForm extends React.Component {
 
       var myHeaders = new Headers();
       var yearValue = this.state.year;
-      var yearInt = Number(yearValue) ;
       if(this.state.isChecked){
-        yearInt = yearInt + 3000;
+        yearValue = '-'+ yearValue;
       }
-      var dateUpload = yearInt.toString() + '-' + this.state.month + '-' + this.state.day;
+      var dateUpload = yearValue + '-' + this.state.month + '-' + this.state.day;
 
       console.log(dateUpload);
 
