@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 public class UniversalNewsfeedFragment extends HeritageItemListFragment {
 
-    private static final String apiURL = "http://18.220.108.135/api/newsfeed";
+    private static final String apiURL = "http://52.90.34.144:85/api/newsfeed";
 
     @Override
     public android.support.v4.content.Loader<ArrayList<HeritageItem>> onCreateLoader(int id, Bundle args) {

@@ -138,7 +138,7 @@ public class CommentAdapter extends ArrayAdapter {
 
         private boolean deleteComment(String token) {
             String result;
-            String deleteCommentUrl = "http://18.220.108.135/api/comments/" + deleteCommentId;
+            String deleteCommentUrl = "http://52.90.34.144:85/api/comments/" + deleteCommentId;
             try {
                 result = PostJSON.deleteToApi(deleteCommentUrl, token);
             } catch (IOException e) {

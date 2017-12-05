@@ -70,7 +70,7 @@ public class HeritageItemViewActivity extends AppCompatActivity {
     private ArrayList<Tag> tagsList = new ArrayList<>();
     private TagsViewAdapter tagsAdapter;
 
-    private static String itemUrl = "http://18.220.108.135/api/items/";
+    private static String itemUrl = "http://52.90.34.144:85/api/items/";
 
     private int heritageItemPostID;
 
@@ -165,7 +165,7 @@ public class HeritageItemViewActivity extends AppCompatActivity {
         new LikeCommentCountLoader().execute();
         new ProfileLoader(false).execute();
         //Will be implemented soon!!
-        itemUrl = "http://18.220.108.135/api/items/" + heritageItemPostID;
+        itemUrl = "http://52.90.34.144:85/api/items/" + heritageItemPostID;
 
         TextView guest = (TextView) findViewById(R.id.guest_profile);
         guest.setOnClickListener(new View.OnClickListener() {
@@ -205,7 +205,7 @@ public class HeritageItemViewActivity extends AppCompatActivity {
 //        recommendations.add(new HeritageItem(1, "", "", "", true));
 //        recommendations.add(new HeritageItem(1, "", "", "", true));
 //        recommendations.add(new HeritageItem(1, "", "", "", true));
-        String recommendationsUrl = "http://18.220.108.135/api/recommendation/item/";
+        String recommendationsUrl = "http://52.90.34.144:85/api/recommendation/item/";
         new RecommendationRequest(HeritageItemViewActivity.this, recommendationsUrl + heritageItemPostID).execute();
         recommendationAdapter = new RecommendationRecyclerViewAdapter(HeritageItemViewActivity.this, recommendations);
         mRecommendationView.setAdapter(recommendationAdapter);
@@ -361,7 +361,7 @@ public class HeritageItemViewActivity extends AppCompatActivity {
         }
 
         private void uploadFile(String fileName, int itemID) {
-            String upLoadServerUri = "http://18.220.108.135/api/items/" + itemID + "/medias";
+            String upLoadServerUri = "http://52.90.34.144:85/api/items/" + itemID + "/medias";
             int serverResponseCode = 0;
             HttpURLConnection conn = null;
             DataOutputStream dos = null;
@@ -592,7 +592,7 @@ public class HeritageItemViewActivity extends AppCompatActivity {
             } catch (Exception e) {
                 Log.v("heritageItem", "error parsing guestProfile:" + creator_id);
             }
-            String profileURL = "http://18.220.108.135/api/profile/" + creator_id;
+            String profileURL = "http://52.90.34.144:85/api/profile/" + creator_id;
 
             ViewGuestProfile(profileURL);
 
@@ -759,7 +759,7 @@ public class HeritageItemViewActivity extends AppCompatActivity {
 
         private boolean uploadLikePic() {
             String result;
-            itemUrl = "http://18.220.108.135/api/items/" + heritageItemPostID;
+            itemUrl = "http://52.90.34.144:85/api/items/" + heritageItemPostID;
             try {
                 result = Fetcher.getJSON(Fetcher.createUrl(itemUrl), HeritageItemViewActivity.this);
             } catch (IOException e) {
@@ -788,7 +788,7 @@ public class HeritageItemViewActivity extends AppCompatActivity {
 
         private boolean uploadLikeCount(String token) {
             String result;
-            String ratesUrl = "http://18.220.108.135/api/items/" + heritageItemPostID + "/rates";
+            String ratesUrl = "http://52.90.34.144:85/api/items/" + heritageItemPostID + "/rates";
             try {
                 result = PostJSON.postToApi(constructTheJSONLikeCount(), ratesUrl, token);
             } catch (IOException e) {
@@ -826,7 +826,7 @@ public class HeritageItemViewActivity extends AppCompatActivity {
 
         private boolean isLiked;
         private String result;
-        private String item_url = "http://18.220.108.135/api/items/" + heritageItemPostID;  // Temporary url
+        private String item_url = "http://52.90.34.144:85/api/items/" + heritageItemPostID;  // Temporary url
 
         private getLikeStatus() {
             this.isLiked = false;
@@ -859,7 +859,7 @@ public class HeritageItemViewActivity extends AppCompatActivity {
 
     private class LikeCommentCountLoader extends AsyncTask<String, String, String> {
 
-        private String ratesUrl = "http://18.220.108.135/api/items/" + heritageItemPostID;
+        private String ratesUrl = "http://52.90.34.144:85/api/items/" + heritageItemPostID;
         private int totalLikeCount;
         private int totalCommentCount;
 

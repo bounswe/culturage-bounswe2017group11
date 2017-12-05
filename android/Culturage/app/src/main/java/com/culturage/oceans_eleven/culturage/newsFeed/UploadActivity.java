@@ -43,7 +43,7 @@ import java.io.IOException;
 
 public class UploadActivity extends Activity {
 
-    private static final String UPLOAD_URL = "http://18.220.108.135/api/items/";
+    private static final String UPLOAD_URL = "http://52.90.34.144:85/api/items/";
     private int REQUEST_CAMERA = 0, SELECT_FILE = 1;
     private ImageView mImageView;
     private ProgressBar mProgressBar;

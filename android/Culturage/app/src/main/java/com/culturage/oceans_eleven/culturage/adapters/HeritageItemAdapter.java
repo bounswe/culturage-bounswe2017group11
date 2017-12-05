@@ -196,7 +196,7 @@ public class HeritageItemAdapter extends ArrayAdapter {
 
         private boolean uploadLikeCount(String token) {
             String result;
-            String ratesUrl = "http://18.220.108.135/api/items/" + heritageItemPostID + "/rates";
+            String ratesUrl = "http://52.90.34.144:85/api/items/" + heritageItemPostID + "/rates";
             try {
                 result = PostJSON.postToApi(constructTheJSONLikeCount(), ratesUrl, token);
             } catch (IOException e) {

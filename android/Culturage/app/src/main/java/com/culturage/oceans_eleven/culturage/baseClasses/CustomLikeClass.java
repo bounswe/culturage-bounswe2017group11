@@ -61,7 +61,7 @@ public class CustomLikeClass extends Dialog implements
 
     private class likeLoader extends AsyncTask<String, String, String> {
 
-        private String itemUrl = "http://18.220.108.135/api/items/" + postId;
+        private String itemUrl = "http://52.90.34.144:85/api/items/" + postId;
         private ArrayList<Comment> comments = new ArrayList<>();
 
         private likeLoader() {

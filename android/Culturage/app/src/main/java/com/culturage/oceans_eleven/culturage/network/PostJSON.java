@@ -17,7 +17,7 @@ import java.nio.charset.Charset;
 
 public class PostJSON {
 
-    //private static final String baseURI = "http://18.220.108.135/api/";
+    //private static final String baseURI = "http://52.90.34.144:85/api/";
 
     public static String postToApi(JSONObject json, String url, String token) throws  IOException {
         HttpURLConnection urlConnection;

@@ -127,7 +127,7 @@ public class CustomDialogClass extends Dialog implements
 
     private class commentLoader extends AsyncTask<String, String, String> {
 
-        private String commentsUrl = "http://18.220.108.135/api/items/" + postId + "/comments";
+        private String commentsUrl = "http://52.90.34.144:85/api/items/" + postId + "/comments";
         private ArrayList<Comment> comments = new ArrayList<>();
 
         private commentLoader() {
@@ -201,7 +201,7 @@ public class CustomDialogClass extends Dialog implements
 
     private class postComment extends AsyncTask<String, String, Boolean> {
 
-        private String commentsUrl = "http://18.220.108.135/api/items/" + postId + "/comments";
+        private String commentsUrl = "http://52.90.34.144:85/api/items/" + postId + "/comments";
         private String text;
 
         private postComment(String text) {
