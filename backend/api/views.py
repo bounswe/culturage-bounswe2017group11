@@ -272,25 +272,28 @@ class MediaDetailView(APIView):
 
 class ItemTag(APIView):
 	def delete(self, request, itemID):
-		try:
-			item = Item.objects.get(id=itemID)
-			tag = Tag.objects.get(name=request.data.get('name'))
-			#tagToDelete = TagList.objects.get(item = item, tag = tag)
-		except Tag.DoesNotExist:
-			tag = None
-
-		if not tag:
-			return Response({"error" : "We couldn't find the tag for given Item" + itemID}, status=status.HTTP_404_NOT_FOUND)
-		item.tags.remove(tag)
-		#tagToDelete.delete()
-		return Response({"success" : "Your tag is deleted successfully"})
+		item = Item.objects.get(id=itemID)
+		tags = request.data.get('tags')
+		for name in tags:
+			try:
+				tag = Tag.objects.get(name=name)
+			except Tag.DoesNotExist:
+				tag = None
+			if tag is not None:
+				item.tags.remove(tag)
+		return Response({"success" : "Your tags are deleted successfully"})
 
 	def post(self, request, itemID):
 		item = Item.objects.get(id=itemID)
-		serializer = TagSerializer(data=request.data, context={'item':item})
-		if serializer.is_valid():
-			serializer.save()
-			return Response(serializer.data)
-		else:
-			return Response(serializer.errors)
-#	def get(self):
+		tags = request.data.get('tags')
+		for name in tags:
+			newTag, created = Tag.objects.get_or_create(name = name, defaults={'created_by':request.user})
+			item.tags.add(newTag)
+		serializer = TagSerializer(item.tags, many=True)
+		return Response(serializer.data)
+
+	def get(self, request, itemID):
+		item = Item.objects.get(id=itemID)
+		serializer = TagSerializer(item.tags, many=True)
+		return Response(serializer.data)
+
