@@ -36,9 +36,9 @@ class SearchTag extends React.Component {
 	render() {
 		return(
       <div>
-        <Navbar page={"home"}/>
-        <div class="home-body">
-          
+        <Navbar/>
+        <div class="search-body">
+          <div class="search-body-header">Tag search results for <b>{this.props.match.params.tag}</b></div>
           <NewsFeed itemlist={this.state.itemlist}/>
         </div>
       </div>

@@ -4,7 +4,6 @@
     padding:0px;
     padding-bottom: 20px;
     display: flex;
-
     font-family: Calibri, Candara, Segoe, 'Segoe UI', Optima, Arial, sans-serif;
 }
 
@@ -103,8 +102,34 @@
     margin-top: 5px;
 }
 
+.search-body{
+    margin-top: 0px;
+    z-index: -10;
+    background-color: red;
+    font-family: Calibri, Candara, Segoe, 'Segoe UI', Optima, Arial, sans-serif;
+    background: #f2f2f2;
+    padding-bottom: 20px;
+    min-height: 900px;
+}
+
+.search-body-header{
+    padding-top: 40px;
+    padding-left: 10%;
+    font-size: 32px;
+}
+
+.search-body p{
+    color: red;
+    margin-left: 15%;
+    font-size: 25px;
+    margin-top: 25px;
+}
+
 .newsfeed-item p{
     font-size: 15px;
+    margin-left: 0px;
+    margin-top: 10px;
+    color: black;
 }
 
 .newsfeed-item img{
@@ -115,6 +140,7 @@
     vertical-align: center;
 }
 
-.my-input-group{
-    width: 200%;
-}
+
+
+
+

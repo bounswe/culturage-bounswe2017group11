@@ -23,7 +23,6 @@ class SearchTag extends React.Component {
         })
     	.then(response => response.json())
     	.then(function(data){
-    			console.log(data);
       		_this.setState({itemlist: data});
       	})
 
@@ -34,11 +33,21 @@ class SearchTag extends React.Component {
     }
 
 	render() {
+    let $list = null;
+    if(this.state.itemlist.length == 0){
+      //$list = (<p><i class="fa fa-times-circle" aria-hidden="true"></i>  No result found</p>);
+      $list = "";
+    }
+    else{
+      $list = (<NewsFeed itemlist={this.state.itemlist}/>);
+    }
+
 		return(
       <div>
-        <Navbar page={"home"}/>
-        <div class="home-body">
-          <NewsFeed itemlist={this.state.itemlist}/>
+        <Navbar/>
+        <div class="search-body">
+          <div class="search-body-header">Search results for <b>{this.props.match.params.item}</b></div>
+          {$list}
         </div>
       </div>
 		);

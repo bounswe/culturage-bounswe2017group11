@@ -41,7 +41,6 @@
     margin-bottom: -10px;
     margin-right: 10px;
     float: left;
-    background-size: auto 100%; /* Interchange this value depending on prefering width vs. height */
     width: 38px;
     height: 38px;
 }
@@ -90,4 +89,8 @@
 .navbar-dropdown-content a:hover{
     background-color: #EEEEEE;
     color: orange;
+}
+
+.my-input-group{
+    width: 200%;
 }
