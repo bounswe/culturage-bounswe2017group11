@@ -6,9 +6,11 @@ export default class RecommendedListItem extends React.Component {
       	return (
             <Link to={"/item/" + this.props.item.id}>
         	    <div class="recommended-list-item">
-        			<img class="col-sm-6" src={this.props.item.featured_img}></img>
+        			  <div class="col-sm-6">
+                  <img src={this.props.item.featured_img}></img>
+                </div>
         		    <div class="col-md-6 recommended-list-item-desc">
-        				<h2>{this.props.item.name}</h2>
+        				  <h2>{this.props.item.name}</h2>
                         <p>
 	        			    {this.props.item.created_at.substring(0, 10)} <br/>
 	        			    <i class="fa fa-comment-o" aria-hidden="true">{this.props.item.comment_count}</i> &nbsp;
