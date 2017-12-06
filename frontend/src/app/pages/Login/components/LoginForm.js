@@ -68,7 +68,7 @@ class LoginForm extends React.Component {
       	<input type="text" id="username" onChange={this.handleChange} placeholder="username"/>
       	<input type="password" id="password" onChange={this.handleChange} placeholder="password"/>
       	<button class="loginBtn onClick={this.handleLogin} loginBtn--login">Login</button>
-    	 	<SocialButton
+    	 	{/*<SocialButton
 		      provider='facebook'
 		      appId='136076600389829'
 		      onLoginSuccess={this.handleFBLogin}
@@ -76,7 +76,7 @@ class LoginForm extends React.Component {
 		      className="loginBtn loginBtn--facebook"
 		    >
 		      Login with Facebook
-		    </SocialButton>
+		    </SocialButton>*/}
 	      <p class="message">Not registered? <a href="#">Create an account</a></p>
 			</form>
 		);
@@ -100,4 +100,5 @@ function getCookie(key) {
     var keyValue = document.cookie.match('(^|;) ?' + key + '=([^;]*)(;|$)');
     return keyValue ? keyValue[2] : null;
 }
+
 export default LoginForm;
