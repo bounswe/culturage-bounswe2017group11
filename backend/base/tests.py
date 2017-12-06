@@ -1,6 +1,10 @@
 from django.test import TestCase
 from  .models import Item, Comment, UserRatedItem
 from django.contrib.auth.models import User
+from django.urls import reverse
+from rest_framework import status
+from rest_framework.test import APITestCase
+
 # Create your tests here.
 
 class ItemTestCase(TestCase):
@@ -41,3 +45,12 @@ class ItemTestCase(TestCase):
 
         if not del_item:
             self.assertTrue(self)
+
+class ItemEndPointTest(APITestCase):
+    def test_create_item(self):
+        url = ('/api/items/')
+        data = {'name': 'test item','desciption':'item to be used for test purposes','location':'istanbul','date':'2017-01-01'}
+        response = self.client.post(url, data, format='json')
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(Item.objects.count(), 1)
+        self.assertEqual(Item.objects.get().name, 'test item')
