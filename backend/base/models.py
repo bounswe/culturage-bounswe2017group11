@@ -99,7 +99,7 @@ class Timeline(models.Model):
     created_at = models.DateTimeField(auto_now_add=True, blank=True)
 
     def __str__(self):
-        return self.name + " - " + self.startDate.strftime("%d.%m.%Y")
+        return self.name + " - " + self.startDate
 
 class Follow(models.Model):
     follower = models.ForeignKey(User, related_name='user_follower', on_delete=models.CASCADE, null=True)
