@@ -7,7 +7,7 @@ from base.serializers import NewsfeedSerializer
 from base.serializers import UserSerializer
 from rest_framework.response import Response
 from rest_framework.views import APIView
-import gensim
+#import gensim
 import os
 
 class UserRecommendation(APIView):

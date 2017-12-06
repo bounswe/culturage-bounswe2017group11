@@ -297,3 +297,10 @@ class ItemTag(APIView):
 		serializer = TagSerializer(item.tags, many=True)
 		return Response(serializer.data)
 
+class UserLikes(APIView):
+	def get(self, request, userID):
+		user = User.objects.get(id=userID);
+		items = Item.objects.order_by('-created_at').filter(rated_item__user=user)
+		items = ItemSerializer.setup_eager_loading(items)  # Set up eager loading to avoid N+1 selects
+		serializer = ItemSerializer(items, many=True, context={'request': request})
+		return Response(serializer.data)
