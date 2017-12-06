@@ -128,7 +128,7 @@ public class CommentAdapter extends ArrayAdapter {
         protected void onPostExecute(String result) {
 
             if (isDeleted) {
-                Toast.makeText(getContext(), "Comment Deleted Successfuly", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getContext(), "Comment Deleted Successfuly", Toast.LENGTH_SHORT).show();
                 theAdapter.remove(currentComment);
                 listItemView.invalidate();
             } else {

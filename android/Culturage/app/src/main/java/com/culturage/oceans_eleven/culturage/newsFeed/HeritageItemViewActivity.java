@@ -438,9 +438,10 @@ public class HeritageItemViewActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(Integer... itemID) {
             try {
+                Log.v("axzs" + LOG_TAG, "before fetch");
                 return Fetcher.getJSON(Fetcher.createUrl(getResources().getString(R.string.itemsEndPoint) + itemID[0]), HeritageItemViewActivity.this);
             } catch (IOException e) {
-                e.printStackTrace();
+                Log.v("axzs" + LOG_TAG, e.getMessage());
             }
             //if can't return Fetcher.getJSON because of exception
             return null;
@@ -448,11 +449,13 @@ public class HeritageItemViewActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(String jsonStr) {
+            Log.v("axzs" + LOG_TAG, jsonStr);
             try {
                 JSONObject itemJson = new JSONObject(jsonStr);
                 JSONArray timelines = itemJson.getJSONArray("timelines");
                 JSONObject timeLine0 = null;
                 JSONObject loc0 = null;
+
                 try {
                     timeLine0 = timelines.getJSONObject(0);
                     loc0 = timeLine0.getJSONObject("location");
@@ -468,23 +471,18 @@ public class HeritageItemViewActivity extends AppCompatActivity {
                 TextView date = (TextView) findViewById(R.id.her_item_date);
 
                 try {
-                    date.setText(timeLine0.getString("startDate"));
+                    date.setText(timeLine0.getString("startLabel"));
 
                 } catch (Exception e) {
-                    date.setText("unknown");
+                    date.setText("Not specified");
                     Log.e(LOG_TAG + " start date", e.getMessage());
-
                 }
-
                 TextView loc = (TextView) findViewById(R.id.her_item_location);
                 try {
                     loc.setText(loc0.getString("name"));
-
                 } catch (Exception e) {
-                    loc.setText("unknown");
+                    loc.setText("Not specified");
                     Log.e(LOG_TAG + " location", e.getMessage());
-
-
                 }
 
                 tagsList.clear();

@@ -65,7 +65,7 @@ public class CustomDialogClass extends Dialog implements
                 String text = edit_comment.getText().toString();
                 if (!text.equals("")) {
                     new postComment(text).execute();
-                    Toast.makeText(activity, "Commented Successfuly", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(activity, "Commented Successfuly", Toast.LENGTH_SHORT).show();
                 } else {
                     Toast.makeText(activity, "Comment is not allowed", Toast.LENGTH_SHORT).show();
                 }

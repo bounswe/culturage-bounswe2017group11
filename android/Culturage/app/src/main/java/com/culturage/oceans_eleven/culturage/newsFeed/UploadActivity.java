@@ -93,21 +93,14 @@ public class UploadActivity extends Activity {
                 String createdAt = null;
                 String day = mDaySpinner.getSelectedItem().toString();
                 String month = mMonthSpinner.getSelectedItem().toString();
-
-                String year = "";
-                try {
-                    int yearTemp = Integer.parseInt(mYearView.getText().toString());
+                String year = mYearView.getText().toString();
+                if (year.equals("")) {
+                    year = "0000";
+                } else {
                     if (mBcSwitch.isChecked()) {
                         // BC case
-                        year = yearTemp + 3000 + "";
-                    } else {
-                        year = yearTemp + "";
+                        year = "-" + year;
                     }
-
-                } catch (NumberFormatException e) {
-                    year = "0000";
-                } catch (Exception e) {
-                    Log.e("upload", "Error in year parsing");
                 }
                 if (day.equals("--")) {
                     day = "00";
