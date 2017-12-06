@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.Uri;
 import android.provider.MediaStore;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -13,12 +14,13 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 
 import com.culturage.oceans_eleven.culturage.R;
+import com.culturage.oceans_eleven.culturage.baseClasses.HeritageMedia;
 import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
-public class HeritageImageAdapter extends RecyclerView.Adapter<HeritageImageAdapter.ViewHolder> {
-    private static ArrayList<String> imageUrls;
+public class HeritageMediaAdapter extends RecyclerView.Adapter<HeritageMediaAdapter.ViewHolder> {
+    private static ArrayList<HeritageMedia> medias;
     private Activity mContext;
     public static final int REQUEST_CAMERA = 0, SELECT_FILE = 1;
 
@@ -36,13 +38,13 @@ public class HeritageImageAdapter extends RecyclerView.Adapter<HeritageImageAdap
         }
     }
 
-    public HeritageImageAdapter(Activity context, ArrayList<String> _imageUrls) {
-        imageUrls = _imageUrls;
+    public HeritageMediaAdapter(Activity context, ArrayList<HeritageMedia> _medias) {
+        medias = _medias;
         this.mContext = context;
     }
 
     @Override
-    public HeritageImageAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+    public HeritageMediaAdapter.ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
         View itemView;
         if (viewType == R.layout.heritage_image_horizontal_list_item) {
             itemView = LayoutInflater.from(parent.getContext()).inflate(R.layout.heritage_image_horizontal_list_item, parent, false);
@@ -54,27 +56,40 @@ public class HeritageImageAdapter extends RecyclerView.Adapter<HeritageImageAdap
 
     @Override
     public void onBindViewHolder(ViewHolder holder, int position) {
-        if (position != imageUrls.size()) {
-            final String url = imageUrls.get(position);
-            Picasso.with(mContext).load(url).resize(0, 1500).into(holder.mImage);
-            holder.mImage.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View v) {
-                    final AlertDialog.Builder imageDialog = new AlertDialog.Builder(mContext, R.style.BlackDialogTheme);
-//                imageDialog.create().getWindow().setLayout(600, 1200);
-                    View view = LayoutInflater.from(mContext).inflate(R.layout.image_dialog, null);
-                    ImageView image = (ImageView) view.findViewById(R.id.alertedImage);
-                    Picasso.with(mContext).load(url).resize(0, 1500).into(image);
-                    imageDialog.setView(view);
-                    imageDialog.setNegativeButton("Close", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            dialog.dismiss();
-                        }
-                    });
-                    imageDialog.show();
-                }
-            });
+        if (position != medias.size()) {
+            final String url = medias.get(position).getUrl();
+            final String mediaType = medias.get(position).getMediaType();
+            if (mediaType.equals("image")) {
+                Picasso.with(mContext).load(url).resize(0, 1500).into(holder.mImage);
+                holder.mImage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        final AlertDialog.Builder imageDialog = new AlertDialog.Builder(mContext, R.style.BlackDialogTheme);
+                        View view = LayoutInflater.from(mContext).inflate(R.layout.image_dialog, null);
+                        ImageView image = (ImageView) view.findViewById(R.id.alertedImage);
+                        Picasso.with(mContext).load(url).resize(0, 1500).into(image);
+                        imageDialog.setView(view);
+                        imageDialog.setNegativeButton("Close", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                        imageDialog.show();
+                    }
+                });
+            } else if (mediaType.equals("youtube")) {
+                holder.mImage.setImageResource(R.mipmap.ic_play_video);
+                holder.mImage.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mContext.startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse(url)));
+//                        Log.i("Video", "Video Playing....");
+
+                    }
+                });
+            }
+
         } else {
             holder.mTakePhoto.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -93,20 +108,20 @@ public class HeritageImageAdapter extends RecyclerView.Adapter<HeritageImageAdap
 
     @Override
     public int getItemCount() {
-        return imageUrls.size() + 1;
+        return medias.size() + 1;
     }
 
-    public void addAll(ArrayList<String> urls) {
-        imageUrls.addAll(urls);
-    }
+//    public void addAll(ArrayList<HeritageMedia> _medias) {
+//        medias.addAll(_medias);
+//    }
 
-    public void clear() {
-        imageUrls.clear();
-    }
+//    public void clear() {
+//        imageUrls.clear();
+//    }
 
     @Override
     public int getItemViewType(int position) {
-        if (position == imageUrls.size()) {
+        if (position == medias.size()) {
             return R.layout.heritage_item_image_list_last_button;
         }
         return R.layout.heritage_image_horizontal_list_item;

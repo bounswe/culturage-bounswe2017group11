@@ -28,12 +28,13 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.culturage.oceans_eleven.culturage.R;
-import com.culturage.oceans_eleven.culturage.adapters.HeritageImageAdapter;
+import com.culturage.oceans_eleven.culturage.adapters.HeritageMediaAdapter;
 import com.culturage.oceans_eleven.culturage.adapters.RecommendationRecyclerViewAdapter;
 import com.culturage.oceans_eleven.culturage.adapters.TagsViewAdapter;
 import com.culturage.oceans_eleven.culturage.baseClasses.CustomDialogClass;
 import com.culturage.oceans_eleven.culturage.baseClasses.CustomLikeClass;
 import com.culturage.oceans_eleven.culturage.baseClasses.HeritageItem;
+import com.culturage.oceans_eleven.culturage.baseClasses.HeritageMedia;
 import com.culturage.oceans_eleven.culturage.baseClasses.Tag;
 import com.culturage.oceans_eleven.culturage.network.Fetcher;
 import com.culturage.oceans_eleven.culturage.network.PostJSON;
@@ -218,10 +219,10 @@ public class HeritageItemViewActivity extends AppCompatActivity {
         super.onActivityResult(requestCode, resultCode, data);
 
         if (resultCode == Activity.RESULT_OK) {
-            if (requestCode == HeritageImageAdapter.SELECT_FILE) {
+            if (requestCode == HeritageMediaAdapter.SELECT_FILE) {
                 onSelectFromGalleryResult(data);
 //                Toast.makeText(this, "Picked from gallery", Toast.LENGTH_SHORT).show();
-            } else if (requestCode == HeritageImageAdapter.REQUEST_CAMERA) {
+            } else if (requestCode == HeritageMediaAdapter.REQUEST_CAMERA) {
 //                Toast.makeText(this, "taken by camera", Toast.LENGTH_SHORT).show();
                 onCaptureImageResult(data);
             }
@@ -280,7 +281,7 @@ public class HeritageItemViewActivity extends AppCompatActivity {
         return cursor.getString(column_index);
     }
 
-    private class AllMediasReceiver extends AsyncTask<String, Void, ArrayList<String>> {
+    private class AllMediasReceiver extends AsyncTask<String, Void, ArrayList<HeritageMedia>> {
         private Activity mContext;
         private String mImageUri;
         private int mItemID;
@@ -292,24 +293,26 @@ public class HeritageItemViewActivity extends AppCompatActivity {
         }
 
         @Override
-        protected ArrayList<String> doInBackground(String... params) {
+        protected ArrayList<HeritageMedia> doInBackground(String... params) {
             return getMediaUrls(mItemID);
         }
 
-        private ArrayList<String> getMediaUrls(int mItemID) {
+        private ArrayList<HeritageMedia> getMediaUrls(int mItemID) {
             JSONArray json;
             try {
                 json = new JSONArray(Fetcher.getJSON(new URL(getResources().getString(R.string.itemsEndPoint) + mItemID + "/medias"), mContext));
                 Log.v(LOG_TAG, "Error in get medias" + json.toString());
-                ArrayList<String> urls = new ArrayList<>();
-                urls.add(mImageUri);
+                ArrayList<HeritageMedia> medias = new ArrayList<>();
+                medias.add(new HeritageMedia(mImageUri, "image"));
                 for (int i = 0; i < json.length(); i++) {
                     JSONObject temp = json.getJSONObject(i);
                     if (temp.getString("mediaType").equals("image")) {
-                        urls.add(temp.getString("file_url"));
+                        medias.add(new HeritageMedia(temp.getString("file_url"), "image"));
+                    } else if (temp.getString("extension").equals("youtube")) {
+                        medias.add(new HeritageMedia(temp.getString("url"), "youtube"));
                     }
                 }
-                return urls;
+                return medias;
             } catch (Exception e) {
                 Log.v(LOG_TAG, "Error in get medias" + e.getMessage());
             }
@@ -317,8 +320,8 @@ public class HeritageItemViewActivity extends AppCompatActivity {
         }
 
         @Override
-        protected void onPostExecute(ArrayList<String> urls) {
-            HeritageImageAdapter imageAdapter = new HeritageImageAdapter(mContext, urls);
+        protected void onPostExecute(ArrayList<HeritageMedia> medias) {
+            HeritageMediaAdapter imageAdapter = new HeritageMediaAdapter(mContext, medias);
             imageList.setAdapter(imageAdapter);
         }
 
