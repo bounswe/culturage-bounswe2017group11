@@ -144,10 +144,11 @@ class ContactForm extends React.Component {
 
         return (
 
-        <div className="container-fluid">
+        <div className="container-fluid home-body">
+          <div className="row newsfeed">
           <h1>Upload New Item</h1>
           <hr/>
-          <div className="row">
+
 
             <div className="col-md-5" >
               <div className="previewComponent text-center">
@@ -162,7 +163,7 @@ class ContactForm extends React.Component {
               </div>
             </div>
 
-            <div className="col-md-6 ">
+            <div className="col-md-6">
                 <form className="form-horizontal" role="form">
 
                   <div className="form-group">
@@ -245,13 +246,12 @@ class ContactForm extends React.Component {
                     <label className="col-lg-3 control-label">Tags:</label>
                     <div className="col-lg-8">
                       <TagsInput value={this.state.tags} onChange={this.handleChangeTags} />
-                      <br/>
                     </div>
                   </div>
 
                   <div class="form-group">
         						<label class="col-md-3 control-label"></label>
-        						<div class="col-md-8">
+        						<div class="col-md-8 classWithPad">
                       <button className="btn btn-primary custom"
                         onClick={ this.handleSubmit }>Submit</button>
                       <button className="btn btn-primary custom margin-left"
