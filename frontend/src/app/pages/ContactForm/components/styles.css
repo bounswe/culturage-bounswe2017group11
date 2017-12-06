@@ -4,7 +4,7 @@
   margin-left: 15px;
 }
 
-.home-body{
+.upload-body{
     background: #f2f2f2;
     margin:0px;
     padding:0px;
@@ -13,26 +13,26 @@
     font-family: Calibri, Candara, Segoe, 'Segoe UI', Optima, Arial, sans-serif;
 }
 
-.newsfeed{
+.upload-container{
   width:100%;
   margin-left: 5%;
   margin-right: 5%;
   padding-left: 1%;
   padding-right: 1%;
-    background: white;
-    box-shadow: 0px 0px 15px #888888;
-    border-radius: 5px;
-    border: 1px solid #e6e6e6;
-    margin-top: 20px;
-    margin-bottom: 20px;
+  background: white;
+  box-shadow: 0px 0px 15px #888888;
+  border-radius: 5px;
+  border: 1px solid #e6e6e6;
+  margin-top: 20px;
+  margin-bottom: 20px;
 }
 .classWithPad { padding-bottom: 10px; }
 
 @media screen and (max-width: 600px) {
-    .home-body {
+    .upload-body {
         flex-direction: column-reverse;
     }
-    .newsfeed{
+    .upload-container{
         margin-left: 1%;
         margin-right: 1%;
         width: auto;

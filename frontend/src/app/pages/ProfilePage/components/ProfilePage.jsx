@@ -132,8 +132,8 @@ class ProfilePage extends React.Component {
 		}
 
 		return(
-		<div className="container-fluid home-body">
-			<div className="row newsfeed">
+		<div className="container-fluid profile-body">
+			<div className="row profile-container">
 			<h1>Edit Profile</h1>
 	  	<hr/>
 
