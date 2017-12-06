@@ -132,10 +132,11 @@ class ProfilePage extends React.Component {
 		}
 
 		return(
-		<div className="container-fluid">
-	    <h1>Edit Profile</h1>
+		<div className="container-fluid home-body">
+			<div className="row newsfeed">
+			<h1>Edit Profile</h1>
 	  	<hr/>
-			<div className="row">
+
 
 				<div className="col-md-4">
 					<div className="text-center">
@@ -157,7 +158,7 @@ class ProfilePage extends React.Component {
 				<form className="form-horizontal" role="form">
 
 					<div className="form-group">
-						<label className="col-lg-3 control-label">Username:</label>
+						<label className="col-lg-3 control-label ">Username:</label>
 						<div className="col-lg-8">
 							<input className="form-control"
 								type="text" id="username" onChange={this.handleChange} placeholder={this.props.profileinfo.username}
@@ -235,7 +236,7 @@ class ProfilePage extends React.Component {
 
 					<div class="form-group">
 						<label class="col-md-3 control-label"></label>
-						<div class="col-md-8">
+						<div class="col-md-8 classWithPad">
 							<button className="btn btn-primary custom"
 								onClick={ this.handleSubmit }>Submit</button>
 							<span></span>
@@ -244,6 +245,7 @@ class ProfilePage extends React.Component {
 						</div>
 					</div>
 					</form>
+
 				</div>
 			</div>
 		</div>
