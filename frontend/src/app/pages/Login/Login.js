@@ -6,15 +6,32 @@ import RegisterForm from './components/RegisterForm.js';
 import './utils/login-form.css';
 
 class Login extends React.Component {
+ 	constructor(props) {
+    super(props);
+    this.state = {isLoggedIn: false};
+  }
+	componentWillMount(){
+		if(getCookie("token") != null){
+    	this.setState({isLoggedIn: true});
+		} else{
+	    this.setState({isLoggedIn: false});			
+		}
+	}	
 	render() {
-		return(
-			<div class="login-page" id="login-page">
-			  <div class="form">
-			  	<RegisterForm/>
-					<LoginForm/>
+		const isLoggedIn = this.state.isLoggedIn;		
+		if(isLoggedIn){
+			window.location.replace("/");			
+		} 
+		else{
+			return(
+				<div class="login-page" id="login-page">
+				  <div class="form">
+				  	<RegisterForm/>
+						<LoginForm/>
+					</div>
 				</div>
-			</div>
-		);
+			);
+		}
 	}
 }
 
@@ -36,5 +53,16 @@ var randomImage = Math.floor(Math.random() * 10)
  $(document).ready(function() {
   $("#login-page").css("background-image", "url('" + images[randomImage] + "')");
 })
+
+function setCookie(key, value) {
+    var expires = new Date();
+    expires.setTime(expires.getTime() + (1 * 24 * 60 * 60 * 1000));
+    document.cookie = key + '=' + value + ';expires=' + expires.toUTCString();
+}
+
+function getCookie(key) {
+    var keyValue = document.cookie.match('(^|;) ?' + key + '=([^;]*)(;|$)');
+    return keyValue ? keyValue[2] : null;
+}
 
 export default Login;

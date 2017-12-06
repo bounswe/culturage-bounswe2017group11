@@ -78,6 +78,7 @@ class LoginForm extends React.Component {
 		      Login with Facebook
 		    </SocialButton>*/}
 	      <p class="message">Not registered? <a href="#">Create an account</a></p>
+	      <p class="message"><a href="/">Enter the site</a></p>	      
 			</form>
 		);
 	}
