@@ -11,7 +11,7 @@ from base.serializers import LocationSerializer
 from base.serializers import TagSerializer
 from rest_framework.response import Response
 from rest_framework.views import APIView
-#import gensim
+import gensim
 import os
 
 class SearchItem(APIView):
