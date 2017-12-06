@@ -98,6 +98,9 @@
   display: inline;
 }
 
+.comment-text{
+  word-wrap:break-word;
+}
 
 
 .mycontainer{position:relative;margin-left:150px;margin-right:120px;padding-right:15px;padding-left:15px; padding-top: 25px}
