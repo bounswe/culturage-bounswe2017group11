@@ -70,9 +70,9 @@ class Like extends React.Component {
 
       .then(function(res){
         if(res.ok){
-          alert("Item liked");
+          //alert("Item liked");
         } else {
-          alert("Couldn't complete :(");
+          //alert("Couldn't complete :(");
         }
       })
       .catch((error) => {
@@ -109,9 +109,9 @@ class Like extends React.Component {
 
       .then(function(res){
         if(res.ok){
-          alert("Item disliked");
+          //alert("Item disliked");
         } else {
-          alert("Couldn't complete :(");
+          //alert("Couldn't complete :(");
         }
       })
       .catch((error) => {

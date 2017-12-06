@@ -101,8 +101,31 @@
 .comment-text{
   word-wrap:break-word;
 }
-
-
+.video-tab-button{
+  background-color: #6ec1e09e;
+  color: white !important; 
+  margin-right: 5px;
+}
+.video-tab-button:hover{
+  background-color: #5bc0de;
+}
+.video-tab-button:active{
+  background-color: #5bc0de;
+}
+.image-tab-button{
+  background-color: #6ec1e09e;
+  color: white !important;
+}
+.image-tab-button:hover{
+  background-color: #5bc0de;
+}
+.image-tab-button:active{
+  background-color: #5bc0de;
+}
+.tab-buttons{
+  text-align: center;
+  padding-bottom: 10px;
+}
 .mycontainer{position:relative;margin-left:150px;margin-right:120px;padding-right:15px;padding-left:15px; padding-top: 25px}
 
 .mycontainer2{position:relative;margin-left:75px;margin-right:75px;padding-right:15px;padding-left:15px; padding-top: 75px}
