@@ -1,6 +1,6 @@
 # Culturage Web Service
 ### You can see demo at [here](http://18.220.108.135)
-### You can see API Documentation at [here](https://app.swaggerhub.com/apis/enescakir/culturage/1.0.0)
+### You can see Postman API Documentation at [here](https://documenter.getpostman.com/view/2986669/culturage-api/71FWB4x)
 
 ## How to Use
 1. Switch to venv
@@ -10,6 +10,14 @@
 3. Run database migrations for any change (`$ python3 manage.py migrate`)
 4. Run server locally (`$ python3 manage.py runserver`)
 5. If you get success message, server’s running, visit `http://127.0.0.1:8000/`
+
+## Testing API
+1. Install [Postman](https://www.getpostman.com) app
+2. Import [Culturage Collection](https://raw.githubusercontent.com/bounswe/bounswe2017group11/master/backend/culturage.postman_collection) or use "Run in Postman" in [documentation](https://documenter.getpostman.com/view/2986669/culturage-api/71FWB4x)
+3. Create a new environment from "_Manage Enviroments_" option
+4. Add two key:value pair `url:http://18.220.108.135` and `token:YOUR_TOKEN`
+5. You can get token from `login` or `register` endpoint
+6. Don't forget to select current environment as environment that you created newly
 
 ## How to Setup
 To setup this project, follow these steps:

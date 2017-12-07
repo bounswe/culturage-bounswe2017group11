@@ -21,7 +21,7 @@
 				],
 				"body": {
 					"mode": "raw",
-					"raw": "{\t\n\t\"username\": \"gsgfdsgsdfg\",\n\t\"password\": \"asddsf\",\n\t\"email\": \"deneme@cakir.web.tr\"\n}"
+					"raw": "{\t\n\t\"username\": \"yfeni\",\n\t\"password\": \"asddsf\",\n\t\"email\": \"naberf@naber.com\"\n}"
 				},
 				"description": ""
 			},
@@ -65,9 +65,166 @@
 			"response": []
 		},
 		{
+			"name": "Newsfeed",
+			"request": {
+				"url": "{{url}}/api/newsfeed",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "JWT {{token}}",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"query\" : \"asdf\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Search Item",
+			"request": {
+				"url": {
+					"raw": "{{url}}/api/search/item?q=yeni",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"search",
+						"item"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "yeni",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "JWT {{token}}",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"query\" : \"asdf\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Search User",
+			"request": {
+				"url": {
+					"raw": "{{url}}/api/search/user?q=yeni",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"search",
+						"user"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "yeni",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "JWT {{token}}",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"query\" : \"asdf\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Search Location",
+			"request": {
+				"url": {
+					"raw": "{{url}}/api/search/location?q=İs",
+					"host": [
+						"{{url}}"
+					],
+					"path": [
+						"api",
+						"search",
+						"location"
+					],
+					"query": [
+						{
+							"key": "q",
+							"value": "İs",
+							"equals": true,
+							"description": ""
+						}
+					],
+					"variable": []
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "JWT {{token}}",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"query\" : \"asdf\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
 			"name": "Show Item",
 			"request": {
-				"url": "{{url}}/api/items/49",
+				"url": "{{url}}/api/items/40",
 				"method": "GET",
 				"header": [
 					{
@@ -82,7 +239,175 @@
 			"response": []
 		},
 		{
-			"name": "Store Item",
+			"name": "Comment on Item",
+			"request": {
+				"url": "{{url}}/api/items/40/comments",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "JWT {{token}}",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"text\" : \"Çok güzell\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Rate on Item",
+			"request": {
+				"url": "{{url}}/api/items/40/rates",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "JWT {{token}}",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"rate\" : 4\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Rates of Item",
+			"request": {
+				"url": "{{url}}/api/items/40/rates",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "JWT {{token}}",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"rate\" : 4\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Comments of Item",
+			"request": {
+				"url": "{{url}}/api/items/40/comments",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "JWT {{token}}",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Recommendation for User",
+			"request": {
+				"url": "{{url}}/api/recommendation",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "JWT {{token}}",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Recommendation for Item",
+			"request": {
+				"url": "{{url}}/api/recommendation/item/40",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "JWT {{token}}",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Auth Profile",
+			"request": {
+				"url": "{{url}}/api/profile",
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "JWT {{token}}",
+						"description": ""
+					}
+				],
+				"body": {},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Update Profile",
+			"request": {
+				"url": "{{url}}/api/profile",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "JWT {{token}}",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n\t\"fullName\": \"Enes\",\n    \"location\": \"deneme\"\n}"
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Store Item Form",
 			"request": {
 				"url": "{{url}}/api/items/",
 				"method": "POST",
@@ -110,9 +435,9 @@
 						},
 						{
 							"key": "image",
+							"value": "",
 							"description": "",
-							"type": "file",
-							"src": "Nemrut_Mountain_Peak.JPG"
+							"type": "file"
 						},
 						{
 							"key": "location",
@@ -125,8 +450,45 @@
 							"value": "0537-01-01",
 							"description": "",
 							"type": "text"
+						},
+						{
+							"key": "tags",
+							"value": "mount",
+							"description": "",
+							"type": "text"
+						},
+						{
+							"key": "tags",
+							"value": "naber",
+							"description": "",
+							"type": "text"
 						}
 					]
+				},
+				"description": ""
+			},
+			"response": []
+		},
+		{
+			"name": "Store Item JSON",
+			"request": {
+				"url": "{{url}}/api/items/",
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "JWT {{token}}",
+						"description": ""
+					},
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"description": ""
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\t\n\t\"name\" : \"deneme\",\n\t\"description\": \"güzel\",\n\t\"location\": \"Enes\",\n\t\"date\": \"1995-03-18\",\n\t\"image\": \"image/png;base64,iVBORw0KGgoAAAANSUhEUgAABVAAAAHcCAYAAAAwQ4H4AAAMJmlDQ1BJQ0MgUHJvZmlsZ\",\n\t\"tags\": [\"enes\", \"mount\"]\n}"
 				},
 				"description": ""
 			},

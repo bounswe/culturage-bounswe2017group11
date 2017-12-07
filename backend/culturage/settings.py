@@ -30,6 +30,7 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 DEBUG = bool(int(os.getenv('DEBUG', False)))
 
 ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS').split(',') if os.getenv('ALLOWED_HOSTS') else []
+CURRENT_DOMAIN = os.getenv('CURRENT_DOMAIN', 'http://127.0.0.1:8000')
 
 INTERNAL_IPS = '127.0.0.1'
 
@@ -74,6 +75,7 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES': (
         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
         'rest_framework.authentication.TokenAuthentication',
+
     ),
 }
 ROOT_URLCONF = 'culturage.urls'
@@ -111,6 +113,27 @@ DATABASES = {
     }
 }
 
+LOGGING = {
+    'version': 1,
+    'filters': {
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        }
+    },
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'filters': ['require_debug_true'],
+            'class': 'logging.StreamHandler',
+        }
+    },
+    'loggers': {
+        'django.db.backends': {
+            'level': 'DEBUG',
+            'handlers': ['console'],
+        }
+    }
+}
 
 # Password validation
 # https://docs.djangoproject.com/en/1.11/ref/settings/#auth-password-validators
