@@ -144,8 +144,8 @@ class ContactForm extends React.Component {
 
         return (
 
-        <div className="container-fluid upload-body">
-          <div className="row upload-container">
+        <div className="container-fluid home-body">
+          <div className="row newsfeed">
           <h1>Upload New Item</h1>
           <hr/>
 
