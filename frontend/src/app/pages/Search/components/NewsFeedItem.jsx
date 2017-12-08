@@ -12,16 +12,15 @@ export default class NewsFeedItem extends React.Component {
       return (
          <div class="newsfeed-item">
             <div class="col-sm-6">
+               {console.log("In item page: ", this.props.item)}
                <Link to={"/item/" + this.props.item.id}>
                   <h1>{this.props.item.name}</h1>
                </Link>            
-               <h2>{this.props.item.created_at.substring(0, 10)} - {this.props.item.created_by.username}</h2>
+               <h2></h2>
                <NewsFeedItemDesc description={this.props.item.description} id={this.props.item.id} />
             </div>
             <div class="col-sm-6">
-               <Link to={"/item/" + this.props.item.id}>
-                  <img src={this.props.item.featured_img}></img>
-               </Link>
+               <img src={this.props.item.featured_img}></img>
             </div>
          </div>
       )
