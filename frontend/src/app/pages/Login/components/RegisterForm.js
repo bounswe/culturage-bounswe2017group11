@@ -20,7 +20,7 @@ class RegisterForm extends React.Component {
     	email : this.state.email
     }
     $.ajax({
-		  url: "http://18.220.108.135/api/auth/register",
+		  url: "http://52.90.34.144:85/api/auth/register",
 		  data: JSON.stringify(body),
 		  type: "POST",
 		  headers: {
@@ -30,7 +30,7 @@ class RegisterForm extends React.Component {
 		  	console.log();
 		  },
 		  success: (res) => {
-		  	var token = JSON.stringify(res.token);
+		  	var token = res.token;
 		  	console.log("SUCCESS! Token: " + token);
 		  	setCookie("token", token);
 		  	window.location.replace("/");

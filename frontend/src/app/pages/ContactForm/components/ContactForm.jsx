@@ -1,35 +1,49 @@
 import React from 'react';
-import $ from 'jquery';
-import _ from "lodash";
+import TagsInput from 'react-tagsinput'
+import 'react-tagsinput/react-tagsinput.css'
 
 class ContactForm extends React.Component {
     constructor(props) {
         super(props);
 
         this.state = {
+            selectedValue: 'media',
             file: '',
             imagePreviewUrl: ' ',
             name: '',
             description: '',
             location: '',
-            date:'2017-01-01',
+            day:'00',
+            month:'00',
+            year:'0000',
             image: '',
             tags: [],
             tag: '',
+            isChecked: false,
         }
-
+        this.handleSelectedChange = this.handleSelectedChange.bind(this);
         this.handleNameChange = this.handleNameChange.bind(this);
         this.handleDescriptionChange = this.handleDescriptionChange.bind(this);
-        this.handleTagsChange = this.handleTagsChange.bind(this);
+        this.handleChangeTags =  this.handleChangeTags.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
         this.handleClear = this.handleClear.bind(this);
+        this.toggleChange = this.toggleChange.bind(this);
+
+        this.handleYearChange = this.handleYearChange.bind(this);
+
+        this.handleMonthChange = this.handleMonthChange.bind(this);
+
+        this.handleDayChange =
+        this.handleDayChange.bind(this);
     }
 
-    _handleSubmit(e) {
-      e.preventDefault();
-      // TODO: do something with -> this.state.file
-      console.log('handle uploading-', this.state.imagePreviewUrl);
+    toggleChange = () => {
+      this.setState({
+        isChecked: !this.state.isChecked,
+      });
     }
+
+    handleChangeTags(tags) {this.setState({tags});}
 
     _handleImageChange(e) {
       e.preventDefault();
@@ -56,13 +70,16 @@ class ContactForm extends React.Component {
     // onChange handler saves subject to state
     handleDescriptionChange(event){event.preventDefault();this.setState({description: event.target.value});};
     handleLocationChange(event){event.preventDefault();this.setState({location: event.target.value});};
-    handleDateChange(event){event.preventDefault();this.setState({date: event.target.value});};
+
+    handleYearChange(event){event.preventDefault();this.setState({year: event.target.value});};
+
+    handleMonthChange(event){event.preventDefault();  this.setState({month: event.target.value});};
+
+    handleDayChange(event){event.preventDefault();  this.setState({day: event.target.value});};
+
     handleImageChange(event){event.preventDefault();this.setState({image: event.target.value});};
     handleTagsChange(event){event.preventDefault();this.setState({tags: event.target.value});};
-
-    handleChangeTags(event, tags) {event.preventDefault();this.setState({tags});};
-    handleChangeInput(event, tag) {event.preventDefault();this.setState({tag});};
-
+    handleSelectedChange(event) {this.setState({selectedValue: event.target.value});}
 
 
     // Handler for the button/submit event
@@ -70,19 +87,27 @@ class ContactForm extends React.Component {
       e.preventDefault();
 
       var myHeaders = new Headers();
+      var yearValue = this.state.year;
+      if(this.state.isChecked){
+        yearValue = '-'+ yearValue;
+      }
+      var dateUpload = yearValue + '-' + this.state.month + '-' + this.state.day;
+
+      console.log(dateUpload);
 
       var payload = {
         "name" : this.state.name,
         "description": this.state.description,
         "location": this.state.location,
-        "date": this.state.date,
+        "date": dateUpload,
         "image": this.state.imagePreviewUrl,
         "tags": this.state.tags
       };
 
-      //console.log(data);
+      console.log("PAYLOAD");
+      console.log(payload);
       var token = getCookie('token');
-      fetch('http://18.220.108.135/api/items/',
+      fetch('http://52.90.34.144:85/api/items/',
       {
 
       headers: {
@@ -118,10 +143,15 @@ class ContactForm extends React.Component {
       }
 
         return (
-          <div className="row">
-            <div className="col-md-6" >
-              <div className="previewComponent">
-                <h1 align = "center"> Upload New Item</h1>
+
+        <div className="container-fluid home-body">
+          <div className="row newsfeed">
+          <h1>Upload New Item</h1>
+          <hr/>
+
+
+            <div className="col-md-5" >
+              <div className="previewComponent text-center">
                 <form onSubmit={(e)=>this._handleSubmit(e)}>
                   <input className="fileInput"
                     type="file"
@@ -133,52 +163,109 @@ class ContactForm extends React.Component {
               </div>
             </div>
 
+            <div className="col-md-6">
+                <form className="form-horizontal" role="form">
 
-            <div className="col-md-6 ">
-                <form>
                   <div className="form-group">
-                    <label id="titleID">Title</label>
-                    <input className="form-control"
-                      type="text"
-                      name="title"
-                      ref="title"
-                      value={ this.state.subject }
-                      onChange={ this.handleNameChange }
-                    required />
-                  </div>
-                  <div className="form-group">
-                      <label id="descID">Description</label>
-                      <textArea className="form-control"
-                        rows="8"
-                        type="text"
-                        name="description"
-                        ref="description"
-                        value={ this.state.subject }
-                        onChange={ this.handleDescriptionChange }
-                        required />
-                  </div>
-                  <div className="form-group">
-                      <label id="tagsID">Tags</label>
+                    <label className="col-lg-3 control-label">Title:</label>
+                    <div className="col-lg-8">
                       <input className="form-control"
                         type="text"
-                        name="tags"
-                        ref="tags"
+                        name="title"
+                        ref="title"
                         value={ this.state.subject }
-                        onChange={ this.handleTagsChange }
-                        required />
-                      <br/>
+                        onChange={ this.handleNameChange }
+                      required />
+                    </div>
                   </div>
 
-                  <button className="btn btn-primary custom"
-                    onClick={ this.handleSubmit }>Submit</button>
-                  <button className="btn btn-primary custom margin-left"
-                    onClick={ this.handleClear }>Clear</button>
+                  <div className="form-group">
+                      <label className="col-lg-3 control-label">Description:</label>
+                      <div className="col-lg-8">
+                        <textArea className="form-control"
+                          rows="8"
+                          type="text"
+                          name="description"
+                          ref="description"
+                          value={ this.state.subject }
+                          onChange={ this.handleDescriptionChange }
+                          required />
+                      </div>
+                  </div>
+
+                  <div className="form-group">
+                    <label className="col-lg-3 control-label">Date:</label>
+                    <div className="col-lg-2">
+                      <label>
+                        <input type="checkbox"
+                          checked={this.state.isChecked}
+                          onChange={this.toggleChange}
+                        />
+                        BC
+                      </label>
+                    </div>
+                    <div className="col-lg-2">
+                      <input className="form-control"
+                        type="number"
+                        name="day"
+                        ref="day"
+                        min="1"
+                        max="31"
+                        placeholder="DD"
+                        value={ this.state.subject }
+                        onChange={ this.handleDayChange }
+                      required />
+                    </div>
+                    <div className="col-lg-2">
+                      <input className="form-control"
+                        type="number"
+                        name="month"
+                        ref="month"
+                        min="1"
+                        max="12"
+                        placeholder="MM"
+                        value={ this.state.subject }
+                        onChange={ this.handleMonthChange }
+                      required />
+                    </div>
+                    <div className="col-lg-2">
+                      <input className="form-control"
+                        type="number"
+                        name="year"
+                        ref="year"
+                        min="0"
+                        max="3000"
+                        placeholder="YYYY"
+                        value={ this.state.subject }
+                        onChange={ this.handleYearChange }
+                      required />
+                    </div>
+                  </div>
+
+                  <div className="form-group">
+                    <label className="col-lg-3 control-label">Tags:</label>
+                    <div className="col-lg-8">
+                      <TagsInput value={this.state.tags} onChange={this.handleChangeTags} />
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+        						<label class="col-md-3 control-label"></label>
+        						<div class="col-md-8 classWithPad">
+                      <button className="btn btn-primary custom"
+                        onClick={ this.handleSubmit }>Submit</button>
+                      <button className="btn btn-primary custom margin-left"
+                        onClick={ this.handleClear }>Clear</button>
+                    </div>
+                  </div>
                 </form>
             </div>
           </div>
+        </div>
         );
     }
 }
+
 function getCookie(key) {
     var keyValue = document.cookie.match('(^|;) ?' + key + '=([^;]*)(;|$)');
     return keyValue ? keyValue[2] : null;

@@ -16,7 +16,7 @@ export default class NewsFeedItemDesc extends React.Component {
 	}
 	render() {
     	return (
-    		<p>{this.organize(this.props.description)}<Link to={"/item/" + this.props.id}> Show More</Link></p>
+    		<p>{this.organize(this.props.description)}<Link to={"/item/" + this.props.id}>Show More</Link></p>
     	)
     }
 }
