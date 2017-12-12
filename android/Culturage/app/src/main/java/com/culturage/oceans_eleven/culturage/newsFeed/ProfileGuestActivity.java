@@ -22,8 +22,8 @@ import java.util.ArrayList;
 public class ProfileGuestActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<ArrayList<ProfilePage>> {
 
     private ImageView photo;
-    private String apiURL = "http://18.220.108.135/api/profile/";
-    private static final String baseURL = "http://18.220.108.135";
+    private String apiURL = "http://52.90.34.144:85/api/profile/";
+    private static final String baseURL = "http://52.90.34.144:85";
     private ProgressBar mProgressBar;
     private String creator_id;
     private TextView username, email, fullName, location, birthday;

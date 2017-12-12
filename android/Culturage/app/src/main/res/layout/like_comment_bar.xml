@@ -31,7 +31,7 @@
                 android:background="@android:color/white"
                 android:paddingStart="65dp"
                 android:paddingEnd="0dp"
-                android:src="@drawable/ic_like"
+                android:src="@drawable/ic_notlike"
                 android:textAlignment="textStart"
                 android:textColor="@color/primary_blue"
                 android:clickable="false"
@@ -87,4 +87,37 @@
 
         </LinearLayout>
     </LinearLayout>
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="4dp"
+        android:background="@color/separator_grey"
+        android:clickable="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:id="@+id/like_number_container"
+            android:clickable="true"
+            android:focusable="true"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <TextView
+                android:id="@+id/show_likes"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:textAlignment="textStart"
+                android:textColor="@color/primary_blue"
+                tools:text="  Liked by 225 people" />
+        </LinearLayout>
+
+    </LinearLayout>
+
 </LinearLayout>

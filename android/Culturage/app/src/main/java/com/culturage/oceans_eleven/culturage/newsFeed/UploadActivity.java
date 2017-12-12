@@ -43,7 +43,7 @@ import java.io.IOException;
 
 public class UploadActivity extends Activity {
 
-    private static final String UPLOAD_URL = "http://18.220.108.135/api/items/";
+    private static final String UPLOAD_URL = "http://52.90.34.144:85/api/items/";
     private int REQUEST_CAMERA = 0, SELECT_FILE = 1;
     private ImageView mImageView;
     private ProgressBar mProgressBar;
@@ -71,7 +71,7 @@ public class UploadActivity extends Activity {
         btnTakePhoto.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                cameraIntent();
+                startCameraIntent();
             }
         });
 
@@ -79,7 +79,7 @@ public class UploadActivity extends Activity {
         btnSelectPhoto.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-                galleryIntent();
+                startGalleryIntent();
             }
         });
 
@@ -93,21 +93,14 @@ public class UploadActivity extends Activity {
                 String createdAt = null;
                 String day = mDaySpinner.getSelectedItem().toString();
                 String month = mMonthSpinner.getSelectedItem().toString();
-
-                String year = "";
-                try {
-                    int yearTemp = Integer.parseInt(mYearView.getText().toString());
+                String year = mYearView.getText().toString();
+                if (year.equals("")) {
+                    year = "0000";
+                } else {
                     if (mBcSwitch.isChecked()) {
                         // BC case
-                        year = yearTemp + 3000 + "";
-                    } else {
-                        year = yearTemp + "";
+                        year = "-" + year;
                     }
-
-                } catch (NumberFormatException e) {
-                    year = "0000";
-                } catch (Exception e) {
-                    Log.v("upload", "Error in year parsing");
                 }
                 if (day.equals("--")) {
                     day = "00";
@@ -150,9 +143,9 @@ public class UploadActivity extends Activity {
 //            case NewsFeedUtils.MY_PERMISSIONS_REQUEST_READ_EXTERNAL_STORAGE:
 //                if (grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
 //                    if (userChosenTask.equals("Take Photo"))
-//                        cameraIntent();
+//                        startCameraIntent();
 //                    else if (userChosenTask.equals("Choose from Gallery"))
-//                        galleryIntent();
+//                        startGalleryIntent();
 //                } else {
 //                    //code for deny
 //                }
@@ -160,14 +153,14 @@ public class UploadActivity extends Activity {
 //        }
 //    }
 
-    private void galleryIntent() {
+    private void startGalleryIntent() {
         Intent intent = new Intent();
         intent.setType("image/*");
         intent.setAction(Intent.ACTION_GET_CONTENT);//
         startActivityForResult(Intent.createChooser(intent, "Select File"), SELECT_FILE);
     }
 
-    private void cameraIntent() {
+    private void startCameraIntent() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(intent, REQUEST_CAMERA);
     }
@@ -191,7 +184,6 @@ public class UploadActivity extends Activity {
 
         File destination = new File(Environment.getExternalStorageDirectory(),
                 System.currentTimeMillis() + ".jpg");
-
         FileOutputStream fo;
         try {
             destination.createNewFile();
@@ -201,13 +193,11 @@ public class UploadActivity extends Activity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-
         mImageView.setImageBitmap(thumbnail);
     }
 
     @SuppressWarnings("deprecation")
     private void onSelectFromGalleryResult(Intent data) {
-
         Bitmap bm = null;
         if (data != null) {
             try {
@@ -216,7 +206,6 @@ public class UploadActivity extends Activity {
                 e.printStackTrace();
             }
         }
-
         mImageView.setImageBitmap(bm);
     }
 
@@ -276,24 +265,20 @@ public class UploadActivity extends Activity {
         private JSONObject constructTheJSON() {
             JSONObject json = new JSONObject();
             try {
-
-
                 json.put("name", itemToUpload.getmTitle());
                 json.put("description", itemToUpload.getmDescription());
-                json.put("image", "image/png;base64," + itemToUpload.getmImageString());
+                json.put("image", "image/png;base64," + itemToUpload.getmImageBase64String());
                 json.put("location", itemToUpload.getmLocation());
                 json.put("date", itemToUpload.getmDate());
-                JSONArray tags = new JSONArray(itemToUpload.getMTags().split("\\s"));
+                JSONArray tags = new JSONArray(itemToUpload.getMTags().replaceAll("#", "").split("\\s"));
                 Log.v("upload-tag", tags.toString());
                 json.put("tags", tags);
-                Log.v("upload", itemToUpload.getmImageString());
+                Log.v("upload", itemToUpload.getmImageBase64String());
                 return json;
             } catch (JSONException e) {
                 Log.v("upload", "Error in json construction");
             }
             return json;
         }
-
     }
-
 }

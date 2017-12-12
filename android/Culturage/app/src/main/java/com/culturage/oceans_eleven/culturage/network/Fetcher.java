@@ -28,7 +28,7 @@ import java.util.ArrayList;
  * does some other url stuff internally
  */
 
-class Fetcher {
+public class Fetcher {
     /**
      * Tag for the log messages
      */
@@ -40,25 +40,21 @@ class Fetcher {
     static ArrayList<HeritageItem> fetchNewsFeedData(String requestUrl, Context context) {
 
         // Create URL object
-        //FIXME
         URL url = createUrl(requestUrl);
-
         // Perform HTTP request to the URL and receive a JSON response back
         String jsonResponse = null;
         try {
-            jsonResponse = makeHttpRequest(url, context);
+            jsonResponse = getJSON(url, context);
         } catch (IOException e) {
             Log.e(LOG_TAG, "Error closing input stream", e);
         }
-        // Extract relevant fields from the JSON response and create an {@link Event} object
-        // Return the {@link Event}
         return extractHeritageItemsFromJson(jsonResponse);
     }
 
     /**
      * Returns new URL object from the given string URL.
      */
-    private static URL createUrl(String stringUrl) {
+    public static URL createUrl(String stringUrl) {
         URL url = null;
         try {
             url = new URL(stringUrl);
@@ -72,14 +68,12 @@ class Fetcher {
     /**
      * Make an HTTP request to the given URL and return a String as the response.
      */
-    private static String makeHttpRequest(URL url, Context context) throws IOException {
+    public static String getJSON(URL url, Context context) throws IOException {
         String jsonResponse = "";
-
         // If the URL is null, then return early.
         if (url == null) {
             return jsonResponse;
         }
-
         HttpURLConnection urlConnection = null;
         InputStream inputStream = null;
         try {
@@ -88,20 +82,20 @@ class Fetcher {
             urlConnection.setConnectTimeout(15000 /* milliseconds */);
             urlConnection.setRequestMethod("GET");
 
-
             SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(context);
             String token = preferences.getString("token", "null");
             // String token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyMiwidXNlcm5hbWUiOiJha29rc2FsIiwiZW1haWwiOiJha29rc2FsQGEuY29tIiwiZXhwIjoyNTA4Njc4OTE1fQ.PgPIJppA9u5umhrHGxPmv7_1Hi2ItASDgd7NH4DHcO0";
             urlConnection.setRequestProperty("Authorization", "JWT " + token);
             urlConnection.connect();
-
             // If the request was successful (response code 200),
             // then read the input stream and parse the response.
             if (urlConnection.getResponseCode() == 200) {
                 inputStream = urlConnection.getInputStream();
                 jsonResponse = readFromStream(inputStream);
+                Log.v(LOG_TAG, "Fetched succesfully " + jsonResponse);
             } else {
                 Log.e(LOG_TAG, "Error response code: " + urlConnection.getResponseCode());
+                Log.e(LOG_TAG, url.toString());
             }
         } catch (IOException e) {
             Log.e(LOG_TAG, "Problem retrieving the news feed JSON results.", e);
@@ -113,6 +107,7 @@ class Fetcher {
                 inputStream.close();
             }
         }
+        Log.v(LOG_TAG, "resulting json " + jsonResponse);
         return jsonResponse;
     }
 
@@ -147,34 +142,35 @@ class Fetcher {
         // Create an empty ArrayList that we can start adding HeritageItem's to
         ArrayList<HeritageItem> heritageItems = new ArrayList<>();
         try {
-
             JSONArray items = new JSONArray(newsFeedJSON);
             for (int i = 0; i < items.length(); i++) {
                 JSONObject values = items.getJSONObject(i);
-                JSONObject creator = values.getJSONObject("created_by");  //Change
                 String title, description, imageURL, rate, createdAt, date, location = "", stringTags = "";
-
                 title = values.getString("name");
                 description = values.getString("description");
                 imageURL = values.getString("featured_img");
-                rate = values.getString("rate");
-                createdAt = values.getString("created_at");
-                JSONArray timelines = values.getJSONArray("timelines");
-                date = parseDate(timelines);
-                try {
-                    location = timelines.getJSONObject(0).getJSONObject("location").getString("name");
-                } catch (Exception e) {
-                    Log.v("fetcher", "error parsing location.");
-                }
-                JSONArray tags = values.getJSONArray("tags");
-                try {
-                    stringTags = parseTags(tags);
-                } catch (Exception e) {
-                    Log.v("fetcher", "error parsing tags.");
-                }
-                heritageItems.add(new HeritageItem(title.trim(), description.trim(), imageURL, rate, createdAt, date, location, stringTags));
-                heritageItems.get(i).setCreatorId(creator.getString("id")); //New
-                heritageItems.get(i).setCreatorUsername(creator.getString("username"));
+                boolean isRated = values.getBoolean("is_rated");
+                int postID = values.getInt("id");
+                int likeCount = values.getInt("rate");
+                int commentCount = values.getInt("comment_count");
+//                createdAt = values.getString("created_at");
+//                JSONArray timelines = values.getJSONArray("timelines");
+//                date = parseDate(timelines);
+//                try {
+//                    location = timelines.getJSONObject(0).getJSONObject("location").getString("name");
+//                } catch (Exception e) {
+//                    Log.v("fetcher", "error parsing location.");
+//                }
+//                JSONArray tags = values.getJSONArray("tags");
+//                try {
+//                    stringTags = parseTags(tags);
+//                } catch (Exception e) {
+//                    Log.v("fetcher", "error parsing tags.");
+//                }
+
+                heritageItems.add(new HeritageItem(postID, title.trim(), description.trim(), imageURL, isRated, likeCount, commentCount));
+                //heritageItems.get(i).setCreatorId(creator.getString("id")); //New
+                //heritageItems.get(i).setCreatorUsername(creator.getString("username"));
             }
         } catch (Exception e) {
             Log.v(LOG_TAG, "Error in populating heritage items");

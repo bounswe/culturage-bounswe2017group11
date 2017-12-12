@@ -12,4 +12,6 @@
     <dimen name="large_edit_text_height">144dp</dimen>
     <dimen name="tiny_padding">4dp</dimen>
     <dimen name="label_height">25dp</dimen>
+    <dimen name="tagsViewHeight">48dp</dimen>
+    <dimen name="tagsViewWidth">72dp</dimen>
 </resources>

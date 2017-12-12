@@ -11,41 +11,29 @@
         android:orientation="vertical">
 
         <!-- To be changed -->
-        <TextView
-            android:id="@+id/guest_profile"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            tools:text="username"
-            android:textSize="0.15in" />
 
-        <TextView
-            android:id="@+id/her_item_Title"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/small_padding"
-            android:background="@drawable/blue_border"
-            android:gravity="center"
-            android:orientation="vertical"
-            android:padding="@dimen/medium_padding"
-            android:textAllCaps="true"
-            android:textColor="@color/login_page_text_color"
-            android:textStyle="bold"
-            tools:text="Here is an example title" />
+            android:orientation="horizontal">
 
-        <ImageView
-            android:id="@+id/her_item_photo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/small_padding"
-            android:adjustViewBounds="true"
-            android:scaleType="centerCrop"
-            tools:src="@mipmap/hagia_sophia" />
+            <ImageView
+                android:id="@+id/guest_profile_pict"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:adjustViewBounds="true"
+                android:scaleType="centerCrop"
+                android:src="@mipmap/ic_no_image" />
 
-        <include
-            android:id="@+id/item_like_comment_buttons_container"
-            layout="@layout/like_comment_bar"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content" />
+            <TextView
+                android:id="@+id/guest_profile"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textSize="0.15in"
+                tools:text="username" />
+
+        </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -54,16 +42,67 @@
             android:orientation="vertical">
 
             <TextView
-                android:id="@+id/her_item_tags"
-                style="?android:textAppearanceMedium"
+                android:id="@+id/her_item_Title"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:background="@drawable/blue_border"
+                android:gravity="center"
+                android:orientation="vertical"
+                android:padding="@dimen/medium_padding"
+                android:textAllCaps="true"
+                android:textColor="@color/login_page_text_color"
+                android:textStyle="bold"
+                tools:text="Here is an example title" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/her_item_image_list"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/large_edit_text_height"
+                android:layout_gravity="center"
+                android:layout_marginTop="@dimen/small_padding"
                 android:layout_marginBottom="@dimen/small_padding"
                 android:background="@drawable/blue_border"
-                android:gravity="start"
                 android:padding="@dimen/small_padding"
-                android:textColor="@color/login_page_text_color"
-                tools:text="#someTags #someMoreTags #hereIsAnotherTag" />
+                android:scrollbars="horizontal" />
+
+            <include
+                android:id="@+id/item_like_comment_buttons_container"
+                layout="@layout/like_comment_bar"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content" />
+
+
+            <TextView
+                android:id="@+id/tagsText"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/label_height"
+                android:gravity="start"
+                android:paddingTop="@dimen/tiny_padding"
+                android:text="Tags"
+                android:textColor="@color/hint_color"
+                android:textStyle="italic" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/tagsRecycleView"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:background="@drawable/blue_border"
+                android:padding="@dimen/small_padding"
+                android:scrollbars="horizontal" />
+
+            <!--not used any more-->
+            <!--<TextView-->
+            <!--android:id="@+id/her_item_tags"-->
+            <!--style="?android:textAppearanceMedium"-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:layout_marginBottom="@dimen/small_padding"-->
+            <!--android:background="@drawable/blue_border"-->
+            <!--android:gravity="start"-->
+            <!--android:padding="@dimen/small_padding"-->
+            <!--android:textColor="@color/login_page_text_color"-->
+            <!--tools:text="#someTags #someMoreTags #hereIsAnotherTag" />-->
 
             <TextView
                 android:id="@+id/her_item_description_title"
@@ -87,8 +126,8 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:baselineAligned="false">
+                android:baselineAligned="false"
+                android:orientation="horizontal">
 
                 <LinearLayout
                     android:layout_width="0dp"
@@ -143,14 +182,31 @@
                         android:layout_marginStart="@dimen/tiny_padding"
                         android:background="@drawable/blue_border"
                         android:gravity="center"
-                        android:paddingStart="@dimen/small_padding"
                         android:paddingEnd="0dp"
+                        android:paddingStart="@dimen/small_padding"
                         android:textColor="@color/login_page_text_color"
                         tools:text="Sultanahmet" />
 
                 </LinearLayout>
             </LinearLayout>
-        </LinearLayout>
 
+            <TextView
+                android:id="@+id/rec_title"
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/label_height"
+                android:gravity="start"
+                android:paddingTop="@dimen/tiny_padding"
+                android:text="@string/recommendation"
+                android:textColor="@color/hint_color"
+                android:textStyle="italic" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recommendation_view"
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/large_edit_text_height"
+                android:background="@drawable/blue_border"
+                android:padding="@dimen/small_padding"
+                android:scrollbars="horizontal" />
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>

@@ -43,8 +43,8 @@ public class ProfilePageActivity extends AppCompatActivity implements LoaderMana
     private int SELECT_FILE = 1;
     private boolean isChangedImage = false;
     private ImageView photo;
-    private static final String apiURL = "http://18.220.108.135/api/profile";
-    private static final String baseURL = "http://18.220.108.135";
+    private static final String apiURL = "http://52.90.34.144:85/api/profile";
+    private static final String baseURL = "http://52.90.34.144:85";
     private ProgressBar mProgressBar;
     private EditText username, email, fullName, location, birthday;
 
@@ -316,10 +316,7 @@ public class ProfilePageActivity extends AppCompatActivity implements LoaderMana
         }
 
         private boolean uploadProfile(String token) {
-
-
             String result;
-
             try {
                 result = PostJSON.postToApi(constructTheJSON(),apiURL,token);
             } catch (IOException e) {
@@ -327,7 +324,6 @@ public class ProfilePageActivity extends AppCompatActivity implements LoaderMana
                 return false;
 
             }
-
             if(result == null || result.equals("400")){
                 return false;
             }

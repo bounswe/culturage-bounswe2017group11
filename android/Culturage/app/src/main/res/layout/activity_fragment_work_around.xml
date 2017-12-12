@@ -22,6 +22,7 @@
             android:id="@+id/dummyView"
             android:orientation="horizontal" />
         <EditText
+            android:id="@+id/search_bar"
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
@@ -39,6 +40,7 @@
         </EditText>
 
         <ImageButton
+            android:id="@+id/searchButton"
             android:layout_width="36dp"
             android:layout_height="match_parent"
             android:layout_weight="0"

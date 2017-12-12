@@ -1,34 +1,32 @@
-package com.culturage.oceans_eleven.culturage.newsFeed;
+package com.culturage.oceans_eleven.culturage.adapters;
 
 import android.content.Context;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-import com.culturage.oceans_eleven.culturage.R;
+import com.culturage.oceans_eleven.culturage.baseClasses.HeritageItem;
+import com.culturage.oceans_eleven.culturage.newsFeed.RecommendedHeritageItemsFragment;
+import com.culturage.oceans_eleven.culturage.newsFeed.UniversalNewsfeedFragment;
 
 /**
- * Created by me on 10.11.2017.
- */
-
-/**
- * {@link HeritageItemListAdapder} is a {@link FragmentPagerAdapter} that can provide the layout for
+ * {@link HeritageItemListAdapter} is a {@link FragmentPagerAdapter} that can provide the layout for
  * each list item based on a data source which is a list of {@link HeritageItem} objects.
  */
-public class HeritageItemListAdapder extends FragmentPagerAdapter {
+public class HeritageItemListAdapter extends FragmentPagerAdapter {
 
     /** Context of the app */
     private Context appContext;
 
 
     /**
-     * Create a new {@link HeritageItemListAdapder} object.
+     * Create a new {@link HeritageItemListAdapter} object.
      *
      * @param appContext is the context of the app
      * @param fragMan is the fragment manager that will keep each fragment's state in the adapter
      *           across swipes.
      */
-    public HeritageItemListAdapder(Context appContext, FragmentManager fragMan){
+    public HeritageItemListAdapter(Context appContext, FragmentManager fragMan) {
         super(fragMan);
         this.appContext = appContext;
 
