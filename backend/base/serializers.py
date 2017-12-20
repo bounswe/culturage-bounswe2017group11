@@ -1,10 +1,10 @@
-from base.models import Item, Location, Timeline, Tag, Comment, UserRatedItem, Media, TagList
+from base.models import Item, Location, Timeline, Tag, Comment, UserRatedItem, Media, TagList, Annotation
 from django.contrib.auth.models import User
 from django.conf import settings
 from django.db.models import Prefetch
 from rest_framework import serializers
 from rest_framework.validators import UniqueValidator
-import os, calendar
+import os, calendar, json
 
 class ProfileSerializer(serializers.Serializer):
 	class Meta:
@@ -161,6 +161,41 @@ class CommentSerializer(serializers.ModelSerializer):
 		comment.save()
 		return comment
 
+class AnnotationSerializer(serializers.ModelSerializer):
+	text = serializers.CharField(required=True)
+	x = serializers.IntegerField(required=True)
+	y = serializers.IntegerField(required=True)
+	w = serializers.IntegerField(required=True)
+	h = serializers.IntegerField(required=True)
+	user = UserSerializer( required = False)
+	jsonld = serializers.SerializerMethodField('_get_json')
+
+	class Meta:
+		model = Media
+		fields =('id','text', 'x', 'y', 'w', 'h', 'user', 'jsonld')
+
+	def _get_json(self, obj):
+		jld = {
+			"@context": "http://www.w3.org/ns/anno.jsonld",
+			"id": settings.CURRENT_DOMAIN + "/annotations/" + str(obj.id) ,
+			"type": "Annotation",
+			"body": obj.text,
+			"target": {
+				"id": obj.media.get_file_url() + "#xywh=" + str(obj.x) + "," + str(obj.y) + "," + str(obj.w) + "," + str(obj.h) ,
+				"type": "Image",
+				"format": "image/jpeg"
+			}
+		}
+		return jld
+
+	def create(self, validated_data):
+		media = self.context.get('media')
+		user = self.context.get('user')
+		validated_data['media'] = media
+		validated_data['user'] = user
+		annotation = Annotation.objects.create(**validated_data)
+		return annotation
+
 class MediaSerializer(serializers.ModelSerializer):
 	name = serializers.CharField(required=False)
 	mediaType = serializers.CharField(required=False)
@@ -168,13 +203,19 @@ class MediaSerializer(serializers.ModelSerializer):
 	file = serializers.FileField(required=False)
 	file_url = serializers.SerializerMethodField('_get_file_url')
 	url = serializers.URLField(required=False)
+	annotations = serializers.SerializerMethodField('_get_annotations')
+
 	class Meta:
 		model = Media
-		fields =('id','name', 'extension', 'mediaType', 'file', 'url', 'file_url')
+		fields =('id','name', 'extension', 'mediaType', 'file', 'url', 'file_url', 'annotations')
 
 	def _get_file_url(self, obj):
 		if obj.file:
 			return settings.CURRENT_DOMAIN + obj.file.url
+
+	def _get_annotations(self, item):
+		serializer = AnnotationSerializer(item.annotated_media, many=True)
+		return serializer.data
 
 	def create(self, validated_data):
 		item = self.context.get('item')
@@ -227,7 +268,7 @@ class ItemSerializer(serializers.ModelSerializer):
 	def setup_eager_loading(queryset):
 		""" Perform necessary eager loading of data. """
 		queryset = queryset.prefetch_related(
-			'created_by', 'created_by__profile', 'timelines', 'timelines__location', 'tags', 'commented_item', 'commented_item__written_by', 'commented_item__written_by__profile', 'rated_item', 'rated_item__user', 'rated_item__user__profile', 'media_item'
+			'created_by', 'created_by__profile', 'timelines', 'timelines__location', 'tags', 'commented_item', 'commented_item__written_by', 'commented_item__written_by__profile', 'rated_item', 'rated_item__user', 'rated_item__user__profile', 'media_item', 'media_item__annotated_media'
 		)
 		return queryset
 

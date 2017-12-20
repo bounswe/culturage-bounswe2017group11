@@ -9,6 +9,7 @@ from base.models import Location
 from base.models import Media
 from base.models import Tag
 from base.models import TagList
+from base.models import Annotation
 from base.serializers import ItemSerializer
 from base.serializers import UserSerializer
 from base.serializers import NewsfeedSerializer
@@ -17,6 +18,7 @@ from base.serializers import UserRatedItemSerializer
 from base.serializers import TimelineSerializer
 from base.serializers import MediaSerializer
 from base.serializers import TagSerializer
+from base.serializers import AnnotationSerializer
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
@@ -190,6 +192,22 @@ class ItemMedia(APIView):
 	def get(self, request, itemID):
 		item = Item.objects.get(id=itemID)
 		serializer = MediaSerializer(item.media_item, many=True)
+		return Response(serializer.data)
+
+class MediaAnnotation(APIView):
+	def post(self, request, mediaID):
+		media = Media.objects.get(id=mediaID)
+		user = request.user
+		serializer = AnnotationSerializer(data=request.data,context={'media': media, 'user':user})
+		if serializer.is_valid():
+			serializer.save()
+			return Response(serializer.data)
+		else:
+			return Response(serializer.errors)
+
+	def get(self, request, mediaID):
+		media = Media.objects.get(id=mediaID)
+		serializer = AnnotationSerializer(media.annotated_media, many=True)
 		return Response(serializer.data)
 
 class RateItem(APIView):

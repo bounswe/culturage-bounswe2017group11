@@ -4,7 +4,7 @@ from django.db.models.signals import post_save
 from django.dispatch import receiver
 from django.utils import timezone
 from django.db.models import Sum
-
+from django.conf import settings
 
 class Profile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
@@ -72,12 +72,6 @@ class Comment(models.Model):
     written_by = models.ForeignKey(User, related_name='comment_written_by', on_delete=models.SET_NULL, null=True)
     related_item = models.ForeignKey(Item, related_name='commented_item', on_delete=models.CASCADE, null=True)
 
-class Annotation(models.Model):
-    text = models.CharField(max_length=500)
-    rate = models.IntegerField(null=True, blank=True)
-    user = models.ForeignKey(User, related_name='annotating_user', on_delete=models.CASCADE, null=True)
-    item = models.ForeignKey(Item, related_name='annotated_item', on_delete=models.CASCADE, null=True)
-
 class Location(models.Model):
     name = models.CharField(max_length=200)
     longtitude = models.FloatField(null=True, blank=True)
@@ -112,6 +106,7 @@ class ItemFollow(models.Model):
 class Reported(models.Model):
     user = models.ForeignKey(User, related_name='reporter_user', on_delete=models.CASCADE, null=True)
     item = models.ForeignKey(Item, related_name='reported_item', on_delete=models.CASCADE, null=True)
+    created_at = models.DateTimeField(auto_now_add=True, blank=True)
 
 class ItemEdit(models.Model):
     user = models.ForeignKey(User, related_name='editing_user', on_delete=models.CASCADE, null=True)
@@ -128,11 +123,6 @@ class UserRatedComment(models.Model):
     user = models.ForeignKey(User, related_name='comment_rating_user', on_delete=models.CASCADE, null=True)
     comment = models.ForeignKey(Comment, related_name='rated_comment', on_delete=models.CASCADE, null=True)
 
-class UserRatedAnnotation(models.Model):
-    rate = models.IntegerField(null=True, blank=True)
-    user = models.ForeignKey(User, related_name='annotation_rating_user', on_delete=models.CASCADE, null=True)
-    annotation = models.ForeignKey(Annotation, related_name='rated_annotation', on_delete=models.CASCADE, null=True)
-
 class TagList(models.Model):
     item = models.ForeignKey(Item, related_name='tagged_item', on_delete=models.CASCADE, null=True)
     tag = models.ForeignKey(Tag, related_name='tag', on_delete=models.CASCADE, null=True)
@@ -147,31 +137,50 @@ class Media(models.Model):
     created_by = models.ForeignKey(User, related_name='media_user', on_delete=models.SET_NULL, null=True)
     created_at = models.DateTimeField(auto_now_add=True, blank=True)
 
-class VideoAnno(models.Model):
-    text = models.CharField(max_length=500)
-    startTime = models.TimeField(null=True, blank=True)
-    endTime = models.TimeField(null=True, blank=True)
-    media = models.ForeignKey(Media, related_name='video_media', on_delete=models.CASCADE, null=True)
-    annotation = models.ForeignKey(Annotation, related_name='video_annotation', on_delete=models.CASCADE, null=True)
+    def get_file_url(self):
+        if self.file:
+            return settings.CURRENT_DOMAIN + self.file.url
 
-class AudioAnno(models.Model):
+class Annotation(models.Model):
     text = models.CharField(max_length=500)
-    startTime = models.TimeField(null=True, blank=True)
-    endTime = models.TimeField(null=True, blank=True)
-    media = models.ForeignKey(Media, related_name='audio_media', on_delete=models.CASCADE, null=True)
-    annotation = models.ForeignKey(Annotation, related_name='audio_annotation', on_delete=models.CASCADE, null=True)
+    x = models.IntegerField(null=True, blank=True)
+    y = models.IntegerField(null=True, blank=True)
+    w = models.IntegerField(null=True, blank=True)
+    h = models.IntegerField(null=True, blank=True)
+    media = models.ForeignKey(Media, related_name='annotated_media', on_delete=models.CASCADE, null=True)
+    # item = models.ForeignKey(Item, related_name='annotated_item', on_delete=models.CASCADE, null=True)
+    user = models.ForeignKey(User, related_name='annotating_user', on_delete=models.CASCADE, null=True)
 
-class ImageAnno(models.Model):
-    text = models.CharField(max_length=500)
-    pixelX = models.IntegerField(null=True, blank=True)
-    pixelY = models.IntegerField(null=True, blank=True)
-    media = models.ForeignKey(Media, related_name='image_media', on_delete=models.CASCADE, null=True)
-    annotation = models.ForeignKey(Annotation, related_name='image_annotation', on_delete=models.CASCADE, null=True)
+class UserRatedAnnotation(models.Model):
+    rate = models.IntegerField(null=True, blank=True)
+    user = models.ForeignKey(User, related_name='annotation_rating_user', on_delete=models.CASCADE, null=True)
+    annotation = models.ForeignKey(Annotation, related_name='rated_annotation', on_delete=models.CASCADE, null=True)
 
-class TextAnno(models.Model):
-    text = models.CharField(max_length=500)
-    startChar = models.TimeField(null=True, blank=True)
-    endChar = models.TimeField(null=True, blank=True)
-    media = models.ForeignKey(Media, related_name='text_media', on_delete=models.CASCADE, null=True)
-    annotation = models.ForeignKey(Annotation, related_name='text_annotation', on_delete=models.CASCADE, null=True)
+# class VideoAnno(models.Model):
+#     text = models.CharField(max_length=500)
+#     startTime = models.TimeField(null=True, blank=True)
+#     endTime = models.TimeField(null=True, blank=True)
+#     media = models.ForeignKey(Media, related_name='video_media', on_delete=models.CASCADE, null=True)
+#     annotation = models.ForeignKey(Annotation, related_name='video_annotation', on_delete=models.CASCADE, null=True)
+
+# class AudioAnno(models.Model):
+#     text = models.CharField(max_length=500)
+#     startTime = models.TimeField(null=True, blank=True)
+#     endTime = models.TimeField(null=True, blank=True)
+#     media = models.ForeignKey(Media, related_name='audio_media', on_delete=models.CASCADE, null=True)
+#     annotation = models.ForeignKey(Annotation, related_name='audio_annotation', on_delete=models.CASCADE, null=True)
+
+# class ImageAnno(models.Model):
+#     text = models.CharField(max_length=500)
+#     pixelX = models.IntegerField(null=True, blank=True)
+#     pixelY = models.IntegerField(null=True, blank=True)
+#     media = models.ForeignKey(Media, related_name='image_media', on_delete=models.CASCADE, null=True)
+#     annotation = models.ForeignKey(Annotation, related_name='image_annotation', on_delete=models.CASCADE, null=True)
+
+# class TextAnno(models.Model):
+#     text = models.CharField(max_length=500)
+#     startChar = models.TimeField(null=True, blank=True)
+#     endChar = models.TimeField(null=True, blank=True)
+#     media = models.ForeignKey(Media, related_name='text_media', on_delete=models.CASCADE, null=True)
+#     annotation = models.ForeignKey(Annotation, related_name='text_annotation', on_delete=models.CASCADE, null=True)
 
