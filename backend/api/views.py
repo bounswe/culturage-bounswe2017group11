@@ -162,9 +162,9 @@ class ItemTimeline(APIView):
 	def post(self, request, itemID):
 		item = Item.objects.get(id=itemID)
 		user = request.user
-		location_name = request.data.get('location')
-		if location_name:
-			location, created = Location.objects.get_or_create(name = location_name)
+		l_data = request.data.get('location')
+		if l_data:
+			location, created = Location.objects.get_or_create(name = l_data.get('name'), defaults={'longtitude':l_data.get('longtitude') , 'latitude':l_data.get('latitude') })
 		else:
 			location = None
 		serializer = TimelineSerializer(data=request.data,context={'item': item, 'user':user, 'location':location})

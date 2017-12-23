@@ -143,6 +143,7 @@ class Media(models.Model):
     def get_file_url(self):
         if self.file:
             return settings.CURRENT_DOMAIN + self.file.url
+        return ""
 
 class Annotation(models.Model):
     text = models.CharField(max_length=500)
