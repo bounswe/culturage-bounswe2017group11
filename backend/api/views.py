@@ -31,10 +31,10 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 import datetime
 import json
-
+import requests
 import base64
 from django.core.files.base import ContentFile
-
+from django.conf import settings
 
 class ItemViewSet(viewsets.ModelViewSet):
 	"""
@@ -232,6 +232,18 @@ class RateItem(APIView):
 		serializer = UserRatedItemSerializer(data=request.data, context={ 'user':user, 'item':item })
 		if serializer.is_valid():
 			serializer.save()
+			header = {
+				"Content-Type": "application/json; charset=utf-8",
+				"Authorization": "Basic " + settings.ONESIGNAL_TOKEN
+			}
+
+			payload = {
+				"app_id": settings.ONESIGNAL_APP,
+				"included_segments": ["All"],
+				"contents": {"en": "Your item is liked by " + user.username }
+			}
+			req = requests.post("https://onesignal.com/api/v1/notifications", headers=header, data=json.dumps(payload))
+			print(req.status_code, req.reason)
 			return Response(item.rate)
 		else:
 			return Response(serializer.errors)

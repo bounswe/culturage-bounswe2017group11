@@ -286,7 +286,7 @@ class ItemSerializer(serializers.ModelSerializer):
 	def setup_eager_loading(queryset):
 		""" Perform necessary eager loading of data. """
 		queryset = queryset.prefetch_related(
-			'created_by', 'created_by__profile', 'timelines', 'timelines__location', 'tags', 'commented_item', 'commented_item__written_by', 'commented_item__written_by__profile', 'rated_item', 'rated_item__user', 'rated_item__user__profile', 'media_item', 'media_item__annotated_media'
+			'created_by', 'created_by__profile', 'timelines', 'timelines__location', 'tags', 'commented_item', 'commented_item__written_by', 'commented_item__written_by__profile', 'rated_item', 'rated_item__user', 'rated_item__user__profile', 'reported_item', 'reported_item__user', 'media_item', 'media_item__annotated_media', 'media_item__annotated_media__user'
 		)
 		return queryset
 
