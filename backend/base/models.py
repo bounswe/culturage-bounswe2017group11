@@ -54,6 +54,9 @@ class Item(models.Model):
     def get_raters(self):
         return [i.user_id for i in self.rated_item.all()]
 
+    def get_reporters(self):
+        return [i.user_id for i in self.reported_item.all()]
+
     def get_commenters(self):
         return [i.written_by_id for i in self.commented_item.all()]
 
@@ -103,7 +106,7 @@ class ItemFollow(models.Model):
     user = models.ForeignKey(User, related_name='following_user', on_delete=models.CASCADE, null=True)
     item = models.ForeignKey(Item, related_name='followed_item', on_delete=models.CASCADE, null=True)
 
-class Reported(models.Model):
+class Report(models.Model):
     user = models.ForeignKey(User, related_name='reporter_user', on_delete=models.CASCADE, null=True)
     item = models.ForeignKey(Item, related_name='reported_item', on_delete=models.CASCADE, null=True)
     created_at = models.DateTimeField(auto_now_add=True, blank=True)

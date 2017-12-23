@@ -1,4 +1,4 @@
-from base.models import Item, Location, Timeline, Tag, Comment, UserRatedItem, Media, TagList, Annotation
+from base.models import Item, Location, Timeline, Tag, Comment, UserRatedItem, Media, TagList, Annotation, Report
 from django.contrib.auth.models import User
 from django.conf import settings
 from django.db.models import Prefetch
@@ -61,9 +61,11 @@ class UserSerializer(serializers.Serializer):
 class LocationSerializer(serializers.ModelSerializer):
 	id = serializers.IntegerField(read_only=True)
 	name = serializers.CharField(required=True, max_length=200)
+	longtitude = serializers.FloatField(required=False)
+	latitude = serializers.FloatField(required=False)
 	class Meta:
 		model = Location
-		fields =('id','name')
+		fields =('id','name', 'longtitude', 'latitude')
 
 class TagSerializer(serializers.ModelSerializer):
 	id = serializers.IntegerField(read_only=True)
@@ -298,12 +300,12 @@ class ItemSerializer(serializers.ModelSerializer):
 
 
 	def create(self, validated_data):
-		location_name = validated_data.pop('location')
+		l_data = validated_data.pop('location')
 		date = validated_data.pop('date')
 		tags = validated_data.pop('tags')
 		item = Item.objects.create(**validated_data)
-		if location_name:
-			location, created = Location.objects.get_or_create(name = location_name)
+		if l_data:
+			location, created = Location.objects.get_or_create(name = l_data.get('name'), defaults={'longtitude':l_data.get('longtitude') , 'latitude':l_data.get('latitude') })
 		else:
 			location = None
 		Timeline.objects.create(item=item, startDate = date, location = location, name = "Item is created")
@@ -337,6 +339,29 @@ class UserRatedItemSerializer(serializers.ModelSerializer):
 
 		item.calculateRate()
 		return  userRatedItem
+
+class ReportSerializer(serializers.ModelSerializer):
+	user = UserSerializer(required=False)
+
+	class Meta:
+		model = Report
+		fields = ('id','user','item', 'created_at')
+
+	@staticmethod
+	def setup_eager_loading(queryset):
+		""" Perform necessary eager loading of data. """
+		queryset = queryset.prefetch_related('user', 'user__profile')
+		return queryset
+
+	def create(self, validated_data):
+		user = self.context.get('user')
+		item = self.context.get('item')
+
+		report = Report.objects.create(**validated_data)
+		report.user = user
+		report.item = item
+		report.save()
+		return  report
 
 class NewsfeedSerializer(serializers.ModelSerializer):
 	comment_count = serializers.SerializerMethodField('_get_comment_count')

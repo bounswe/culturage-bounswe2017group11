@@ -10,6 +10,7 @@ from base.models import Media
 from base.models import Tag
 from base.models import TagList
 from base.models import Annotation
+from base.models import Report
 from base.serializers import ItemSerializer
 from base.serializers import UserSerializer
 from base.serializers import NewsfeedSerializer
@@ -19,6 +20,7 @@ from base.serializers import TimelineSerializer
 from base.serializers import MediaSerializer
 from base.serializers import TagSerializer
 from base.serializers import AnnotationSerializer
+from base.serializers import ReportSerializer
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
@@ -241,6 +243,35 @@ class RateItem(APIView):
 		serializer = UserRatedItemSerializer(rates, many=True)
 		return Response(serializer.data)
 
+class ReportItem(APIView):
+	def post(self, request, itemID):
+		item = Item.objects.get(id= itemID)
+		user = request.user
+		try:
+			report = Report.objects.filter(item=itemID, user = request.user.id).first()
+		except Report.DoesNotExist:
+			report = None
+		if report:
+			if request.data["report"]:
+				return Response({"error" : "You already report this item"}, status=status.HTTP_403_FORBIDDEN)
+			else:
+				report.delete()
+				return Response(len(item.get_reporters()))
+		if not request.data["report"]:
+			return Response({"error" : "You can't delete your item report  without report it"}, status=status.HTTP_403_FORBIDDEN)
+
+		serializer = ReportSerializer(data=request.data, context={ 'user':user, 'item':item })
+		if serializer.is_valid():
+			serializer.save()
+			return Response(len(item.get_reporters()))
+		else:
+			return Response(serializer.errors)
+
+	def get(self, request, itemID):
+		item = Item.objects.get(id=itemID)
+		report = ReportSerializer.setup_eager_loading(item.reported_item)  # Set up eager loading to avoid N+1 selects
+		serializer = ReportSerializer(report, many=True)
+		return Response(serializer.data)
 
 class CommentDetailView(APIView):
 	def delete(self, request, commentID):
