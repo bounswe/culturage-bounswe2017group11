@@ -106,9 +106,13 @@ class TimelineSerializer(serializers.ModelSerializer):
 		else:
 			date = obj.startDate
 			result = ""
+			notExact = False
 			if date[0] == "-":
 				date = date[1:]
 				result += "BC"
+			if date[-1:] == "~":
+				date = date[:-1]
+				notExact = True
 			year, month, day = date.split("-")
 			if day != "00":
 				result = result + " " + str(int(day))
@@ -116,6 +120,10 @@ class TimelineSerializer(serializers.ModelSerializer):
 				result = result + " " + calendar.month_name[int(month)]
 			if year != "0000":
 				result = result + " " + str(int(year))
+				if notExact:
+					result += "s"
+			else:
+				result = "Every " + result.strip()
 			return result.strip()
 
 	def _get_end_label(self, obj):
@@ -124,9 +132,13 @@ class TimelineSerializer(serializers.ModelSerializer):
 		else:
 			date = obj.endDate
 			result = ""
+			notExact = False
 			if date[0] == "-":
 				date = date[1:]
 				result += "BC"
+			if date[-1:] == "~":
+				date = date[:-1]
+				notExact = True
 			year, month, day = date.split("-")
 			if day != "00":
 				result = result + " " + str(int(day))
@@ -134,6 +146,10 @@ class TimelineSerializer(serializers.ModelSerializer):
 				result = result + " " + calendar.month_name[int(month)]
 			if year != "0000":
 				result = result + " " + str(int(year))
+				if notExact:
+					result += "s"
+			else:
+				result = "Every " + result.strip()
 			return result.strip()
 
 	def create(self, validated_data):
@@ -308,11 +324,18 @@ class ItemSerializer(serializers.ModelSerializer):
 			location, created = Location.objects.get_or_create(name = l_data.get('name'), defaults={'longtitude':l_data.get('longtitude') , 'latitude':l_data.get('latitude') })
 		else:
 			location = None
-		Timeline.objects.create(item=item, startDate = date, location = location, name = "Item is created")
+		Timeline.objects.create(item=item, startDate = date.get('start'), endDate = date.get('end'), location = location, name = "Item is created")
 		for tag_name in tags:
 			tag, created = Tag.objects.get_or_create(name = tag_name, defaults={'created_by': item.created_by})
 			taglist, created = TagList.objects.get_or_create(tag = tag, item = item)
 			item.tags.add(tag)
+
+		image = validated_data.get('featured_img')
+		if image:
+			data = { "file" : image}
+			serializer = MediaSerializer(data=data,context={'item': item, 'user':item.created_by})
+			if serializer.is_valid():
+				serializer.save()
 		return item
 
 class UserRatedItemSerializer(serializers.ModelSerializer):

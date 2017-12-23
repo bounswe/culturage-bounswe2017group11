@@ -63,7 +63,6 @@ class ItemViewSet(viewsets.ModelViewSet):
 				format, imgstr = image.split(';base64,')
 				ext = format.split('/')[-1]
 				image = ContentFile(base64.b64decode(imgstr), name='item.' + ext) # You can save this as file instance.
-		# serializer.save(featured_img=self.request.data.get('image'), created_by=self.request.user, date = date, location = location, tags = tags)
 		serializer.save(featured_img=image, created_by=self.request.user, date = date, location = location, tags = tags)
 
 
