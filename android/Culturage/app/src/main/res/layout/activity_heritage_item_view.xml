@@ -178,7 +178,9 @@
                     android:background="@android:color/transparent"
                     android:textColor="@color/primary_blue"
                     android:textColorHint="@color/hint_color"
-                    android:textCursorDrawable="@null">
+                    android:textCursorDrawable="@null"
+                    tools:text="Not specified"
+                    android:gravity="center_horizontal|center_vertical">
 
                 </TextView>
 

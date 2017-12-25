@@ -133,6 +133,24 @@ public class HeritageItemViewActivity extends AppCompatActivity {
 //            }
 //        });
 
+        ImageView mapButton = (ImageView) findViewById(R.id.her_item_map_button);
+        mapButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // TODO: replace with actual bounds
+//                PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+//                LatLng mNortheast = new LatLng(0, 0);
+//                LatLng mSouthwest = new LatLng(0, 0);
+//                builder.setLatLngBounds(new LatLngBounds(mNortheast,mSouthwest));
+//                Toast.makeText(HeritageItemViewActivity.this,"Clicked map", Toast.LENGTH_SHORT).show();
+                Uri gmmIntentUri = Uri.parse("geo:0.230,0.45123");
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                mapIntent.setPackage("com.google.android.apps.maps");
+                if (mapIntent.resolveActivity(getPackageManager()) != null) {
+                    startActivity(mapIntent);
+                }
+            }
+        });
         commentContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
