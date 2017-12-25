@@ -153,6 +153,8 @@ public class Fetcher {
                 int postID = values.getInt("id");
                 int likeCount = values.getInt("rate");
                 int commentCount = values.getInt("comment_count");
+                boolean isReported = values.getBoolean("is_reported");
+                int reportCount = values.getInt("report_count");
 //                createdAt = values.getString("created_at");
 //                JSONArray timelines = values.getJSONArray("timelines");
 //                date = parseDate(timelines);
@@ -168,7 +170,8 @@ public class Fetcher {
 //                    Log.v("fetcher", "error parsing tags.");
 //                }
 
-                heritageItems.add(new HeritageItem(postID, title.trim(), description.trim(), imageURL, isRated, likeCount, commentCount));
+                heritageItems.add(new HeritageItem(postID, title.trim(), description.trim(), imageURL, isRated, likeCount, commentCount,
+                        isReported, reportCount));
                 //heritageItems.get(i).setCreatorId(creator.getString("id")); //New
                 //heritageItems.get(i).setCreatorUsername(creator.getString("username"));
             }

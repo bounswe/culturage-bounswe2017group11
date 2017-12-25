@@ -84,6 +84,7 @@ public class HeritageItemViewActivity extends AppCompatActivity {
         Intent incomingIntent = getIntent();
         heritageItemPostID = incomingIntent.getIntExtra("postId", -1);
         new getLikeStatus().execute();
+        new getReportStatus().execute();
 //        ImageView iw = (ImageView) findViewById(R.id.her_item_photo);
         final String imageUri = incomingIntent.getStringExtra("imageUrl");
         // 400 looks cool
@@ -158,6 +159,17 @@ public class HeritageItemViewActivity extends AppCompatActivity {
                 CustomLikeClass cdd = new CustomLikeClass(HeritageItemViewActivity.this, heritageItemPostID);
                 cdd.getWindow().setBackgroundDrawable(new ColorDrawable(Color.TRANSPARENT));
                 cdd.show();
+            }
+        });
+
+        //Report Container
+        LinearLayout reportContainer = (LinearLayout) likeCommentFrame.findViewById(R.id.report_container);
+        reportContainer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new reportAction(HeritageItemViewActivity.this).execute();
+                new LikeCommentCountLoader().execute();
+                //Toast.makeText(HeritageItemViewActivity.this, "Will report soon", Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -863,6 +875,7 @@ public class HeritageItemViewActivity extends AppCompatActivity {
         private String ratesUrl = "http://52.90.34.144:85/api/items/" + heritageItemPostID;
         private int totalLikeCount;
         private int totalCommentCount;
+        private int totalReportCount;
 
         private LikeCommentCountLoader() {
         }
@@ -874,6 +887,7 @@ public class HeritageItemViewActivity extends AppCompatActivity {
             String result = null;
             totalLikeCount = 0;
             totalCommentCount = 0;
+            totalReportCount = 0;
             try {
                 result = Fetcher.getJSON(Fetcher.createUrl(ratesUrl), HeritageItemViewActivity.this);
                 Log.v(LOG_TAG, "resulting json for ratesUrl " + result);
@@ -882,7 +896,7 @@ public class HeritageItemViewActivity extends AppCompatActivity {
                 Log.v("heritageItem", "invalid url: " + ratesUrl);
             }
             try {
-                Log.v(LOG_TAG, "resulting json after likeCount: " + result);
+                Log.v(LOG_TAG, "resulting json after likeCommentReportCount: " + result);
                 JSONObject values = new JSONObject(result);
 
                 if (!values.isNull("rate")) {
@@ -890,6 +904,7 @@ public class HeritageItemViewActivity extends AppCompatActivity {
                 }
                 JSONArray comment_ = values.getJSONArray("comments");
                 totalCommentCount = comment_.length();
+                totalReportCount = values.getInt("report_count");
 
 
                 Log.v("heritageItem", "success parsing totalCommentCount:" + totalCommentCount);
@@ -905,13 +920,18 @@ public class HeritageItemViewActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(String result) {
             try {
+                String temp = "";
                 LinearLayout likeCommentFrame = (LinearLayout) findViewById(R.id.item_like_comment_buttons_container);
                 LinearLayout likeContainer = (LinearLayout) likeCommentFrame.findViewById(R.id.like_container);
                 LinearLayout commentContainer = (LinearLayout) likeCommentFrame.findViewById(R.id.comment_container);
+                LinearLayout reportContainer = (LinearLayout) likeCommentFrame.findViewById(R.id.report_container);
                 TextView likeCount = (TextView) likeContainer.findViewById(R.id.like_count);
                 likeCount.setText("" + totalLikeCount);
                 TextView commentCount = (TextView) commentContainer.findViewById(R.id.comment_count);
                 commentCount.setText("" + totalCommentCount);
+                TextView reportCount = (TextView) reportContainer.findViewById(R.id.report_count);
+                if (totalReportCount != 0) temp = "-";
+                reportCount.setText(temp + totalReportCount);
 
                 LinearLayout like_number_container = (LinearLayout) likeCommentFrame.findViewById(R.id.like_number_container);
 
@@ -919,6 +939,154 @@ public class HeritageItemViewActivity extends AppCompatActivity {
                 show_likes.setText("  Liked by " + totalLikeCount + " people");
             } catch (Exception e) {
                 Log.v("heritageItem", "error setting totalLikeCount:" + totalLikeCount);
+            }
+        }
+    }
+
+
+    private class reportAction extends AsyncTask<String, String, String> {
+
+        private Context mContext;
+        private boolean reportSuccessful;
+        private boolean isReported;
+
+        private reportAction(Context context) {
+            mContext = context;
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+            try {
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+                String token = preferences.getString("token", "null");
+                reportSuccessful = uploadReportPic();
+                if (reportSuccessful) {
+                    try {
+                        reportSuccessful = uploadReportCount(token);
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+            return "";
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            if (reportSuccessful) {
+                //Post Execute
+                ImageButton reportButton = (ImageButton) findViewById(R.id.report_btn);
+                if (isReported) {
+                    reportButton.setImageResource(R.drawable.ic_reported);
+                    Toast.makeText(mContext, "Reported Successfully", Toast.LENGTH_LONG).show();
+
+                } else {
+                    reportButton.setImageResource(R.drawable.ic_not_reported);
+                }
+
+            } else {
+                Toast.makeText(mContext, "Report unsuccessful", Toast.LENGTH_LONG).show();
+            }
+        }
+
+        private boolean uploadReportPic() {
+            String result;
+            itemUrl = "http://52.90.34.144:85/api/items/" + heritageItemPostID;
+            try {
+                result = Fetcher.getJSON(Fetcher.createUrl(itemUrl), HeritageItemViewActivity.this);
+            } catch (IOException e) {
+                e.printStackTrace();
+                return false;
+            }
+            try {
+                Log.v(LOG_TAG, "resulting json on report button " + result);
+                JSONObject values = new JSONObject(result);
+                isReported = values.getBoolean("is_reported");
+                //isLiked = getIsLikedTemp();     //Needs to be removed!!
+                if (isReported) {
+                    isReported = false;
+                    Log.v("ISREPORTED", "is reported :  Disreporting now");
+                } else {
+                    isReported = true;
+                    Log.v("ISREPORTED", "is reported :  Reporting now");
+                }
+
+            } catch (Exception e) {
+                Log.v("reportItem", "error parsing report:");
+            }
+            return !(result == null || result.equals("400"));
+
+        }
+
+        private boolean uploadReportCount(String token) {
+            String result;
+            String reportUrl = "http://52.90.34.144:85/api/items/" + heritageItemPostID + "/reports";
+            try {
+                result = PostJSON.postToApi(constructTheJSONReportCount(), reportUrl, token);
+            } catch (IOException e) {
+                e.printStackTrace();
+                return false;
+
+            }
+            return !(result == null || result.equals("400"));
+
+        }
+
+        private JSONObject constructTheJSONReportCount() {
+
+            JSONObject json = new JSONObject();
+            try {
+
+                if (!isReported) {
+                    json.put("report", 0);
+                } else {
+                    json.put("report", 1);
+                }
+
+                Log.v("REPORTImplemented", "" + json.getInt("report"));
+
+
+                return json;
+            } catch (JSONException e) {
+                Log.v("report", "Error in json construction");
+            }
+            return json;
+        }
+    }
+
+    private class getReportStatus extends AsyncTask<String, String, String> {
+
+        private boolean isReported;
+        private String result;
+        private String item_url = "http://52.90.34.144:85/api/items/" + heritageItemPostID;  // Temporary url
+
+        private getReportStatus() {
+            this.isReported = false;
+        }
+
+        protected String doInBackground(String... params) {
+            try {
+                result = Fetcher.getJSON(Fetcher.createUrl(item_url), HeritageItemViewActivity.this); //temporary result
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            try {
+                JSONObject values = new JSONObject(result);
+                isReported = values.getBoolean("is_reported");
+            } catch (Exception e) {
+                Log.v("reportItem", "error parsing report:");
+            }
+            return null;
+        }
+
+        protected void onPostExecute(String result) {
+            ImageButton reportButton_ = (ImageButton) findViewById(R.id.report_btn);
+            if (isReported) {
+                reportButton_.setImageResource(R.drawable.ic_reported);
+            } else {
+                reportButton_.setImageResource(R.drawable.ic_not_reported);
             }
         }
     }

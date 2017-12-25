@@ -106,11 +106,31 @@ public class HeritageItemAdapter extends ArrayAdapter {
             likeButton_.setImageResource(R.drawable.ic_notlike);
         }
 
+        LinearLayout reportContainer = (LinearLayout) frame.findViewById(R.id.report_container);
+        reportContainer.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                new reportAction(getContext(), currentItem, finalListItemView).execute();
+            }
+        });
+
+        ImageButton reportButton_ = (ImageButton) listItemView.findViewById(R.id.report_btn);
+        if (currentItem.isReported()) {
+            reportButton_.setImageResource(R.drawable.ic_reported);
+        } else {
+            reportButton_.setImageResource(R.drawable.ic_not_reported);
+        }
+
         TextView commentCount = (TextView) listItemView.findViewById(R.id.comment_count);
         commentCount.setText(currentItem.getmCommentCount() + "");
 
         TextView likeCount = (TextView) listItemView.findViewById(R.id.like_count);
         likeCount.setText(currentItem.getmLikeCount() + "");
+
+        String tempReport = "";
+        TextView reportCount = (TextView) listItemView.findViewById(R.id.report_count);
+        if (currentItem.getmReportCount() != 0) tempReport = "-";
+        reportCount.setText(tempReport + currentItem.getmReportCount());
 
         TextView show_likes = (TextView) listItemView.findViewById(R.id.show_likes);
         show_likes.setText("  Liked by " + currentItem.getmLikeCount() + " people");
@@ -227,6 +247,120 @@ public class HeritageItemAdapter extends ArrayAdapter {
                 return json;
             } catch (JSONException e) {
                 Log.v("like", "Error in json construction");
+            }
+            return json;
+        }
+    }
+
+    private class reportAction extends AsyncTask<String, String, Boolean> {
+
+        private Context mContext;
+        private boolean isReported;
+        private int heritageItemPostID;
+        HeritageItem currentItem;
+        View listItemView;
+
+
+        private reportAction(Context context, HeritageItem currentItem, View listItemView) {
+            mContext = context;
+            this.heritageItemPostID = currentItem.getmPostId();
+            this.isReported = currentItem.isReported();
+            this.currentItem = currentItem;
+            this.listItemView = listItemView;
+        }
+
+        @Override
+        protected Boolean doInBackground(String... params) {
+            try {
+                SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
+                String token = preferences.getString("token", "null");
+
+                uploadReportCount(token);
+
+            } catch (Exception e) {
+                e.printStackTrace();
+                return false;
+            }
+            return true;
+        }
+
+        @Override
+        protected void onPostExecute(Boolean result) {
+
+            if (result != true) { //if the action could not be performed then just report and quit
+                if (isReported) {
+                    Toast.makeText(context, "uppss could not un-report", Toast.LENGTH_SHORT).show();
+
+                } else {
+                    Toast.makeText(context, "uppss could not report", Toast.LENGTH_SHORT).show();
+
+                }
+
+                return;
+            }
+
+            ImageButton reportButton_ = (ImageButton) listItemView.findViewById(R.id.report_btn);
+
+
+            TextView reportCount = (TextView) listItemView.findViewById(R.id.report_count);
+
+
+            if (isReported) { //meaning that we will unreport it
+                reportButton_.setImageResource(R.drawable.ic_not_reported);
+                currentItem.setmReportCount(currentItem.getmReportCount() - 1);
+                currentItem.setReported(false);
+
+
+            } else { //THEN WE REPORT IT
+                reportButton_.setImageResource(R.drawable.ic_reported);
+                currentItem.setmReportCount(currentItem.getmReportCount() + 1);
+                currentItem.setReported(true);
+                Toast.makeText(context, "Reported Successfully", Toast.LENGTH_SHORT).show();
+
+
+            }
+
+            this.isReported = !this.isReported; //we toggle it
+            /*update views accordingly*/
+            String tempReport = "";
+            if (currentItem.getmReportCount() != 0) tempReport = "-";
+            reportCount.setText(tempReport + currentItem.getmReportCount());
+
+        }
+
+        private boolean uploadReportCount(String token) {
+            String result;
+            String reportUrl = "http://52.90.34.144:85/api/items/" + heritageItemPostID + "/reports";
+            try {
+                result = PostJSON.postToApi(constructTheJSONReportCount(), reportUrl, token);
+            } catch (IOException e) {
+                e.printStackTrace();
+                return false;
+
+            }
+            return !(result == null || result.equals("400"));
+
+        }
+
+        private JSONObject constructTheJSONReportCount() {
+
+            JSONObject json = new JSONObject();
+            try {
+
+                if (isReported) {
+                    //then unlike
+                    json.put("report", 0);
+                } else {
+                    //like it
+                    json.put("report", 1);
+                }
+
+                Log.v("REPORTImplemented", "" + json.getInt("report"));
+
+
+                return json;
+            } catch (JSONException e) {
+                Log.v("report", "Error in json construction");
             }
             return json;
         }
