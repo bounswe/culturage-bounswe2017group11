@@ -186,9 +186,9 @@
                     android:id="@+id/her_item_map_button"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/upload_location"
-                    android:layout_alignRight="@+id/upload_location"
-                    android:layout_alignTop="@+id/upload_location"
+                    android:layout_alignBottom="@+id/her_item_location"
+                    android:layout_alignRight="@+id/her_item_location"
+                    android:layout_alignTop="@+id/her_item_location"
                     android:layout_centerVertical="true"
                     android:padding="@dimen/tiny_padding"
                     android:src="@mipmap/ic_map" />
