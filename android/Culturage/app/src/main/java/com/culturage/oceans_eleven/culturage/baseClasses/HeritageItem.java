@@ -3,10 +3,10 @@ package com.culturage.oceans_eleven.culturage.baseClasses;
 
 public class HeritageItem {
 
-    private int mPostId, mLikeCount, mCommentCount, mResourceId, creatorId;
+    private int mPostId, mLikeCount, mCommentCount, mResourceId, creatorId, mReportCount;
     private String mTitle, mDescription, mDate, mLocationName, mImageBase64String, rate, createdAt, mTags, creatorUsername, mImageUrl;
     private double mLongitude, mLatitude;
-    private boolean isRated;
+    private boolean isRated, isReported;
 
     //dummy item; this constructor is not to be used, temporary
     public HeritageItem(String title, String description, String imageString, String rate, String createdAt, String date, String mLocationName, double longitude, double latitude, String tags) {
@@ -34,7 +34,8 @@ public class HeritageItem {
     }
 
     // Used in news feed
-    public HeritageItem(int postID, String title, String description, String imageURL, boolean isRated, int mLikeCount, int mCommentCount) {
+    public HeritageItem(int postID, String title, String description, String imageURL, boolean isRated, int mLikeCount, int mCommentCount,
+                        boolean isReported, int mReportCount) {
         this.mPostId = postID;
         this.mTitle = title;
         this.mDescription = description;
@@ -42,6 +43,8 @@ public class HeritageItem {
         this.isRated = isRated;
         this.mLikeCount = mLikeCount;
         this.mCommentCount = mCommentCount;
+        this.isReported = isReported;
+        this.mReportCount = mReportCount;
     }
 
     // Used by recommendation slider
@@ -184,5 +187,21 @@ public class HeritageItem {
 
     public void setRated(boolean rated) {
         isRated = rated;
+    }
+
+    public boolean isReported() {
+        return isReported;
+    }
+
+    public void setReported(boolean isReported) {
+        this.isReported = isReported;
+    }
+
+    public void setmReportCount(int reportCount) {
+        this.mReportCount = reportCount;
+    }
+
+    public int getmReportCount() {
+        return mReportCount;
     }
 }
