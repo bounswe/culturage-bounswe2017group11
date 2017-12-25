@@ -1,6 +1,7 @@
 # Culturage Web Service
-### You can see demo at [here](http://18.220.108.135)
+### Our API base url is [http://52.90.34.144:85](http://52.90.34.144:85)
 ### You can see Postman API Documentation at [here](https://documenter.getpostman.com/view/2986669/culturage-api/71FWB4x)
+### You can see Doxygen Documentation at [here](http://52.90.34.144:85/static/doc/)
 
 ## How to Use
 1. Switch to venv

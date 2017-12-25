@@ -281,6 +281,8 @@ class ItemSerializer(serializers.ModelSerializer):
 	comments = serializers.SerializerMethodField('_get_comments')
 	medias = serializers.SerializerMethodField('_get_medias')
 	comment_count = serializers.SerializerMethodField('_get_comment_count')
+	report_count = serializers.SerializerMethodField('_get_report_count')
+	is_reported = serializers.SerializerMethodField('_get_is_reported')
 
 	@staticmethod
 	def setup_eager_loading(queryset):
@@ -292,7 +294,7 @@ class ItemSerializer(serializers.ModelSerializer):
 
 	class Meta:
 		model = Item
-		fields = ('id','name', 'description', 'featured_img', 'timelines', 'tags', 'rate', 'created_at', 'created_by', 'comments', 'raters', 'is_rated', 'comment_count', 'medias', 'created_at')
+		fields = ('id','name', 'description', 'featured_img', 'timelines', 'tags', 'rate', 'created_at', 'created_by', 'comments', 'raters', 'is_rated', 'report_count', 'is_reported', 'comment_count', 'medias', 'created_at')
 
 	def _get_comments(self, item):
 		serializer = CommentSerializer(item.commented_item, many=True)
@@ -314,6 +316,13 @@ class ItemSerializer(serializers.ModelSerializer):
 		raters = item.get_raters()
 		return user.id in raters
 
+	def _get_report_count(self, item):
+		return len(item.get_reporters())
+
+	def _get_is_reported(self, item):
+		user = self.context['request'].user
+		reporters = item.get_reporters()
+		return user.id in reporters
 
 	def create(self, validated_data):
 		l_data = validated_data.pop('location')
@@ -389,21 +398,31 @@ class ReportSerializer(serializers.ModelSerializer):
 class NewsfeedSerializer(serializers.ModelSerializer):
 	comment_count = serializers.SerializerMethodField('_get_comment_count')
 	is_rated = serializers.SerializerMethodField('_get_is_rated')
+	report_count = serializers.SerializerMethodField('_get_report_count')
+	is_reported = serializers.SerializerMethodField('_get_is_reported')
 
 	def _get_comment_count(self, item):
 		return len(item.get_commenters())
+
+	def _get_report_count(self, item):
+		return len(item.get_reporters())
 
 	def _get_is_rated(self, item):
 		user = self.context['request'].user
 		raters = item.get_raters()
 		return user.id in raters
 
+	def _get_is_reported(self, item):
+		user = self.context['request'].user
+		reporters = item.get_reporters()
+		return user.id in reporters
+
 	@staticmethod
 	def setup_eager_loading(queryset):
 		""" Perform necessary eager loading of data. """
-		queryset = queryset.prefetch_related('rated_item', 'commented_item')
+		queryset = queryset.prefetch_related('rated_item', 'commented_item', 'reported_item', 'reported_item__user')
 		return queryset
 
 	class Meta:
 		model = Item
-		fields = ('id', 'name', 'rate', 'description', 'featured_img', 'created_at', 'is_rated', 'comment_count')
+		fields = ('id', 'name', 'rate', 'description', 'featured_img', 'created_at', 'is_rated', 'comment_count', 'report_count', 'is_reported')
