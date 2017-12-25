@@ -170,7 +170,8 @@
                 android:padding="@dimen/small_padding"
                 android:textColor="@color/primary_blue"
                 android:textColorHint="@color/hint_color"
-                android:textCursorDrawable="@null" />
+                android:textCursorDrawable="@null"
+                android:background="@android:color/transparent" />
 
 
         </LinearLayout>
@@ -195,7 +196,8 @@
                 android:padding="@dimen/small_padding"
                 android:textColor="@color/primary_blue"
                 android:textColorHint="@color/hint_color"
-                android:textCursorDrawable="@null">
+                android:textCursorDrawable="@null"
+                android:background="@android:color/transparent">
 
             </EditText>
 
