@@ -36,6 +36,10 @@
         <activity android:name=".newsFeed.HeritageItemViewActivity" />
         <activity android:name=".newsFeed.SearchActivity" />
         <activity android:name=".newsFeed.LikeActivity" />
+
+        <meta-data
+            android:name="com.google.android.geo.API_KEY"
+            android:value="AIzaSyDtNTnX1q8AwSUwlsyMpO2mxeLCM6rVO00" />
     </application>
 
 

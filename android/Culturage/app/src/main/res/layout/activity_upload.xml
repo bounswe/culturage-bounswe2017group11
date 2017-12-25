@@ -175,20 +175,41 @@
 
         </LinearLayout>
 
-        <EditText
-            android:id="@+id/upload_location"
-            android:layout_width="match_parent"
-            android:layout_height="48dp"
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/small_padding"
             android:layout_marginEnd="@dimen/small_padding"
             android:layout_marginStart="@dimen/small_padding"
-            android:background="@drawable/blue_border"
-            android:hint="@string/prompt_"
-            android:inputType="textAutoComplete"
-            android:padding="@dimen/small_padding"
-            android:textColor="@color/primary_blue"
-            android:textColorHint="@color/hint_color"
-            android:textCursorDrawable="@null" />
+            android:background="@drawable/blue_border">
+
+            <EditText
+                android:id="@+id/upload_location"
+                android:layout_width="match_parent"
+                android:layout_height="48dp"
+                android:layout_marginBottom="@dimen/small_padding"
+                android:layout_marginEnd="@dimen/small_padding"
+                android:layout_marginStart="@dimen/small_padding"
+                android:hint="@string/prompt_"
+                android:inputType="textAutoComplete"
+                android:padding="@dimen/small_padding"
+                android:textColor="@color/primary_blue"
+                android:textColorHint="@color/hint_color"
+                android:textCursorDrawable="@null">
+
+            </EditText>
+
+            <ImageView
+                android:id="@+id/imageView1"
+                android:padding="5dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignTop="@+id/upload_location"
+                android:layout_alignBottom="@+id/upload_location"
+                android:layout_alignRight="@+id/upload_location"
+                android:src="@mipmap/ic_map" />
+
+        </RelativeLayout>
 
         <EditText
             android:id="@+id/upload_tags"
