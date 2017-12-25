@@ -25,11 +25,16 @@ import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.Spinner;
 import android.widget.Switch;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.culturage.oceans_eleven.culturage.R;
 import com.culturage.oceans_eleven.culturage.baseClasses.HeritageItem;
 import com.culturage.oceans_eleven.culturage.network.PostJSON;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlacePicker;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -44,10 +49,12 @@ import java.io.IOException;
 public class UploadActivity extends Activity {
 
     private static final String UPLOAD_URL = "http://52.90.34.144:85/api/items/";
-    private int REQUEST_CAMERA = 0, SELECT_FILE = 1;
+    private final int REQUEST_CAMERA = 0, SELECT_FILE = 1, PLACE_PICKER_REQUEST = 2;
+    private double longitude = 0, latitude = 0;
     private ImageView mImageView;
     private ProgressBar mProgressBar;
-    private EditText mTitleView, mDescView, mYearView, mLocView, mTagView;
+    private EditText mTitleView, mDescView, mYearView, mTagView;
+    private TextView mLocView;
     private Switch mBcSwitch;
     private Spinner mDaySpinner, mMonthSpinner;
 
@@ -61,8 +68,8 @@ public class UploadActivity extends Activity {
         mTitleView = (EditText) findViewById(R.id.upload_title);
         mDescView = (EditText) findViewById(R.id.upload_description);
         mYearView = (EditText) findViewById(R.id.upload_year);
-        mLocView = (EditText) findViewById(R.id.upload_location);
         mTagView = (EditText) findViewById(R.id.upload_tags);
+        mLocView = (TextView) findViewById(R.id.upload_location);
         mBcSwitch = (Switch) findViewById(R.id.acSwitch);
         mDaySpinner = (Spinner) findViewById(R.id.daySpinner);
         mMonthSpinner = (Spinner) findViewById(R.id.monthSpinner);
@@ -83,6 +90,22 @@ public class UploadActivity extends Activity {
             }
         });
 
+        ImageView btnMap = (ImageView) findViewById(R.id.map_button);
+        btnMap.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
+                try {
+                    startActivityForResult(builder.build(UploadActivity.this), PLACE_PICKER_REQUEST);
+                } catch (GooglePlayServicesRepairableException e) {
+                    Log.v("upload", "first catch");
+                    e.printStackTrace();
+                } catch (GooglePlayServicesNotAvailableException e) {
+                    Log.v("upload", "second catch");
+                    e.printStackTrace();
+                }
+            }
+        });
         ImageButton btnUpload = (ImageButton) findViewById(R.id.save_upload);
         btnUpload.setOnClickListener(new OnClickListener() {
             @Override
@@ -112,7 +135,7 @@ public class UploadActivity extends Activity {
                 Log.v("upload-date", date);
 //                startActivity(new Intent(UploadActivity.this, NewsFeedActivity.class));
                 HeritageItem itemToUpload = new HeritageItem(mTitleView.getText().toString(), mDescView.getText().toString(), imageString,
-                        rate, createdAt, date, mLocView.getText().toString(), mTagView.getText().toString());
+                        rate, createdAt, date, mLocView.getText().toString(), longitude, latitude, mTagView.getText().toString());
                 new UploadRequest(UploadActivity.this, itemToUpload).execute();
                 startActivity(new Intent(UploadActivity.this, NewsFeedActivity.class));
             }
@@ -174,6 +197,16 @@ public class UploadActivity extends Activity {
                 onSelectFromGalleryResult(data);
             else if (requestCode == REQUEST_CAMERA)
                 onCaptureImageResult(data);
+        }
+        if (requestCode == PLACE_PICKER_REQUEST) {
+            if (resultCode == RESULT_OK) {
+                Place place = PlacePicker.getPlace(data, this);
+//                String toastMsg = String.format("Place: %s %s",place.getName(), place.getLatLng());
+//                Toast.makeText(this, toastMsg, Toast.LENGTH_LONG).show();
+                mLocView.setText(place.getName());
+                longitude = place.getLatLng().longitude;
+                latitude = place.getLatLng().latitude;
+            }
         }
     }
 
@@ -268,12 +301,19 @@ public class UploadActivity extends Activity {
                 json.put("name", itemToUpload.getmTitle());
                 json.put("description", itemToUpload.getmDescription());
                 json.put("image", "image/png;base64," + itemToUpload.getmImageBase64String());
-                json.put("location", itemToUpload.getmLocation());
+                JSONObject location = new JSONObject();
+                if (itemToUpload.getmLatitude() != 0 && itemToUpload.getmLongitude() != 0) {
+                    location.put("name", itemToUpload.getmLocationName());
+                    location.put("longtitude", itemToUpload.getmLongitude());
+                    location.put("latitude", itemToUpload.getmLatitude());
+                }
+                json.put("location", location);
                 json.put("date", itemToUpload.getmDate());
                 JSONArray tags = new JSONArray(itemToUpload.getMTags().replaceAll("#", "").split("\\s"));
                 Log.v("upload-tag", tags.toString());
                 json.put("tags", tags);
                 Log.v("upload", itemToUpload.getmImageBase64String());
+                Log.v("upload-whole json", json.toString());
                 return json;
             } catch (JSONException e) {
                 Log.v("upload", "Error in json construction");

@@ -184,7 +184,7 @@
             android:layout_marginStart="@dimen/small_padding"
             android:background="@drawable/blue_border">
 
-            <EditText
+            <TextView
                 android:id="@+id/upload_location"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
@@ -192,24 +192,25 @@
                 android:layout_marginEnd="@dimen/small_padding"
                 android:layout_marginStart="@dimen/small_padding"
                 android:hint="@string/prompt_"
-                android:inputType="textAutoComplete"
+                android:inputType="none"
                 android:padding="@dimen/small_padding"
                 android:textColor="@color/primary_blue"
                 android:textColorHint="@color/hint_color"
                 android:textCursorDrawable="@null"
                 android:background="@android:color/transparent">
 
-            </EditText>
+            </TextView>
 
             <ImageView
-                android:id="@+id/imageView1"
-                android:padding="5dp"
+                android:id="@+id/map_button"
+                android:padding="@dimen/tiny_padding"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignTop="@+id/upload_location"
                 android:layout_alignBottom="@+id/upload_location"
                 android:layout_alignRight="@+id/upload_location"
-                android:src="@mipmap/ic_map" />
+                android:src="@mipmap/ic_map"
+                android:layout_centerVertical="true" />
 
         </RelativeLayout>
 

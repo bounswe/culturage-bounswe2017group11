@@ -4,18 +4,21 @@ package com.culturage.oceans_eleven.culturage.baseClasses;
 public class HeritageItem {
 
     private int mPostId, mLikeCount, mCommentCount, mResourceId, creatorId;
-    private String mTitle, mDescription, mDate, mLocation, mImageBase64String, rate, createdAt, mTags, creatorUsername, mImageUrl;
+    private String mTitle, mDescription, mDate, mLocationName, mImageBase64String, rate, createdAt, mTags, creatorUsername, mImageUrl;
+    private double mLongitude, mLatitude;
     private boolean isRated;
 
     //dummy item; this constructor is not to be used, temporary
-    public HeritageItem(String title, String description, String imageString, String rate, String createdAt, String date, String location, String tags) {
+    public HeritageItem(String title, String description, String imageString, String rate, String createdAt, String date, String mLocationName, double longitude, double latitude, String tags) {
         this.mTitle = title;
         this.createdAt = createdAt;
         this.mDescription = description;
         this.mImageBase64String = imageString;
         this.rate = rate;
         this.mDate = date;
-        this.mLocation = location;
+        this.mLocationName = mLocationName;
+        this.mLongitude = longitude;
+        this.mLatitude = latitude;
         this.mTags = tags;
 
     }
@@ -75,14 +78,18 @@ public class HeritageItem {
         return mDate;
     }
 
-    public String getmLocation() {
-        return mLocation;
+
+    public String getmLocationName() {
+        return mLocationName;
     }
 
-    public void setmLocation(String mLocation) {
-        this.mLocation = mLocation;
+    public double getmLongitude() {
+        return mLongitude;
     }
 
+    public double getmLatitude() {
+        return mLatitude;
+    }
 
     public void setmResourceId(int mResourceId) {
         this.mResourceId = mResourceId;
