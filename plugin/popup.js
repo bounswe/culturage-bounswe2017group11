@@ -133,6 +133,40 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById("cover").src = obj[0].featured_img;
         if(url.includes("youtube")){
           console.log("denemee");
+          document.getElementById("youtubeText").style.display = "block";
+          document.getElementById("youtubeButton").style.display = "block";
+          var youtubeButton = document.getElementById('youtubeButton');
+
+          youtubeButton.style.cursor = 'pointer';
+          youtubeButton.onclick = function() {
+              console.log("tiklandi");
+              console.log(url);
+              console.log(obj[0].id);
+              var xhr1 = new XMLHttpRequest();
+              var requestedUrl = "http://52.90.34.144:85/api/items/"+obj[0].id+"/medias"; 
+              console.log(requestedUrl);
+              var body = "url="+url;
+              console.log(body);
+
+              xhr1.open("POST",requestedUrl,true);
+
+              xhr1.setRequestHeader("Authorization",token);
+              xhr1.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+
+              
+              xhr1.onreadystatechange = function() {//Call a function when the state changes.
+                  if(xhr1.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
+                    console.log("Item is uploaded.")
+                  }
+              }
+
+              
+
+
+              xhr1.send(body);
+              
+          };
         }
        }
     }
