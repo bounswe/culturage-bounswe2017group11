@@ -1,8 +1,8 @@
 {
   "manifest_version": 2,
 
-  "name": "Getting started example",
-  "description": "This extension allows the user to change the background color of the current page.",
+  "name": "Culturage",
+  "description": "This extension allows the user to see heritage items related to current page and upload new media for that item",
   "version": "1.0",
 
   "browser_action": {
@@ -10,7 +10,9 @@
     "default_popup": "popup.html"
   },
   "permissions": [
+    "http://52.90.34.144:85",
     "activeTab",
-    "storage"
+    "storage",
+    "tabs"
   ]
 }
