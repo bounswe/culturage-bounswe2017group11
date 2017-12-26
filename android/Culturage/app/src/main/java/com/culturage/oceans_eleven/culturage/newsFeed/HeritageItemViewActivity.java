@@ -134,24 +134,7 @@ public class HeritageItemViewActivity extends AppCompatActivity {
 //            }
 //        });
 
-        ImageView mapButton = (ImageView) findViewById(R.id.her_item_map_button);
-        mapButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // TODO: replace with actual bounds
-//                PlacePicker.IntentBuilder builder = new PlacePicker.IntentBuilder();
-//                LatLng mNortheast = new LatLng(0, 0);
-//                LatLng mSouthwest = new LatLng(0, 0);
-//                builder.setLatLngBounds(new LatLngBounds(mNortheast,mSouthwest));
-//                Toast.makeText(HeritageItemViewActivity.this,"Clicked map", Toast.LENGTH_SHORT).show();
-                Uri gmmIntentUri = Uri.parse("geo:0.230,0.45123");
-                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
-                mapIntent.setPackage("com.google.android.apps.maps");
-                if (mapIntent.resolveActivity(getPackageManager()) != null) {
-                    startActivity(mapIntent);
-                }
-            }
-        });
+
         commentContainer.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -471,10 +454,8 @@ public class HeritageItemViewActivity extends AppCompatActivity {
         @Override
         protected String doInBackground(Integer... itemID) {
             try {
-                Log.v("axzs" + LOG_TAG, "before fetch");
                 return Fetcher.getJSON(Fetcher.createUrl(getResources().getString(R.string.itemsEndPoint) + itemID[0]), HeritageItemViewActivity.this);
             } catch (IOException e) {
-                Log.v("axzs" + LOG_TAG, e.getMessage());
             }
             //if can't return Fetcher.getJSON because of exception
             return null;
@@ -492,6 +473,32 @@ public class HeritageItemViewActivity extends AppCompatActivity {
                 try {
                     timeLine0 = timelines.getJSONObject(0);
                     loc0 = timeLine0.getJSONObject("location");
+                    final JSONObject tempLoc0 = loc0;
+                    ImageView mapButton = (ImageView) findViewById(R.id.her_item_map_button);
+                    mapButton.setOnClickListener(new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            double longitude = 0, latitude = 0;
+                            try {
+                                longitude = tempLoc0.getDouble("longtitude");
+                                latitude = tempLoc0.getDouble("latitude");
+
+                            } catch (JSONException e) {
+                                Log.v(LOG_TAG, "Error in parsing location specifics");
+                                e.printStackTrace();
+                            }
+                            if (longitude == 0 || latitude == 0) {
+                                Toast.makeText(HeritageItemViewActivity.this, "No map description is available", Toast.LENGTH_SHORT).show();
+                            } else {
+                                Uri gmmIntentUri = Uri.parse("geo:" + latitude + "," + longitude);
+                                Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+                                mapIntent.setPackage("com.google.android.apps.maps");
+                                if (mapIntent.resolveActivity(getPackageManager()) != null) {
+                                    startActivity(mapIntent);
+                                }
+                            }
+                        }
+                    });
                 } catch (Exception e) {
                     Log.e(LOG_TAG + "timeline", "onPostExecute: ");
                 }
