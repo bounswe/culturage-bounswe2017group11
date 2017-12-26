@@ -131,6 +131,19 @@ document.addEventListener('DOMContentLoaded', () => {
         document.getElementById("title").innerHTML = obj[0].name;
         document.getElementById("description").innerHTML = ((obj[0].description).substring(0,800)).concat("...");
         document.getElementById("cover").src = obj[0].featured_img;
+        
+
+        var cover = document.getElementById('cover');
+
+        cover.style.cursor = 'pointer';
+        cover.onclick = function() {
+          var targetUrl = "http://culturage.s3-website-us-east-1.amazonaws.com/item/"+obj[0].id;
+          console.log(targetUrl);
+          window.open(targetUrl);
+
+        }
+
+
         if(url.includes("youtube")){
           console.log("denemee");
           document.getElementById("youtubeText").style.display = "block";
