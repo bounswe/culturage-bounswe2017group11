@@ -13,7 +13,7 @@ $sandybrown: #F49D6E;
 	}
 }
 
-.home-body{
+.profile-body{
     background: #f2f2f2;
     margin:0px;
     padding:0px;
@@ -22,7 +22,7 @@ $sandybrown: #F49D6E;
     font-family: 'Open Sans', sans-serif;
 }
 
-.newsfeed{
+.profile-container{
 	  width:100%;
 	  margin-left: 5%;
 	  margin-right: 5%;
