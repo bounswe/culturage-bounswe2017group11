@@ -308,7 +308,10 @@ public class UploadActivity extends Activity {
                     location.put("latitude", itemToUpload.getmLatitude());
                 }
                 json.put("location", location);
-                json.put("date", itemToUpload.getmDate());
+                JSONObject date = new JSONObject();
+                date.put("start", itemToUpload.getmDate());
+                date.put("end", null);
+                json.put("date", date);
                 JSONArray tags = new JSONArray(itemToUpload.getMTags().replaceAll("#", "").split("\\s"));
                 Log.v("upload-tag", tags.toString());
                 json.put("tags", tags);

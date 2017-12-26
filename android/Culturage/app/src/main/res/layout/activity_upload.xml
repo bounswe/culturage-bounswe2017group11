@@ -184,7 +184,7 @@
             android:layout_marginStart="@dimen/small_padding"
             android:background="@drawable/blue_border">
 
-            <TextView
+            <EditText
                 android:id="@+id/upload_location"
                 android:layout_width="match_parent"
                 android:layout_height="48dp"
@@ -197,9 +197,10 @@
                 android:textColor="@color/primary_blue"
                 android:textColorHint="@color/hint_color"
                 android:textCursorDrawable="@null"
-                android:background="@android:color/transparent">
+                android:background="@android:color/transparent"
+                android:focusable="false">
 
-            </TextView>
+            </EditText>
 
             <ImageView
                 android:id="@+id/map_button"

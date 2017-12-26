@@ -474,22 +474,14 @@ public class HeritageItemViewActivity extends AppCompatActivity {
                     timeLine0 = timelines.getJSONObject(0);
                     loc0 = timeLine0.getJSONObject("location");
                     final JSONObject tempLoc0 = loc0;
-                    ImageView mapButton = (ImageView) findViewById(R.id.her_item_map_button);
-                    mapButton.setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            double longitude = 0, latitude = 0;
-                            try {
-                                longitude = tempLoc0.getDouble("longtitude");
-                                latitude = tempLoc0.getDouble("latitude");
+                    final ImageView mapButton = (ImageView) findViewById(R.id.her_item_map_button);
+                    try {
 
-                            } catch (JSONException e) {
-                                Log.v(LOG_TAG, "Error in parsing location specifics");
-                                e.printStackTrace();
-                            }
-                            if (longitude == 0 || latitude == 0) {
-                                Toast.makeText(HeritageItemViewActivity.this, "No map description is available", Toast.LENGTH_SHORT).show();
-                            } else {
+                        final double longitude = tempLoc0.getDouble("longtitude");
+                        final double latitude = tempLoc0.getDouble("latitude");
+                        mapButton.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
                                 Uri gmmIntentUri = Uri.parse("geo:" + latitude + "," + longitude);
                                 Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
                                 mapIntent.setPackage("com.google.android.apps.maps");
@@ -497,8 +489,15 @@ public class HeritageItemViewActivity extends AppCompatActivity {
                                     startActivity(mapIntent);
                                 }
                             }
-                        }
-                    });
+                        });
+//                        if (longitude == 0 || latitude == 0) {
+//                        }
+
+//                        Toast.makeText(HeritageItemViewActivity.this, "No map description is available", Toast.LENGTH_SHORT).show();
+                    } catch (Exception e) {
+                        // No long or lat is available.
+                        mapButton.setVisibility(View.GONE);
+                    }
                 } catch (Exception e) {
                     Log.e(LOG_TAG + "timeline", "onPostExecute: ");
                 }
@@ -522,7 +521,7 @@ public class HeritageItemViewActivity extends AppCompatActivity {
                     loc.setText(loc0.getString("name"));
                 } catch (Exception e) {
                     loc.setText("Not specified");
-                    Log.e(LOG_TAG + " location", e.getMessage());
+                    Log.v(LOG_TAG + " location", e.getMessage());
                 }
 
                 tagsList.clear();
@@ -591,7 +590,10 @@ public class HeritageItemViewActivity extends AppCompatActivity {
                 });*/
 
 
-            } catch (JSONException e) {
+            } catch (
+                    JSONException e)
+
+            {
                 e.printStackTrace();
             }
         }
