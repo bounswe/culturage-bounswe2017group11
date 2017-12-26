@@ -170,7 +170,7 @@ document.addEventListener('DOMContentLoaded', () => {
               
               xhr1.onreadystatechange = function() {//Call a function when the state changes.
                   if(xhr1.readyState == XMLHttpRequest.DONE && xhr.status == 200) {
-                    console.log("Item is uploaded.")
+                    alert("Item is uploaded.")
                   }
               }
 
