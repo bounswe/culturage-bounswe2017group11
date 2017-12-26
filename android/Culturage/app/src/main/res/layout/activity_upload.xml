@@ -124,57 +124,179 @@
             android:textCursorDrawable="@null" />
 
         <LinearLayout
+            android:background="@drawable/blue_border"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="48dp"
+            android:layout_marginEnd="@dimen/small_padding"
+            android:layout_marginStart="@dimen/small_padding"
+            android:padding="@dimen/small_padding">
+
+            <Button
+                android:id="@+id/normalDateButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="ONE DATE"
+                android:background="@drawable/blue_border" />
+
+            <Button
+                android:id="@+id/intervalButton"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:text="INTERVAL"
+                android:background="@drawable/blue_border" />
+
+        </LinearLayout>
+
+        <TableLayout
+            android:padding="@dimen/small_padding"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="@dimen/small_padding"
+            android:background="@drawable/blue_border"
+            android:orientation="vertical"
             android:layout_marginEnd="@dimen/small_padding"
-            android:layout_marginStart="@dimen/small_padding"
-            android:background="@drawable/blue_border">
+            android:layout_marginStart="@dimen/small_padding">
 
-            <Switch
-                android:id="@+id/acSwitch"
-                android:layout_width="wrap_content"
-                android:layout_height="@dimen/edit_text_height"
-                android:paddingEnd="@dimen/tiny_padding"
-                android:paddingStart="@dimen/tiny_padding"
-                android:showText="true"
-                android:textColor="@color/hint_color"
-                android:textOff="AC"
-                android:textOn="BC"
-                android:theme="@style/SwitchCompatTheme" />
-
-            <Spinner
-                android:id="@+id/daySpinner"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/edit_text_height"
+            <TableRow
+                android:id="@+id/startDateResolutionRow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:entries="@array/days" />
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
 
-            <Spinner
-                android:id="@+id/monthSpinner"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/edit_text_height"
+                <Spinner
+                    android:id="@+id/date_resolutions"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/startDateRow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:entries="@array/months" />
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
 
-            <EditText
-                android:id="@+id/upload_year"
-                android:layout_width="0dp"
-                android:layout_height="@dimen/edit_text_height"
-                android:layout_marginBottom="@dimen/small_padding"
-                android:layout_marginEnd="@dimen/tiny_padding"
-                android:layout_marginStart="@dimen/small_padding"
-                android:layout_weight="2"
-                android:hint="Year"
-                android:inputType="number"
-                android:padding="@dimen/small_padding"
-                android:textColor="@color/primary_blue"
-                android:textColorHint="@color/hint_color"
-                android:textCursorDrawable="@null"
-                android:background="@android:color/transparent" />
+                <Switch
+                    android:id="@+id/acSwitch"
+                    android:layout_width="50dp"
+                    android:layout_height="@dimen/edit_text_height"
+                    android:layout_weight="1"
+                    android:paddingEnd="@dimen/tiny_padding"
+                    android:paddingStart="@dimen/tiny_padding"
+                    android:showText="true"
+                    android:textColor="@color/hint_color"
+                    android:textOff="AC"
+                    android:textOn="BC"
+                    android:theme="@style/SwitchCompatTheme" />
 
+                <Spinner
+                    android:id="@+id/daySpinner"
+                    android:layout_width="75dp"
+                    android:layout_height="@dimen/edit_text_height"
+                    android:layout_weight="1"
+                    android:entries="@array/days" />
 
-        </LinearLayout>
+                <Spinner
+                    android:id="@+id/monthSpinner"
+                    android:layout_width="75dp"
+                    android:layout_height="@dimen/edit_text_height"
+                    android:layout_weight="1"
+                    android:entries="@array/months" />
+
+                <EditText
+                    android:id="@+id/upload_year"
+                    android:layout_width="147dp"
+                    android:layout_height="@dimen/edit_text_height"
+                    android:layout_marginBottom="@dimen/small_padding"
+                    android:layout_marginEnd="@dimen/tiny_padding"
+                    android:layout_marginStart="@dimen/small_padding"
+                    android:layout_weight="2"
+                    android:hint="Year"
+                    android:inputType="number"
+                    android:maxLength="5"
+                    android:padding="@dimen/small_padding"
+                    android:textColor="@color/primary_blue"
+                    android:textColorHint="@color/hint_color"
+                    android:textCursorDrawable="@null"
+                    android:background="@android:color/transparent" />
+
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/endDateResolutionRow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <Spinner
+                    android:id="@+id/date_resolutionsEnd"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp" />
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/endDateRow"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:gravity="start"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <Switch
+                    android:id="@+id/acSwitchEnd"
+                    android:layout_width="50dp"
+                    android:layout_height="@dimen/edit_text_height"
+                    android:layout_weight="1"
+                    android:paddingEnd="@dimen/tiny_padding"
+                    android:paddingStart="@dimen/tiny_padding"
+                    android:showText="true"
+                    android:textColor="@color/hint_color"
+                    android:textOff="AC"
+                    android:textOn="BC"
+                    android:theme="@style/SwitchCompatTheme" />
+
+                <Spinner
+                    android:id="@+id/daySpinnerEnd"
+                    android:layout_height="@dimen/edit_text_height"
+                    android:layout_weight="1"
+                    android:layout_width="50dp"
+                    android:entries="@array/days" />
+
+                <Spinner
+                    android:id="@+id/monthSpinnerEnd"
+                    android:layout_height="@dimen/edit_text_height"
+                    android:layout_weight="1"
+                    android:layout_width="50dp"
+                    android:entries="@array/months" />
+
+                <EditText
+                    android:id="@+id/upload_yearEnd"
+                    android:layout_width="147dp"
+                    android:layout_height="@dimen/edit_text_height"
+                    android:layout_marginBottom="@dimen/small_padding"
+                    android:layout_marginEnd="@dimen/tiny_padding"
+                    android:layout_marginStart="@dimen/small_padding"
+                    android:layout_weight="2"
+                    android:hint="Year"
+                    android:inputType="number"
+                    android:maxLength="5"
+                    android:padding="@dimen/small_padding"
+                    android:textColor="@color/primary_blue"
+                    android:textColorHint="@color/hint_color"
+                    android:textCursorDrawable="@null" />
+
+            </TableRow>
+        </TableLayout>
 
         <RelativeLayout
             android:layout_width="wrap_content"

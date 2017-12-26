@@ -1,5 +1,6 @@
 package com.culturage.oceans_eleven.culturage.network;
 
+import android.support.annotation.NonNull;
 import android.util.Log;
 
 import org.json.JSONObject;
@@ -67,6 +68,7 @@ public class PostJSON {
 
     }
 
+    @NonNull
     private static String readFromStream(InputStream inputStream) throws IOException {
         StringBuilder output = new StringBuilder();
         if (inputStream != null) {

@@ -3,23 +3,32 @@ package com.culturage.oceans_eleven.culturage.baseClasses;
 
 public class HeritageItem {
 
+
+    private String mStartDate;
+
+    public String getmEndDate() {
+        return mEndDate;
+    }
+
+    private String mEndDate;
     private int mPostId, mLikeCount, mCommentCount, mResourceId, creatorId, mReportCount;
-    private String mTitle, mDescription, mDate, mLocationName, mImageBase64String, rate, createdAt, mTags, creatorUsername, mImageUrl;
+    private String mTitle, mDescription, mLocationName, mImageBase64String, rate, createdAt, mTags, creatorUsername, mImageUrl;
     private double mLongitude, mLatitude;
     private boolean isRated, isReported;
 
     //dummy item; this constructor is not to be used, temporary
-    public HeritageItem(String title, String description, String imageString, String rate, String createdAt, String date, String mLocationName, double longitude, double latitude, String tags) {
+    public HeritageItem(String title, String description, String imageString, String rate, String createdAt, String mStartDate, String mEndDate, String mLocationName, double longitude, double latitude, String tags) {
         this.mTitle = title;
         this.createdAt = createdAt;
         this.mDescription = description;
         this.mImageBase64String = imageString;
         this.rate = rate;
-        this.mDate = date;
+        this.mStartDate = mStartDate;
         this.mLocationName = mLocationName;
         this.mLongitude = longitude;
         this.mLatitude = latitude;
         this.mTags = tags;
+        this.mEndDate = mEndDate;
 
     }
 
@@ -77,8 +86,8 @@ public class HeritageItem {
         this.creatorUsername = creator_username;
     }
 
-    public String getmDate() {
-        return mDate;
+    public String getmStartDate() {
+        return mStartDate;
     }
 
 

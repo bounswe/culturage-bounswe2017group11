@@ -95,4 +95,11 @@
         <!--<item>Dec</item>-->
     </string-array>
 
+    <string-array name="resolutions">
+        <item>Resolution</item>
+        <item>Exact</item>
+        <item>Approximate</item>
+        <item>Repetitive</item>
+    </string-array>
+
 </resources>

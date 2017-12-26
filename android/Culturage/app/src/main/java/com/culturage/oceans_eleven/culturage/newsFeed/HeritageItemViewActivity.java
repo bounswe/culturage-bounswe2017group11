@@ -510,12 +510,26 @@ public class HeritageItemViewActivity extends AppCompatActivity {
                 TextView date = (TextView) findViewById(R.id.her_item_date);
 
                 try {
-                    date.setText(timeLine0.getString("startLabel"));
+                    String fullDate = "dummy";
+                    String startDate = timeLine0.getString("startLabel");
+                    String endDate = timeLine0.getString("endLabel");
+
+                    if (endDate != null && !endDate.equals("null")) {
+                        fullDate = startDate + " to " + endDate;
+                    } else {
+                        fullDate = startDate;
+                    }
+
+                    date.setText(fullDate);
+
+
 
                 } catch (Exception e) {
                     date.setText("Not specified");
                     Log.e(LOG_TAG + " start date", e.getMessage());
                 }
+
+
                 TextView loc = (TextView) findViewById(R.id.her_item_location);
                 try {
                     loc.setText(loc0.getString("name"));
