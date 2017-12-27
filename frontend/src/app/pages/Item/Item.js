@@ -7,6 +7,7 @@ import Like from './components/Likebtn.js';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './utils/font-awesome-4.7.0/css/font-awesome.css';
 import SuggestedItems from './components/SuggestedItems.js';
+import ItemMap from './components/Map.jsx';
 
 
 import './utils/mycss.css';
@@ -17,11 +18,17 @@ class Item extends React.Component {
    		super(props);
    		this.state = {items: [],
    			suggestedItems: [],
-        loggedIn:""
+        loggedIn:"",
+        templocation: {
+          name: "Bebek Mahallesi, Boğaziçi University, Beşiktaş/Istanbul, Turkey",
+          lat: 41.0847571,
+          lon: 29.051039899999978
+        }
    		};
 	}
 
 	componentDidMount(){
+
     var id = this.props.match.params.id;
     var link = 'http://52.90.34.144:85/api/items/' + id;
 		var _this = this;
@@ -73,19 +80,17 @@ class Item extends React.Component {
 
 			<div>
 				<Navbar/> 
-			   		<div class="mycontainer">
-			   		   			<div class="col-md-8">
-
-
-                  <Body item={this.state.items} />
-                  <SuggestedItems item={this.state.suggestedItems}/>
-
-                  </div>
-                     			<div class="col-md-4">
-                  <Like item={this.state.items} loginStatus={this.state.loggedIn} />
-                  <Comment item={this.state.items} loginStatus={this.state.loggedIn}/>
-                  </div>
-                  </div>
+        <div class="mycontainer">
+			   	<div class="col-md-8">
+            <Body item={this.state.items} />
+            <SuggestedItems item={this.state.suggestedItems}/>
+          </div>
+          <div class="col-md-4">
+            <Like item={this.state.items} loginStatus={this.state.loggedIn} />
+            <Comment item={this.state.items} loginStatus={this.state.loggedIn}/>
+            <ItemMap location = {this.state.templocation} />
+          </div>
+        </div>
 			</div>
 		);
 	}
