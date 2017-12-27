@@ -28,6 +28,10 @@
 }
 .classWithPad { padding-bottom: 10px; }
 
+.my-autocomplete-container{
+
+}
+
 @media screen and (max-width: 600px) {
     .home-body {
         flex-direction: column-reverse;

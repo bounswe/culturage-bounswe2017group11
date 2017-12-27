@@ -23,6 +23,7 @@
     "react-autosuggest": "^9.3.2",
     "react-datepicker": "^0.61.0",
     "react-dom": "^16.0.0",
+    "react-places-autocomplete": "^5.4.3",
     "react-responsive-carousel": "^3.1.30",
     "react-router-dom": "^4.2.2",
     "react-scripts": "1.0.14",

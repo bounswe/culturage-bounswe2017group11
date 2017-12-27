@@ -1,6 +1,9 @@
 import React from 'react';
 import TagsInput from 'react-tagsinput'
+import UploadLocationPicker from './UploadLocationPicker.jsx'
+import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete'
 import 'react-tagsinput/react-tagsinput.css'
+
 
 class ContactForm extends React.Component {
     constructor(props) {
@@ -33,8 +36,7 @@ class ContactForm extends React.Component {
 
         this.handleMonthChange = this.handleMonthChange.bind(this);
 
-        this.handleDayChange =
-        this.handleDayChange.bind(this);
+        this.handleDayChange = this.handleDayChange.bind(this);
     }
 
     toggleChange = () => {
@@ -80,6 +82,23 @@ class ContactForm extends React.Component {
     handleImageChange(event){event.preventDefault();this.setState({image: event.target.value});};
     handleTagsChange(event){event.preventDefault();this.setState({tags: event.target.value});};
     handleSelectedChange(event) {this.setState({selectedValue: event.target.value});}
+
+    onLocationChange(address){
+      console.log(address)
+      geocodeByAddress(address)
+        .then(results => getLatLng(results[0]))
+        .then(({ lat, lng }) => {
+            console.log('Successfully got latitude and longitude', { lat, lng })
+            //var loc = {address, lng, lat}
+            var loc =  {
+              "name": address,
+              "longtitude": lng,
+              "latitude": lat,
+            }
+            console.log(loc)
+            this.setState({location: loc})      
+        })
+    }
 
 
     // Handler for the button/submit event
@@ -248,6 +267,12 @@ class ContactForm extends React.Component {
                       <TagsInput value={this.state.tags} onChange={this.handleChangeTags} />
                     </div>
                   </div>
+                  <div className="form-group">
+                    <label className="col-lg-3 control-label">Location:</label>
+                    <div className="col-lg-8">
+                      <UploadLocationPicker onChange={this.onLocationChange.bind(this)} onRef={ref => (this.child = ref)}/>
+                    </div>
+                  </div>
 
                   <div class="form-group">
         						<label class="col-md-3 control-label"></label>
@@ -257,7 +282,7 @@ class ContactForm extends React.Component {
                       <button className="btn btn-primary custom margin-left"
                         onClick={ this.handleClear }>Clear</button>
                     </div>
-                  </div>
+                  </div>              
                 </form>
             </div>
           </div>
