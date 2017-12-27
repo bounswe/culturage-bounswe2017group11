@@ -344,28 +344,35 @@ public class UploadActivity extends Activity {
                 String dayEnd = mEndDaySpinner.getSelectedItem().toString();
                 String monthEnd = mEndMonthSpinner.getSelectedItem().toString();
                 String yearEnd = mEndYearView.getText().toString();
-                if (yearEnd.equals("")) {
-                    yearEnd = "0000";
+
+                String dateEnd = "";
+                if (yearEnd.equals("") && dayEnd.equals("--") && monthEnd.equals("--")) {
+                    dateEnd = null;
                 } else {
-                    if (mBcSwitchEnd.isChecked()) {
-                        // BC case
-                        yearEnd = "-" + yearEnd;
+
+
+                    if (yearEnd.equals("")) {
+                        yearEnd = "0000";
+                    } else {
+                        if (mBcSwitchEnd.isChecked()) {
+                            // BC case
+                            yearEnd = "-" + yearEnd;
+                        }
+                    }
+                    if (dayEnd.equals("--")) {
+                        dayEnd = "00";
+                    }
+                    if (monthEnd.equals("--")) {
+                        monthEnd = "00";
+                    }
+
+
+                    dateEnd = yearEnd + "-" + monthEnd + "-" + dayEnd;
+
+                    if (isApprxEnd) {
+                        dateEnd += '~';
                     }
                 }
-                if (dayEnd.equals("--")) {
-                    dayEnd = "00";
-                }
-                if (monthEnd.equals("--")) {
-                    monthEnd = "00";
-                }
-
-
-                String dateEnd = yearEnd + "-" + monthEnd + "-" + day;
-
-                if (isApprxEnd) {
-                    dateEnd += '~';
-                }
-
 
 
 
@@ -550,7 +557,10 @@ public class UploadActivity extends Activity {
                 /*add date*/
                 JSONObject date = new JSONObject();
                 date.put("start", itemToUpload.getmStartDate());
-                date.put("end", itemToUpload.getmEndDate());
+                if (itemToUpload.getmEndDate() != null) {
+                    date.put("end", itemToUpload.getmEndDate());
+                }
+
                 json.put("date", date);
 
                 /*add tags*/
