@@ -89,7 +89,8 @@ class Item extends React.Component {
                             {console.log(this.state)}
                             {this.state.items.timelines!=null ? this.state.items.timelines.map(function(timeLine, key){
                                 if(timeLine.location!=null)
-                                    return(<ItemMap location = {timeLine.location} key={key} />)
+                                    if(timeLine.location.longtitude!=null)
+                                        return(<ItemMap location = {timeLine.location} key={key} />)
                             })                  
                             : ""}
                         </div>
