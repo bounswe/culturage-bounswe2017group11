@@ -14,7 +14,7 @@
 }
 
 .recommended-list h1{
-    font-size: 20px;
+    font-size: 25px;
     margin-left: 5%;
 }
 
@@ -52,7 +52,7 @@
 }
 
 .recommended-list-item h2{
-    font-size:16px;
+    font-size:18px;
     color:#17a2b8;
     margin:0;
 }
@@ -61,6 +61,7 @@
     margin-top: 2%;
     margin-left: 2%;
     margin-right: 2%;
+    font-size:14px;
 }
 
 .recommended-list-item img{
@@ -117,17 +118,17 @@
 }
 
 .newsfeed-item h1{
-    font-size: 24px;
+    font-size: 26px;
 }
 
 .newsfeed-item h2{
     padding-left: 30px;
-    font-size: 12px;
+    font-size: 15px;
     margin-top: 5px;
 }
 
 .newsfeed-item p{
-    font-size: 15px;
+    font-size: 16px;
     margin-left: 0px;
     margin-top: 10px;
     color: black;

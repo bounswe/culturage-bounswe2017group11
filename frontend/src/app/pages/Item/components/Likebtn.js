@@ -12,7 +12,6 @@ class Like extends React.Component {
 
    }
    render() {
-    console.log(this.props);
       return( 
         <div>
         <div class="likeContainer" >
@@ -35,7 +34,7 @@ class Like extends React.Component {
   }
 
   componentWillMount(){
-    console.log(this.props);
+
   }
 
   clickHandler() {

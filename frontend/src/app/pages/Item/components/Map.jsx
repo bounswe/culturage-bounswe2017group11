@@ -9,10 +9,11 @@ export default class ItemMap extends React.PureComponent {
 		super(props)
 		this.state = {
       		position:{
-          		lat: this.props.location.lat,
-          		lng: this.props.location.lon,
+          		lat: this.props.location.latitude,
+          		lng: this.props.location.longtitude,
         	}
     	}
+    	console.log(this.state.position)
 	}
 
   	render() {

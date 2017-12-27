@@ -2,6 +2,25 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 export default class RecommendedListItem extends React.Component {
+  editDate(date){
+        var year = date.substring(0,4)
+        var month = date.substring(5,7)
+        var day = date.substring(8,10)
+        if(month=="01") month = "January"
+        else if(month=="02") month = "February"
+        else if(month=="03") month = "March"
+        else if(month=="04") month = "April"
+        else if(month=="05") month = "May"
+        else if(month=="06") month = "June"
+        else if(month=="07") month = "July"
+        else if(month=="08") month = "August"
+        else if(month=="09") month = "September"
+        else if(month=="10") month = "October"
+        else if(month=="11") month = "November"
+        else if(month=="12") month = "December"
+        var edited = new String(day + " " + month + " " + year)
+        return edited
+    }
 	render() {
       	return (
             <Link to={"/item/" + this.props.item.id}>
@@ -12,7 +31,7 @@ export default class RecommendedListItem extends React.Component {
         		    <div class="col-md-6 recommended-list-item-desc">
         				  <h2>{this.props.item.name}</h2>
                         <p>
-	        			    {this.props.item.created_at.substring(0, 10)} <br/>
+	        			    {this.editDate(this.props.item.created_at)} <br/>
 	        			    <i class="fa fa-comment-o" aria-hidden="true">{this.props.item.comment_count}</i> &nbsp;
 	        			    <i class="fa fa-thumbs-o-up" aria-hidden="true">{this.props.item.rate}</i>
                         </p>
