@@ -125,7 +125,7 @@ class Comment extends React.Component {
             <h5 class="panel-title"><strong>Created at:</strong> {this.props.item.created_at.substring(0,10)}</h5>
             <div class = {(this.props.loginStatus == "1") ? "" : "hidden"}> 
             <hr></hr>
-            <a href={"/editItem/" + this.props.item.id} type="button" class="btn btn-danger btn-block">Add media</a>
+            <a href={"/editItem/" + this.props.item.id} type="button" class="btn btn-danger btn-block media-button">Add media</a>
             </div>
 
             </div>
