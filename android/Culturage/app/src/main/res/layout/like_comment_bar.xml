@@ -29,7 +29,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@android:color/white"
-                android:paddingStart="65dp"
+                android:paddingStart="35dp"
                 android:paddingEnd="0dp"
                 android:src="@drawable/ic_notlike"
                 android:textAlignment="textStart"
@@ -68,7 +68,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:background="@android:color/white"
-                android:paddingStart="65dp"
+                android:paddingStart="35dp"
                 android:paddingEnd="0dp"
                 android:src="@drawable/ic_comment"
                 android:textAlignment="textStart"
@@ -86,6 +86,45 @@
                 tools:text="225" />
 
         </LinearLayout>
+
+        <TextView
+            android:layout_width="@dimen/dummy_layout_size"
+            android:layout_height="match_parent"
+            android:background="@color/separator_grey" />
+
+        <LinearLayout
+            android:id="@+id/report_container"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:clickable="true"
+            android:focusable="true"
+            android:descendantFocusability="blocksDescendants">
+
+            <ImageButton
+                android:id="@+id/report_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                android:paddingStart="35dp"
+                android:paddingEnd="0dp"
+                android:src="@drawable/ic_not_reported"
+                android:textAlignment="textStart"
+                android:clickable="false"
+                android:textColor="@color/primary_blue" />
+
+            <TextView
+                android:id="@+id/report_count"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:paddingStart="10dp"
+                android:paddingEnd="10dp"
+                android:clickable="false"
+                tools:text="-225" />
+
+        </LinearLayout>
+
     </LinearLayout>
 
     <TextView
