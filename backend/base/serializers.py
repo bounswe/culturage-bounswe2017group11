@@ -233,6 +233,7 @@ class MediaSerializer(serializers.ModelSerializer):
 	class Meta:
 		model = Media
 		fields =('id','name', 'extension', 'mediaType', 'file', 'url', 'file_url', 'annotations')
+		# ordering = ('mediaType',)
 
 	def _get_file_url(self, obj):
 		if obj.file:
@@ -308,7 +309,8 @@ class ItemSerializer(serializers.ModelSerializer):
 		return serializer.data
 
 	def _get_medias(self, item):
-		serializer = MediaSerializer(item.media_item, many=True)
+		medias = item.media_item.order_by('-mediaType')
+		serializer = MediaSerializer(medias, many=True)
 		return serializer.data
 
 	def _get_comment_count(self, item):
