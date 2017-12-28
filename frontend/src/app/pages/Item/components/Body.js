@@ -77,6 +77,7 @@ class Body extends React.Component {
                 <span class="badge badge-info">#{data.name}</span></a>
               })}
       			<hr/>
+
       {(this.props.item.medias != "") ?
       (this.props.item.medias[0].mediaType == "video") ?
         // Show videos and images in seperate tabs
