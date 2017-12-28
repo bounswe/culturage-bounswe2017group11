@@ -334,6 +334,9 @@ public class HeritageItemViewActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(ArrayList<HeritageMedia> medias) {
+            if (medias.size() > 1) {
+                medias.remove(1);
+            }
             HeritageMediaAdapter imageAdapter = new HeritageMediaAdapter(mContext, medias);
             imageList.setAdapter(imageAdapter);
         }
