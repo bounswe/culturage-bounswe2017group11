@@ -144,13 +144,15 @@ class Comment extends React.Component {
                         })                  
                         : ""}
                         {this.props.item.timelines!=null ? this.props.item.timelines.map(function(timeLine, key){
-                            if(timeLine.startLabel!=null)
+                            if(timeLine.startLabel!=null && timeLine.endLabel!=null)
+                                return(<div class="details-text"><b>Start Date:</b> {timeLine.startLabel}</div>)
+                            else if(timeLine.startLabel!=null)
                                 return(<div class="details-text"><b>Date:</b> {timeLine.startLabel}</div>)
                         })                  
                         : ""}
                         {this.props.item.timelines!=null ? this.props.item.timelines.map(function(timeLine, key){
                             if(timeLine.endLabel!=null)
-                                return(<div class="details-text"> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;{timeLine.endLabel}</div>)
+                                return(<div class="details-text"><b>End Date:</b> {timeLine.endLabel}</div>)
                         })                  
                         : ""}
                         <div class = {(this.props.loginStatus == "1") ? "" : "hidden"}> 

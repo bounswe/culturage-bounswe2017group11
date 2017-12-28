@@ -52,9 +52,6 @@ class Body extends React.Component {
 				(this.props.item.medias[0].mediaType == "image") &&
         // Show images only        
 				<Carousel showStatus={false} showArrows={false}>
-          <div>
-              <img src={this.props.item.featured_img} />
-          </div>
   				{this.props.item.medias.map(function(media){ return (
             <div>
                 <img src={media.file_url} />
