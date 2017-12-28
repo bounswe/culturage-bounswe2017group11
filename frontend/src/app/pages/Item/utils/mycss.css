@@ -14,6 +14,10 @@
   border-color: #ddd;
 }
 
+.my-panel-heading{
+  font-size: 20px;
+}
+
 .post .post-heading {
   height: 95px;
   padding: 20px 15px;
