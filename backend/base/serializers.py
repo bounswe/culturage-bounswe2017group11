@@ -124,6 +124,9 @@ class TimelineSerializer(serializers.ModelSerializer):
 					result += "s"
 			else:
 				result = "Every " + result.strip()
+
+			if date == "0000-00-00":
+				result = "Not specified"
 			return result.strip()
 
 	def _get_end_label(self, obj):
@@ -150,6 +153,9 @@ class TimelineSerializer(serializers.ModelSerializer):
 					result += "s"
 			else:
 				result = "Every " + result.strip()
+
+			if date == "0000-00-00":
+				result = "Not specified"
 			return result.strip()
 
 	def create(self, validated_data):
