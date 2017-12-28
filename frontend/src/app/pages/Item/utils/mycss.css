@@ -103,7 +103,7 @@
 }
 .video-tab-button{
   background-color: #6ec1e09e;
-  color: white !important; 
+  color: white !important;
   margin-right: 5px;
 }
 .video-tab-button:hover{
@@ -193,7 +193,7 @@ img {
 
 .badge-info{background-color:#5bc0de}.badge-info[href]:focus,.badge-info[href]:hover{background-color:#31b0d5}
 
-.likeContainer{text-align: center; padding-top: 75px; padding-right: 30px;}
+.likeContainer{text-align: center; padding-top: 105px; padding-right: 30px;}
 
 .blueIcon{color: #5bc0de;}
 

@@ -4,6 +4,7 @@ import Navbar from '../Navbar/components/Navbar.jsx';
 import Body from './components/Body.js';
 import Comment from './components/Comment.js';
 import Like from './components/Likebtn.js';
+import Flag from './components/Flagbtn.js'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './utils/font-awesome-4.7.0/css/font-awesome.css';
 import SuggestedItems from './components/SuggestedItems.js';
@@ -39,7 +40,7 @@ class Item extends React.Component {
         }else{
             token = "JWT " + token;
             this.setState({loggedIn: 1});
-        }     
+        }
 
 
     	myHeaders.append("Authorization", token);
@@ -77,21 +78,28 @@ class Item extends React.Component {
 		if(this.state.items.name){
     		return(
     			<div>
-    				<Navbar/> 
+    				<Navbar/>
                     <div class="mycontainer">
                         <div class="col-md-8">
                             <Body item={this.state.items} />
                             <SuggestedItems item={this.state.suggestedItems}/>
                         </div>
                         <div class="col-md-4">
-                            <Like item={this.state.items} loginStatus={this.state.loggedIn} />
+													<div class="row">
+														<div class="col-md-5">
+	                            <Like item={this.state.items} loginStatus={this.state.loggedIn} />
+														</div>
+														<div class="col-md-5">
+															<Flag item={this.state.items} loginStatus={this.state.loggedIn} />
+														</div>
+													</div>
                             <Comment item={this.state.items} loginStatus={this.state.loggedIn}/>
                             {console.log(this.state)}
                             {this.state.items.timelines!=null ? this.state.items.timelines.map(function(timeLine, key){
                                 if(timeLine.location!=null)
                                     if(timeLine.location.longtitude!=null)
                                         return(<ItemMap location = {timeLine.location} key={key} />)
-                            })                  
+                            })
                             : ""}
                         </div>
                     </div>

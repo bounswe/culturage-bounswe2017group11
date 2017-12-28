@@ -1,12 +1,12 @@
 import React from 'react';
 import $ from 'jquery';
 
-class Like extends React.Component {
+class Flag extends React.Component {
     constructor(props){
       super(props);
       this.state = {
          count: "",
-         isLiked: ""
+         isFlagged: ""
        };
       this.clickHandler = this.clickHandler.bind(this)
 
@@ -16,8 +16,8 @@ class Like extends React.Component {
         <div>
         <div class="likeContainer" >
         <a class="button">
-        <i id="id1" ref="myComponentDiv" class={(this.state.isLiked) ? "fa fa-thumbs-o-up fa-3x text-info" : "fa fa-thumbs-o-up fa-3x text-muted"} aria-hidden="true"></i></a>
-        <h4>{this.state.count} likes </h4>
+        <i id="id1" ref="myComponentDiv" class={(this.state.isFlagged) ? "fa fa-flag fa-3x text-info" : "fa fa-flag fa-3x text-muted"} aria-hidden="true"></i></a>
+        <h4>{this.state.count} reported </h4>
         </div>
         </div>
       );
@@ -28,8 +28,8 @@ class Like extends React.Component {
 
 
     this.setState({
-      count: nextProps.item.rate,
-      isLiked: nextProps.item.is_rated
+      count: nextProps.item.report_count,
+      isFlagged: nextProps.item.is_reported
     });
   }
 
@@ -40,18 +40,18 @@ class Like extends React.Component {
   clickHandler() {
       var clk = this.state.count
       var add = 0;
-      if(!this.state.isLiked && this.props.loginStatus == "1"){
+      if(!this.state.isFlagged && this.props.loginStatus == "1"){
         add = 1;
         this.setState({
-          isLiked: true
+          isFlagged: true
         });
 
          var myHeaders = new Headers();
 
         var comment1 = {
-        "rate" : 1
+        "report" : 1
         };
-        var url = "http://52.90.34.144:85/api/items/" + this.props.item.id + "/rates";
+        var url = "http://52.90.34.144:85/api/items/" + this.props.item.id + "/reports";
       //console.log(data);
       var token = getCookie('token');
       fetch(url,
@@ -78,19 +78,19 @@ class Like extends React.Component {
         console.error(error);
       })
       }
-      else if(this.state.isLiked && this.props.loginStatus == "1"){
+      else if(this.state.isFlagged && this.props.loginStatus == "1"){
         add = -1;
         this.setState({
-          isLiked: false
+          isFlagged: false
         });
 
 
          var myHeaders = new Headers();
 
         var comment1 = {
-        "rate" : 0
+        "report" : 0
         };
-        var url = 'http://52.90.34.144:85/api/items/' + this.props.item.id + '/rates';
+        var url = 'http://52.90.34.144:85/api/items/' + this.props.item.id + '/reports';
       //console.log(data);
       var token = getCookie('token');
       fetch(url,
@@ -108,7 +108,7 @@ class Like extends React.Component {
 
       .then(function(res){
         if(res.ok){
-          //alert("Item disliked");
+          //alert("Item disFlagged");
         } else {
           //alert("Couldn't complete :(");
         }
@@ -138,4 +138,4 @@ function getCookie(key) {
     return keyValue ? keyValue[2] : null;
 }
 
-export default Like;
+export default Flag;
