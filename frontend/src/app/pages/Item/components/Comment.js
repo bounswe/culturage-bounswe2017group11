@@ -130,7 +130,7 @@ class Comment extends React.Component {
         comment = <div>
             <div class="mycontainer2">
                 <div class="panel panel-info">
-                    <div class="panel-heading">
+                    <div class="panel-heading my-panel-heading">
                         Item details
                     </div>
                     <div class="panel-body">
@@ -163,7 +163,7 @@ class Comment extends React.Component {
                 </div>
                 <br />
                 <div class="panel panel-info post">
-                    <div class="panel-heading">
+                    <div class="panel-heading my-panel-heading">
                         Comments
                     </div>
                     <div class="post-footer">
