@@ -139,7 +139,7 @@ class Comment extends React.Component {
                         <div class="details-text"><b>Created at:</b> {this.editDate(this.props.item.created_at)}</div>
                         {console.log(this.props.item)}
                         {this.props.item.timelines!=null ? this.props.item.timelines.map(function(timeLine, key){
-                            if(timeLine.location!=null)
+                            if(timeLine.location!=null && timeLine.location.name != "")
                                 return(<div class="details-text"><b>Location:</b> {timeLine.location.name}</div>)
                         })                  
                         : ""}

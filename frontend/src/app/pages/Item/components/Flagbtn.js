@@ -16,7 +16,7 @@ class Flag extends React.Component {
         <div>
         <div class="likeContainer" >
         <a class="button">
-        <i id="id1" ref="myComponentDiv" class={(this.state.isFlagged) ? "fa fa-flag fa-3x text-info" : "fa fa-flag fa-3x text-muted"} aria-hidden="true"></i></a>
+        <i id="id1" ref="myComponentDiv" class={(this.state.isFlagged) ? "fa fa-flag fa-3x text-info my-flag" : "fa fa-flag fa-3x text-muted"} aria-hidden="true"></i></a>
         <h4>{this.state.count} reported </h4>
         </div>
         </div>
