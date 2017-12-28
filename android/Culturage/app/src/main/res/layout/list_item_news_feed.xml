@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!--one list item in news feed-->
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/frame"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@android:color/white"
+    android:clickable="false"
+    android:descendantFocusability="blocksDescendants"
+    android:focusable="false"
+    android:focusableInTouchMode="false"
+    android:orientation="vertical"
+    android:paddingBottom="0dp"
+    android:paddingLeft="@dimen/small_padding"
+    android:paddingRight="@dimen/small_padding"
+    android:paddingTop="@dimen/small_padding">
+
+    <ImageView
+        android:id="@+id/image"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:adjustViewBounds="true"
+        android:clickable="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        tools:src="@mipmap/hagia_sophia" />
+
+    <TextView
+        android:id="@+id/title"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:clickable="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:gravity="bottom"
+        android:textAppearance="?android:attr/textAppearanceMedium"
+        android:textColor="@color/primary_blue"
+        android:textStyle="bold"
+        tools:text="Hagia Sophia" />
+
+    <TextView
+        android:id="@+id/description"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:ellipsize="marquee"
+        android:maxLines="3"
+        android:minLines="1"
+        android:clickable="false"
+        android:focusable="false"
+        android:focusableInTouchMode="false"
+        android:gravity="top"
+        android:textColor="@color/primary_blue"
+        android:textSize="18sp"
+
+        tools:text="Good one" />
+
+    <include
+        android:id="@+id/nf_like_comment_buttons_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        layout="@layout/like_comment_bar" />
+
+</LinearLayout>

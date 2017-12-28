@@ -1,0 +1,279 @@
+.panel-shadow {
+    box-shadow: rgba(0, 0, 0, 0.3) 7px 7px 7px;
+}
+.panel-white {
+  border: 1px solid #dddddd;
+}
+.panel-white  .panel-heading {
+  color: #333;
+  background-color: #fff;
+  border-color: #ddd;
+}
+.panel-white  .panel-footer {
+  background-color: #fff;
+  border-color: #ddd;
+}
+
+.my-panel-heading{
+  font-size: 20px;
+}
+
+.post .post-heading {
+  height: 95px;
+  padding: 20px 15px;
+}
+.post .post-heading .avatar {
+  width: 60px;
+  height: 60px;
+  display: block;
+  margin-right: 15px;
+}
+.post .post-heading .meta .title {
+  margin-bottom: 0;
+}
+.post .post-heading .meta .title a {
+  color: black;
+}
+.post .post-heading .meta .title a:hover {
+  color: #aaaaaa;
+}
+.post .post-heading .meta .time {
+  margin-top: 8px;
+  color: #999;
+}
+.post .post-image .image {
+  width: 100%;
+  height: auto;
+}
+.post .post-description {
+  padding: 15px;
+}
+.post .post-description p {
+  font-size: 14px;
+}
+.post .post-description .stats {
+  margin-top: 20px;
+}
+.post .post-description .stats .stat-item {
+  display: inline-block;
+  margin-right: 15px;
+}
+.post .post-description .stats .stat-item .icon {
+  margin-right: 8px;
+}
+.post .post-footer {
+  border-top: 1px solid #ddd;
+  padding: 10px;
+}
+.post .post-footer .input-group-addon a {
+  color: #454545;
+}
+.post .post-footer .comments-list {
+  padding: 0;
+  margin-top: 20px;
+  list-style-type: none;
+}
+.post .post-footer .comments-list .comment {
+  display: block;
+  width: 100%;
+  margin: 20px 0;
+}
+.post .post-footer .comments-list .comment .avatar {
+  width: 40px;
+  height: 40px;
+  margin-right: 15px;
+  margin-bottom: 10px;
+}
+.post .post-footer .comments-list .comment .comment-heading {
+  display: block;
+  width: 100%;
+}
+.post .post-footer .comments-list .comment .comment-heading .user {
+  font-size: 14px;
+  font-weight: bold;
+  display: inline;
+  margin-top: 0;
+  margin-right: 10px;
+}
+.post .post-footer .comments-list .comment .comment-heading .time {
+  font-size: 12px;
+  color: #aaa;
+  margin-top: 0;
+  display: inline;
+}
+
+.comment-text{
+  word-wrap:break-word;
+}
+.video-tab-button{
+  background-color: #6ec1e09e;
+  color: white !important;
+  margin-right: 5px;
+}
+.video-tab-button:hover{
+  background-color: #5bc0de;
+}
+.video-tab-button:active{
+  background-color: #5bc0de;
+}
+.image-tab-button{
+  background-color: #6ec1e09e;
+  color: white !important;
+}
+.image-tab-button:hover{
+  background-color: #5bc0de;
+}
+.image-tab-button:active{
+  background-color: #5bc0de;
+}
+.tab-buttons{
+  text-align: center;
+  padding-bottom: 10px;
+}
+.mycontainer{position:relative;margin-left:150px;margin-right:120px;padding-right:15px;padding-left:15px; padding-top: 25px}
+
+
+
+img {
+  height: 100%;
+  padding: 0px;
+}
+
+.cover {
+  width: 100%;
+  object-fit: cover;
+}
+
+.thumb {
+    float: left;
+    border: 1px solid #ccc;
+    width: 23%;
+    margin-right: 15px;
+    margin-bottom: 10px;
+    padding-bottom: 10px;
+
+}
+
+.thumb p {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    display: inline-block;
+    width: 100%;
+}
+.thumb h5 {
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    overflow: hidden;
+    display: inline-block;
+    width: 100%;
+}
+
+.thumb img {
+    max-width: 100%;
+    height: 120px;
+    overflow: hidden;
+
+
+}
+
+.thumb div {
+    padding: 10px;
+}
+
+
+.details-text{
+  font-size: 20px;
+  color: #003366;
+}
+
+
+
+.card-title{margin-bottom:.75rem}.card-subtitle{margin-top:-.375rem;margin-bottom:0}
+
+.bg-info{background-color:#5bc0de!important}a.bg-info:focus,a.bg-info:hover{background-color:#31b0d5!important}
+
+.myjumbotron{padding:2rem 1rem;margin-bottom:2rem;background-color:#eceeef;border-radius:.3rem}@media (min-width:576px){.jumbotron{padding:4rem 2rem}}
+
+.badge-info{background-color:#5bc0de}.badge-info[href]:focus,.badge-info[href]:hover{background-color:#31b0d5}
+
+.likeContainer{text-align: center; padding-top: 105px; padding-right: 30px;}
+
+.blueIcon{color: #5bc0de;}
+
+.wrapper {
+    position: relative;
+    padding-bottom: 56.25%; /* 16:9 */
+    padding-top: 25px;
+    height: 0;
+}
+iframe {
+    display:block;
+    width: 100%;
+    height: width*2;
+}
+
+.media-button{
+  width: 70%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.icon{
+  margin-top: 6px;
+  margin-right: 10px;
+  width: 38px;
+}
+
+.my-flag{
+  color:red;
+}
+
+
+.image-wrapper {
+  margin:10px;
+  border:5px solid red;
+  position: relative;
+  display: inline-block;
+
+}
+
+.image-wrapper img {
+  max-width:100%;
+  display: block;
+}
+
+.box {
+  width:5%;
+  height:5%;
+  background-image:   url(http://www.clker.com/cliparts/W/0/g/a/W/E/map-pin-red.svg);
+  background-position: top center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  position: absolute;
+}
+
+#pin-1 {
+  top:25px;
+  left:36px;
+}
+
+.box:hover > .pin-text {
+  display: block;
+}
+
+.pin-text {
+  background-color: rgba(50,50,50,0.5);
+  padding: 5px !important;
+  position: absolute;
+  top:50%;
+  transform:translateY(-50%);
+  left:75%;
+  white-space:nowrap;
+  display: none;
+}
+
+.pin-text h3 {
+    color:white;
+    text-shadow: 1px 1px 1px #000;
+}

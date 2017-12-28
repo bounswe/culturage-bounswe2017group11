@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="itemsEndPoint">http://52.90.34.144:85/api/items/</string>
+    <string name="newsfeedEndPoint">http://52.90.34.144:85/api/newsfeed/</string>
+    <string name="search_item_EndPoint">http://52.90.34.144:85/api/search/item?q=</string>
+    <string name="search_tag_EndPoint">http://52.90.34.144:85//api/filter/tag/items?q=</string>
+
+
+</resources>

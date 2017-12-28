@@ -8,4 +8,27 @@
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="SwitchCompatTheme">
+        <item name="colorControlActivated">@color/primary_blue</item>
+    </style>
+
+    <style name="CategoryTab" parent="Widget.Design.TabLayout">
+        <item name="tabIndicatorColor">@android:color/white</item>
+        <item name="tabSelectedTextColor">@android:color/white</item>
+        <item name="tabTextAppearance">@style/CategoryTabTextAppearance</item>
+    </style>
+
+    <style name="CategoryTabTextAppearance" parent="TextAppearance.Design.Tab">
+        <item name="android:textColor">#A8A19E</item>
+    </style>
+
+    <style name="BlackDialogTheme" parent="Theme.AppCompat.Light.Dialog.Alert">
+        <item name="android:background">#000000</item>
+    </style>
+
+    <!--<style name="Custom_Dialog" parent="ThemeOverlay.AppCompat.Light" >-->
+    <!--<item name="windowMinWidthMajor">100%</item>-->
+    <!--<item name="windowMinWidthMinor">65%</item>-->
+    <!--</style>-->
+
 </resources>
