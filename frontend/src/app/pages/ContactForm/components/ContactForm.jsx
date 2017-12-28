@@ -325,7 +325,7 @@ class ContactForm extends React.Component {
                           checked={this.state.isRepetitive}
                           onChange={this.repetitiveChange}
                         />
-                        Repetitive
+                        Approximate
                       </label>
                     </div>
                     <div className="col-lg-3">
