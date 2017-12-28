@@ -39,7 +39,7 @@ class Navbar extends React.Component {
 			<div className="my-navbar">
 				<div className="container-fluid">
 					<div className="navbar-header">
-						<a className="navbar-brand" href="#"><span className="glyphicon glyphicon-fire"></span></a>
+						<img className="icon" src="https://image.ibb.co/gJZixG/favicon.png"/>
 					</div>
 					<div className="collapse navbar-collapse" id="myNavbar">
 						<ul className="nav navbar-nav">
