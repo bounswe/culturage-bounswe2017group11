@@ -124,13 +124,13 @@
             android:textCursorDrawable="@null" />
 
         <LinearLayout
-            android:background="@drawable/blue_border"
+
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="48dp"
             android:layout_marginEnd="@dimen/small_padding"
             android:layout_marginStart="@dimen/small_padding"
-            android:padding="@dimen/small_padding">
+            android:paddingBottom="@dimen/small_padding">
 
             <Button
                 android:id="@+id/normalDateButton"
