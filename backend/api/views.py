@@ -240,7 +240,7 @@ class RateItem(APIView):
 			payload = {
 				"app_id": settings.ONESIGNAL_APP,
 				"included_segments": ["All"],
-				"contents": {"en": "Your item is liked by " + user.username }
+				"contents": {"en": item.name + " is liked by " + user.username }
 			}
 			req = requests.post("https://onesignal.com/api/v1/notifications", headers=header, data=json.dumps(payload))
 			print(req.status_code, req.reason)
