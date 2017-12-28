@@ -1,0 +1,12 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node2" href="$classbase_1_1serializers_1_1AnnotationSerializer.html" title="base.serializers.Annotation\lSerializer" alt="" coords="180,5,359,47"/>
+<area shape="rect" id="node3" href="$classbase_1_1serializers_1_1CommentSerializer.html" title="base.serializers.Comment\lSerializer" alt="" coords="182,71,357,112"/>
+<area shape="rect" id="node4" href="$classbase_1_1serializers_1_1ItemSerializer.html" title="base.serializers.ItemSerializer" alt="" coords="171,137,368,163"/>
+<area shape="rect" id="node5" href="$classbase_1_1serializers_1_1LocationSerializer.html" title="base.serializers.Location\lSerializer" alt="" coords="186,188,353,229"/>
+<area shape="rect" id="node6" href="$classbase_1_1serializers_1_1MediaSerializer.html" title="base.serializers.MediaSerializer" alt="" coords="166,254,373,281"/>
+<area shape="rect" id="node7" href="$classbase_1_1serializers_1_1NewsfeedSerializer.html" title="base.serializers.Newsfeed\lSerializer" alt="" coords="181,305,357,347"/>
+<area shape="rect" id="node8" href="$classbase_1_1serializers_1_1ReportSerializer.html" title="base.serializers.ReportSerializer" alt="" coords="164,371,375,398"/>
+<area shape="rect" id="node9" href="$classbase_1_1serializers_1_1TagSerializer.html" title="base.serializers.TagSerializer" alt="" coords="173,422,366,449"/>
+<area shape="rect" id="node10" href="$classbase_1_1serializers_1_1TimelineSerializer.html" title="base.serializers.Timeline\lSerializer" alt="" coords="186,473,353,515"/>
+<area shape="rect" id="node11" href="$classbase_1_1serializers_1_1UserRatedItemSerializer.html" title="base.serializers.UserRated\lItemSerializer" alt="" coords="179,539,359,580"/>
+</map>

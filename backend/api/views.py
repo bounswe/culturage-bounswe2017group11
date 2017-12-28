@@ -9,6 +9,8 @@ from base.models import Location
 from base.models import Media
 from base.models import Tag
 from base.models import TagList
+from base.models import Annotation
+from base.models import Report
 from base.serializers import ItemSerializer
 from base.serializers import UserSerializer
 from base.serializers import NewsfeedSerializer
@@ -17,6 +19,8 @@ from base.serializers import UserRatedItemSerializer
 from base.serializers import TimelineSerializer
 from base.serializers import MediaSerializer
 from base.serializers import TagSerializer
+from base.serializers import AnnotationSerializer
+from base.serializers import ReportSerializer
 from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.views import APIView
@@ -27,23 +31,37 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 import datetime
 import json
-
+import requests
 import base64
 from django.core.files.base import ContentFile
-
-
+from django.conf import settings
+"""@package docstring
+Documentation for views endpoint for API
+For more details please see below.
+"""
+	###
+    #API endpoint that allows items to be viewed or edited.
+    #@param request for view set
+    #
 class ItemViewSet(viewsets.ModelViewSet):
-	"""
-    API endpoint that allows items to be viewed or edited.
-    """
+
 	queryset = Item.objects.all().order_by('-created_at')
 	serializer_class = ItemSerializer
 	permission_classes = (permissions.IsAuthenticated,)
 
+	###
+	#Get item list to review
+	#@param self The item pointer
+	#@return item list to be viewed
 	def get_queryset(self):
 		queryset = Item.objects.all().order_by('-created_at')
 		queryset = self.get_serializer_class().setup_eager_loading(queryset)
 		return queryset
+
+	###
+	#Create an item
+	#@param self The item pointer
+	#@param serializer Item model serializer
 
 	def perform_create(self, serializer):
 		location = self.request.data.get('location');
@@ -59,10 +77,12 @@ class ItemViewSet(viewsets.ModelViewSet):
 				format, imgstr = image.split(';base64,')
 				ext = format.split('/')[-1]
 				image = ContentFile(base64.b64decode(imgstr), name='item.' + ext) # You can save this as file instance.
-		# serializer.save(featured_img=self.request.data.get('image'), created_by=self.request.user, date = date, location = location, tags = tags)
 		serializer.save(featured_img=image, created_by=self.request.user, date = date, location = location, tags = tags)
 
-
+	###
+	# API endpoint that returs newsfeed
+	# @param request for newsfeed list
+	#
 class NewsfeedList(APIView):
 	def get(self, request):
 		items = Item.objects.order_by('-created_at').all()
@@ -137,7 +157,10 @@ def profile(request, id = ''):
 			response_data["photo"] = request.META['HTTP_HOST']+user.profile.photo.url
 
 		return JsonResponse(response_data)
-
+	###
+	# API endpoint that creates and retrieves comment
+	# @param request for comment list
+	#
 class CommentList(APIView):
 	def post(self, request, itemID):
 		item = Item.objects.get(id=itemID)
@@ -154,14 +177,17 @@ class CommentList(APIView):
 		comments = Comment.objects.filter(related_item = itemID)
 		serializer = CommentSerializer(comments, many=True)
 		return Response(serializer.data)
-
+	###
+	# API endpoint that returns timeline
+	# @param request for items in a user's timeline
+	#
 class ItemTimeline(APIView):
 	def post(self, request, itemID):
 		item = Item.objects.get(id=itemID)
 		user = request.user
-		location_name = request.data.get('location')
-		if location_name:
-			location, created = Location.objects.get_or_create(name = location_name)
+		l_data = request.data.get('location')
+		if l_data:
+			location, created = Location.objects.get_or_create(name = l_data.get('name'), defaults={'longtitude':l_data.get('longtitude') , 'latitude':l_data.get('latitude') })
 		else:
 			location = None
 		serializer = TimelineSerializer(data=request.data,context={'item': item, 'user':user, 'location':location})
@@ -175,7 +201,10 @@ class ItemTimeline(APIView):
 		item = Item.objects.get(id=itemID)
 		serializer = TimelineSerializer(item.timelines, many=True)
 		return Response(serializer.data)
-
+	###
+	# API endpoint that enables addtion of media for an item
+	# @param request for media addition
+	#
 class ItemMedia(APIView):
 	def post(self, request, itemID):
 		item = Item.objects.get(id=itemID)
@@ -191,7 +220,29 @@ class ItemMedia(APIView):
 		item = Item.objects.get(id=itemID)
 		serializer = MediaSerializer(item.media_item, many=True)
 		return Response(serializer.data)
+	###
+	# API endpoint that enables annotation for media source
+	# @param request for annotation
+	#
+class MediaAnnotation(APIView):
+	def post(self, request, mediaID):
+		media = Media.objects.get(id=mediaID)
+		user = request.user
+		serializer = AnnotationSerializer(data=request.data,context={'media': media, 'user':user})
+		if serializer.is_valid():
+			serializer.save()
+			return Response(serializer.data)
+		else:
+			return Response(serializer.errors)
 
+	def get(self, request, mediaID):
+		media = Media.objects.get(id=mediaID)
+		serializer = AnnotationSerializer(media.annotated_media, many=True)
+		return Response(serializer.data)
+	###
+	# API endpoint that support item like/rate
+	# @param request for item rate/like
+	#
 class RateItem(APIView):
 	def post(self, request, itemID):
 		item = Item.objects.get(id= itemID)
@@ -213,6 +264,18 @@ class RateItem(APIView):
 		serializer = UserRatedItemSerializer(data=request.data, context={ 'user':user, 'item':item })
 		if serializer.is_valid():
 			serializer.save()
+			header = {
+				"Content-Type": "application/json; charset=utf-8",
+				"Authorization": "Basic " + settings.ONESIGNAL_TOKEN
+			}
+
+			payload = {
+				"app_id": settings.ONESIGNAL_APP,
+				"included_segments": ["All"],
+				"contents": {"en": item.name + " is liked by " + user.username }
+			}
+			req = requests.post("https://onesignal.com/api/v1/notifications", headers=header, data=json.dumps(payload))
+			print(req.status_code, req.reason)
 			return Response(item.rate)
 		else:
 			return Response(serializer.errors)
@@ -222,8 +285,44 @@ class RateItem(APIView):
 		rates = UserRatedItemSerializer.setup_eager_loading(item.rated_item)  # Set up eager loading to avoid N+1 selects
 		serializer = UserRatedItemSerializer(rates, many=True)
 		return Response(serializer.data)
+    ###
+	# API endpoint that support item report
+	# @param request for item report
+	#
+class ReportItem(APIView):
+	def post(self, request, itemID):
+		item = Item.objects.get(id= itemID)
+		user = request.user
+		try:
+			report = Report.objects.filter(item=itemID, user = request.user.id).first()
+		except Report.DoesNotExist:
+			report = None
+		if report:
+			if request.data["report"]:
+				return Response({"error" : "You already report this item"}, status=status.HTTP_403_FORBIDDEN)
+			else:
+				report.delete()
+				return Response(len(item.get_reporters()))
+		if not request.data["report"]:
+			return Response({"error" : "You can't delete your item report  without report it"}, status=status.HTTP_403_FORBIDDEN)
 
+		serializer = ReportSerializer(data=request.data, context={ 'user':user, 'item':item })
+		if serializer.is_valid():
+			serializer.save()
+			return Response(len(item.get_reporters()))
+		else:
+			return Response(serializer.errors)
 
+	def get(self, request, itemID):
+		item = Item.objects.get(id=itemID)
+		report = ReportSerializer.setup_eager_loading(item.reported_item)  # Set up eager loading to avoid N+1 selects
+		serializer = ReportSerializer(report, many=True)
+		return Response(serializer.data)
+
+	###
+	# API endpoint that returns little summary of a comment
+	# @param request for summary for a comment
+	#
 class CommentDetailView(APIView):
 	def delete(self, request, commentID):
 		try:
@@ -239,6 +338,10 @@ class CommentDetailView(APIView):
 			return Response({"success" : "Your comment is deleted successfully"})
 		return Response({"error" : "You can't delete other user's comments"} , status=status.HTTP_403_FORBIDDEN)
 
+	###
+	# API endpoint that returns detailed information of the timeline
+	# @param request for detailed information of the timeline
+	#
 class TimelineDetailView(APIView):
 	def delete(self, request, timelineID):
 		try:
@@ -254,6 +357,10 @@ class TimelineDetailView(APIView):
 			return Response({"success" : "Your timeline is deleted successfully"})
 		return Response({"error" : "You can't delete other user's timelines"} , status=status.HTTP_403_FORBIDDEN)
 
+	###
+	# API endpoint that returns detailed information of the timeline
+	# @param request for detailed information of the timeline
+	#
 class MediaDetailView(APIView):
 	def delete(self, request, mediaID):
 		try:
@@ -269,7 +376,10 @@ class MediaDetailView(APIView):
 			return Response({"success" : "Your media is deleted successfully"})
 		return Response({"error" : "You can't delete other user's medias"} , status=status.HTTP_403_FORBIDDEN)
 
-
+	###
+	# API endpoint that enables adddting/deleting a tag
+	# @param request for tag
+	#
 class ItemTag(APIView):
 	def delete(self, request, itemID):
 		item = Item.objects.get(id=itemID)
@@ -297,6 +407,10 @@ class ItemTag(APIView):
 		serializer = TagSerializer(item.tags, many=True)
 		return Response(serializer.data)
 
+	###
+	# API endpoint to support recommendation
+	# @param request item liked bu a user
+	#
 class UserLikes(APIView):
 	def get(self, request, userID):
 		user = User.objects.get(id=userID);
