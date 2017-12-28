@@ -224,3 +224,52 @@ iframe {
 .my-flag{
   color:red;
 }
+
+
+.image-wrapper {
+  margin:10px;
+  border:5px solid red;
+  position: relative;
+  display: inline-block;
+
+}
+
+.image-wrapper img {
+  max-width:100%;
+  display: block;
+}
+
+.box {
+  width:5%;
+  height:5%;
+  background-image:   url(http://www.clker.com/cliparts/W/0/g/a/W/E/map-pin-red.svg);
+  background-position: top center;
+  background-repeat: no-repeat;
+  background-size: contain;
+  position: absolute;
+}
+
+#pin-1 {
+  top:25px;
+  left:36px;
+}
+
+.box:hover > .pin-text {
+  display: block;
+}
+
+.pin-text {
+  background-color: rgba(50,50,50,0.5);
+  padding: 5px !important;
+  position: absolute;
+  top:50%;
+  transform:translateY(-50%);
+  left:75%;
+  white-space:nowrap;
+  display: none;
+}
+
+.pin-text h3 {
+    color:white;
+    text-shadow: 1px 1px 1px #000;
+}
