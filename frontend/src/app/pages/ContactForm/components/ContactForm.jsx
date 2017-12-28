@@ -206,6 +206,57 @@ class ContactForm extends React.Component {
         $imagePreview = (<div className="previewText">Please select an Image for Preview</div>);
       }
 
+      let {isRange} = this.state;
+      let $timeinterval = null;
+      let $timeinterval2 = null;
+      if(isRange){
+        $timeinterval = (
+            <div className="form-group">
+              <label className="col-lg-3 control-label"></label>
+              <label className="col-lg-1 control-label">End:</label>
+              <div className="col-lg-2">
+                <input className="form-control"
+                  type="number"
+                  name="day"
+                  ref="day"
+                  min="1"
+                  max="31"
+                  placeholder="DD"
+                  value={ this.state.subject }
+                  onChange={ this.handleDay2Change }
+                required />
+              </div>
+              <div className="col-lg-2">
+                <input className="form-control"
+                  type="number"
+                  name="month"
+                  ref="month"
+                  min="1"
+                  max="12"
+                  placeholder="MM"
+                  value={ this.state.subject }
+                  onChange={ this.handleMonth2Change }
+                required />
+              </div>
+              <div className="col-lg-2">
+                <input className="form-control"
+                  type="number"
+                  name="year"
+                  ref="year"
+                  min="0"
+                  max="3000"
+                  placeholder="YYYY"
+                  value={ this.state.subject }
+                  onChange={ this.handleYear2Change }
+                required />
+              </div>
+            </div>
+        );
+
+        $timeinterval2 = (
+          <label className="col-lg-1 control-label">Start:</label>
+        );
+      }
         return (
 
         <div className="container-fluid upload-body">
@@ -289,7 +340,7 @@ class ContactForm extends React.Component {
                   </div>
                   <div className="form-group">
                     <label className="col-lg-3 control-label"></label>
-                    <label className="col-lg-1 control-label">Start:</label>
+                    {$timeinterval2}
                     <div className="col-lg-2">
                       <input className="form-control"
                         type="number"
@@ -328,46 +379,7 @@ class ContactForm extends React.Component {
                     </div>
                   </div>
 
-                  <div className="form-group">
-                    <label className="col-lg-3 control-label"></label>
-                    <label className="col-lg-1 control-label">End:</label>
-                    <div className="col-lg-2">
-                      <input className="form-control"
-                        type="number"
-                        name="day"
-                        ref="day"
-                        min="1"
-                        max="31"
-                        placeholder="DD"
-                        value={ this.state.subject }
-                        onChange={ this.handleDay2Change }
-                      required />
-                    </div>
-                    <div className="col-lg-2">
-                      <input className="form-control"
-                        type="number"
-                        name="month"
-                        ref="month"
-                        min="1"
-                        max="12"
-                        placeholder="MM"
-                        value={ this.state.subject }
-                        onChange={ this.handleMonth2Change }
-                      required />
-                    </div>
-                    <div className="col-lg-2">
-                      <input className="form-control"
-                        type="number"
-                        name="year"
-                        ref="year"
-                        min="0"
-                        max="3000"
-                        placeholder="YYYY"
-                        value={ this.state.subject }
-                        onChange={ this.handleYear2Change }
-                      required />
-                    </div>
-                  </div>
+                  {$timeinterval}
 
                   <div className="form-group">
                     <label className="col-lg-3 control-label">Tags:</label>
