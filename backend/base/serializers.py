@@ -188,6 +188,7 @@ class AnnotationSerializer(serializers.ModelSerializer):
 	user = UserSerializer( required = False)
 	jsonld = serializers.SerializerMethodField('_get_json')
 
+
 	class Meta:
 		model = Media
 		fields =('id','text', 'x', 'y', 'w', 'h', 'user', 'jsonld')

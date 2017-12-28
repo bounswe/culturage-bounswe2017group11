@@ -135,8 +135,28 @@ class ItemEndPointTest(APITestCase):
     def test_create_item(self):
         self.client.force_login(user=self.user)
         url = ('/api/items/')
-        data = {'name': 'test item','desciption':'item to be used for test purposes'}
-       # response = self.client.post(url, data, format='json', HTTP_AUTHORIZATION=self.token)
-       # self.assertEqual(response.status_code, status.HTTP_201_CREATED)
-       # self.assertEqual(Item.objects.count(), 1)
-       # self.assertEqual(Item.objects.get().name, 'test item')
+        data = {'name': 'test item','desciption':'item to be used for test purposes', 'date':{},'tags':['item']}
+        response = self.client.post(url, data, format='json', HTTP_AUTHORIZATION=self.token)
+        self.assertEqual(response.status_code, status.HTTP_201_CREATED)
+        self.assertEqual(Item.objects.count(), 1)
+        self.assertEqual(Item.objects.get().name, 'test item')
+
+    def test_addComment_item(self):
+        self.client.force_login(user=self.user)
+        url = ('/api/items/')
+        data = {'name': 'test item', 'desciption': 'item to be used for test purposes', 'date': {}, 'tags': ['item']}
+        response = self.client.post(url, data, format='json', HTTP_AUTHORIZATION=self.token)
+
+
+
+
+
+
+
+
+
+
+
+
+
+

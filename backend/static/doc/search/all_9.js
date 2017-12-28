@@ -1,8 +1,8 @@
 var searchData=
 [
-  ['rateitem',['RateItem',['../classapi_1_1views_1_1_rate_item.html',1,'api::views']]],
-  ['recommendationconfig',['RecommendationConfig',['../classrecommendation_1_1apps_1_1_recommendation_config.html',1,'recommendation::apps']]],
-  ['report',['Report',['../classbase_1_1models_1_1_report.html',1,'base::models']]],
-  ['reportitem',['ReportItem',['../classapi_1_1views_1_1_report_item.html',1,'api::views']]],
-  ['reportserializer',['ReportSerializer',['../classbase_1_1serializers_1_1_report_serializer.html',1,'base::serializers']]]
+  ['perform_5fcreate',['perform_create',['../classapi_1_1views_1_1ItemViewSet.html#ab437a5886a49fc844613d925818e01f0',1,'api::views::ItemViewSet']]],
+  ['profile',['Profile',['../classbase_1_1models_1_1Profile.html',1,'base::models']]],
+  ['profileadmin',['ProfileAdmin',['../classbase_1_1admin_1_1ProfileAdmin.html',1,'base::admin']]],
+  ['profileinline',['ProfileInline',['../classbase_1_1admin_1_1ProfileInline.html',1,'base::admin']]],
+  ['profileserializer',['ProfileSerializer',['../classbase_1_1serializers_1_1ProfileSerializer.html',1,'base::serializers']]]
 ];
