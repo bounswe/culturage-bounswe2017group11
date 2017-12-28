@@ -9,9 +9,9 @@ class ProfilePage extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
-			username: props.profileinfo.username,
-			fullname: props.profileinfo.fullName,
-			email: props.profileinfo.email,
+			username: '',
+			fullname: '',
+			mailuser: '',
 			imagePreviewUrl: props.profileinfo.photo,
 			birthday : props.profileinfo.birthday,
 			day:'',
@@ -45,7 +45,7 @@ class ProfilePage extends React.Component {
 		} else if(event.target.id == "fullname"){
 			this.setState({fullname: event.target.value});
 		} else {
-			this.setState({email: event.target.value});
+			this.setState({mailuser: event.target.value});
 		}
 	}
 
@@ -53,13 +53,25 @@ class ProfilePage extends React.Component {
 		e.preventDefault();
 
 		var myHeaders = new Headers();
-
-		var valueBirthday = this.state.year + '-' + this.state.month + '-' + this.state.day;
+		var birthday_year = this.state.year;
+		var nameFull = this.state.fullname;
+		var mail = this.state.mailuser;
+		var str = "";
+		var valueBirthday = this.props.profileinfo.birthday;
+		if(birthday_year.localeCompare(str) != 0){
+			valueBirthday = this.state.year + '-' + this.state.month + '-' + this.state.day;
+		}
+		if(nameFull.localeCompare(str) == 0){
+			nameFull = this.props.profileinfo.fullName;
+		}
+		if(mail.localeCompare(str) == 0){
+			mail = this.props.profileinfo.email;
+		}
 		var payload = {
 			"birthday": valueBirthday,
-			"email" : this.state.email,
+			"email" : mail,
 			"photo" : this.state.imagePreviewUrl,
-			"fullName": this.state.fullname,
+			"fullName": nameFull,
 			"location": this.props.profileinfo.location,
 		};
 
@@ -79,7 +91,7 @@ class ProfilePage extends React.Component {
 
 		.then(function(res){
 			if(res.ok){
-				window.location.replace("/");
+				window.location.replace("/Profile");
 			} else {
 				alert("Couldn't upload");
 			}
@@ -132,8 +144,8 @@ class ProfilePage extends React.Component {
 		}
 
 		return(
-		<div className="container-fluid home-body">
-			<div className="row newsfeed">
+		<div className="container-fluid profile-body">
+			<div className="row profile-container">
 			<h1>Edit Profile</h1>
 	  	<hr/>
 

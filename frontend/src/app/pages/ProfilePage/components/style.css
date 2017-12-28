@@ -13,17 +13,19 @@ $sandybrown: #F49D6E;
 	}
 }
 
-.home-body{
+.profile-body{
     background: #f2f2f2;
     margin:0px;
     padding:0px;
     padding-bottom: 40px;
     display: flex;
+    min-height: 900px;
     font-family: 'Open Sans', sans-serif;
 }
 
-.newsfeed{
+.profile-container{
 	  width:100%;
+	  height: 100%;
 	  margin-left: 5%;
 	  margin-right: 5%;
 	  padding-left: 1%;
@@ -33,7 +35,6 @@ $sandybrown: #F49D6E;
     border-radius: 5px;
     border: 1px solid #e6e6e6;
     margin-top: 40px;
-    margin-bottom: 20px;
 }
 
 .classWithPad { margin:10px; padding-bottom: 10px; }
