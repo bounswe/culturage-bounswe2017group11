@@ -236,7 +236,9 @@ class MediaSerializer(serializers.ModelSerializer):
 		# ordering = ('mediaType',)
 
 	def _get_file_url(self, obj):
-		if obj.file:
+		if obj.url:
+			return obj.url
+		elif obj.file:
 			return settings.CURRENT_DOMAIN + obj.file.url
 
 	def _get_annotations(self, item):
@@ -268,7 +270,9 @@ class MediaSerializer(serializers.ModelSerializer):
 				validated_data['extension'] = "youtube"
 				validated_data['mediaType'] = "video"
 			else:
-				raise serializers.ValidationError({ "url": "Only Youtube links are allowed." })
+				validated_data['extension'] = "image"
+				validated_data['mediaType'] = "external"
+				# raise serializers.ValidationError({ "url": "Only Youtube links are allowed." })
 
 		else:
 			raise serializers.ValidationError({ "file": "This field or URL field is required." , "url": "This field or file field is required." })
