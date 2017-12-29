@@ -22,12 +22,20 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 
+/**
+ * Class that handles all `like` related operations
+ * such as liking an item or un-liking it
+ */
 public class CustomLikeClass extends Dialog implements
         android.view.View.OnClickListener {
 
     private Activity activity;
     private int postId;
 
+    /**
+     * @param activity the activity that this instance of this CustomLike object belongs to
+     * @param postId   the id of the item which's likes currently being dealt with
+     */
     public CustomLikeClass(Activity activity, int postId) {
         super(activity);
         this.activity = activity;
@@ -59,6 +67,10 @@ public class CustomLikeClass extends Dialog implements
     public void onClick(View v) {
     }
 
+    /**
+     * private class that extends AsyncTask to handle network operations, this one handles
+     * downloading likes and then setting the corresponding views
+     */
     private class likeLoader extends AsyncTask<String, String, String> {
 
         private String itemUrl = "http://52.90.34.144:85/api/items/" + postId;

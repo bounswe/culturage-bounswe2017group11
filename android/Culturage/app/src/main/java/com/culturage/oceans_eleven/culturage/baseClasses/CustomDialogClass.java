@@ -31,6 +31,10 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * The class extends Dialog aiming to show comments of a Heritage Item in a
+ * dialog popup
+ */
 public class CustomDialogClass extends Dialog implements
         android.view.View.OnClickListener {
 
@@ -40,6 +44,11 @@ public class CustomDialogClass extends Dialog implements
     private HeritageItem currentItem;
     private CommentAdapter commentAdapter;
 
+    /**
+     * @param activity    the activity that this instance of this CustomDialog object belongs to
+     * @param postId      the id of the item which's likes currently being dealt with
+     * @param currentItem the item currently being dealt with
+     */
     public CustomDialogClass(Activity activity, int postId, HeritageItem currentItem) {
         super(activity);
         this.activity = activity;
@@ -125,6 +134,10 @@ public class CustomDialogClass extends Dialog implements
     public void onClick(View v) {
     }
 
+    /**
+     * private class that extends AsyncTask to handle network operations, this one handles
+     * downloading comments of the item and then setting the corresponding views
+     */
     private class commentLoader extends AsyncTask<String, String, String> {
 
         private String commentsUrl = "http://52.90.34.144:85/api/items/" + postId + "/comments";
@@ -199,6 +212,10 @@ public class CustomDialogClass extends Dialog implements
     }
 
 
+    /**
+     * private class that extends AsyncTask to handle network operations, this one handles
+     * posting new comment to the server
+     */
     private class postComment extends AsyncTask<String, String, Boolean> {
 
         private String commentsUrl = "http://52.90.34.144:85/api/items/" + postId + "/comments";
@@ -232,6 +249,10 @@ public class CustomDialogClass extends Dialog implements
             }
         }
 
+        /**
+         * Constructs the json file to send to the server
+         * @return the json file to send to the server
+         */
         private JSONObject constructTheJSONLikeComment() {
 
             JSONObject json = new JSONObject();

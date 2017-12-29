@@ -1,5 +1,8 @@
 package com.culturage.oceans_eleven.culturage.baseClasses;
 
+/**
+ * Class that represents a users profile
+ */
 
 public class ProfilePage {
 
@@ -11,6 +14,14 @@ public class ProfilePage {
     private String photo;
     private String birthday;
 
+    /**
+     * @param username of user
+     * @param email    of user
+     * @param fullName of user
+     * @param location of user
+     * @param photo    of user
+     * @param birthday of user
+     */
     public ProfilePage(String username, String email, String fullName, String location, String photo, String birthday) {
         this.username = username;
         this.email = email;

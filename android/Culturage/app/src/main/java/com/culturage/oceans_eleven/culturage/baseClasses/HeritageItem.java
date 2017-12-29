@@ -1,6 +1,8 @@
 package com.culturage.oceans_eleven.culturage.baseClasses;
 
-
+/**
+ * Represents a heritage item
+ */
 public class HeritageItem {
 
 
@@ -16,7 +18,19 @@ public class HeritageItem {
     private double mLongitude, mLatitude;
     private boolean isRated, isReported;
 
-    //dummy item; this constructor is not to be used, temporary
+    /**
+     * @param title         title of the Heritage Item
+     * @param description   of the Heritage Item
+     * @param imageString   the string representation of the Heritage Item
+     * @param rate          of the Heritage Item
+     * @param createdAt     the string representing the date which the Heritage Item is added to the system
+     * @param mStartDate    date of the |heritageItem and if an interval is given corresponds to the start date
+     * @param mEndDate      this date only used if a time interval is given for the Heritage Item
+     * @param mLocationName the name of the location of the Heritage Item
+     * @param longitude     of the Heritage Item
+     * @param latitude      of the Heritage Item
+     * @param tags          of the Heritage Item
+     */
     public HeritageItem(String title, String description, String imageString, String rate, String createdAt, String mStartDate, String mEndDate, String mLocationName, double longitude, double latitude, String tags) {
         this.mTitle = title;
         this.createdAt = createdAt;
@@ -32,7 +46,15 @@ public class HeritageItem {
 
     }
 
-
+    /**
+     *
+     * @param mPostId the post id of this item
+     * @param mTitle title of the Heritage Item
+     * @param mDescription description of the Heritage Item
+     * @param mResourceId the id of this items resource
+     * @param mLikeCount number of likes this item has
+     * @param mCommentCount number of comments this item has
+     */
     public HeritageItem(int mPostId, String mTitle, String mDescription, int mResourceId, int mLikeCount, int mCommentCount) {
         this.mPostId = mPostId;
         this.mTitle = mTitle;
@@ -42,6 +64,18 @@ public class HeritageItem {
         this.mCommentCount = mCommentCount;
     }
 
+    /**
+     *
+     * @param postID the post id of this item
+     * @param title title of the Heritage Item
+     * @param description description of the Heritage Item
+     * @param imageURL the url of this items image in the server
+     * @param isRated ture if this item is rated by this user
+     * @param mLikeCount number of likes this item has
+     * @param mCommentCount number of comments this item has
+     * @param isReported true if this item is reported by this user
+     * @param mReportCount total number of reports this item has
+     */
     // Used in news feed
     public HeritageItem(int postID, String title, String description, String imageURL, boolean isRated, int mLikeCount, int mCommentCount,
                         boolean isReported, int mReportCount) {
@@ -56,6 +90,14 @@ public class HeritageItem {
         this.mReportCount = mReportCount;
     }
 
+
+    /**
+     *
+     * @param postID the post id of this item
+     * @param title title of the Heritage Item
+     * @param mDescription description of the Heritage Item
+     * @param imageURL the url of this items image in the server
+     */
     // Used by recommendation slider
     public HeritageItem(int postID, String title, String mDescription, String imageURL) {
         this.mPostId = postID;
@@ -64,6 +106,11 @@ public class HeritageItem {
         this.mImageUrl = imageURL;
     }
 
+    /**
+     *
+     * @param creatorId id of the registered user who added this item to the system
+     * @param creatorUsername userName of the registered user who added this item to the system
+     */
     // Used for guest profile
     public HeritageItem(int creatorId, String creatorUsername) {
         this.creatorId = creatorId;

@@ -1,9 +1,18 @@
 package com.culturage.oceans_eleven.culturage.baseClasses;
 
+/**
+ * Represents one comment of an item
+ */
 public class Comment {
     private String content, username, imageUri;
     private int commentId;
 
+    /**
+     * @param content   the content of the comment
+     * @param username  the user name of the user who posted this comment
+     * @param imageUri  the uri opf the user who posted this comment
+     * @param commentId the id of this comment
+     */
     Comment(String content, String username, String imageUri, int commentId) {
         this.content = content;
         this.imageUri = imageUri;
