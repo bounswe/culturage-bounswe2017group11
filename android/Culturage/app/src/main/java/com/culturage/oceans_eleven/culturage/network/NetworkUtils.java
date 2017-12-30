@@ -190,6 +190,11 @@ public class NetworkUtils {
         return profilepages;
     }
 
+    /**
+     * Checks if internet connection exists else alerts the user
+     *
+     * @param context the context currently being used
+     */
     public static void forceInternetConnection(final Context context) {
         ConnectivityManager conMan = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
         if (conMan.getActiveNetworkInfo() == null || !conMan.getActiveNetworkInfo().isConnected()) {

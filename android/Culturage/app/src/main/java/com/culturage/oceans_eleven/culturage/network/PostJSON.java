@@ -16,6 +16,9 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 import java.nio.charset.Charset;
 
+/**
+ * Class whose only task is to make json formatted posts to to api and get response of course
+ */
 public class PostJSON {
 
     //private static final String baseURI = "http://52.90.34.144:85/api/";
@@ -47,7 +50,7 @@ public class PostJSON {
             outputStream.close();
             Log.v("postApi", "output closed");
 
-            
+
             if (urlConnection.getResponseCode() == 201 || urlConnection.getResponseCode() == 200) {
                 inputStream = urlConnection.getInputStream();
                 result = readFromStream(inputStream);
@@ -68,6 +71,11 @@ public class PostJSON {
 
     }
 
+    /**
+     * @param inputStream the input stream to read from
+     * @return the string read from the input stream
+     * @throws IOException
+     */
     @NonNull
     private static String readFromStream(InputStream inputStream) throws IOException {
         StringBuilder output = new StringBuilder();
@@ -84,6 +92,13 @@ public class PostJSON {
         return output.toString();
     }
 
+    /**
+     * Basically jus another json post but specialized for deleting requests from the api
+     * @param url the full url of the api to send the delete request
+     * @param token the toke of this user
+     * @return response code of api example 400 for success null means fail
+     * @throws IOException
+     */
     public static String deleteToApi(String url, String token) throws IOException {
         HttpURLConnection urlConnection;
         //String url = baseURI + endpoint;
