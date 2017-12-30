@@ -26,6 +26,9 @@ import org.json.JSONObject;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
+/**
+ * The login activity
+ */
 public class LoginActivity extends AppCompatActivity {
 
     private static final String registerURI = "auth/login/";
@@ -70,6 +73,10 @@ public class LoginActivity extends AppCompatActivity {
         });
 
     }
+
+    /**
+     * get id and password from gui then attempts to login
+     */
     private void attemptLogin() {
 
         // Reset errors.
@@ -83,6 +90,9 @@ public class LoginActivity extends AppCompatActivity {
         new LoginRequest(LoginActivity.this).execute();
     }
 
+    /**
+     * AsyncTask for sending login request
+     */
     private class LoginRequest extends AsyncTask<String, String, String> {
 
         private String resp;
@@ -125,6 +135,11 @@ public class LoginActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Constructs the json to post and sends it
+     *
+     * @return the response of server
+     */
     private String sendLoginRequest() {
         JSONObject json = new JSONObject();
         try {
@@ -152,6 +167,11 @@ public class LoginActivity extends AppCompatActivity {
         return parseJson(result);
     }
 
+    /**
+     * Parses the response parameter (result) and gets token
+     * @param result the response as string
+     * @return the token extracted from the response
+     */
     private String parseJson(String result) {
         String token = null;
         try {
