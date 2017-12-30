@@ -33,10 +33,17 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.util.ArrayList;
 
-
+/**
+ * extends ArrayAdapter to fill the heritage item list views namely the recommendation and general news feed
+ */
 public class HeritageItemAdapter extends ArrayAdapter {
 
     private Activity context;
+
+    /**
+     * @param context the context currently being used
+     * @param items   the items to be filled to the view
+     */
     public HeritageItemAdapter(Activity context, ArrayList<HeritageItem> items) {
         super(context, 0, items);
         this.context = context;
@@ -138,6 +145,10 @@ public class HeritageItemAdapter extends ArrayAdapter {
         return listItemView;
     }
 
+    /**
+     * privatee class that extends AsyncTask<String, String, Boolean>
+     *     for handling like acto=ion which is a network task
+     */
     private class likeAction extends AsyncTask<String, String, Boolean> {
 
         private Context mContext;
@@ -147,6 +158,11 @@ public class HeritageItemAdapter extends ArrayAdapter {
         View listItemView;
 
 
+        /**
+         * @param context      the context currently being used
+         * @param currentItem  the item currently being proccessed
+         * @param listItemView the list view of items to be filled
+         */
         private likeAction(Context context, HeritageItem currentItem, View listItemView) {
             mContext = context;
             this.heritageItemPostID = currentItem.getmPostId();
@@ -214,6 +230,12 @@ public class HeritageItemAdapter extends ArrayAdapter {
 
         }
 
+        /**
+         * the method that makes apost to send like count in json format
+         * uses PostJSON.postToApi() method
+         * @param token the token if user
+         * @return true if the post operations responds positive
+         */
         private boolean uploadLikeCount(String token) {
             String result;
             String ratesUrl = "http://52.90.34.144:85/api/items/" + heritageItemPostID + "/rates";
@@ -228,6 +250,10 @@ public class HeritageItemAdapter extends ArrayAdapter {
 
         }
 
+        /**
+         * constructs the json to be posted
+         * @return true if the post operations responds positive
+         */
         private JSONObject constructTheJSONLikeCount() {
 
             JSONObject json = new JSONObject();
@@ -252,6 +278,10 @@ public class HeritageItemAdapter extends ArrayAdapter {
         }
     }
 
+    /**
+     * Asynchronous task that extends AsyncTask<String, String, Boolean>
+     *     for posting a report action basically same as like
+     */
     private class reportAction extends AsyncTask<String, String, Boolean> {
 
         private Context mContext;
@@ -261,6 +291,12 @@ public class HeritageItemAdapter extends ArrayAdapter {
         View listItemView;
 
 
+        /**
+         *
+         * @param context the context currently being used
+         * @param currentItem the item currently being proccessed
+         * @param listItemView the list view of items to be filled
+         */
         private reportAction(Context context, HeritageItem currentItem, View listItemView) {
             mContext = context;
             this.heritageItemPostID = currentItem.getmPostId();
@@ -328,6 +364,12 @@ public class HeritageItemAdapter extends ArrayAdapter {
 
         }
 
+        /**
+         * the method that makes apost to send report count in json format
+         * uses PostJSON.postToApi() method
+         * @param token the token if user
+         * @return true if the post operations responds positive
+         */
         private boolean uploadReportCount(String token) {
             String result;
             String reportUrl = "http://52.90.34.144:85/api/items/" + heritageItemPostID + "/reports";
@@ -342,6 +384,10 @@ public class HeritageItemAdapter extends ArrayAdapter {
 
         }
 
+        /**
+         * constructs the json to be posted
+         * @return true if the post operations responds positive
+         */
         private JSONObject constructTheJSONReportCount() {
 
             JSONObject json = new JSONObject();

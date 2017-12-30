@@ -19,11 +19,19 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+/**
+ * extends RecyclerView.Adapter<HeritageMediaAdapter.ViewHolder>
+ * used for filling the RecyclerView of the heritage items media
+ */
 public class HeritageMediaAdapter extends RecyclerView.Adapter<HeritageMediaAdapter.ViewHolder> {
     private static ArrayList<HeritageMedia> medias;
     private Activity mContext;
     public static final int REQUEST_CAMERA = 0, SELECT_FILE = 1;
 
+    /**
+     * inner class extends RecyclerView.ViewHolder
+     * used as building block for the RecyclerView
+     */
     class ViewHolder extends RecyclerView.ViewHolder {
         private ImageView mImage;
         private ImageButton mTakePhoto, mChoosePhoto;
@@ -38,6 +46,11 @@ public class HeritageMediaAdapter extends RecyclerView.Adapter<HeritageMediaAdap
         }
     }
 
+    /**
+     *
+     * @param context the context currently being used
+     * @param _medias the list of media of this heritage item
+     */
     public HeritageMediaAdapter(Activity context, ArrayList<HeritageMedia> _medias) {
         medias = _medias;
         this.mContext = context;
@@ -127,6 +140,9 @@ public class HeritageMediaAdapter extends RecyclerView.Adapter<HeritageMediaAdap
         return R.layout.heritage_image_horizontal_list_item;
     }
 
+    /**
+     * starts android gallery for the user to pick a media from
+     */
     private void startGalleryIntent() {
         Intent intent = new Intent();
         intent.setType("image/*");
@@ -134,6 +150,9 @@ public class HeritageMediaAdapter extends RecyclerView.Adapter<HeritageMediaAdap
         mContext.startActivityForResult(Intent.createChooser(intent, "Select File"), SELECT_FILE);
     }
 
+    /**
+     * starts the devices camera intent for the user to take a media to upload
+     */
     private void startCameraIntent() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         mContext.startActivityForResult(intent, REQUEST_CAMERA);

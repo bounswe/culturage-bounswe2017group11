@@ -28,6 +28,10 @@ public class TagsViewAdapter extends RecyclerView.Adapter<TagsViewAdapter.ViewHo
     private Activity context;
 
 
+    /**
+     * inner class extends RecyclerView.ViewHolder
+     * used as building block for the RecyclerView
+     */
     class ViewHolder extends RecyclerView.ViewHolder {
         private TextView tagText;
 //        private View.OnClickListener listener;
@@ -39,6 +43,10 @@ public class TagsViewAdapter extends RecyclerView.Adapter<TagsViewAdapter.ViewHo
         }
     }
 
+    /**
+     * @param context the context currently being used
+     * @param _tags   the list of tags of this heritage item to be showed
+     */
     public TagsViewAdapter(HeritageItemViewActivity context, ArrayList<Tag> _tags) {
         tags = _tags;
         this.context = context;

@@ -16,10 +16,18 @@ import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
+/**
+ * extends RecyclerView.Adapter<RecommendationRecyclerViewAdapter.ViewHolder> for filling the
+ * RecyclerView of item based recommendation in item view page
+ */
 public class RecommendationRecyclerViewAdapter extends RecyclerView.Adapter<RecommendationRecyclerViewAdapter.ViewHolder> {
     private static ArrayList<HeritageItem> recommendations;
     private Activity context;
 
+    /**
+     * inner class extends RecyclerView.ViewHolder
+     * used as building block for the RecyclerView
+     */
     class ViewHolder extends RecyclerView.ViewHolder {
         private TextView mTitle;
         private ImageView mImage;
@@ -33,6 +41,10 @@ public class RecommendationRecyclerViewAdapter extends RecyclerView.Adapter<Reco
         }
     }
 
+    /**
+     * @param context          the context currently being used
+     * @param _recommendations the list of heritage items tib e recommended similar to this item
+     */
     public RecommendationRecyclerViewAdapter(Activity context, ArrayList<HeritageItem> _recommendations) {
         recommendations = _recommendations;
         this.context = context;
@@ -70,10 +82,18 @@ public class RecommendationRecyclerViewAdapter extends RecyclerView.Adapter<Reco
         return recommendations.size();
     }
 
-    public void addAll(ArrayList<HeritageItem> item) {
-        recommendations.addAll(item);
+    /**
+     * neat short hand for adding a list of items to the recommendations
+     *
+     * @param items list of heritage items tro be added to the recommendations
+     */
+    public void addAll(ArrayList<HeritageItem> items) {
+        recommendations.addAll(items);
     }
 
+    /**
+     * short hand for clearing (removing all) the recommendations
+     */
     public void clear() {
         recommendations.clear();
     }
