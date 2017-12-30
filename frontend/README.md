@@ -19,6 +19,7 @@ To have a production build:
 
 `npm run build`
 
+Follow the instructions [here](https://www.fullstackreact.com/articles/deploying-a-react-app-to-s3/) to deploy the built app
 
 Created using [create-react-app](https://github.com/facebookincubator/create-react-app). If you want to tweak configs (webpack etc.) execute:
 
