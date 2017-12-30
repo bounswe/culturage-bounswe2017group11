@@ -8,6 +8,10 @@ import com.culturage.oceans_eleven.culturage.network.NewsFeedLoader;
 
 import java.util.ArrayList;
 
+/**
+ * The fragment that holds general - recently added heritage item recommendations
+ * extends HeritageItemListFragment
+ */
 public class UniversalNewsfeedFragment extends HeritageItemListFragment {
 
     private static final String apiURL = "http://52.90.34.144:85/api/newsfeed";

@@ -22,11 +22,13 @@ import java.util.ArrayList;
 
 /**
  * Created by me on 13.11.2017.
+ * An abstract class which is to be super class of all news-feed fragments
  */
 
 public abstract class HeritageItemListFragment extends Fragment implements LoaderManager.LoaderCallbacks<ArrayList<HeritageItem>> {
 
     private HeritageItemAdapter itemAdapter;
+
 
     @Nullable
     @Override
@@ -77,6 +79,12 @@ public abstract class HeritageItemListFragment extends Fragment implements Loade
     }
 
 
+    /**
+     * Updates UI (the list)
+     * clears old one and adds current items
+     *
+     * @param heritageItems uptodate list of heritage items to show
+     */
     public void updateUi(ArrayList<HeritageItem> heritageItems) {
         itemAdapter.clear();
         if (heritageItems != null || heritageItems.size() > 0) {

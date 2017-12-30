@@ -15,6 +15,9 @@ import com.culturage.oceans_eleven.culturage.R;
 import com.culturage.oceans_eleven.culturage.adapters.HeritageItemListAdapter;
 import com.culturage.oceans_eleven.culturage.network.NetworkUtils;
 
+/**
+ * The activity for handling news feeds
+ */
 public class NewsFeedActivity extends AppCompatActivity {
 
     @Override

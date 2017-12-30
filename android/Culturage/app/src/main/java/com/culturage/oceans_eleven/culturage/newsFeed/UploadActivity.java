@@ -50,7 +50,9 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-
+/**
+ * The main upload class - activity which is for up;oasing a new heritage item
+ */
 public class UploadActivity extends Activity {
 
     private static final String UPLOAD_URL = "http://52.90.34.144:85/api/items/";
@@ -395,6 +397,12 @@ public class UploadActivity extends Activity {
 
     }
 
+    /**
+     * transforms bitmap of image into 64 encoded String
+     *
+     * @param bitmap the image as bitmap
+     * @return the 64 base encoded image as a string
+     */
     public String getEncoded64ImageStringFromBitmap(Bitmap bitmap) {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 70, stream);
@@ -419,6 +427,9 @@ public class UploadActivity extends Activity {
 //        }
 //    }
 
+    /**
+     * starts android gallery for the user to pick a media from
+     */
     private void startGalleryIntent() {
         Intent intent = new Intent();
         intent.setType("image/*");
@@ -426,6 +437,9 @@ public class UploadActivity extends Activity {
         startActivityForResult(Intent.createChooser(intent, "Select File"), SELECT_FILE);
     }
 
+    /**
+     * starts the devices camera intent for the user to take a media to upload
+     */
     private void startCameraIntent() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         startActivityForResult(intent, REQUEST_CAMERA);
@@ -453,6 +467,10 @@ public class UploadActivity extends Activity {
         }
     }
 
+    /**
+     * Saves the captured image
+     * @param data the data that represents the image
+     */
     private void onCaptureImageResult(Intent data) {
         Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
@@ -486,6 +504,9 @@ public class UploadActivity extends Activity {
     }
 
 
+    /**
+     * AsyncTask for actually making the upload
+     */
     private class UploadRequest extends AsyncTask<String, String, String> {
 
         Context mContext;
@@ -524,6 +545,11 @@ public class UploadActivity extends Activity {
             mProgressBar.setVisibility(View.VISIBLE);
         }
 
+        /**
+         * Tries to upload the image to the api
+         * @param token the toke of the user to be send to the api for authorization
+         * @return true if upload is successful
+         */
         private boolean uploadPhoto(String token) {
 
             String result;
@@ -538,6 +564,11 @@ public class UploadActivity extends Activity {
             return !(result == null || result.equals("400"));
         }
 
+
+        /**
+         * constructs the json to be posted
+         * @return true if the post operations responds positive
+         */
         private JSONObject constructTheJSON() {
             JSONObject json = new JSONObject();
             try {
