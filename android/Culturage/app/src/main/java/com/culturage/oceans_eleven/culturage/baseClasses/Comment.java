@@ -13,7 +13,7 @@ public class Comment {
      * @param imageUri  the uri opf the user who posted this comment
      * @param commentId the id of this comment
      */
-    Comment(String content, String username, String imageUri, int commentId) {
+    public Comment(String content, String username, String imageUri, int commentId) {
         this.content = content;
         this.imageUri = imageUri;
         this.username = username;
