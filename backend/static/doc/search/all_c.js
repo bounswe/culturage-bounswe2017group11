@@ -1,11 +1,9 @@
 var searchData=
 [
-  ['tag',['Tag',['../classbase_1_1models_1_1Tag.html',1,'base::models']]],
-  ['taglist',['TagList',['../classbase_1_1models_1_1TagList.html',1,'base::models']]],
-  ['tagserializer',['TagSerializer',['../classbase_1_1serializers_1_1TagSerializer.html',1,'base::serializers']]],
-  ['tagtestcase',['TagTestCase',['../classbase_1_1tests_1_1TagTestCase.html',1,'base::tests']]],
-  ['timeline',['Timeline',['../classbase_1_1models_1_1Timeline.html',1,'base::models']]],
-  ['timelineadmin',['TimelineAdmin',['../classbase_1_1admin_1_1TimelineAdmin.html',1,'base::admin']]],
-  ['timelinedetailview',['TimelineDetailView',['../classapi_1_1views_1_1TimelineDetailView.html',1,'api::views']]],
-  ['timelineserializer',['TimelineSerializer',['../classbase_1_1serializers_1_1TimelineSerializer.html',1,'base::serializers']]]
+  ['searchconfig',['SearchConfig',['../classsearch_1_1apps_1_1_search_config.html',1,'search::apps']]],
+  ['searchitem',['SearchItem',['../classsearch_1_1views_1_1_search_item.html',1,'search::views']]],
+  ['searchlocation',['SearchLocation',['../classsearch_1_1views_1_1_search_location.html',1,'search::views']]],
+  ['searchtag',['SearchTag',['../classsearch_1_1views_1_1_search_tag.html',1,'search::views']]],
+  ['searchuser',['SearchUser',['../classsearch_1_1views_1_1_search_user.html',1,'search::views']]],
+  ['setup_5feager_5floading',['setup_eager_loading',['../classbase_1_1serializers_1_1_user_serializer.html#ab07925075d980cf54ac14ebb6f1b244f',1,'base.serializers.UserSerializer.setup_eager_loading()'],['../classbase_1_1serializers_1_1_tag_serializer.html#a3eb68307be74800e373a425fc2d79178',1,'base.serializers.TagSerializer.setup_eager_loading()'],['../classbase_1_1serializers_1_1_item_serializer.html#a1f6e986193f1b8233ff59fa15354d7f0',1,'base.serializers.ItemSerializer.setup_eager_loading()'],['../classbase_1_1serializers_1_1_user_rated_item_serializer.html#a92eb16c98320886cfd76f3b9456a009e',1,'base.serializers.UserRatedItemSerializer.setup_eager_loading()'],['../classbase_1_1serializers_1_1_report_serializer.html#af8342d07d7464aae214f2f40bc708600',1,'base.serializers.ReportSerializer.setup_eager_loading()'],['../classbase_1_1serializers_1_1_newsfeed_serializer.html#a83bb0735196198d18dceb77a41e612d8',1,'base.serializers.NewsfeedSerializer.setup_eager_loading()']]]
 ];
