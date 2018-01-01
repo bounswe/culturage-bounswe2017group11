@@ -4,7 +4,7 @@ import PropTypes from 'prop-types';
 import NewsFeedItemDesc from './NewsFeedItemDesc.jsx';
 
 /**
- * Newsfeed Item component. 
+ * Newsfeed Item component. Newsfeed Item contains Newsfeed Item Description component, title, creation date, creator and image of the item.
  */
 export default class NewsFeedItem extends React.Component {
     static propTypes = {

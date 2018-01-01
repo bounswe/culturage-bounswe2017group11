@@ -6,6 +6,8 @@ import PropTypes from 'prop-types';
 
 	/**
    *  Navbar component. Contains NavbarDropdown and NavbarSearch components. 
+   * If user is not logged in displays login/register button.
+   * If user is logged in displays upload button and user dropdown menu.
    */
 
 class Navbar extends React.Component {
