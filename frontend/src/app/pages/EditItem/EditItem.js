@@ -4,9 +4,17 @@ import Navbar from '../Navbar/components/Navbar.jsx';
 import ContactForm from './components/ContactForm.jsx';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './components/stylesEdit.css';
+import PropTypes from 'prop-types';
 
+
+/**
+ * Edit Item component. Receives item data via API and passes it on to ContactForm component. 
+ */
 class EditItem extends React.Component {
-
+  static propTypes = {
+      /** Heritage item id */
+      itemId: PropTypes.object
+  }
 	constructor(props){
    		super(props);
    		this.state = {item:"",
@@ -15,8 +23,6 @@ class EditItem extends React.Component {
 
 
 	}
-
-
 
  componentWillMount(){
         var token = getCookie('token');
