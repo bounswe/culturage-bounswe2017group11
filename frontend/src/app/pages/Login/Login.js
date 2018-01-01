@@ -6,6 +6,9 @@ import RegisterForm from './components/RegisterForm.js';
 import './utils/login-form.css';
 /**
  * Login Page Component
+ *	componentWillMount checks if already logged in
+ *
+ *	If already logged in redirects to homepage in render() function 
  */
 class Login extends React.Component {
  	constructor(props) {

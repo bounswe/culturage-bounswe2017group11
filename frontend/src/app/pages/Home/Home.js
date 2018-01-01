@@ -6,6 +6,11 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './utils/home-styles.css';
 import { Link } from 'react-router-dom';
 
+/**
+ *  Component for Homepage
+ *
+ *  Holds item list, recommended item and login status in states
+ */
 class Home extends React.Component {
 	constructor(){
    		super();
@@ -15,7 +20,14 @@ class Home extends React.Component {
    						loggedIn: 0
    					};
 	}
-
+  /**
+   *  Load all items upon mounting from {{url}}/api/items
+   *
+   *  Sends a get with user token. If no token found, sends hardcoded guest token
+   *
+   *  Also loads all recommended items of a user from {{url}}/api/recommendation with same headers
+   *  @public
+   */
 	componentDidMount(){
 		var _this = this;
 		var tokenTemp = getCookie("token");

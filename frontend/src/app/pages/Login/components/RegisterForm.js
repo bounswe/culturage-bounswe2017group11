@@ -19,7 +19,9 @@ class RegisterForm extends React.Component {
 	}
 	/**
 	 *  Handler for submitting register
+	 *
 	 *	Sends a POST to {{url}}/api/auth/register with the authentication token
+	 *
 	 *	If suceeds redirects to homepage
 	 *	@param event 
 	 *	@public
