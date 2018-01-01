@@ -7,9 +7,7 @@ import './utils/home-styles.css';
 import { Link } from 'react-router-dom';
 
 /**
- *  Component for Homepage
- *
- *  Holds item list, recommended item and login status in states
+ * Home component. Contains newsfeed and user recommendation if user is logged in. 
  */
 class Home extends React.Component {
 	constructor(){
@@ -46,6 +44,7 @@ class Home extends React.Component {
     	.then(response => response.json())
     	.then(function(data){
       		_this.setState({itemlist: data});
+      		console.log("Number of items: ", data.length)
       	})
 
 		.catch(function(error) {

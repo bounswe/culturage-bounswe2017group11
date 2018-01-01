@@ -1,14 +1,26 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-
+import PropTypes from 'prop-types';
 import NewsFeedItemDesc from './NewsFeedItemDesc.jsx';
 
+/**
+ * Newsfeed Item component. 
+ */
 export default class NewsFeedItem extends React.Component {
+    static propTypes = {
+      /** Newsfeed Item */
+      item: PropTypes.object
+    }
    constructor(props){
       super(props);
 
    }
-
+   /**
+    * Converts given date string to desired format. 
+    *
+    * @param {string} date
+    * @public
+    */
    editDate(date){
         var year = date.substring(0,4)
         var month = date.substring(5,7)
