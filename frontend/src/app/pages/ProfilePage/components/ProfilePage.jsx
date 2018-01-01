@@ -4,8 +4,16 @@ import moment from 'moment';
 import 'react-datepicker/dist/react-datepicker.css';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './style.css'
+import PropTypes from 'prop-types';
 
+	/**
+   *  Profile Page component. Contains the profile form.
+   */
 class ProfilePage extends React.Component {
+	static propTypes = {
+        /** Current user */
+        profileinfo: PropTypes.object
+    }
 	constructor(props) {
 		super(props);
 		this.state = {
@@ -28,16 +36,52 @@ class ProfilePage extends React.Component {
 		this.handleDayChange = this.handleDayChange.bind(this);
 	}
 
+	/**
+    * Updates year property of birthday
+    *
+    * @param {event} event
+    * @public
+    */
 	handleYearChange(event){event.preventDefault();this.setState({year: event.target.value});};
 
+	/**
+    * Updates month property of birthday
+    *
+    * @param {event} event
+    * @public
+    */
 	handleMonthChange(event){event.preventDefault();  this.setState({month: event.target.value});};
 
+	/**
+    * Updates day property of birthday
+    *
+    * @param {event} event
+    * @public
+    */
 	handleDayChange(event){event.preventDefault();  this.setState({day: event.target.value});};
 
+	/**
+    * Clears inputs entered
+    *
+    * @param {event} e
+    * @public
+    */
 	handleClear(e) { e.preventDefault();window.location.replace("/profile");};
 
+	/**
+    * Updates date property of birthday
+    *
+    * @param {string} date
+    * @public
+    */
 	handleDateChange(date){this.setState({birthday: date});};
 
+	/**
+    * Updates username, full name and e-mail properties
+    *
+    * @param {event} event
+    * @public
+    */
 	handleChange(event) {
 		event.preventDefault();
 		if(event.target.id == "username"){
@@ -49,6 +93,12 @@ class ProfilePage extends React.Component {
 		}
 	}
 
+	/**
+    * Creates JSON object from input and sends it via API
+    *
+    * @param {event} e
+    * @public
+    */
 	handleSubmit(e){
 		e.preventDefault();
 
@@ -100,6 +150,13 @@ class ProfilePage extends React.Component {
 			console.error(error);
 		})
 	};
+
+	/**
+    * Updates profile image
+    *
+    * @param {event} e
+    * @public
+    */
 
 	_handleImageChange(e) {
 		e.preventDefault();

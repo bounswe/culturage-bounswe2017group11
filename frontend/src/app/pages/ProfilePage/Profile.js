@@ -4,6 +4,9 @@ import ProfilePage from './components/ProfilePage.jsx';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import { Link } from 'react-router-dom';
 
+/**
+   *  Profile component. Allows user to edit their profile and saves the changes via API
+   */
 class Profile extends React.Component {
 	constructor(){
    		super();
