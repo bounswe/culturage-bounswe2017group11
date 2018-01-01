@@ -14,6 +14,13 @@ import ItemMap from './components/Map.jsx';
 import './utils/mycss.css';
 import $ from 'jquery';
 
+/*
+ *  Main component for showing an item
+ *
+ *  GETs the item by its id through a call to {{url}}/api/items/<id>. Also GETs recommended items from {{url}}/api/recommendation/item/<id>.
+ *
+ *  Renders Body, SuggestedItems, Comments and GoogleMaps of an item through corresponding components.
+ */
 class Item extends React.Component {
 	constructor(props){
    		super(props);

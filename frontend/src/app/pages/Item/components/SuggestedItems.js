@@ -1,6 +1,11 @@
 import React from 'react';
 import $ from 'jquery';
 
+/*
+ *  Component for showing suggested items relative to the item being shown.
+ *  
+ *  Takes the suggested item as props. Renders its picture and link.
+ */
 class SuggestedItems extends React.Component {
     constructor(props){
       super(props);

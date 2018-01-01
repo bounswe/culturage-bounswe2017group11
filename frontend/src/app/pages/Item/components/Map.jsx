@@ -3,7 +3,13 @@ import { compose, withProps } from "recompose"
 import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps"
 
 
-
+/*
+ *	Component for showing location of an item on Google Maps
+ *
+ *	Makes use of the library react-google-maps
+ *
+ *	Gets item location in latitud and longtitude. Passes the location to the GoogleMap component.
+ */
 export default class ItemMap extends React.PureComponent {
 	constructor(props){
 		super(props)

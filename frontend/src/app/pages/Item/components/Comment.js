@@ -1,5 +1,8 @@
 import React from 'react';
 
+/*
+ *  Component to render comments of an item
+ */
 class Comment extends React.Component {
     constructor(props){
         super(props);
@@ -31,9 +34,24 @@ class Comment extends React.Component {
             console.log('There has been a problem with your fetch operation: ' + error.message);
         });
     }
-
+    /*
+     *  Handler for changes in comments
+     *
+     *  Keeps user typed comment and the state variable synchronised
+     *  @public
+     *  @param event
+     */
    handleCommentChange(event){this.setState({myComment: event.target.value});};
 
+   /*
+    *   Handler for "Enter" key press.
+    *
+    *   Sends the comment to {{url}}/api/items/<itemid>/comments as a POST with user authorization
+    *
+    *   Refreshes the page if POST succeeds
+    *   @public
+    *   @param e
+    */
    handleKeyPress(e){
         if(e.key === 'Enter'){
             var myHeaders = new Headers();
@@ -68,7 +86,15 @@ class Comment extends React.Component {
             })
         }
    }
-
+   /*
+    *   Handler for submit button press.
+    *
+    *   Sends the comment to {{url}}/api/items/<itemid>/comments as a POST with user authorization
+    *
+    *   Refreshes the page if POST succeeds
+    *   @public
+    *   @param e
+    */
    handleSubmit(e){
         e.preventDefault();
         var myHeaders = new Headers();
@@ -103,7 +129,13 @@ class Comment extends React.Component {
             console.error(error);
         })
     };
-
+    /**
+     *  Function for rendering date numbers in written form
+     *
+     *  Takes the date as a string, parses its year month and day
+     *
+     *  Replaces the month with the written form and returns the date.
+     */
     editDate(date){
         var year = date.substring(0,4)
         var month = date.substring(5,7)

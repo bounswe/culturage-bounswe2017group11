@@ -1,6 +1,10 @@
 import React from 'react';
 import $ from 'jquery';
 
+/*
+ *  Component for liking an item
+ * 
+ */
 class Like extends React.Component {
     constructor(props){
       super(props);
@@ -36,7 +40,16 @@ class Like extends React.Component {
   componentWillMount(){
 
   }
-
+  /*
+   *  Handler method for liking an item.
+   *
+   *  Checks if user is logged in. If user likes the item sends the information to server through a POST call.
+   *
+   *  If the item is unliked, decreases the like count and updates the server with a POST call.
+   *
+   *  If user is not logged in alerts user to login in order to like the item.
+   *  @public
+   */
   clickHandler() {
       var clk = this.state.count
       var add = 0;
