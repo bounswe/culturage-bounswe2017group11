@@ -40,7 +40,7 @@ class Login extends React.Component {
 	}
 }
 
-/*
+/**
  * Random images to show in background
  */
 var images = [

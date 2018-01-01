@@ -89,7 +89,7 @@ class RegisterForm extends React.Component {
 	componentDidMount() {
 	}
 }
-/*
+/**
 *	Function to set the cookie
 *
 * @param key

@@ -2,7 +2,7 @@ import React from 'react';
 import $ from 'jquery';
 import SocialButton from './SocialButton';
 
-/*
+/**
  *	Login form component
  */
 class LoginForm extends React.Component {
@@ -82,7 +82,7 @@ class LoginForm extends React.Component {
   handleFBLogin(user){
   	console.log(user);
   }
-  /*
+  /**
    *	Supposedly handler for Facebook Login failure
    *
    *	@depreceted

@@ -5,6 +5,10 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import '../Home/utils/home-styles.css';
 import { Link } from 'react-router-dom';
 
+/**
+ * Tag Search component. Makes an API call and passes on the resulting items to child component.
+ * Displays error message if an error occurs.
+ */
 class SearchTag extends React.Component {
 	constructor(){
    		super();

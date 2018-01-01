@@ -1,11 +1,18 @@
 import React from 'react';
 import $ from 'jquery';
+import PropTypes from 'prop-types';
 
-/*
+/**
  *  Component for liking an item
  * 
  */
 class Like extends React.Component {
+  static propTypes = {
+         /** Current Heritage Item */
+         item: PropTypes.object,
+         /** Login status of the user */
+         loginStatus: PropTypes.bool
+    }
     constructor(props){
       super(props);
       this.state = {
@@ -40,7 +47,7 @@ class Like extends React.Component {
   componentWillMount(){
 
   }
-  /*
+  /**
    *  Handler method for liking an item.
    *
    *  Checks if user is logged in. If user likes the item sends the information to server through a POST call.

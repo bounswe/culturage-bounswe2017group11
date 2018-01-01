@@ -2,6 +2,10 @@ import React from 'react';
 
 import NewsFeedItem from './NewsFeedItem.jsx';
 
+/**
+ * Search Results component. Contains heritage item list.
+ */
+
 export default class NewsFeed extends React.Component {
 	render() {
       return (

@@ -1,9 +1,16 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 
-/*
+/**
  *  Component to render comments of an item
  */
 class Comment extends React.Component {
+    static propTypes = {
+         /** Current Heritage Item */
+         item: PropTypes.object,
+         /** Login status of the user */
+         loginStatus: PropTypes.bool
+    }
     constructor(props){
         super(props);
         this.state = {
@@ -34,7 +41,7 @@ class Comment extends React.Component {
             console.log('There has been a problem with your fetch operation: ' + error.message);
         });
     }
-    /*
+    /**
      *  Handler for changes in comments
      *
      *  Keeps user typed comment and the state variable synchronised

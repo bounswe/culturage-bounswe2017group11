@@ -3,6 +3,7 @@ import '../utils/mycss.css';
 import { Carousel } from 'react-responsive-carousel';
 import styles from '../utils/carousel.min.css';
 import $ from 'jquery';
+import PropTypes from 'prop-types';
 
 function getCookie(key) {
     var keyValue = document.cookie.match('(^|;) ?' + key + '=([^;]*)(;|$)');
@@ -24,6 +25,10 @@ if(token == null){
  *  If clicked on image, promts annotation to user and sends a PUSH call to {{url}}/api/medias/" + imgid + "/annotations/" to send annotations.
  */
 class Body extends React.Component {
+  static propTypes = {
+      /** Current Heritage Item */
+      item: PropTypes.object
+    }
    constructor(props){
       super(props);
       this.state = { showVideoTab: true};
