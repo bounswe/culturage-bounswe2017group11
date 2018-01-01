@@ -1,4 +1,5 @@
 var searchData=
 [
-  ['get_5fqueryset',['get_queryset',['../classapi_1_1views_1_1ItemViewSet.html#a68f5c02262b1c494755a68b86434dc17',1,'api::views::ItemViewSet']]]
+  ['filterconfig',['FilterConfig',['../classfilter_1_1apps_1_1_filter_config.html',1,'filter::apps']]],
+  ['follow',['Follow',['../classbase_1_1models_1_1_follow.html',1,'base::models']]]
 ];

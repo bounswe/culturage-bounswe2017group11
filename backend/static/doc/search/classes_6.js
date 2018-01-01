@@ -1,19 +1,8 @@
 var searchData=
 [
-  ['media',['Media',['../classbase_1_1models_1_1Media.html',1,'base::models']]],
-  ['mediaannotation',['MediaAnnotation',['../classapi_1_1views_1_1MediaAnnotation.html',1,'api::views']]],
-  ['mediadetailview',['MediaDetailView',['../classapi_1_1views_1_1MediaDetailView.html',1,'api::views']]],
-  ['mediaserializer',['MediaSerializer',['../classbase_1_1serializers_1_1MediaSerializer.html',1,'base::serializers']]],
-  ['meta',['Meta',['../classbase_1_1serializers_1_1ItemSerializer_1_1Meta.html',1,'base::serializers::ItemSerializer']]],
-  ['meta',['Meta',['../classbase_1_1serializers_1_1MediaSerializer_1_1Meta.html',1,'base::serializers::MediaSerializer']]],
-  ['meta',['Meta',['../classbase_1_1serializers_1_1AnnotationSerializer_1_1Meta.html',1,'base::serializers::AnnotationSerializer']]],
-  ['meta',['Meta',['../classbase_1_1serializers_1_1CommentSerializer_1_1Meta.html',1,'base::serializers::CommentSerializer']]],
-  ['meta',['Meta',['../classbase_1_1serializers_1_1TimelineSerializer_1_1Meta.html',1,'base::serializers::TimelineSerializer']]],
-  ['meta',['Meta',['../classbase_1_1serializers_1_1TagSerializer_1_1Meta.html',1,'base::serializers::TagSerializer']]],
-  ['meta',['Meta',['../classbase_1_1serializers_1_1LocationSerializer_1_1Meta.html',1,'base::serializers::LocationSerializer']]],
-  ['meta',['Meta',['../classbase_1_1serializers_1_1UserSerializer_1_1Meta.html',1,'base::serializers::UserSerializer']]],
-  ['meta',['Meta',['../classbase_1_1serializers_1_1ProfileSerializer_1_1Meta.html',1,'base::serializers::ProfileSerializer']]],
-  ['meta',['Meta',['../classbase_1_1serializers_1_1NewsfeedSerializer_1_1Meta.html',1,'base::serializers::NewsfeedSerializer']]],
-  ['meta',['Meta',['../classbase_1_1serializers_1_1ReportSerializer_1_1Meta.html',1,'base::serializers::ReportSerializer']]],
-  ['meta',['Meta',['../classbase_1_1serializers_1_1UserRatedItemSerializer_1_1Meta.html',1,'base::serializers::UserRatedItemSerializer']]]
+  ['media',['Media',['../classbase_1_1models_1_1_media.html',1,'base::models']]],
+  ['mediaannotation',['MediaAnnotation',['../classapi_1_1views_1_1_media_annotation.html',1,'api::views']]],
+  ['mediadetailview',['MediaDetailView',['../classapi_1_1views_1_1_media_detail_view.html',1,'api::views']]],
+  ['mediaserializer',['MediaSerializer',['../classbase_1_1serializers_1_1_media_serializer.html',1,'base::serializers']]],
+  ['meta',['Meta',['../classbase_1_1serializers_1_1_profile_serializer_1_1_meta.html',1,'base.serializers.ProfileSerializer.Meta'],['../classbase_1_1serializers_1_1_user_serializer_1_1_meta.html',1,'base.serializers.UserSerializer.Meta'],['../classbase_1_1serializers_1_1_location_serializer_1_1_meta.html',1,'base.serializers.LocationSerializer.Meta'],['../classbase_1_1serializers_1_1_tag_serializer_1_1_meta.html',1,'base.serializers.TagSerializer.Meta'],['../classbase_1_1serializers_1_1_timeline_serializer_1_1_meta.html',1,'base.serializers.TimelineSerializer.Meta'],['../classbase_1_1serializers_1_1_comment_serializer_1_1_meta.html',1,'base.serializers.CommentSerializer.Meta'],['../classbase_1_1serializers_1_1_annotation_serializer_1_1_meta.html',1,'base.serializers.AnnotationSerializer.Meta'],['../classbase_1_1serializers_1_1_media_serializer_1_1_meta.html',1,'base.serializers.MediaSerializer.Meta'],['../classbase_1_1serializers_1_1_item_serializer_1_1_meta.html',1,'base.serializers.ItemSerializer.Meta'],['../classbase_1_1serializers_1_1_user_rated_item_serializer_1_1_meta.html',1,'base.serializers.UserRatedItemSerializer.Meta'],['../classbase_1_1serializers_1_1_report_serializer_1_1_meta.html',1,'base.serializers.ReportSerializer.Meta'],['../classbase_1_1serializers_1_1_newsfeed_serializer_1_1_meta.html',1,'base.serializers.NewsfeedSerializer.Meta']]]
 ];
