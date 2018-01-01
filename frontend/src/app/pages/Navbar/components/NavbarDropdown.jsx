@@ -1,13 +1,29 @@
 import React from 'react';
 import '../utils/navbar.css';
+import PropTypes from 'prop-types';
+
+	/**
+   *  Navbar Dropdown component. Contains a link to profile page and logout. 
+   */
 
 class NavbarDropdown extends React.Component {
+	static propTypes = {
+        /** Current user */
+        user: PropTypes.object
+    }
 	constructor(props){
    		super(props);
    		this.state = {
    			user: this.props.user
    		};
 	}
+	
+	/**
+    * Removes user token.
+    *
+    * @public
+    */
+
 	handleClick(){
 		removeCookie("token");
 	}

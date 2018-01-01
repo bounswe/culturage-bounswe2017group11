@@ -6,6 +6,9 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import './utils/home-styles.css';
 import { Link } from 'react-router-dom';
 
+/**
+ * Home component. Contains newsfeed and user recommendation if user is logged in. 
+ */
 class Home extends React.Component {
 	constructor(){
    		super();
@@ -16,6 +19,13 @@ class Home extends React.Component {
    					};
 	}
 
+  /**
+  * Gets token from cookie and decides if user is logged in or not.
+  * Receives newsfeed items and recommended items from API and stores them.
+  * Gives error messages if a problem occurs.
+  *
+  * @public 
+  */
 	componentDidMount(){
 		var _this = this;
 		var tokenTemp = getCookie("token");
@@ -34,6 +44,7 @@ class Home extends React.Component {
     	.then(response => response.json())
     	.then(function(data){
       		_this.setState({itemlist: data});
+      		console.log("Number of items: ", data.length)
       	})
 
 		.catch(function(error) {
