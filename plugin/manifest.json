@@ -10,7 +10,8 @@
     "default_popup": "popup.html"
   },
   "permissions": [
-    "http://52.90.34.144:85",
+    "webRequest",
+    "http://52.90.34.144:85/",
     "activeTab",
     "storage",
     "tabs"
