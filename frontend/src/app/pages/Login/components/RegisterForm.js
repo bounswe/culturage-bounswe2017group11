@@ -1,10 +1,14 @@
 import React from 'react';
 import $ from 'jquery';
 
+/**
+ * 	Register form component
+ */
 class RegisterForm extends React.Component {
 	constructor(props) {
 		super(props);
 		this.state = {
+			/** Store username */
 			username : '',
 			password : '',
 			email : ''
@@ -13,6 +17,13 @@ class RegisterForm extends React.Component {
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
 	}
+	/**
+	 *  Handler for submitting register
+	 *	Sends a POST to {{url}}/api/auth/register with the authentication token
+	 *	If suceeds redirects to homepage
+	 *	@param event 
+	 *	@public
+	 */
 	handleSubmit(event) {
     var body = {
     	username: this.state.username,
@@ -41,7 +52,16 @@ class RegisterForm extends React.Component {
 		});
     event.preventDefault();
   }
-
+	/**
+	 *  Handler for register fields 
+	 *
+	 *	Sets state vars to respective fields
+	 *
+	 *  Gets target values from event variable
+	 *
+	 *	@param event 
+	 *	@public
+	 */
   handleChange(event) {
   	if(event.target.id == "username"){
     	this.setState({username: event.target.value});
@@ -67,6 +87,14 @@ class RegisterForm extends React.Component {
 	componentDidMount() {
 	}
 }
+/*
+*	Function to set the cookie
+*
+* @param key
+* @param value
+* @public
+
+*/
 function setCookie(key, value) {
     var expires = new Date();
     expires.setTime(expires.getTime() + (1 * 24 * 60 * 60 * 1000));

@@ -32,6 +32,7 @@
     "react-scripts": "1.0.14",
     "react-slick": "^0.15.4",
     "react-social-login": "^3.4.1",
+    "react-styleguidist": "^6.1.0",
     "react-tabs": "^2.1.1",
     "react-tagsinput": "^3.19.0",
     "style-loader": "^0.19.0",
@@ -41,7 +42,9 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "styleguide": "styleguidist server",
+    "styleguide:build": "styleguidist build"
   },
   "repository": {
     "type": "git",
