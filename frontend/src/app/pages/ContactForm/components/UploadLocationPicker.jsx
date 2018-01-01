@@ -1,7 +1,17 @@
 import React, { Component } from 'react';
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete'
+import PropTypes from 'prop-types';
  
+/**
+ * LocationPicker component. Uses Google API to recommend locations when given string. 
+ */
 export default class UploadLocationPicker extends Component {
+    static propTypes = {
+        /** Function to handle given string */
+        onChange: PropTypes.func,
+        /** Function to bind this to parent */
+        onRef: PropTypes.func
+    }
     constructor(props) {
         super(props)
         this.state = { address: '' }

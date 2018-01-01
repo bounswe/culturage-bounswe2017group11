@@ -8,6 +8,8 @@ import { Link } from 'react-router-dom';
 
 /**
  * Home component. Contains newsfeed and user recommendation if user is logged in. 
+ * Gets token from cookie and decides if user is logged in or not.
+ * Receives newsfeed items and recommended items from API and stores them.
  */
 class Home extends React.Component {
 	constructor(){
@@ -18,14 +20,7 @@ class Home extends React.Component {
    						loggedIn: 0
    					};
 	}
-  /**
-   *  Load all items upon mounting from {{url}}/api/items
-   *
-   *  Sends a get with user token. If no token found, sends hardcoded guest token
-   *
-   *  Also loads all recommended items of a user from {{url}}/api/recommendation with same headers
-   *  @public
-   */
+
 	componentDidMount(){
 		var _this = this;
 		var tokenTemp = getCookie("token");

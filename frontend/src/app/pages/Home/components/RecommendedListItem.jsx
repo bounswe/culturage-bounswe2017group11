@@ -4,6 +4,7 @@ import PropTypes from 'prop-types';
 
     /**
    *  Recommended List Item component. 
+   * Recommended List Item contains image, title, creation date, number of likes and number of comments of the item.
    */
 
 export default class RecommendedListItem extends React.Component {
