@@ -1,0 +1,109 @@
+<!doctype html>
+<!--
+ This page is shown when the extension button is clicked, because the
+ "browser_action" field in manifest.json contains the "default_popup" key with
+ value "popup.html".
+ -->
+<html>
+  <head>
+    <meta charset="UTF-8">
+    <title>Culturage Item</title>
+    <style type="text/css">
+      body {
+        width: 400px;
+        margin: 10px;
+      }
+
+      h1 {
+        font-size: 15px;
+        text-align: center;
+      }
+
+      #container {
+        align-items: center;
+        display: flex;
+        justify-content: space-between;
+      }
+      
+      img { 
+        display: inline-block;
+      }
+
+
+      p {
+        word-wrap: break-word;
+        }
+
+      .youtubeText {
+        display: none;
+        font-size: 8px;
+      }
+      .addyoutube {
+        display: none;
+        background: #c4302b;
+        border-radius: 50% / 10%;
+        color: #FFFFFF;
+        font-size: 2em; /* change this to change size */
+        height: 3em;
+        margin: 20px auto;
+        padding: 0;
+        position: relative;
+        text-align: center;
+        text-indent: 0.1em;
+        transition: all 150ms ease-out;
+        width: 4em;
+      }
+
+            
+      .addyoutube:hover {
+        background:#D3D3D3;
+      }
+
+      .addyoutube::before { 
+        background: inherit;
+        border-radius: 5% / 50%;
+        bottom: 9%;
+        content: "";
+        left: -5%;
+        position: absolute;
+        right: -5%;
+        top: 9%;
+      }
+
+      .addyoutube::after {
+        border-style: solid;
+        border-width: 1em 0 1em 1.732em;
+        border-color: transparent transparent transparent rgba(255, 255, 255, 0.75);
+        content: ' ';
+        font-size: 0.75em;
+        height: 0;
+        margin: -1em 0 0 -0.75em;
+        top: 50%;
+        position: absolute;
+        width: 0;
+      }
+    </style>
+
+    <!--
+      - JavaScript and HTML must be in separate files: see our Content Security
+      - Policy documentation[1] for details and explanation.
+      -
+      - [1]: https://developer.chrome.com/extensions/contentSecurityPolicy
+    -->
+    <script src="popup.js"></script>
+  </head>
+
+  <body>
+    <img id ="cover" height="200" width="400">
+    <h1 id="title"></h1>
+    <div id="description">
+    </div>
+    <div align="center" class="addyoutube" id="youtubeButton">
+    </div>
+    <div align="center">
+    <p class="youtubeText" id="youtubeText">
+    Add YouTube Link to Item
+    </p>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,21 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node2" href="$classapi_1_1views_1_1CommentDetailView.html" title="api.views.CommentDetailView" alt="" coords="127,5,328,32"/>
+<area shape="rect" id="node3" href="$classapi_1_1views_1_1CommentList.html" title="api.views.CommentList" alt="" coords="148,56,307,83"/>
+<area shape="rect" id="node4" href="$classapi_1_1views_1_1ItemMedia.html" title="api.views.ItemMedia" alt="" coords="156,107,299,133"/>
+<area shape="rect" id="node5" href="$classapi_1_1views_1_1ItemTag.html" title="api.views.ItemTag" alt="" coords="163,157,292,184"/>
+<area shape="rect" id="node6" href="$classapi_1_1views_1_1ItemTimeline.html" title="api.views.ItemTimeline" alt="" coords="149,208,305,235"/>
+<area shape="rect" id="node7" href="$classapi_1_1views_1_1MediaAnnotation.html" title="api.views.MediaAnnotation" alt="" coords="138,259,317,285"/>
+<area shape="rect" id="node8" href="$classapi_1_1views_1_1MediaDetailView.html" title="api.views.MediaDetailView" alt="" coords="138,309,317,336"/>
+<area shape="rect" id="node9" href="$classapi_1_1views_1_1NewsfeedList.html" title="api.views.NewsfeedList" alt="" coords="147,360,308,387"/>
+<area shape="rect" id="node10" href="$classapi_1_1views_1_1RateItem.html" title="api.views.RateItem" alt="" coords="160,411,295,437"/>
+<area shape="rect" id="node11" href="$classapi_1_1views_1_1ReportItem.html" title="api.views.ReportItem" alt="" coords="154,461,301,488"/>
+<area shape="rect" id="node12" href="$classapi_1_1views_1_1TimelineDetailView.html" title="api.views.TimelineDetailView" alt="" coords="131,512,324,539"/>
+<area shape="rect" id="node13" href="$classapi_1_1views_1_1UserLikes.html" title="api.views.UserLikes" alt="" coords="157,563,297,589"/>
+<area shape="rect" id="node14" href="$classfilter_1_1views_1_1ItemsByTag.html" title="filter.views.ItemsByTag" alt="" coords="147,613,307,640"/>
+<area shape="rect" id="node15" href="$classrecommendation_1_1views_1_1ItemRecommendation.html" title="recommendation.views.Item\lRecommendation" alt="" coords="134,665,321,706"/>
+<area shape="rect" id="node16" href="$classrecommendation_1_1views_1_1UserRecommendation.html" title="recommendation.views.User\lRecommendation" alt="" coords="133,730,321,771"/>
+<area shape="rect" id="node17" href="$classsearch_1_1views_1_1SearchItem.html" title="search.views.SearchItem" alt="" coords="142,796,313,823"/>
+<area shape="rect" id="node18" href="$classsearch_1_1views_1_1SearchLocation.html" title="search.views.SearchLocation" alt="" coords="131,847,324,873"/>
+<area shape="rect" id="node19" href="$classsearch_1_1views_1_1SearchTag.html" title="search.views.SearchTag" alt="" coords="144,897,311,924"/>
+<area shape="rect" id="node20" href="$classsearch_1_1views_1_1SearchUser.html" title="search.views.SearchUser" alt="" coords="141,948,313,975"/>
+</map>

@@ -1,0 +1,8 @@
+<map id="Graphical Class Hierarchy" name="Graphical Class Hierarchy">
+<area shape="rect" id="node2" href="$classapi_1_1apps_1_1ApiConfig.html" title="api.apps.ApiConfig" alt="" coords="198,5,330,32"/>
+<area shape="rect" id="node3" href="$classauth_1_1apps_1_1AuthConfig.html" title="auth.apps.AuthConfig" alt="" coords="190,56,338,83"/>
+<area shape="rect" id="node4" href="$classbase_1_1apps_1_1BaseConfig.html" title="base.apps.BaseConfig" alt="" coords="187,107,341,133"/>
+<area shape="rect" id="node5" href="$classfilter_1_1apps_1_1FilterConfig.html" title="filter.apps.FilterConfig" alt="" coords="189,157,339,184"/>
+<area shape="rect" id="node6" href="$classrecommendation_1_1apps_1_1RecommendationConfig.html" title="recommendation.apps.Recommendation\lConfig" alt="" coords="136,209,392,250"/>
+<area shape="rect" id="node7" href="$classsearch_1_1apps_1_1SearchConfig.html" title="search.apps.SearchConfig" alt="" coords="176,275,352,301"/>
+</map>
