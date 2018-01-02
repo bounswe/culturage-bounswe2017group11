@@ -1,9 +1,17 @@
 import React from 'react';
 import { Tab, Tabs, TabList, TabPanel } from 'react-tabs';
 import 'react-tabs/style/react-tabs.css';
+import PropTypes from 'prop-types';
 
-
+/**
+ * ContactForm component for editing an item. 
+ * Adds a media file/url for chosen item.
+ */
 class ContactForm extends React.Component {
+  static propTypes = {
+      /** Heritage item */
+      item: PropTypes.object
+  }
     constructor(props) {
         super(props);
 
@@ -20,7 +28,12 @@ class ContactForm extends React.Component {
         this.handleSubmitImage = this.handleSubmitImage.bind(this);
 
     }
-
+    /**
+    * Updates image as the chosen file.
+    *
+    * @param {event} e
+    * @public
+    */
     _handleImageChange(e) {
       e.preventDefault();
 
@@ -36,12 +49,29 @@ class ContactForm extends React.Component {
 
       reader.readAsDataURL(file)
     }
-
+    /**
+    * Updates image as the chosen file.
+    *
+    * @param {event} event
+    * @public
+    */
     handleImageChange(event){event.preventDefault();this.setState({image: event.target.value});};
 
-
+    /**
+    * Updates video as the chosen file url.
+    *
+    * @param {event} event
+    * @public
+    */
   	handleUrlChange(event){this.setState({url: event.target.value});};
 
+    /**
+    * Updates medias property of given item with chosen image using a POST API call.
+    * Logs error message if an error is raised.
+    *
+    * @param {event} e
+    * @public
+    */
   	handleSubmitImage(e){
       e.preventDefault();
 
@@ -76,7 +106,13 @@ class ContactForm extends React.Component {
     };
 
 
-    // Handler for the button/submit event
+    /**
+    * Updates medias property of given item with chosen video url using a POST API call.
+    * Logs error message if an error is raised.
+    *
+    * @param {event} e
+    * @public
+    */
     handleSubmit(e){
       e.preventDefault();
 

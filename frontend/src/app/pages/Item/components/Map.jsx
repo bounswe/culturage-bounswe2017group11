@@ -1,10 +1,22 @@
 import React from "react"
 import { compose, withProps } from "recompose"
 import { withScriptjs, withGoogleMap, GoogleMap, Marker } from "react-google-maps"
+import PropTypes from 'prop-types';
 
-
-
+/**
+ *	Component for showing location of an item on Google Maps
+ *
+ *	Makes use of the library react-google-maps
+ *
+ *	Gets item location in latitud and longtitude. Passes the location to the GoogleMap component.
+ */
 export default class ItemMap extends React.PureComponent {
+	static propTypes = {
+         /** Location object of the item */
+         location: PropTypes.object,
+         /** Key of the location object */
+         key: PropTypes.bool
+    }
 	constructor(props){
 		super(props)
 		this.state = {

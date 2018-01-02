@@ -4,7 +4,12 @@ import $ from 'jquery';
 import LoginForm from './components/LoginForm.js';
 import RegisterForm from './components/RegisterForm.js';
 import './utils/login-form.css';
-
+/**
+ * Login Page Component
+ *	componentWillMount checks if already logged in
+ *
+ *	If already logged in redirects to homepage in render() function 
+ */
 class Login extends React.Component {
  	constructor(props) {
     super(props);
@@ -35,6 +40,9 @@ class Login extends React.Component {
 	}
 }
 
+/**
+ * Random images to show in background
+ */
 var images = [
 	"https://images.unsplash.com/photo-1485518994577-6cd6324ade8f?auto=format&fit=crop&w=1888&q=80&ixid=dW5zcGxhc2guY29tOzs7Ozs%3D",
 	"https://images.unsplash.com/photo-1505676652198-c6de23866d0e?auto=format&fit=crop&w=1923&q=80&ixid=dW5zcGxhc2guY29tOzs7Ozs%3D",

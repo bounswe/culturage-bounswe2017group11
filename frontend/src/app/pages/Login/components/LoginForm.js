@@ -2,6 +2,9 @@ import React from 'react';
 import $ from 'jquery';
 import SocialButton from './SocialButton';
 
+/**
+ *	Login form component
+ */
 class LoginForm extends React.Component {
 	constructor(props) {
 		super(props);
@@ -15,7 +18,17 @@ class LoginForm extends React.Component {
     this.handleFBLogin = this.handleFBLogin.bind(this);
     this.handleFBFailure = this.handleFBFailure.bind(this);
 	}
-
+	/**
+	 *  Handler for loggin in
+	 *
+	 *	Sends a POST to {{url}}/api/auth/login
+	 *
+	 *	Gets the token from server and saves as a cookie
+	 *
+	 *	If suceeds redirects to homepage
+	 *	@param event 
+	 *	@public
+	 */
   handleLogin(event) {
     var body = {
     	username: this.state.username,
@@ -44,7 +57,16 @@ class LoginForm extends React.Component {
 		});
     event.preventDefault();
   }
-
+	/**
+	 *  Handler for login fields 
+	 *
+	 *	Sets state vars to respective fields
+	 *
+	 *  Gets target values from event variable
+	 *
+	 *	@param event 
+	 *	@public
+	 */
   handleChange(event) {
   	if(event.target.id == "username"){
     	this.setState({username: event.target.value});
@@ -52,11 +74,19 @@ class LoginForm extends React.Component {
     	this.setState({password: event.target.value});
     }
   }
-
+  /*
+   *	Supposedly handler for Facebook Login
+   *
+   *	@depreceted
+   */
   handleFBLogin(user){
   	console.log(user);
   }
-
+  /**
+   *	Supposedly handler for Facebook Login failure
+   *
+   *	@depreceted
+   */
   handleFBFailure(err){
 
   }
@@ -82,7 +112,9 @@ class LoginForm extends React.Component {
 			</form>
 		);
 	}
-
+	/**
+	 *	Loads toggle animation with jquery
+	 */
 	componentDidMount() {
 		$('.message a').click(function(){
    		$('form').animate({height: "toggle", opacity: "toggle"}, "slow");

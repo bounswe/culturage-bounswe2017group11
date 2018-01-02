@@ -2,8 +2,19 @@ import React from 'react';
 import '../utils/navbar.css';
 import NavbarDropdown from './NavbarDropdown.jsx';
 import NavbarSearch from './NavbarSearch.jsx';
+import PropTypes from 'prop-types';
+
+	/**
+   *  Navbar component. Contains NavbarDropdown and NavbarSearch components. 
+   * If user is not logged in displays login/register button.
+   * If user is logged in displays upload button and user dropdown menu.
+   */
 
 class Navbar extends React.Component {
+	static propTypes = {
+        /** Name of the current page. Ex: "home" or "upload" */
+        page: PropTypes.string
+    }
 	constructor(props){
    		super(props);
    		this.state = {
@@ -31,6 +42,13 @@ class Navbar extends React.Component {
   			console.log('There has been a problem with your fetch operation: ' + error.message);
 		});
 	}
+
+	/**
+    * Removes user token.
+    *
+    * @public
+    */
+
 	handleClick(){
 		removeCookie("token");
 	}

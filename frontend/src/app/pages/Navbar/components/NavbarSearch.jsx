@@ -1,6 +1,11 @@
 import React from 'react';
 import '../utils/navbar.css';
 import Autosuggest from 'react-autosuggest';
+import PropTypes from 'prop-types';
+
+	/**
+   *  Navbar Searchbox component. 
+   */
 
 class NavbarSearch extends React.Component {
 	constructor(){
@@ -13,13 +18,25 @@ class NavbarSearch extends React.Component {
 			this.handleSubmit = this.handleSubmit.bind(this);
 	}
 
-	// Handler for the button/submit event
+	/**
+    * Handler for the button/submit event
+    *
+    * @public
+    * @param {event} e
+    */
 	handleSubmit(e){
 		e.preventDefault();
 		var replaceWith = '/searchItem/' + this.state.searchText;
 		window.location.replace(replaceWith);
 	}
 
+	/**
+    * Makes GET API call and stores the search results.
+    * If an error is raised, logs the error message.
+    *
+    * @public
+    * @param {event} e
+    */
 	handleValueChange(e) {
 				e.preventDefault();
         this.setState({searchText: e.target.value});

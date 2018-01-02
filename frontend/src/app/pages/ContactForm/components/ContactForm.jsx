@@ -3,8 +3,13 @@ import TagsInput from 'react-tagsinput'
 import UploadLocationPicker from './UploadLocationPicker.jsx'
 import PlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-places-autocomplete'
 import 'react-tagsinput/react-tagsinput.css'
+import PropTypes from 'prop-types';
 
 
+/**
+ * Contact form component. Contains image picker, title area, description area, date area, tag adder and location picker.
+ * Creates a heritage item object from given input and passes it to API.
+ */
 class ContactForm extends React.Component {
     constructor(props) {
         super(props);
@@ -56,15 +61,47 @@ class ContactForm extends React.Component {
         this.handleDay2Change = this.handleDay2Change.bind(this);
     }
 
+
+    /**
+    * Toggle change
+    *
+    * @public
+    */
     toggleChange = () => {
       this.setState({
         isChecked: !this.state.isChecked,
       });
     }
+
+    /**
+    * Sets the repetitive property of date
+    *
+    * @public
+    */
     repetitiveChange = () => {this.setState({isRepetitive: !this.state.isRepetitive});}
+
+    /**
+    * Sets the range property of date
+    *
+    * @public
+    */
     rangeChange = () => {this.setState({isRange: ! this.state.isRange});}
 
+    /**
+    * Sets the tags entered
+    *
+    * @param tags
+    * @public
+    */
+
     handleChangeTags(tags) {this.setState({tags});}
+
+    /**
+    * Sets the image chosen
+    *
+    * @param {event} e
+    * @public
+    */
 
     _handleImageChange(e) {
       e.preventDefault();
@@ -82,32 +119,118 @@ class ContactForm extends React.Component {
       reader.readAsDataURL(file)
     }
 
-
+    /**
+    * Clears all inputs entered
+    *
+    * @param {event} e
+    * @public
+    */
     handleClear(e) { e.preventDefault();window.location.replace("/upload");}
 
-    // onChange handler saves subject to state
+    /**
+    * Sets the title
+    *
+    * @param {event} event
+    * @public
+    */
     handleNameChange(event){event.preventDefault();this.setState({name: event.target.value});};
 
-    // onChange handler saves subject to state
+    /**
+    * Sets the description
+    *
+    * @param {event} event
+    * @public
+    */
     handleDescriptionChange(event){event.preventDefault();this.setState({description: event.target.value});};
+
+    /**
+    * Sets the location
+    *
+    * @param {event} event
+    * @public
+    */
     handleLocationChange(event){event.preventDefault();this.setState({location: event.target.value});};
 
+    /**
+    * Sets the year property of date
+    *
+    * @param {event} event
+    * @public
+    */
     handleYearChange(event){event.preventDefault();this.setState({year: event.target.value});};
 
+    /**
+    * Sets the month property of date
+    *
+    * @param {event} event
+    * @public
+    */
     handleMonthChange(event){event.preventDefault();  this.setState({month: event.target.value});};
 
+    /**
+    * Sets the day property of date
+    *
+    * @param {event} event
+    * @public
+    */
     handleDayChange(event){event.preventDefault();  this.setState({day: event.target.value});};
 
+    /**
+    * Sets the year property of date
+    *
+    * @param {event} event
+    * @public
+    */
     handleYear2Change(event){event.preventDefault();this.setState({year2: event.target.value});};
 
+    /**
+    * Sets the month property of date
+    *
+    * @param {event} event
+    * @public
+    */
     handleMonth2Change(event){event.preventDefault();  this.setState({month2: event.target.value});};
 
+    /**
+    * Sets the day property of date
+    *
+    * @param {event} event
+    * @public
+    */
     handleDay2Change(event){event.preventDefault();  this.setState({day2: event.target.value});};
 
+    /**
+    * Sets the image chosen
+    *
+    * @param {event} event
+    * @public
+    */
     handleImageChange(event){event.preventDefault();this.setState({image: event.target.value});};
+
+    /**
+    * Sets the tags entered
+    *
+    * @param {event} event
+    * @public
+    */
     handleTagsChange(event){event.preventDefault();this.setState({tags: event.target.value});};
+
+    /**
+    * Sets selected
+    *
+    * @param {event} event
+    * @public
+    */
     handleSelectedChange(event) {this.setState({selectedValue: event.target.value});}
 
+    /**
+    * Takes given address and creates location object.
+    * Sets name, latitude and longitude of location object.
+    * Sets this location as the item's location.
+    *
+    * @param {string} address
+    * @public
+    */
     onLocationChange(address){
       console.log(address)
       geocodeByAddress(address)
@@ -126,14 +249,27 @@ class ContactForm extends React.Component {
     }
 
 
-    // Handler for the button/submit event
+    /**
+    * Creates item object and sets its parameters.
+    * Sends the object as JSON object via API
+    * Displays error message if error occurs
+    *
+    * @param {event} e
+    * @public
+    */
     handleSubmit(e){
       e.preventDefault();
 
       var myHeaders = new Headers();
       var yearValue = this.state.year;
       var yearValue2 = this.state.year2;
-
+      var month = this.state.month;
+      var month2 = this.state.month2;
+      var day = this.state.day;
+      var day2 = this.state.day2;
+      
+      if(yearValue.localeCompare("")==0){yearValue = "0000"}
+      if(this.state.isRange && yearValue2.localeCompare("")==0){yearValue2 = "0000"}
       if(this.state.isChecked){
         yearValue = '-'+ yearValue;
         if(this.state.isRange){
@@ -141,8 +277,12 @@ class ContactForm extends React.Component {
         }
       }
 
-      var dateUpload = yearValue + '-' + this.state.month + '-' + this.state.day;
-      var dateUpload2 = yearValue2 + '-' + this.state.month2 + '-' + this.state.day2;
+      if(this.state.month.localeCompare("")==0){month = "00"}
+      if(this.state.isRange && this.state.month2.localeCompare("")==0){month2 = "00"}
+      if(this.state.day.localeCompare("")==0){day = "00"}
+      if(this.state.isRange && this.state.day2.localeCompare("") == 0){day2 = "00"}
+      var dateUpload = yearValue + '-' + month + '-' + day;
+      var dateUpload2 = yearValue2 + '-' + month2 + '-' + day2;
       if(this.state.isRepetitive){
         dateUpload = dateUpload + '~';
         if(this.state.isRange){

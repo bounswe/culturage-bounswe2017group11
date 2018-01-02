@@ -1,7 +1,17 @@
 import React from 'react';
 import $ from 'jquery';
+import PropTypes from 'prop-types';
 
+/**
+ *  Component for the flag button of an item.
+ */
 class Flag extends React.Component {
+  static propTypes = {
+         /** Current Heritage Item */
+         item: PropTypes.object,
+         /** Login status of the user */
+         loginStatus: PropTypes.bool
+    }
     constructor(props){
       super(props);
       this.state = {
@@ -36,7 +46,16 @@ class Flag extends React.Component {
   componentWillMount(){
 
   }
-
+  /**
+   *  Handler method for flagging an item
+   *  
+   *  Checks if item is already flagged. If not marks item as flagged and reports to server through a POST call
+   *
+   *  If already flagged unflags the item and reports to the server through a POST call.
+   *
+   *  If user is not logged in alerts the user to login in order to flag items.
+   *  @public
+   */
   clickHandler() {
       var clk = this.state.count
       var add = 0;

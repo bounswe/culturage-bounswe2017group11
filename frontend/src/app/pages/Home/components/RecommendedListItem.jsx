@@ -1,7 +1,25 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import PropTypes from 'prop-types';
+
+    /**
+   *  Recommended List Item component. 
+   * Recommended List Item contains image, title, creation date, number of likes and number of comments of the item.
+   */
 
 export default class RecommendedListItem extends React.Component {
+    static propTypes = {
+        /** Recommended List Item */
+        item: PropTypes.object
+    }
+
+    /**
+    * Converts given date string to desired format. 
+    *
+    * @param {string} date
+    * @public
+    */
+
   editDate(date){
         var year = date.substring(0,4)
         var month = date.substring(5,7)
