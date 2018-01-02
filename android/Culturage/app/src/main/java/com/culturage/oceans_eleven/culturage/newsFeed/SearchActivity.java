@@ -24,6 +24,7 @@ import java.util.ArrayList;
 
 /**
  * Created by me on 17.11.2017.
+ * The search activity
  */
 
 public class SearchActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<ArrayList<HeritageItem>> {
@@ -37,15 +38,6 @@ public class SearchActivity extends AppCompatActivity implements LoaderManager.L
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_news_feed);
-
-
-//        ImageView profileIcon = (ImageView) findViewById(R.id.profileIcon);
-//        profileIcon.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                startActivity(new Intent(SearchActivity.this, ProfilePageActivity.class));
-//            }
-//        });
 
 
         /*don't want this to appear*/
@@ -78,7 +70,12 @@ public class SearchActivity extends AppCompatActivity implements LoaderManager.L
         });
     }
 
-
+    /**
+     * Updates UI (the list)
+     * clears old one and adds current items
+     *
+     * @param heritageItems up-to-date list of heritage items came from search result
+     */
     private void updateUi(ArrayList<HeritageItem> heritageItems) {
         itemAdapter.clear();
         if (heritageItems != null || heritageItems.size() > 0) {

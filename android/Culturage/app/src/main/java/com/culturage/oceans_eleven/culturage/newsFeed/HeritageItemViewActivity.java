@@ -55,6 +55,10 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 
+/**
+ * The class responsible for the detailed heritage items view.
+ * extends AppCompatActivity
+ */
 public class HeritageItemViewActivity extends AppCompatActivity {
 
     /**
@@ -242,6 +246,11 @@ public class HeritageItemViewActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Saves the captured image
+     *
+     * @param data the data that represents the image
+     */
     private void onCaptureImageResult(Intent data) {
         Bitmap thumbnail = (Bitmap) data.getExtras().get("data");
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
@@ -271,6 +280,13 @@ public class HeritageItemViewActivity extends AppCompatActivity {
         Log.v(LOG_TAG, "full path " + fullPath);
     }
 
+
+    /**
+     * Helper
+     * Retreives real(full) path from uri for the camera
+     * @param contentURI the uri of the content
+     * @return the full path retrieved from uri
+     */
     private String getRealPathFromURIForCamera(Uri contentURI) {
         String result;
         Cursor cursor = getContentResolver().query(contentURI, null, null, null, null);
@@ -285,6 +301,12 @@ public class HeritageItemViewActivity extends AppCompatActivity {
         return result;
     }
 
+    /**
+     * Helper
+     * Retreives real(full) path from uri for the gallery
+     * @param uri the uri of the content
+     * @return the full path retrieved from uri
+     */
     private String getRealPathFromURIForGallery(Uri uri) {
         String[] projection = {MediaStore.Images.Media.DATA};
         @SuppressWarnings("deprecation")
@@ -294,11 +316,21 @@ public class HeritageItemViewActivity extends AppCompatActivity {
         return cursor.getString(column_index);
     }
 
+    /**
+     * extends AsyncTask<String, Void, ArrayList<HeritageMedia>>  to
+     * fetch medias of an item from api
+     */
     private class AllMediasReceiver extends AsyncTask<String, Void, ArrayList<HeritageMedia>> {
         private Activity mContext;
         private String mImageUri;
         private int mItemID;
 
+        /**
+         *
+         * @param context the context currently being used
+         * @param itemID the unique id if the item
+         * @param imageUri the uri of the image
+         */
         private AllMediasReceiver(Activity context, int itemID, String imageUri) {
             this.mContext = context;
             this.mItemID = itemID;
@@ -310,6 +342,11 @@ public class HeritageItemViewActivity extends AppCompatActivity {
             return getMediaUrls(mItemID);
         }
 
+        /**
+         *
+         * @param mItemID the unique id if the item
+         * @return the list of media  of this item extracted from received json from api
+         */
         private ArrayList<HeritageMedia> getMediaUrls(int mItemID) {
             JSONArray json;
             try {
@@ -334,18 +371,31 @@ public class HeritageItemViewActivity extends AppCompatActivity {
 
         @Override
         protected void onPostExecute(ArrayList<HeritageMedia> medias) {
+            if (medias.size() > 1) {
+                medias.remove(1);
+            }
             HeritageMediaAdapter imageAdapter = new HeritageMediaAdapter(mContext, medias);
             imageList.setAdapter(imageAdapter);
         }
 
     }
 
+    /**
+     * AsyncTask<String, Void, Void> class for uploading image to the api
+     */
     private class ImageUpload extends AsyncTask<String, Void, Void> {
         Context mContext;
         String mFullPath;
         int mItemID;
         ProgressDialog dialog;
 
+        /**
+         *
+         * @param context the context currently being used
+         * @param fullPath full path of the image in the device
+         * @param itemID the unique id if the item
+
+         */
         private ImageUpload(Context context, String fullPath, int itemID) {
             this.mContext = context;
             this.mFullPath = fullPath;
@@ -376,6 +426,13 @@ public class HeritageItemViewActivity extends AppCompatActivity {
             dialog = ProgressDialog.show(mContext, "", "Image is being uploaded. Please wait...", true);
         }
 
+        /**
+         * makes the necessary network connections to post the file
+         * and send the file
+         * @param fileName the name of the file to upload
+         * @param itemID the unique id if the item
+
+         */
         private void uploadFile(String fileName, int itemID) {
             String upLoadServerUri = "http://52.90.34.144:85/api/items/" + itemID + "/medias";
             int serverResponseCode = 0;
@@ -449,6 +506,9 @@ public class HeritageItemViewActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Downloads an item with its all detailed information
+     */
     private class FullItemLoader extends AsyncTask<Integer, Void, String> {
 
         @Override
@@ -521,7 +581,6 @@ public class HeritageItemViewActivity extends AppCompatActivity {
                     }
 
                     date.setText(fullDate);
-
 
 
                 } catch (Exception e) {
@@ -613,6 +672,9 @@ public class HeritageItemViewActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Downloads the profile page info from api
+     */
     private class ProfileLoader extends AsyncTask<String, String, String> {
 
         private String creator_username;
@@ -676,6 +738,10 @@ public class HeritageItemViewActivity extends AppCompatActivity {
             }
         }
 
+        /**
+         * Downloads and shows profile picure
+         * @param profileUrl the url of the profile picture on the api
+         */
         private void ViewGuestProfile(String profileUrl) {
             String result = "";
             try {
@@ -698,6 +764,9 @@ public class HeritageItemViewActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * AsyncTask for fetching recommendations
+     */
     private class RecommendationRequest extends AsyncTask<Void, Void, Void> {
         private String url;
         private Activity context;
@@ -722,6 +791,10 @@ public class HeritageItemViewActivity extends AppCompatActivity {
             mRecommendationView.setAdapter(recommendationAdapter);
         }
 
+        /**
+         * fetches item based recommendations
+         * @param url of api to make request to
+         */
         private void getRecommendations(String url) {
             tempRecommendations = new ArrayList<>();
             String result = null;
@@ -763,8 +836,10 @@ public class HeritageItemViewActivity extends AppCompatActivity {
     private LoaderManager.LoaderCallbacks<ArrayList<HeritageItem>> heritageItemLoader
             = new LoaderManager.LoaderCallbacks<ArrayList<HeritageItem>>() {
 
-    /*
-    Will be implemented soon Send token of the user to like or not.
+     */
+
+    /**
+     * Class for making like
      */
     private class LikeAction extends AsyncTask<String, String, String> {
 
@@ -781,7 +856,7 @@ public class HeritageItemViewActivity extends AppCompatActivity {
             try {
                 SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
                 String token = preferences.getString("token", "null");
-                LikeSuccessful = uploadLikePic();
+                LikeSuccessful = checkIfLikeSuccessfull();
                 if (LikeSuccessful) {
                     try {
                         LikeSuccessful = uploadLikeCount(token);
@@ -811,7 +886,13 @@ public class HeritageItemViewActivity extends AppCompatActivity {
             }
         }
 
-        private boolean uploadLikePic() {
+
+        /**
+         * checks if like is successfully performed
+         *
+         * @return true if like is successfully performed
+         */
+        private boolean checkIfLikeSuccessfull() {
             String result;
             itemUrl = "http://52.90.34.144:85/api/items/" + heritageItemPostID;
             try {
@@ -840,6 +921,11 @@ public class HeritageItemViewActivity extends AppCompatActivity {
 
         }
 
+        /**
+         * uplad number likes of this item
+         * @param token the toke of the user to be send to the api for authorization
+         * @return true if successfully uploaded
+         */
         private boolean uploadLikeCount(String token) {
             String result;
             String ratesUrl = "http://52.90.34.144:85/api/items/" + heritageItemPostID + "/rates";
@@ -854,6 +940,10 @@ public class HeritageItemViewActivity extends AppCompatActivity {
 
         }
 
+        /**
+         * constructs the json to be posted
+         * @return true if the post operations responds positive
+         */
         private JSONObject constructTheJSONLikeCount() {
 
             JSONObject json = new JSONObject();
@@ -876,6 +966,9 @@ public class HeritageItemViewActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Fetches if this user has liked this item
+     */
     private class getLikeStatus extends AsyncTask<String, String, String> {
 
         private boolean isLiked;
@@ -911,6 +1004,9 @@ public class HeritageItemViewActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Fetches total Like Count, total Comment Count and   total Report Count of this item
+     */
     private class LikeCommentCountLoader extends AsyncTask<String, String, String> {
 
         private String ratesUrl = "http://52.90.34.144:85/api/items/" + heritageItemPostID;
@@ -985,6 +1081,9 @@ public class HeritageItemViewActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * Reports this item on behalf of this user
+     */
     private class reportAction extends AsyncTask<String, String, String> {
 
         private Context mContext;
@@ -1000,7 +1099,7 @@ public class HeritageItemViewActivity extends AppCompatActivity {
             try {
                 SharedPreferences preferences = PreferenceManager.getDefaultSharedPreferences(mContext);
                 String token = preferences.getString("token", "null");
-                reportSuccessful = uploadReportPic();
+                reportSuccessful = checkIfReportSuccessful();
                 if (reportSuccessful) {
                     try {
                         reportSuccessful = uploadReportCount(token);
@@ -1032,7 +1131,12 @@ public class HeritageItemViewActivity extends AppCompatActivity {
             }
         }
 
-        private boolean uploadReportPic() {
+        /**
+         * checks if Report is successfully performed
+         *
+         * @return true if Report is successfully performed
+         */
+        private boolean checkIfReportSuccessful() {
             String result;
             itemUrl = "http://52.90.34.144:85/api/items/" + heritageItemPostID;
             try {
@@ -1061,6 +1165,11 @@ public class HeritageItemViewActivity extends AppCompatActivity {
 
         }
 
+        /**
+         * Upload number reports of this item
+         * @param token the toke of the user to be send to the api for authorization
+         * @return true if successfully uploaded
+         */
         private boolean uploadReportCount(String token) {
             String result;
             String reportUrl = "http://52.90.34.144:85/api/items/" + heritageItemPostID + "/reports";
@@ -1075,6 +1184,10 @@ public class HeritageItemViewActivity extends AppCompatActivity {
 
         }
 
+        /**
+         * constructs the json to be posted
+         * @return true if the post operations responds positive
+         */
         private JSONObject constructTheJSONReportCount() {
 
             JSONObject json = new JSONObject();
@@ -1097,6 +1210,9 @@ public class HeritageItemViewActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Fetches to see if this item is reported by this user
+     */
     private class getReportStatus extends AsyncTask<String, String, String> {
 
         private boolean isReported;

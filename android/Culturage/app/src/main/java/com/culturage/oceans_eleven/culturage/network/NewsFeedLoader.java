@@ -7,6 +7,10 @@ import com.culturage.oceans_eleven.culturage.baseClasses.HeritageItem;
 
 import java.util.ArrayList;
 
+/**
+ * Loader extends AsyncTaskLoader<ArrayList<HeritageItem> > that is used to download
+ * the news feed (both general and user specific recommendation)
+ */
 public class NewsFeedLoader extends AsyncTaskLoader<ArrayList<HeritageItem> > {
 
     private String Url;
@@ -17,6 +21,7 @@ public class NewsFeedLoader extends AsyncTaskLoader<ArrayList<HeritageItem> > {
         this.context = context;
         this.Url = url;
     }
+
     @Override
     protected void onStartLoading(){
         forceLoad();

@@ -10,6 +10,8 @@ import java.util.ArrayList;
 
 /**
  * Created by me on 10.11.2017.
+ * The fragment that holds user specific heritage item recommendations
+ * extends HeritageItemListFragment
  */
 
 public class RecommendedHeritageItemsFragment extends HeritageItemListFragment {

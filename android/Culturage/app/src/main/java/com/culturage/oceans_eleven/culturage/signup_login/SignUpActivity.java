@@ -24,6 +24,9 @@ import org.json.JSONObject;
 import java.io.PrintWriter;
 import java.io.StringWriter;
 
+/**
+ * The sign up activity
+ */
 public class SignUpActivity extends AppCompatActivity {
 
     private static final String registerURI = "auth/register/";
@@ -64,7 +67,9 @@ public class SignUpActivity extends AppCompatActivity {
 
     }
 
-
+    /**
+     * AsyncTask for sending sign up request
+     */
     private class SignupRequest extends AsyncTask<String, String, String> {
 
         private String resp;
@@ -108,6 +113,11 @@ public class SignUpActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Constructs the json to post and sends it
+     *
+     * @return the response of server
+     */
     private String sendSignupRequest() {
         JSONObject json = new JSONObject();
         try {
@@ -136,6 +146,11 @@ public class SignUpActivity extends AppCompatActivity {
         return parseJson(result);
     }
 
+    /**
+     * Parses the response parameter (result) and gets token
+     * @param result the response as string
+     * @return the token extracted from the response
+     */
     private String parseJson(String result) {
         String token = null;
         try {

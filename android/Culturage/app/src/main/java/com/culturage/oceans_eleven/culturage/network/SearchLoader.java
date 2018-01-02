@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 /**
  * Created by me on 17.11.2017.
+ * Loader extends AsyncTaskLoader<ArrayList<HeritageItem>> to install search results from server
  */
 
 public class SearchLoader extends AsyncTaskLoader<ArrayList<HeritageItem>> {
@@ -16,6 +17,11 @@ public class SearchLoader extends AsyncTaskLoader<ArrayList<HeritageItem>> {
     private String Url;
     private Context context;
 
+    /**
+     * @param context being used
+     * @param url     the url string of the users profile info in the server
+     *                example : http://.../api/search/item?q=<searchQuery>
+     */
     public SearchLoader(Context context, String url) {
         super(context);
         this.context = context;

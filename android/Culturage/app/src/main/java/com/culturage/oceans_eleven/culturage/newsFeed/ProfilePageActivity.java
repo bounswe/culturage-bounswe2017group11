@@ -38,6 +38,9 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * The activity of profile page
+ */
 public class ProfilePageActivity extends AppCompatActivity implements LoaderManager.LoaderCallbacks<ArrayList<ProfilePage>> {
 
     private int SELECT_FILE = 1;
@@ -166,6 +169,9 @@ public class ProfilePageActivity extends AppCompatActivity implements LoaderMana
     }
 
 
+    /**
+     * starts galley intent for the user to pick an image
+     */
     private void galleryIntent() {
         Intent intent = new Intent();
         intent.setType("image/*");
@@ -173,6 +179,7 @@ public class ProfilePageActivity extends AppCompatActivity implements LoaderMana
         startActivityForResult(Intent.createChooser(intent, "Select File"), SELECT_FILE);
     }
 
+    @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
@@ -184,6 +191,12 @@ public class ProfilePageActivity extends AppCompatActivity implements LoaderMana
         }
     }
 
+    /**
+     * transforms bitmap of image into 64 encoded String
+     *
+     * @param bitmap the image as bitmap
+     * @return the 64 base encoded image as a string
+     */
     public String getEncoded64ImageStringFromBitmap(Bitmap bitmap) {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
         bitmap.compress(Bitmap.CompressFormat.JPEG, 70, stream);
@@ -208,6 +221,10 @@ public class ProfilePageActivity extends AppCompatActivity implements LoaderMana
 
     }
 
+    /**
+     * updates the UI, the page showing profile information
+     * @param profilePages
+     */
     public void updateUi(ArrayList<ProfilePage> profilePages) {
         if (profilePages != null || profilePages.size() > 0) {
             username = (EditText) findViewById(R.id.profileUsernameEdit);
@@ -273,8 +290,10 @@ public class ProfilePageActivity extends AppCompatActivity implements LoaderMana
         moveTaskToBack(true);
     }
 
-    ///////
 
+    /**
+     * AsyncTask for uploading profile information
+     */
     private class uploadProfileRequest extends AsyncTask<String, String, String> {
 
         Context mContext;
@@ -332,6 +351,11 @@ public class ProfilePageActivity extends AppCompatActivity implements LoaderMana
 
         }
 
+        /**
+         * constructs the json to be posted
+         * @return true if the post operations responds positive
+         */
+
         private JSONObject constructTheJSON() {
 
             JSONObject json = new JSONObject();
@@ -372,46 +396,5 @@ public class ProfilePageActivity extends AppCompatActivity implements LoaderMana
         }
     }
 
-    /*
-
-    private class uploadProfileRequest extends AsyncTask<String, String, Void> {
-        private String resp;
-        String returnedToken;
-        Context mContext;
-        private String[] arrayProfile;
-
-        public uploadProfileRequest(Context context, String[] arrayProfile) {
-            mContext = context;
-            for(int i = 0; i< arrayProfile.length; i++){
-                this.arrayProfile[i] = arrayProfile[i];
-            }
-            Log.v("Look Here", arrayProfile[0]);
-        }
-
-        @Override
-        protected Void doInBackground(String... params) {
-            try {
-                new ProfileUploadLoader(ProfilePageActivity.this, apiURL, arrayProfile);
-            } catch (Exception e) {
-                e.printStackTrace();
-                resp = e.getMessage();
-            }
-            return null;
-        }
-
-
-
-        protected void onPostExecute() {
-            mProgressBar.setVisibility(View.INVISIBLE);
-            startActivity(new Intent(ProfilePageActivity.this, NewsFeedActivity.class));
-
-        }
-
-        @Override
-        protected void onPreExecute() {
-            mProgressBar.setVisibility(View.VISIBLE);
-        }
-
-    }  */
 
 }

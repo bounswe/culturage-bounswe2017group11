@@ -23,6 +23,10 @@ import com.squareup.picasso.Picasso;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * This class extends ArrayAdapter to fill the comments view
+ * also handles deleting comments
+ */
 public class CommentAdapter extends ArrayAdapter {
 
     private final static String LOG_TAG = "commentAdapter";
@@ -30,6 +34,12 @@ public class CommentAdapter extends ArrayAdapter {
     private Activity activity;
     private String username;
 
+    /**
+     * public constructor
+     *
+     * @param context  the current context being used
+     * @param comments the list of comments of this item
+     */
     public CommentAdapter(Activity context, ArrayList<Comment> comments) {
         super(context, 0, comments);
         this.activity = context;
@@ -94,6 +104,10 @@ public class CommentAdapter extends ArrayAdapter {
         return listItemView;
     }
 
+    /**
+     * Actually not a loader but an Asynchronous task extends AsyncTask<String, String, String>
+     *     to handle network tasks namely posting a delete
+     */
     private class deleteLoader extends AsyncTask<String, String, String> {
 
         private int deleteCommentId;
@@ -102,6 +116,13 @@ public class CommentAdapter extends ArrayAdapter {
         CommentAdapter theAdapter;
         Comment currentComment;
 
+        /**
+         * Private constructor
+         * @param deleteCommentId the id of the comment to be deleted
+         * @param listItemView the view of list of items
+         * @param theAdapter the CommentAdapter
+         * @param currentComment the current comment which is to be deleted
+         */
         private deleteLoader(int deleteCommentId, View listItemView, CommentAdapter theAdapter, Comment currentComment) {
             this.deleteCommentId = deleteCommentId;
             this.isDeleted = false;
@@ -136,6 +157,11 @@ public class CommentAdapter extends ArrayAdapter {
             }
         }
 
+        /**
+         *
+         * @param token the toke of the user to be send to the api for authorization
+         * @return true if operation is complete successfully
+         */
         private boolean deleteComment(String token) {
             String result;
             String deleteCommentUrl = "http://52.90.34.144:85/api/comments/" + deleteCommentId;
