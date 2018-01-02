@@ -226,7 +226,7 @@ class ContactForm extends React.Component {
     /**
     * Takes given address and creates location object.
     * Sets name, latitude and longitude of location object.
-    * Sets this location as the item's location. 
+    * Sets this location as the item's location.
     *
     * @param {string} address
     * @public
@@ -263,7 +263,13 @@ class ContactForm extends React.Component {
       var myHeaders = new Headers();
       var yearValue = this.state.year;
       var yearValue2 = this.state.year2;
-
+      var month = this.state.month;
+      var month2 = this.state.month2;
+      var day = this.state.day;
+      var day2 = this.state.day2;
+      
+      if(yearValue.localeCompare("")==0){yearValue = "0000"}
+      if(this.state.isRange && yearValue2.localeCompare("")==0){yearValue2 = "0000"}
       if(this.state.isChecked){
         yearValue = '-'+ yearValue;
         if(this.state.isRange){
@@ -271,8 +277,12 @@ class ContactForm extends React.Component {
         }
       }
 
-      var dateUpload = yearValue + '-' + this.state.month + '-' + this.state.day;
-      var dateUpload2 = yearValue2 + '-' + this.state.month2 + '-' + this.state.day2;
+      if(this.state.month.localeCompare("")==0){month = "00"}
+      if(this.state.isRange && this.state.month2.localeCompare("")==0){month2 = "00"}
+      if(this.state.day.localeCompare("")==0){day = "00"}
+      if(this.state.isRange && this.state.day2.localeCompare("") == 0){day2 = "00"}
+      var dateUpload = yearValue + '-' + month + '-' + day;
+      var dateUpload2 = yearValue2 + '-' + month2 + '-' + day2;
       if(this.state.isRepetitive){
         dateUpload = dateUpload + '~';
         if(this.state.isRange){
